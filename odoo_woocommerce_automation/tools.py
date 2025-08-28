@@ -5,7 +5,7 @@ import logging
 import requests
 import json
 from datetime import datetime, timedelta
-from odoo import models, fields, api, _, SUPERUSER_ID
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 import woocommerce
 from woocommerce import API
@@ -235,7 +235,7 @@ class WooCommerceDataMapper:
             },
             'shipping': {
                 'first_name': order.partner_shipping_id.name.split()[0] if order.partner_shipping_id.name else '',
-                'last_name': ' '.join(order.partner_shipping_id.name.split()[1:]) if order.partner_shipping_id.name else '',
+                'last_name': ' '.join(order.partner_shipping_id.name.split()[1:]) if order_partner_shipping_id.name else '',
                 'address_1': order.partner_shipping_id.street or '',
                 'city': order.partner_shipping_id.city or '',
                 'state': order.partner_shipping_id.state_id.name or '',
@@ -304,18 +304,17 @@ class WooCommerceDataMapper:
 
 
 # =========================
-# SAFE HOOKS (no side effects)
+# SAFE HOOKS (env signature)
 # =========================
-def post_init_hook(cr, registry):
+def post_init_hook(env):
     """SAFE post-installation hook: no installs/upgrades, no record creation."""
-    env = api.Environment(cr, SUPERUSER_ID, {})
-    _logger.info("Initializing Odoo WooCommerce Automation (SAFE post_init).")
-    # Intencionalmente no instalamos/actualizamos módulos ni creamos configuraciones.
-    # Los datos por defecto (si los hay) deben venir desde data/*.xml.
+    _logger.info("Initializing Odoo WooCommerce Automation (SAFE post_init with env).")
+    # No instalamos/actualizamos módulos ni creamos configuraciones aquí.
+    # Los datos por defecto (si existen) deben venir desde data/*.xml.
     _logger.info("Odoo WooCommerce Automation initialized successfully.")
 
 
-def uninstall_hook(cr, registry):
+def uninstall_hook(env):
     """SAFE uninstall hook (no cleanup needed)."""
     _logger.info("Uninstalling Odoo WooCommerce Automation module...")
     _logger.info("Odoo WooCommerce Automation module uninstalled successfully.")
