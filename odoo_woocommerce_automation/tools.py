@@ -5,7 +5,7 @@ import logging
 import requests
 import json
 from datetime import datetime, timedelta
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError, ValidationError
 import woocommerce
 from woocommerce import API
@@ -303,62 +303,19 @@ class WooCommerceDataMapper:
         }
 
 
-def post_init_hook(env):
-    """Post-installation hook"""
-    _logger.info("Initializing Odoo WooCommerce Automation module...")
-    
-    # Handle optional account_invoice_extract module (Enterprise Edition feature)
-    try:
-        invoice_extract_module = env['ir.module.module'].search([
-            ('name', '=', 'account_invoice_extract')
-        ])
-        
-        if invoice_extract_module:
-            if invoice_extract_module.state != 'installed':
-                _logger.info("Installing account_invoice_extract module (Enterprise Edition)...")
-                invoice_extract_module.button_immediate_install()
-                _logger.info("account_invoice_extract module installed successfully")
-            else:
-                _logger.info("account_invoice_extract module is already installed")
-                
-            # Update the module to ensure all fields are properly registered
-            _logger.info("Updating account_invoice_extract module...")
-            invoice_extract_module.button_immediate_upgrade()
-            _logger.info("account_invoice_extract module updated successfully")
-        else:
-            _logger.info("account_invoice_extract module not available (Community Edition) - module will work without invoice digitization features")
-            
-    except Exception as e:
-        _logger.info(f"account_invoice_extract module not available: {e} - module will work without invoice digitization features")
-    
-    # Ensure account module is up to date
-    try:
-        account_module = env['ir.module.module'].search([
-            ('name', '=', 'account')
-        ])
-        
-        if account_module:
-            _logger.info("Updating account module...")
-            account_module.button_immediate_upgrade()
-            _logger.info("account module updated successfully")
-            
-    except Exception as e:
-        _logger.error(f"Error updating account module: {e}")
-    
-    # Create default configuration
-    config = env['woocommerce.configuration'].search([], limit=1)
-    if not config:
-        env['woocommerce.configuration'].create({
-            'name': 'Default WooCommerce Configuration',
-            'active': False,
-        })
-    
-    _logger.info("Odoo WooCommerce Automation module initialized successfully")
+# =========================
+# SAFE HOOKS (no side effects)
+# =========================
+def post_init_hook(cr, registry):
+    """SAFE post-installation hook: no installs/upgrades, no record creation."""
+    env = api.Environment(cr, SUPERUSER_ID, {})
+    _logger.info("Initializing Odoo WooCommerce Automation (SAFE post_init).")
+    # Intencionalmente no instalamos/actualizamos módulos ni creamos configuraciones.
+    # Los datos por defecto (si los hay) deben venir desde data/*.xml.
+    _logger.info("Odoo WooCommerce Automation initialized successfully.")
 
 
-def uninstall_hook(env):
-    """Uninstallation hook"""
+def uninstall_hook(cr, registry):
+    """SAFE uninstall hook (no cleanup needed)."""
     _logger.info("Uninstalling Odoo WooCommerce Automation module...")
-    
-    # Clean up any module-specific data if needed
-    _logger.info("Odoo WooCommerce Automation module uninstalled successfully") 
+    _logger.info("Odoo WooCommerce Automation module uninstalled successfully.")
