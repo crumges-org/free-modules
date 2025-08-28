@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Odoo WooCommerce Automation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.8;
+            z-index: 1;
+        }
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        .module-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            background: white;
+            font-size: 40px;
+            color: #667eea;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-card h3 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        .feature-card ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        .feature-card li {
+            margin-bottom: 8px;
+        }
+        .company-info {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .company-info h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .contact-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .contact-item {
+            margin: 10px;
+        }
+        .contact-item strong {
+            color: #667eea;
+        }
+        .tech-specs {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .tech-specs h2 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .spec-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        .spec-item strong {
+            color: #667eea;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 5px;
+        }
+        @media (max-width: 768px) {
+            .module-icon {
+                width: 60px;
+                height: 60px;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-banner"></div>
+        <div class="header-content">
+            <div class="module-icon">🛒</div>
+            <h1>🛒 Odoo WooCommerce Automation</h1>
+            <p>Comprehensive WooCommerce integration for Odoo 18</p>
+            <div>
+                <span class="badge">Odoo 18 Compatible</span>
+                <span class="badge">Community Edition</span>
+                <span class="badge">Enterprise Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <h3>🔄 Bidirectional Synchronization</h3>
+            <ul>
+                <li>Product synchronization (import/export)</li>
+                <li>Order management and status updates</li>
+                <li>Customer data synchronization</li>
+                <li>Real-time inventory updates</li>
+                <li>Automatic workflow triggers</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3>⚙️ Advanced Configuration</h3>
+            <ul>
+                <li>Multiple store support</li>
+                <li>Customizable sync schedules</li>
+                <li>Field mapping and transformation</li>
+                <li>Error handling and retry mechanisms</li>
+                <li>Comprehensive logging and monitoring</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3>📊 Dashboard & Analytics</h3>
+            <ul>
+                <li>Real-time sync status monitoring</li>
+                <li>Performance metrics and statistics</li>
+                <li>Error tracking and reporting</li>
+                <li>Sync history and audit trails</li>
+                <li>Customizable dashboards</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <h3>🔧 Developer Friendly</h3>
+            <ul>
+                <li>REST API endpoints</li>
+                <li>Webhook support</li>
+                <li>Extensible architecture</li>
+                <li>Comprehensive documentation</li>
+                <li>Easy customization</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="company-info">
+        <h2>🏢 Developed by ECOSIRE (PRIVATE) LIMITED</h2>
+        <p>Your trusted partner for Odoo solutions and e-commerce automation</p>
+        <div class="contact-info">
+            <div class="contact-item">
+                <strong>Website:</strong><br>
+                <a href="https://www.ecosire.com/" target="_blank">https://www.ecosire.com/</a>
+            </div>
+            <div class="contact-item">
+                <strong>Email:</strong><br>
+                <a href="mailto:info@ecosire.com">info@ecosire.com</a>
+            </div>
+            <div class="contact-item">
+                <strong>Official Number:</strong><br>
+                0923130168262
+            </div>
+        </div>
+    </div>
+
+    <div class="tech-specs">
+        <h2>🔧 Technical Specifications</h2>
+        <div class="spec-grid">
+            <div class="spec-item">
+                <strong>Odoo Version:</strong><br>
+                Compatible with Odoo 18.0+
+            </div>
+            <div class="spec-item">
+                <strong>WooCommerce API:</strong><br>
+                REST API v3 support
+            </div>
+            <div class="spec-item">
+                <strong>Database:</strong><br>
+                PostgreSQL 12.0+
+            </div>
+            <div class="spec-item">
+                <strong>Python Dependencies:</strong><br>
+                requests, woocommerce
+            </div>
+            <div class="spec-item">
+                <strong>Security:</strong><br>
+                OAuth 1.0a authentication
+            </div>
+            <div class="spec-item">
+                <strong>Performance:</strong><br>
+                Optimized for large datasets
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Odoo WooCommerce Automation</strong> - Streamline your e-commerce operations with seamless Odoo and WooCommerce integration.</p>
+        <p>© 2024 ECOSIRE (PRIVATE) LIMITED. All rights reserved.</p>
+    </div>
+</body>
+</html> 

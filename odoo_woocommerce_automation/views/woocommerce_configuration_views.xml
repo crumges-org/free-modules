@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- WooCommerce Configuration Form View -->
+        <record id="view_woocommerce_configuration_form" model="ir.ui.view">
+            <field name="name">woocommerce.configuration.form</field>
+            <field name="model">woocommerce.configuration</field>
+            <field name="arch" type="xml">
+                <form string="WooCommerce Configuration">
+                    <header>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <button name="action_test_connection" 
+                                        type="object" 
+                                        string="Test Connection" 
+                                        class="btn btn-primary me-2"
+                                        icon="fa-plug"/>
+                                <button name="action_sync_products" 
+                                        type="object" 
+                                        string="Sync Products" 
+                                        class="btn btn-secondary me-2"
+                                        icon="fa-refresh"/>
+                                <button name="action_sync_orders" 
+                                        type="object" 
+                                        string="Sync Orders" 
+                                        class="btn btn-secondary me-2"
+                                        icon="fa-refresh"/>
+                                <button name="action_sync_customers" 
+                                        type="object" 
+                                        string="Sync Customers" 
+                                        class="btn btn-secondary me-2"
+                                        icon="fa-refresh"/>
+                            </div>
+                            <field name="active" widget="boolean_toggle"/>
+                        </div>
+                    </header>
+                    
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="e.g., My WooCommerce Store" class="form-control-lg"/>
+                            </h1>
+                            <p class="text-muted">Enter a descriptive name for this WooCommerce configuration (e.g., "Main Store", "Test Store")</p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-cog text-primary me-2"></i>Connection Settings
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="woocommerce_url" class="form-label fw-bold">WooCommerce Store URL *</label>
+                                            <field name="woocommerce_url" required="1" class="form-control" 
+                                                   placeholder="https://yourstore.com"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-info-circle me-1"></i>
+                                                Enter your WooCommerce store's main URL (e.g., https://myshop.com or https://shop.mydomain.com)
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="consumer_key" class="form-label fw-bold">Consumer Key *</label>
+                                            <field name="consumer_key" required="1" password="True" class="form-control"
+                                                   placeholder="ck_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-key me-1"></i>
+                                                Found in WooCommerce → Settings → Advanced → REST API → Add Key → Consumer Key
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="consumer_secret" class="form-label fw-bold">Consumer Secret *</label>
+                                            <field name="consumer_secret" required="1" password="True" class="form-control"
+                                                   placeholder="cs_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-lock me-1"></i>
+                                                Found in WooCommerce → Settings → Advanced → REST API → Add Key → Consumer Secret
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="api_version" class="form-label fw-bold">API Version</label>
+                                            <field name="api_version" class="form-control" placeholder="wc/v3"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-code me-1"></i>
+                                                Usually "wc/v3" for WooCommerce 3.0+. Leave default if unsure.
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="timeout" class="form-label fw-bold">Connection Timeout (seconds)</label>
+                                            <field name="timeout" class="form-control" placeholder="30"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-clock me-1"></i>
+                                                Maximum time to wait for API responses. Default: 30 seconds.
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-info-circle text-info me-2"></i>Status Information
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="connection_status" class="form-label fw-bold">Connection Status</label>
+                                            <field name="connection_status" widget="badge" 
+                                                   decoration-success="connection_status == 'connected'"
+                                                   decoration-danger="connection_status == 'error'"
+                                                   decoration-warning="connection_status == 'disconnected'"
+                                                   class="mb-2"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-wifi me-1"></i>
+                                                Current connection status to your WooCommerce store
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="last_connection_test" class="form-label fw-bold">Last Connection Test</label>
+                                            <field name="last_connection_test" readonly="1" class="form-control"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-calendar me-1"></i>
+                                                Date and time of the last successful connection test
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="mb-3" invisible="connection_status != 'error'">
+                                            <label for="connection_error_message" class="form-label fw-bold text-danger">Error Message</label>
+                                            <field name="connection_error_message" readonly="1" class="form-control"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-exclamation-triangle me-1"></i>
+                                                Details about the connection error (if any)
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-sync text-success me-2"></i>Synchronization Settings
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="text-muted mb-3">
+                                                    <i class="fa fa-toggle-on me-2"></i>Sync Options
+                                                </h6>
+                                                <p class="text-muted mb-3">Select which data types to synchronize between Odoo and WooCommerce:</p>
+                                                
+                                                <div class="mb-3">
+                                                    <field name="sync_products" widget="boolean_toggle"/>
+                                                    <label for="sync_products" class="form-label fw-bold ms-2">Sync Products</label>
+                                                    <small class="text-muted d-block ms-4 mt-1">
+                                                        <i class="fa fa-box me-1"></i>
+                                                        Synchronize product information, prices, and inventory
+                                                    </small>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <field name="sync_orders" widget="boolean_toggle"/>
+                                                    <label for="sync_orders" class="form-label fw-bold ms-2">Sync Orders</label>
+                                                    <small class="text-muted d-block ms-4 mt-1">
+                                                        <i class="fa fa-shopping-cart me-1"></i>
+                                                        Import orders from WooCommerce and update order statuses
+                                                    </small>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <field name="sync_customers" widget="boolean_toggle"/>
+                                                    <label for="sync_customers" class="form-label fw-bold ms-2">Sync Customers</label>
+                                                    <small class="text-muted d-block ms-4 mt-1">
+                                                        <i class="fa fa-users me-1"></i>
+                                                        Synchronize customer information and addresses
+                                                    </small>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <field name="sync_inventory" widget="boolean_toggle"/>
+                                                    <label for="sync_inventory" class="form-label fw-bold ms-2">Sync Inventory</label>
+                                                    <small class="text-muted d-block ms-4 mt-1">
+                                                        <i class="fa fa-warehouse me-1"></i>
+                                                        Keep stock levels synchronized between systems
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <h6 class="text-muted mb-3">
+                                                    <i class="fa fa-clock me-2"></i>Auto Sync
+                                                </h6>
+                                                <p class="text-muted mb-3">Enable automatic synchronization at regular intervals:</p>
+                                                
+                                                <div class="mb-3">
+                                                    <field name="auto_sync_products" widget="boolean_toggle"/>
+                                                    <label for="auto_sync_products" class="form-label fw-bold ms-2">Auto Sync Products</label>
+                                                    <small class="text-muted d-block ms-4 mt-1">
+                                                        <i class="fa fa-robot me-1"></i>
+                                                        Automatically sync products based on frequency setting
+                                                    </small>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <field name="auto_sync_orders" widget="boolean_toggle"/>
+                                                    <label for="auto_sync_orders" class="form-label fw-bold ms-2">Auto Sync Orders</label>
+                                                    <small class="text-muted d-block ms-4 mt-1">
+                                                        <i class="fa fa-robot me-1"></i>
+                                                        Automatically import new orders and update statuses
+                                                    </small>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <field name="auto_sync_customers" widget="boolean_toggle"/>
+                                                    <label for="auto_sync_customers" class="form-label fw-bold ms-2">Auto Sync Customers</label>
+                                                    <small class="text-muted d-block ms-4 mt-1">
+                                                        <i class="fa fa-robot me-1"></i>
+                                                        Automatically sync customer data changes
+                                                    </small>
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="sync_frequency" class="form-label fw-bold">Sync Frequency</label>
+                                                    <field name="sync_frequency" class="form-control" placeholder="1 hour"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-calendar-alt me-1"></i>
+                                                        How often to run automatic sync (e.g., "1 hour", "30 minutes", "1 day")
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-chart-line text-warning me-2"></i>Last Sync Information
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-muted mb-3">
+                                            <i class="fa fa-info-circle me-2"></i>
+                                            This section shows the last synchronization times and statistics for each data type.
+                                        </p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="text-muted mb-3">
+                                                    <i class="fa fa-clock me-2"></i>Last Sync Times
+                                                </h6>
+                                                <div class="mb-3">
+                                                    <label for="last_product_sync" class="form-label fw-bold">Products Last Sync:</label>
+                                                    <field name="last_product_sync" readonly="1" class="form-control"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-calendar me-1"></i>
+                                                        When products were last synchronized with WooCommerce
+                                                    </small>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="last_order_sync" class="form-label fw-bold">Orders Last Sync:</label>
+                                                    <field name="last_order_sync" readonly="1" class="form-control"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-calendar me-1"></i>
+                                                        When orders were last imported from WooCommerce
+                                                    </small>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="last_customer_sync" class="form-label fw-bold">Customers Last Sync:</label>
+                                                    <field name="last_customer_sync" readonly="1" class="form-control"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-calendar me-1"></i>
+                                                        When customer data was last synchronized
+                                                    </small>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="last_inventory_sync" class="form-label fw-bold">Inventory Last Sync:</label>
+                                                    <field name="last_inventory_sync" readonly="1" class="form-control"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-calendar me-1"></i>
+                                                        When inventory levels were last updated
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="text-muted mb-3">
+                                                    <i class="fa fa-chart-bar me-2"></i>Sync Statistics
+                                                </h6>
+                                                <div class="mb-3">
+                                                    <label for="total_products_synced" class="form-label fw-bold">Total Products Synced:</label>
+                                                    <field name="total_products_synced" readonly="1" class="form-control"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-box me-1"></i>
+                                                        Total number of products synchronized with WooCommerce
+                                                    </small>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="total_orders_synced" class="form-label fw-bold">Total Orders Synced:</label>
+                                                    <field name="total_orders_synced" readonly="1" class="form-control"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-shopping-cart me-1"></i>
+                                                        Total number of orders imported from WooCommerce
+                                                    </small>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="total_customers_synced" class="form-label fw-bold">Total Customers Synced:</label>
+                                                    <field name="total_customers_synced" readonly="1" class="form-control"/>
+                                                    <small class="text-muted">
+                                                        <i class="fa fa-users me-1"></i>
+                                                        Total number of customers synchronized between systems
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-sticky-note text-info me-2"></i>Notes &amp; Additional Information
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="notes" class="form-label fw-bold">Configuration Notes</label>
+                                            <field name="notes" placeholder="Add any additional notes about this configuration, special requirements, or troubleshooting information..." class="form-control"/>
+                                            <small class="text-muted">
+                                                <i class="fa fa-lightbulb me-1"></i>
+                                                Optional notes to help you remember specific details about this WooCommerce configuration
+                                            </small>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <h6 class="alert-heading">
+                                                <i class="fa fa-question-circle me-2"></i>Need Help?
+                                            </h6>
+                                            <p class="mb-2">If you need assistance setting up your WooCommerce connection:</p>
+                                            <ul class="mb-0">
+                                                <li>Check that your WooCommerce store URL is accessible</li>
+                                                <li>Verify your Consumer Key and Secret are correct</li>
+                                                <li>Ensure your WooCommerce REST API is enabled</li>
+                                                <li>Test the connection using the "Test Connection" button</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- WooCommerce Configuration Tree View -->
+        <record id="view_woocommerce_configuration_list" model="ir.ui.view">
+            <field name="name">woocommerce.configuration.list</field>
+            <field name="model">woocommerce.configuration</field>
+            <field name="arch" type="xml">
+                <list string="WooCommerce Configurations">
+                    <field name="name"/>
+                    <field name="woocommerce_url"/>
+                    <field name="connection_status" widget="badge" 
+                           decoration-success="connection_status == 'connected'"
+                           decoration-danger="connection_status == 'error'"
+                           decoration-warning="connection_status == 'disconnected'"/>
+                    <field name="last_connection_test"/>
+                    <field name="total_products_synced"/>
+                    <field name="total_orders_synced"/>
+                    <field name="total_customers_synced"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+        
+        <!-- WooCommerce Configuration Action -->
+        <record id="action_woocommerce_configuration" model="ir.actions.act_window">
+            <field name="name">WooCommerce Configurations</field>
+            <field name="res_model">woocommerce.configuration</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No WooCommerce configurations found!
+                </p>
+                <p>
+                    Create your first WooCommerce configuration to start synchronizing data.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</odoo> 

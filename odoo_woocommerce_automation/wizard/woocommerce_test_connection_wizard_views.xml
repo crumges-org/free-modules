@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- WooCommerce Test Connection Wizard Form View -->
+        <record id="view_woocommerce_test_connection_wizard_form" model="ir.ui.view">
+            <field name="name">woocommerce.test.connection.wizard.form</field>
+            <field name="model">woocommerce.test.connection.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Test WooCommerce Connection">
+                    <header>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button name="action_test_connection" 
+                                    type="object" 
+                                    string="Test Connection" 
+                                    class="btn btn-primary"
+                                    icon="fa-plug"/>
+                            <field name="test_success" widget="boolean_toggle" invisible="1"/>
+                        </div>
+                    </header>
+                    
+                    <sheet>
+                        <div class="oe_title text-center mb-4">
+                            <h1 class="display-5 text-primary">
+                                <i class="fa fa-plug me-3"></i>Test WooCommerce Connection
+                            </h1>
+                            <p class="lead text-muted">Verify your WooCommerce store connection settings</p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-gradient-primary text-white">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-cog me-2"></i>Connection Settings
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="woocommerce_url" class="form-label">WooCommerce URL:</label>
+                                                <field name="woocommerce_url" required="1" class="form-control" 
+                                                       placeholder="https://yourstore.com"/>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="api_version" class="form-label">API Version:</label>
+                                                <field name="api_version" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="consumer_key" class="form-label">Consumer Key:</label>
+                                                <field name="consumer_key" required="1" password="True" class="form-control"
+                                                       placeholder="Enter your consumer key"/>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="consumer_secret" class="form-label">Consumer Secret:</label>
+                                                <field name="consumer_secret" required="1" password="True" class="form-control"
+                                                       placeholder="Enter your consumer secret"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="timeout" class="form-label">Timeout (seconds):</label>
+                                                <field name="timeout" class="form-control"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4" invisible="not test_result">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header" invisible="not test_success" style="background: linear-gradient(135deg, #28a745, #20c997); color: white;">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-check-circle me-2"></i>
+                                            <span>Connection Successful</span>
+                                        </h5>
+                                    </div>
+                                    <div class="card-header" invisible="test_success" style="background: linear-gradient(135deg, #dc3545, #fd7e14); color: white;">
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-times-circle me-2"></i>
+                                            <span>Connection Failed</span>
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <field name="test_result" readonly="1" class="form-control" 
+                                               style="font-family: 'Courier New', monospace; white-space: pre-wrap;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4" invisible="not test_success">
+                            <div class="col-lg-8 mx-auto text-center">
+                                <button name="action_save_configuration" 
+                                        type="object" 
+                                        string="Save Configuration" 
+                                        class="btn btn-success btn-lg"
+                                        icon="fa-save"/>
+                                <p class="text-muted mt-2">Click to save these settings as a new configuration</p>
+                            </div>
+                        </div>
+                    </sheet>
+                    
+                    <footer>
+                        <button string="Close" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <!-- WooCommerce Test Connection Wizard Action -->
+        <record id="action_woocommerce_test_connection_wizard" model="ir.actions.act_window">
+            <field name="name">Test WooCommerce Connection</field>
+            <field name="res_model">woocommerce.test.connection.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+        
+    </data>
+</odoo> 
