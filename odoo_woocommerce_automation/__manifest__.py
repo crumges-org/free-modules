@@ -96,7 +96,7 @@
     },
     'assets': {
         'web.assets_backend': [
-            #'odoo_woocommerce_automation/static/src/css/woocommerce.css',
+            'odoo_woocommerce_automation/static/src/css/woocommerce.css',
             'odoo_woocommerce_automation/static/src/js/woocommerce_dashboard.js',
             'odoo_woocommerce_automation/static/src/js/woocommerce_sync.js',
         ],
