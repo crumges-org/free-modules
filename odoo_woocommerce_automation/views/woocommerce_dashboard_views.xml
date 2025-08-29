@@ -8,13 +8,13 @@
             <field name="model">woocommerce.dashboard</field>
             <field name="arch" type="xml">
                 <form string="WooCommerce Dashboard" create="false" edit="false">
-                    <sheet>
+                    <sheet class="o_woo_scope">
                         <!-- No Configuration Warning -->
-                        <div class="row mb-4" invisible="configuration_id">
+                        <div class="row mb-4" attrs="{'invisible': [('configuration_id', '!=', False)]}">
                             <div class="col-12">
-                                <div class="alert alert-warning text-center">
+                                <div class="alert alert-warning text-center" role="status">
                                     <h4 class="alert-heading">
-                                        <i class="fa fa-exclamation-triangle me-2"></i>No WooCommerce Configuration Found
+                                        <i class="fa fa-exclamation-triangle me-2" title="No configuration"></i>No WooCommerce Configuration Found
                                     </h4>
                                     <p class="mb-3">
                                         You need to create a WooCommerce configuration before you can use the dashboard features.
@@ -22,7 +22,7 @@
                                     <button name="action_open_configuration" 
                                             type="object" 
                                             class="btn btn-primary btn-lg">
-                                        <i class="fa fa-cog me-2"></i>Create Configuration
+                                        <i class="fa fa-cog me-2" title="Create configuration"></i>Create Configuration
                                     </button>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
                         
                         <div class="oe_title text-center mb-4">
                             <h1 class="display-4 text-primary">
-                                <i class="fa fa-shopping-cart me-3"></i>WooCommerce Automation Dashboard
+                                <i class="fa fa-shopping-cart me-3" title="WooCommerce"></i>WooCommerce Automation Dashboard
                             </h1>
                             <p class="lead text-muted">Monitor and manage your WooCommerce integration</p>
                         </div>
@@ -41,23 +41,23 @@
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-header bg-gradient-primary text-white">
                                         <h5 class="card-title mb-0">
-                                            <i class="fa fa-plug me-2"></i>Connection Status
+                                            <i class="fa fa-plug me-2" title="Connection status"></i>Connection Status
                                         </h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="row align-items-center">
                                             <div class="col-md-3 text-center">
                                                 <div class="connection-status-indicator">
-                                                    <div invisible="connection_status != 'connected'" class="status-badge connected">
-                                                        <i class="fa fa-check-circle fa-3x text-success"></i>
+                                                    <div class="status-badge connected" attrs="{'invisible': [('connection_status','!=','connected')]}">
+                                                        <i class="fa fa-check-circle fa-3x text-success" title="Connected"></i>
                                                         <h4 class="mt-2 text-success">Connected</h4>
                                                     </div>
-                                                    <div invisible="connection_status != 'error'" class="status-badge error">
-                                                        <i class="fa fa-times-circle fa-3x text-danger"></i>
+                                                    <div class="status-badge error" attrs="{'invisible': [('connection_status','!=','error')]}">
+                                                        <i class="fa fa-times-circle fa-3x text-danger" title="Error"></i>
                                                         <h4 class="mt-2 text-danger">Error</h4>
                                                     </div>
-                                                    <div invisible="connection_status != 'disconnected'" class="status-badge disconnected">
-                                                        <i class="fa fa-exclamation-triangle fa-3x text-warning"></i>
+                                                    <div class="status-badge disconnected" attrs="{'invisible': [('connection_status','!=','disconnected')]}">
+                                                        <i class="fa fa-exclamation-triangle fa-3x text-warning" title="Disconnected"></i>
                                                         <h4 class="mt-2 text-warning">Disconnected</h4>
                                                     </div>
                                                 </div>
@@ -68,7 +68,7 @@
                                                         <p class="text-muted mb-1">Last Connection Test:</p>
                                                         <p class="h6"><field name="last_connection_test"/></p>
                                                     </div>
-                                                    <div class="col-md-6" invisible="connection_status != 'error'">
+                                                    <div class="col-md-6" attrs="{'invisible': [('connection_status','!=','error')]}">
                                                         <p class="text-muted mb-1">Error Message:</p>
                                                         <field name="connection_error_message" readonly="1" class="form-control"/>
                                                     </div>
@@ -86,12 +86,12 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-primary text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-box fa-2x"></i>
+                                            <i class="fa fa-box fa-2x" title="Products"></i>
                                         </div>
                                         <h2 class="text-primary mb-1"><field name="total_products_synced"/></h2>
                                         <p class="text-muted mb-2">Products Synced</p>
                                         <small class="text-muted">
-                                            <i class="fa fa-clock me-1"></i>Last: <field name="last_product_sync"/>
+                                            <i class="fa fa-clock me-1" title="Last products sync"></i>Last: <field name="last_product_sync"/>
                                         </small>
                                     </div>
                                 </div>
@@ -101,12 +101,12 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-success text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-shopping-bag fa-2x"></i>
+                                            <i class="fa fa-shopping-bag fa-2x" title="Orders"></i>
                                         </div>
                                         <h2 class="text-success mb-1"><field name="total_orders_synced"/></h2>
                                         <p class="text-muted mb-2">Orders Synced</p>
                                         <small class="text-muted">
-                                            <i class="fa fa-clock me-1"></i>Last: <field name="last_order_sync"/>
+                                            <i class="fa fa-clock me-1" title="Last orders sync"></i>Last: <field name="last_order_sync"/>
                                         </small>
                                     </div>
                                 </div>
@@ -116,12 +116,12 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-info text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-users fa-2x"></i>
+                                            <i class="fa fa-users fa-2x" title="Customers"></i>
                                         </div>
                                         <h2 class="text-info mb-1"><field name="total_customers_synced"/></h2>
                                         <p class="text-muted mb-2">Customers Synced</p>
                                         <small class="text-muted">
-                                            <i class="fa fa-clock me-1"></i>Last: <field name="last_customer_sync"/>
+                                            <i class="fa fa-clock me-1" title="Last customers sync"></i>Last: <field name="last_customer_sync"/>
                                         </small>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-warning text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-exclamation-triangle fa-2x"></i>
+                                            <i class="fa fa-exclamation-triangle fa-2x" title="Sync errors"></i>
                                         </div>
                                         <h2 class="text-warning mb-1"><field name="total_sync_errors"/></h2>
                                         <p class="text-muted mb-2">Sync Errors</p>
@@ -147,7 +147,7 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-secondary text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-tasks fa-2x"></i>
+                                            <i class="fa fa-tasks fa-2x" title="Pending queues"></i>
                                         </div>
                                         <h2 class="text-secondary mb-1"><field name="total_queues_pending"/></h2>
                                         <p class="text-muted mb-2">Pending Queue Lines</p>
@@ -164,7 +164,7 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-danger text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-bug fa-2x"></i>
+                                            <i class="fa fa-bug fa-2x" title="Failed queues"></i>
                                         </div>
                                         <h2 class="text-danger mb-1"><field name="total_queues_failed"/></h2>
                                         <p class="text-muted mb-2">Failed Queue Lines</p>
@@ -181,7 +181,7 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-dark text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-bell fa-2x"></i>
+                                            <i class="fa fa-bell fa-2x" title="Webhooks"></i>
                                         </div>
                                         <h2 class="text-dark mb-1"><field name="total_active_webhooks"/></h2>
                                         <p class="text-muted mb-2">Active Webhooks</p>
@@ -198,7 +198,7 @@
                                 <div class="card border-0 shadow-sm h-100">
                                     <div class="card-body text-center">
                                         <div class="stat-icon bg-primary text-white rounded-circle mx-auto mb-3">
-                                            <i class="fa fa-ticket fa-2x"></i>
+                                            <i class="fa fa-ticket fa-2x" title="Coupons"></i>
                                         </div>
                                         <h2 class="text-primary mb-1"><field name="total_coupons"/></h2>
                                         <p class="text-muted mb-2">Coupons</p>
@@ -218,7 +218,7 @@
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-header bg-gradient-success text-white">
                                         <h5 class="card-title mb-0">
-                                            <i class="fa fa-bolt me-2"></i>Quick Actions
+                                            <i class="fa fa-bolt me-2" title="Quick actions"></i>Quick Actions
                                         </h5>
                                     </div>
                                     <div class="card-body">
@@ -228,7 +228,7 @@
                                                         type="object" 
                                                         class="btn btn-outline-primary btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Import Products">
-                                                    <i class="fa fa-download fa-2x mb-2"></i>
+                                                    <i class="fa fa-download fa-2x mb-2" title="Import products"></i>
                                                     <span>Import Products</span>
                                                 </button>
                                             </div>
@@ -237,7 +237,7 @@
                                                         type="object" 
                                                         class="btn btn-outline-success btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Export Products">
-                                                    <i class="fa fa-upload fa-2x mb-2"></i>
+                                                    <i class="fa fa-upload fa-2x mb-2" title="Export products"></i>
                                                     <span>Export Products</span>
                                                 </button>
                                             </div>
@@ -246,7 +246,7 @@
                                                         type="object" 
                                                         class="btn btn-outline-info btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Mapping Wizard">
-                                                    <i class="fa fa-refresh fa-2x mb-2"></i>
+                                                    <i class="fa fa-refresh fa-2x mb-2" title="Mapping wizard"></i>
                                                     <span>Mapping Wizard</span>
                                                 </button>
                                             </div>
@@ -255,7 +255,7 @@
                                                         type="object" 
                                                         class="btn btn-outline-warning btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Settings">
-                                                    <i class="fa fa-cog fa-2x mb-2"></i>
+                                                    <i class="fa fa-cog fa-2x mb-2" title="Settings"></i>
                                                     <span>Settings</span>
                                                 </button>
                                             </div>
@@ -266,7 +266,7 @@
                                                         type="object"
                                                         class="btn btn-outline-secondary btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Queues">
-                                                    <i class="fa fa-tasks fa-2x mb-2"></i>
+                                                    <i class="fa fa-tasks fa-2x mb-2" title="Queues"></i>
                                                     <span>Queues</span>
                                                 </button>
                                             </div>
@@ -275,7 +275,7 @@
                                                         type="object"
                                                         class="btn btn-outline-dark btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Webhooks">
-                                                    <i class="fa fa-bell fa-2x mb-2"></i>
+                                                    <i class="fa fa-bell fa-2x mb-2" title="Webhooks"></i>
                                                     <span>Webhooks</span>
                                                 </button>
                                             </div>
@@ -284,7 +284,7 @@
                                                         type="object"
                                                         class="btn btn-outline-primary btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Coupons">
-                                                    <i class="fa fa-ticket fa-2x mb-2"></i>
+                                                    <i class="fa fa-ticket fa-2x mb-2" title="Coupons"></i>
                                                     <span>Coupons</span>
                                                 </button>
                                             </div>
@@ -293,7 +293,7 @@
                                                         type="object"
                                                         class="btn btn-outline-info btn-lg w-100 h-100 d-flex flex-column align-items-center justify-content-center"
                                                         string="Process History">
-                                                    <i class="fa fa-list-ul fa-2x mb-2"></i>
+                                                    <i class="fa fa-list-ul fa-2x mb-2" title="Process history"></i>
                                                     <span>Process History</span>
                                                 </button>
                                             </div>
@@ -309,7 +309,7 @@
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-header bg-gradient-info text-white">
                                         <h5 class="card-title mb-0">
-                                            <i class="fa fa-history me-2"></i>Recent Activity
+                                            <i class="fa fa-history me-2" title="Recent activity"></i>Recent Activity
                                         </h5>
                                     </div>
                                     <div class="card-body">
@@ -367,4 +367,4 @@
         </record>
         
     </data>
-</odoo> 
+</odoo>
