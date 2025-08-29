@@ -107,9 +107,9 @@
                             <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-header">
-                    <h5 class="card-title mb-0">
-                        <i class="fa fa-info-circle text-info me-2" title="Status Information"></i>Status Information
-                    </h5>
+                                        <h5 class="card-title mb-0">
+                                            <i class="fa fa-info-circle text-info me-2" title="Status Information"></i>Status Information
+                                        </h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="mb-3">
@@ -134,7 +134,7 @@
                                             </small>
                                         </div>
                                         
-                                        <div class="mb-3" attrs="{'invisible': [('connection_status','!=','error')]}">
+                                        <div class="mb-3" invisible="connection_status != 'error'">
                                             <label for="connection_error_message" class="form-label fw-bold text-danger">Error Message</label>
                                             <field name="connection_error_message" readonly="1" class="form-control"/>
                                             <small class="text-muted">
