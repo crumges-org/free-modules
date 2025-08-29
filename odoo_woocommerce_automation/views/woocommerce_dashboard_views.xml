@@ -10,7 +10,7 @@
                 <form string="WooCommerce Dashboard" create="false" edit="false">
                     <sheet class="o_woo_scope">
                         <!-- No Configuration Warning -->
-                        <div class="row mb-4" attrs="{'invisible': [('configuration_id', '!=', False)]}">
+                        <div class="row mb-4" invisible="configuration_id">
                             <div class="col-12">
                                 <div class="alert alert-warning text-center" role="status">
                                     <h4 class="alert-heading">
@@ -48,15 +48,15 @@
                                         <div class="row align-items-center">
                                             <div class="col-md-3 text-center">
                                                 <div class="connection-status-indicator">
-                                                    <div class="status-badge connected" attrs="{'invisible': [('connection_status','!=','connected')]}">
+                                                    <div class="status-badge connected" invisible="connection_status != 'connected'">
                                                         <i class="fa fa-check-circle fa-3x text-success" title="Connected"></i>
                                                         <h4 class="mt-2 text-success">Connected</h4>
                                                     </div>
-                                                    <div class="status-badge error" attrs="{'invisible': [('connection_status','!=','error')]}">
+                                                    <div class="status-badge error" invisible="connection_status != 'error'">
                                                         <i class="fa fa-times-circle fa-3x text-danger" title="Error"></i>
                                                         <h4 class="mt-2 text-danger">Error</h4>
                                                     </div>
-                                                    <div class="status-badge disconnected" attrs="{'invisible': [('connection_status','!=','disconnected')]}">
+                                                    <div class="status-badge disconnected" invisible="connection_status != 'disconnected'">
                                                         <i class="fa fa-exclamation-triangle fa-3x text-warning" title="Disconnected"></i>
                                                         <h4 class="mt-2 text-warning">Disconnected</h4>
                                                     </div>
@@ -68,7 +68,7 @@
                                                         <p class="text-muted mb-1">Last Connection Test:</p>
                                                         <p class="h6"><field name="last_connection_test"/></p>
                                                     </div>
-                                                    <div class="col-md-6" attrs="{'invisible': [('connection_status','!=','error')]}">
+                                                    <div class="col-md-6" invisible="connection_status != 'error'">
                                                         <p class="text-muted mb-1">Error Message:</p>
                                                         <field name="connection_error_message" readonly="1" class="form-control"/>
                                                     </div>
