@@ -1,13 +1,14 @@
-/* WooCommerce Automation Module Styles */
+/* WooCommerce Automation Module Styles (scoped) */
+/* Para que esto funcione, el contenedor raíz de las vistas debe tener class="o_woo_scope" */
 
 /* Modern Card Styles */
-.woocommerce-dashboard {
+.o_woo_scope .woocommerce-dashboard {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     padding: 20px;
     min-height: 100vh;
 }
 
-.woocommerce-card {
+.o_woo_scope .woocommerce-card {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -17,12 +18,12 @@
     transition: all 0.3s ease;
 }
 
-.woocommerce-card:hover {
+.o_woo_scope .woocommerce-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 }
 
-.woocommerce-card-header {
+.o_woo_scope .woocommerce-card-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 20px 25px;
@@ -30,12 +31,12 @@
     border-bottom: none;
 }
 
-.woocommerce-card-body {
+.o_woo_scope .woocommerce-card-body {
     padding: 25px;
 }
 
 /* Statistics Cards */
-.woocommerce-stat {
+.o_woo_scope .woocommerce-stat {
     text-align: center;
     padding: 30px 20px;
     border-radius: 12px;
@@ -46,46 +47,46 @@
     border: none;
 }
 
-.woocommerce-stat:hover {
+.o_woo_scope .woocommerce-stat:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
-.woocommerce-stat.success {
+.o_woo_scope .woocommerce-stat.success {
     border-left: 4px solid #28a745;
     background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
 }
 
-.woocommerce-stat.warning {
+.o_woo_scope .woocommerce-stat.warning {
     border-left: 4px solid #ffc107;
     background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
 }
 
-.woocommerce-stat.danger {
+.o_woo_scope .woocommerce-stat.danger {
     border-left: 4px solid #dc3545;
     background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
 }
 
-.woocommerce-stat.info {
+.o_woo_scope .woocommerce-stat.info {
     border-left: 4px solid #17a2b8;
     background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
 }
 
-.woocommerce-stat-number {
+.o_woo_scope .woocommerce-stat-number {
     font-size: 2.5em;
     font-weight: bold;
     margin-bottom: 8px;
     color: #2c3e50;
 }
 
-.woocommerce-stat-label {
+.o_woo_scope .woocommerce-stat-label {
     color: #6c757d;
     font-size: 0.95em;
     font-weight: 500;
 }
 
 /* Status Badges */
-.woocommerce-status-badge {
+.o_woo_scope .woocommerce-status-badge {
     display: inline-block;
     padding: 8px 16px;
     border-radius: 20px;
@@ -96,23 +97,23 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.woocommerce-status-badge.connected {
+.o_woo_scope .woocommerce-status-badge.connected {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     color: white;
 }
 
-.woocommerce-status-badge.disconnected {
+.o_woo_scope .woocommerce-status-badge.disconnected {
     background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
     color: white;
 }
 
-.woocommerce-status-badge.error {
+.o_woo_scope .woocommerce-status-badge.error {
     background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
     color: white;
 }
 
 /* Connection Status Indicator */
-.connection-status-indicator {
+.o_woo_scope .connection-status-indicator {
     padding: 20px;
     border-radius: 12px;
     background: rgba(255,255,255,0.1);
@@ -120,30 +121,30 @@
     backdrop-filter: blur(10px);
 }
 
-.status-badge {
+.o_woo_scope .status-badge {
     padding: 20px;
     border-radius: 12px;
     text-align: center;
     transition: all 0.3s ease;
 }
 
-.status-badge.connected {
+.o_woo_scope .status-badge.connected {
     background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(32, 201, 151, 0.1) 100%);
     border: 2px solid #28a745;
 }
 
-.status-badge.error {
+.o_woo_scope .status-badge.error {
     background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(200, 35, 51, 0.1) 100%);
     border: 2px solid #dc3545;
 }
 
-.status-badge.disconnected {
+.o_woo_scope .status-badge.disconnected {
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.1) 100%);
     border: 2px solid #ffc107;
 }
 
 /* Stat Icons */
-.stat-icon {
+.o_woo_scope .stat-icon {
     width: 80px;
     height: 80px;
     display: flex;
@@ -155,7 +156,7 @@
 }
 
 /* Sync Button Styles */
-.woocommerce-sync-button {
+.o_woo_scope .woocommerce-sync-button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: none;
     color: white;
@@ -169,19 +170,19 @@
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-.woocommerce-sync-button:hover {
+.o_woo_scope .woocommerce-sync-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
     color: white;
 }
 
 /* Timeline Styles */
-.timeline {
+.o_woo_scope .timeline {
     position: relative;
     padding-left: 30px;
 }
 
-.timeline::before {
+.o_woo_scope .timeline::before {
     content: '';
     position: absolute;
     left: 15px;
@@ -191,13 +192,13 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.timeline-item {
+.o_woo_scope .timeline-item {
     position: relative;
     margin-bottom: 30px;
     padding-left: 30px;
 }
 
-.timeline-marker {
+.o_woo_scope .timeline-marker {
     position: absolute;
     left: -22px;
     top: 5px;
@@ -208,7 +209,7 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.timeline-content {
+.o_woo_scope .timeline-content {
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -216,37 +217,37 @@
     border-left: 4px solid #667eea;
 }
 
-.timeline-title {
+.o_woo_scope .timeline-title {
     font-weight: 600;
     color: #2c3e50;
     margin-bottom: 8px;
 }
 
-.timeline-text {
+.o_woo_scope .timeline-text {
     color: #6c757d;
     margin-bottom: 8px;
 }
 
 /* Form Controls */
-.form-control {
+.o_woo_scope .form-control {
     border-radius: 8px;
     border: 2px solid #e9ecef;
     padding: 12px 16px;
     transition: all 0.3s ease;
 }
 
-.form-control:focus {
+.o_woo_scope .form-control:focus {
     border-color: #667eea;
     box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
 }
 
-.form-control-lg {
+.o_woo_scope .form-control-lg {
     font-size: 1.25rem;
     padding: 15px 20px;
 }
 
 /* Button Styles */
-.btn {
+.o_woo_scope .btn {
     border-radius: 8px;
     padding: 10px 20px;
     font-weight: 600;
@@ -256,88 +257,88 @@
     border: none;
 }
 
-.btn-primary {
+.o_woo_scope .btn-primary {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-.btn-primary:hover {
+.o_woo_scope .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
-.btn-secondary {
+.o_woo_scope .btn-secondary {
     background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
     box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
 }
 
-.btn-success {
+.o_woo_scope .btn-success {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
 }
 
-.btn-info {
+.o_woo_scope .btn-info {
     background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
     box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
 }
 
-.btn-warning {
+.o_woo_scope .btn-warning {
     background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
     box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
 }
 
-.btn-danger {
+.o_woo_scope .btn-danger {
     background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
     box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
 }
 
 /* Card Headers */
-.card-header {
+.o_woo_scope .card-header {
     border-bottom: none;
     padding: 20px 25px;
 }
 
-.bg-gradient-primary {
+.o_woo_scope .bg-gradient-primary {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
 }
 
-.bg-gradient-success {
+.o_woo_scope .bg-gradient-success {
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
 }
 
-.bg-gradient-info {
+.o_woo_scope .bg-gradient-info {
     background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
 }
 
-.bg-gradient-warning {
+.o_woo_scope .bg-gradient-warning {
     background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
 }
 
-.bg-gradient-danger {
+.o_woo_scope .bg-gradient-danger {
     background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
 }
 
 /* Statistics Numbers */
-.stat-number {
+.o_woo_scope .stat-number {
     font-size: 2.5em;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.stat-label {
+.o_woo_scope .stat-label {
     font-size: 0.9em;
     font-weight: 500;
 }
 
 /* Form Labels */
-.form-label {
+.o_woo_scope .form-label {
     font-weight: 600;
     color: #495057;
     margin-bottom: 8px;
 }
 
 /* Checkbox Styles */
-.form-check-input {
+.o_woo_scope .form-check-input {
     width: 20px;
     height: 20px;
     margin-right: 10px;
@@ -346,12 +347,12 @@
     transition: all 0.3s ease;
 }
 
-.form-check-input:checked {
+.o_woo_scope .form-check-input:checked {
     background-color: #667eea;
     border-color: #667eea;
 }
 
-.form-check-label {
+.o_woo_scope .form-check-label {
     font-weight: 500;
     color: #495057;
     cursor: pointer;
@@ -359,36 +360,36 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .woocommerce-dashboard {
+    .o_woo_scope .woocommerce-dashboard {
         padding: 10px;
     }
     
-    .woocommerce-card-body {
+    .o_woo_scope .woocommerce-card-body {
         padding: 15px;
     }
     
-    .stat-icon {
+    .o_woo_scope .stat-icon {
         width: 60px;
         height: 60px;
     }
     
-    .woocommerce-stat-number {
+    .o_woo_scope .woocommerce-stat-number {
         font-size: 2em;
     }
     
-    .timeline {
+    .o_woo_scope .timeline {
         padding-left: 20px;
     }
     
-    .timeline::before {
+    .o_woo_scope .timeline::before {
         left: 10px;
     }
     
-    .timeline-item {
+    .o_woo_scope .timeline-item {
         padding-left: 20px;
     }
     
-    .timeline-marker {
+    .o_woo_scope .timeline-marker {
         left: -15px;
         width: 10px;
         height: 10px;
@@ -396,7 +397,7 @@
 }
 
 /* Animation Classes */
-.fade-in {
+.o_woo_scope .fade-in {
     animation: fadeIn 0.5s ease-in;
 }
 
@@ -411,7 +412,7 @@
     }
 }
 
-.slide-in {
+.o_woo_scope .slide-in {
     animation: slideIn 0.5s ease-out;
 }
 
@@ -427,12 +428,12 @@
 }
 
 /* Loading States */
-.loading {
+.o_woo_scope .loading {
     position: relative;
     overflow: hidden;
 }
 
-.loading::after {
+.o_woo_scope .loading::after {
     content: '';
     position: absolute;
     top: 0;
@@ -444,10 +445,6 @@
 }
 
 @keyframes loading {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 100%;
-    }
-} 
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
