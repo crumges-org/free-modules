@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* zehntech_main_menu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-02 09:05+0000\n"
+"PO-Revision-Date: 2025-06-02 15:18+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/add_bookmark/add_bookmark.xml:0
+msgid "Add Bookmark"
+msgstr "Lesezeichen hinzufügen"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_company__announcement
+msgid "Announcement"
+msgstr "Bekanntmachung"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_menu_bookmark
+msgid "Bookmark"
+msgstr "Lesezeichen"
+
+#. module: zehntech_main_menu
+#: model:ir.actions.act_window,name:zehntech_main_menu.menu_bookmark_action_my_bookmarks
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_users__menu_bookmark_ids
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.menu_bookmark_view_list
+msgid "Bookmarks"
+msgstr "Lesezeichen"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_res_config_settings
+msgid "Config Settings"
+msgstr "Konfigurationseinstellungen"
+
+#. module: zehntech_main_menu
+#: model_terms:ir.actions.act_window,help:zehntech_main_menu.menu_bookmark_action_my_bookmarks
+msgid "Create your first bookmark."
+msgstr "Erstellen Sie Ihr erstes Lesezeichen."
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields.selection,name:zehntech_main_menu.selection__menu_bookmark__target___self
+msgid "Current Tab"
+msgstr "Aktuelle Registerkarte"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__id
+msgid "ID"
+msgstr "AUSWEIS"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: zehntech_main_menu
+#: model:ir.actions.client,name:zehntech_main_menu.main_menu_action
+#: model:ir.ui.menu,name:zehntech_main_menu.main_menu_root
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.res_config_settings_view_form
+msgid "Menu"
+msgstr "Speisekarte"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__name
+msgid "Name"
+msgstr "Name"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields.selection,name:zehntech_main_menu.selection__menu_bookmark__target___blank
+msgid "New Tab"
+msgstr "Neuer Tab"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/widget_announcement/widget_announcement.xml:0
+msgid "Post an announcement"
+msgstr "Eine Ankündigung veröffentlichen"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/widget_announcement/widget_announcement.xml:0
+msgid "Save"
+msgstr "Speichern"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__sequence
+msgid "Sequence"
+msgstr "Sequenz"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_company__show_widgets
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_config_settings__show_widgets
+msgid "Show Widgets"
+msgstr "Widgets anzeigen"
+
+#. module: zehntech_main_menu
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.res_config_settings_view_form
+msgid "Show widget panel with the date and the announcements."
+msgstr "Widget-Panel mit dem Datum und den Ankündigungen anzeigen."
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__target
+msgid "Target"
+msgstr "Ziel"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__url
+msgid "URL"
+msgstr "URL"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_res_users
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__user_id
+msgid "User"
+msgstr "Benutzer"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/bookmark/bookmark.xml:0
+msgid "View all bookmarks"
+msgstr "Alle Lesezeichen anzeigen"
+
+#. module: zehntech_main_menu
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.res_config_settings_view_form
+msgid "Zehntech Main Menu"
+msgstr "Zehntech Hauptmenü"

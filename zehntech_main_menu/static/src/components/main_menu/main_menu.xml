@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="zehntech_main_menu.MainMenu">
+        <div class="background"
+            t-att-style="'background: conic-gradient(from ' + deg + ', #71639e, #8274AF)'" />
+        <div class="main-menu">
+            <div class="widgets" t-if="showWidgets">
+                <WidgetHour
+                    userIsAdmin="userIsAdmin"
+                    announcement="announcement" />
+                <WidgetAnnouncement
+                    userIsAdmin="userIsAdmin"
+                    announcement="announcement"
+                    onChangeAnnouncement.bind="onChangeAnnouncement"
+                    onSaveAnnouncement.bind="onSaveAnnouncement" />
+            </div>
+
+            <!-- 🔍 Live Search Input -->
+            <!-- <input type="text"
+                class="search-bar"
+                placeholder="Search apps..."
+                t-model="search.value" /> -->
+
+            <!-- 🌗 Theme Toggle Button -->
+            <!-- <button class="theme-toggle" t-on-click="toggleTheme">
+                <t t-esc="theme.dark ? '🌙 Dark Mode' : '☀️ Light Mode'" />
+            </button> -->
+
+
+            <div class="apps-container">
+                <t t-foreach="apps" t-as="app" t-key="app.id">
+                    <a t-on-click="() => this.onClickModule(app)">
+                        <img t-if="app.webIcon" class="module-icon" t-attf-src="{{app.webIconData}}" />
+                        <img t-if="!app.webIcon" class="module-icon"
+                            src="/zehntech_main_menu/static/src/img/default_icon.png" />
+                        <p t-esc="app.name" class="text-white fs-5 text-truncate" />
+                    </a>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

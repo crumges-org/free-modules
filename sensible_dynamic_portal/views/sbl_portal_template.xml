@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sbl_portal_my_home_menu" name="Portal layout : sbl menu entries"
+            inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <t t-set="sbl_dynamic_portals" t-value="request.env['sbl.dynamic.portal'].search([])"/>
+            <t t-foreach="sbl_dynamic_portals" t-as="sbl_dynamic_portal">
+                <li t-if="page_name == sbl_dynamic_portal.sbl_model_id.name"
+                    t-attf-class="breadcrumb-item #{'active ' if not record else ''}">
+                    <a t-if="record"
+                        t-attf-href="/my/#{sbl_dynamic_portal.id}/#{sbl_dynamic_portal.sbl_model_id.model}?{{ keep_query() }}'">
+                        <t t-out="sbl_dynamic_portal.sbl_model_id.name"/>
+                    </a>
+                    <t t-else="">
+                        <t t-out="sbl_dynamic_portal.sbl_model_id.name"/>
+                    </t>
+                </li>
+                <li t-if="record and page_name == sbl_dynamic_portal.sbl_model_id.name"
+                    class="breadcrumb-item active">
+                    <t t-out="record.name"/>
+                </li>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="sbl_portal_my_home" name="Show My Home Details" customize_show="True"
+            inherit_id="portal.portal_my_home" priority="10">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-set="sbl_dynamic_portals" t-value="request.env['sbl.dynamic.portal'].search([])"/>
+            <t t-foreach="sbl_dynamic_portals" t-as="sbl_dynamic_portal">
+                <t t-set="sbl_title" t-value="sbl_dynamic_portal.name"/>
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">
+                        <t t-out="sbl_title"/>
+                    </t>
+                    <t t-set="url" t-valuef="/my/#{sbl_dynamic_portal.id}/#{sbl_dynamic_portal.sbl_model_id.model}"/>
+                    <t t-set="text">
+                        <t t-out="sbl_title"/>
+                    </t>
+                    <t t-set="placeholder_count"
+                        t-value="'%s_count'% sbl_dynamic_portal.sbl_model_id.name.lower().replace(' ', '_')"/>
+                    <t t-set="icon" t-valuef="/web/image/#{sbl_dynamic_portal._name}/#{sbl_dynamic_portal.id}/image_128"/>
+                </t>
+            </t>
+        </div>
+    </template>
+
+    <template id="sbl_portal_my_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">
+                    <t t-out="sbl_dynamic_portal.name"/>
+                </t>
+            </t>
+            <div t-if="not records" class="alert alert-warning" role="alert">
+                There are currently no records.
+            </div>
+            <t t-if="records" t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <t t-foreach="sbl_dynamic_portal.sbl_field_line" t-as="line">
+                            <th>
+                                <t t-out="line.sbl_field_id.field_description"/>
+                            </th>
+                        </t>
+                    </tr>
+                </thead>
+                <t t-foreach="records" t-as="record">
+                    <tr>
+                        <td t-foreach="sbl_dynamic_portal.sbl_field_line" t-as="line">
+                            <t t-if="sbl_dynamic_portal.sbl_report_id">
+                                <a t-attf-href="/my/#{sbl_dynamic_portal.id}/#{sbl_dynamic_portal.sbl_model_id.model}/#{record.id}">
+                                    <t t-call="sensible_dynamic_portal.sbl_portal_my_detail_row"/>
+                                </a>
+                            </t>
+                            <t t-else="">
+                                <t t-call="sensible_dynamic_portal.sbl_portal_my_detail_row"/>
+                            </t>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="sbl_portal_my_detail_row">
+        <t t-set="data" t-value="sbl_dynamic_portal.sbl_return_field_value(record, line, request.lang)"/>
+        <t t-if="line.sbl_ttype == 'many2many'">
+            <t t-foreach="data" t-as="rec">
+                <span class="badge rounded-pill text-bg-primary" t-out="rec.name"/><br/>
+            </t>
+        </t>
+        <t t-elif="line.sbl_ttype == 'boolean'">
+            <input type="checkbox" t-att-checked="data" disabled="disabled"/>
+        </t>
+        <t t-else="">
+            <span t-out="data"/>
+        </t>
+    </template>
+
+    <template id="sbl_portal_my_detail" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <div class="row">
+                <!-- Sidebar -->
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-4 col-xxl-3 d-print-none'"/>
+                    <t t-set="title">
+                        <h2 class="mb-0 text-break mx-auto">
+                            <span t-field="record.display_name"/>
+                        </h2>
+                    </t>
+                    <t t-set="entries">
+                        <div class="d-flex flex-column gap-4 mt-3">
+                            <div class="d-flex flex-column gap-2" id="sale_order_sidebar_button">
+                                <div class="o_download_pdf d-flex gap-2 flex-lg-column flex-xl-row flex-wrap">
+                                    <a class="btn btn-light o_print_btn o_portal_invoice_print flex-grow-1" t-attf-href="/report/detail/#{sbl_dynamic_portal.id}/#{record._name}/#{record.id}/pdf?download=1" id="sbl_print_report" title="Download" role="button" target="_blank">
+                                        <i class="fa fa-print me-1"/>Download
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <!-- Page Content -->
+                <div class="o_portal_content col-12 col-lg-8 col-xxl-9">
+                    <div class="ratio ratio-1x1">
+                        <iframe class="my-2 embed-responsive-item" frameborder="0" scrolling="no"
+                                t-attf-src="/report/detail/#{sbl_dynamic_portal.id}/#{record._name}/#{record.id}/html"/>
+                    </div>
+                </div>
+                <!-- chatter -->
+                <t t-if="'message_ids' in record._fields">
+                    <div id="sbl_communication" class="mt-4">
+                        <h3>Communication history</h3>
+                        <t t-call="portal.message_thread"/>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="sbl_portal_docs_entry" inherit_id="portal.portal_docs_entry">
+        <xpath expr="//div[hasclass('o_portal_icon')]/img" position="attributes">
+            <attribute name="class" add="o_image_64_max"/>
+        </xpath>
+    </template>
+</odoo>

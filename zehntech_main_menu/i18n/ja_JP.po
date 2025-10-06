@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* zehntech_main_menu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-02 11:43+0000\n"
+"PO-Revision-Date: 2025-06-02 17:23+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.6\n"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/add_bookmark/add_bookmark.xml:0
+msgid "Add Bookmark"
+msgstr "ブックマークを追加"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_company__announcement
+msgid "Announcement"
+msgstr "発表"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_menu_bookmark
+msgid "Bookmark"
+msgstr "ブックマーク"
+
+#. module: zehntech_main_menu
+#: model:ir.actions.act_window,name:zehntech_main_menu.menu_bookmark_action_my_bookmarks
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_users__menu_bookmark_ids
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.menu_bookmark_view_list
+msgid "Bookmarks"
+msgstr "ブックマーク"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_res_company
+msgid "Companies"
+msgstr "企業"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_res_config_settings
+msgid "Config Settings"
+msgstr "設定"
+
+#. module: zehntech_main_menu
+#: model_terms:ir.actions.act_window,help:zehntech_main_menu.menu_bookmark_action_my_bookmarks
+msgid "Create your first bookmark."
+msgstr "最初のブックマークを作成します。"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__create_uid
+msgid "Created by"
+msgstr "作成者"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__create_date
+msgid "Created on"
+msgstr "作成日"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields.selection,name:zehntech_main_menu.selection__menu_bookmark__target___self
+msgid "Current Tab"
+msgstr "現在のタブ"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__display_name
+msgid "Display Name"
+msgstr "表示名"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__id
+msgid "ID"
+msgstr "身元"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__write_uid
+msgid "Last Updated by"
+msgstr "最終更新者"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__write_date
+msgid "Last Updated on"
+msgstr "最終更新日"
+
+#. module: zehntech_main_menu
+#: model:ir.actions.client,name:zehntech_main_menu.main_menu_action
+#: model:ir.ui.menu,name:zehntech_main_menu.main_menu_root
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.res_config_settings_view_form
+msgid "Menu"
+msgstr "メニュー"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__name
+msgid "Name"
+msgstr "名前"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields.selection,name:zehntech_main_menu.selection__menu_bookmark__target___blank
+msgid "New Tab"
+msgstr "新しいタブ"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/widget_announcement/widget_announcement.xml:0
+msgid "Post an announcement"
+msgstr "お知らせを投稿する"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/widget_announcement/widget_announcement.xml:0
+msgid "Save"
+msgstr "保存"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__sequence
+msgid "Sequence"
+msgstr "順序"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_company__show_widgets
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_res_config_settings__show_widgets
+msgid "Show Widgets"
+msgstr "ウィジェットを表示"
+
+#. module: zehntech_main_menu
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.res_config_settings_view_form
+msgid "Show widget panel with the date and the announcements."
+msgstr "日付とアナウンスを含むウィジェット パネルを表示します。"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__target
+msgid "Target"
+msgstr "ターゲット"
+
+#. module: zehntech_main_menu
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__url
+msgid "URL"
+msgstr "URL"
+
+#. module: zehntech_main_menu
+#: model:ir.model,name:zehntech_main_menu.model_res_users
+#: model:ir.model.fields,field_description:zehntech_main_menu.field_menu_bookmark__user_id
+msgid "User"
+msgstr "ユーザー"
+
+#. module: zehntech_main_menu
+#. odoo-javascript
+#: code:addons/zehntech_main_menu/static/src/components/bookmark/bookmark.xml:0
+msgid "View all bookmarks"
+msgstr "すべてのブックマークを表示"
+
+#. module: zehntech_main_menu
+#: model_terms:ir.ui.view,arch_db:zehntech_main_menu.res_config_settings_view_form
+msgid "Zehntech Main Menu"
+msgstr "ゼンテックメインメニュー"

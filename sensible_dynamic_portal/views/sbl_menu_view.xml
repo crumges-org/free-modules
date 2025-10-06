@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="sbl_dynamic_portal_parent" name="Dynamic Portal" web_icon="sensible_dynamic_portal,static/description/icon.png">
+        <menuitem id="sbl_dynamic_portal_menu" name="Dynamic Portal" action="sbl_dynamic_portal_action"/>
+    </menuitem>
+</odoo>
