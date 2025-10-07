@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="feedback_portal_template" name="Customer Feedback Portal">
+        <t t-call="web.layout">
+            <t t-set="head">
+                <link rel="stylesheet" href="/web/static/lib/bootstrap/css/bootstrap.css"/>
+                <style>
+                    .feedback-form {
+                        max-width: 800px;
+                        margin: 0 auto;
+                        padding: 20px;
+                    }
+                    .form-section {
+                        background: white;
+                        border-radius: 8px;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        padding: 20px;
+                        margin-bottom: 20px;
+                    }
+                    .form-group {
+                        margin-bottom: 15px;
+                    }
+                    .btn-submit {
+                        background: #1976d2;
+                        color: white;
+                        padding: 10px 30px;
+                        border: none;
+                        border-radius: 4px;
+                        font-size: 16px;
+                    }
+                    .btn-submit:hover {
+                        background: #1565c0;
+                    }
+                    .alert {
+                        padding: 15px;
+                        margin-bottom: 20px;
+                        border-radius: 4px;
+                    }
+                    .alert-success {
+                        background: #d4edda;
+                        border: 1px solid #c3e6cb;
+                        color: #155724;
+                    }
+                    .alert-danger {
+                        background: #f8d7da;
+                        border: 1px solid #f5c6cb;
+                        color: #721c24;
+                    }
+                </style>
+            </t>
+            
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="feedback-form">
+                            <h1 class="text-center mb-4">Customer Feedback Portal</h1>
+                            <p class="text-center mb-4">We value your feedback! Please share your thoughts with us.</p>
+                            
+                            <div id="alert-container"></div>
+                            
+                            <form id="feedback-form" class="form-section">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="customer_name">Your Name *</label>
+                                            <input type="text" class="form-control" id="customer_name" name="customer_name" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="customer_email">Email Address *</label>
+                                            <input type="email" class="form-control" id="customer_email" name="customer_email" required="required"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="customer_phone">Phone Number</label>
+                                            <input type="tel" class="form-control" id="customer_phone" name="customer_phone"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="category_id">Category *</label>
+                                            <select class="form-control" id="category_id" name="category_id" required="required">
+                                                <option value="">Select a category</option>
+                                                <t t-foreach="categories" t-as="category">
+                                                    <option t-att-value="category.id"><t t-esc="category.name"/></option>
+                                                </t>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="title">Feedback Title *</label>
+                                    <input type="text" class="form-control" id="title" name="title" required="required"/>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="description">Description *</label>
+                                    <textarea class="form-control" id="description" name="description" rows="5" required="required"></textarea>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="priority">Priority</label>
+                                            <select class="form-control" id="priority" name="priority">
+                                                <option value="0">Low</option>
+                                                <option value="1" selected="selected">Medium</option>
+                                                <option value="2">High</option>
+                                                <option value="3">Critical</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="feedback_type">Feedback Type</label>
+                                            <select class="form-control" id="feedback_type" name="feedback_type">
+                                                <option value="suggestion">Suggestion</option>
+                                                <option value="complaint">Complaint</option>
+                                                <option value="compliment">Compliment</option>
+                                                <option value="bug_report">Bug Report</option>
+                                                <option value="feature_request">Feature Request</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-submit">Submit Feedback</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                document.getElementById('feedback-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const data = {
+                        customer_name: formData.get('customer_name'),
+                        customer_email: formData.get('customer_email'),
+                        customer_phone: formData.get('customer_phone'),
+                        category_id: formData.get('category_id'),
+                        title: formData.get('title'),
+                        description: formData.get('description'),
+                        priority: formData.get('priority'),
+                        feedback_type: formData.get('feedback_type')
+                    };
+                    
+                    fetch('/feedback/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        const alertContainer = document.getElementById('alert-container');
+                        if (result.success) {
+                            alertContainer.innerHTML = '<div class="alert alert-success">' + result.message + '</div>';
+                            document.getElementById('feedback-form').reset();
+                        } else {
+                            alertContainer.innerHTML = '<div class="alert alert-danger">' + result.message + '</div>';
+                        }
+                    })
+                    .catch(error => {
+                        const alertContainer = document.getElementById('alert-container');
+                        alertContainer.innerHTML = '<div class="alert alert-danger">An error occurred. Please try again.</div>';
+                    });
+                });
+            </script>
+        </t>
+    </template>
+</odoo>

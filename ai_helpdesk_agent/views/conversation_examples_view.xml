@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_conversation_examples_form" model="ir.ui.view">
+        <field name="name">aihd.conversation_examples.form</field>
+        <field name="model">aihd.conversation_examples</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="set_readonly" invisible="1"/>
+                    <field name="state" widget="statusbar" 
+                           options="{'clickable': true}"
+                           readonly="state == 'published'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ticket_id"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="customer_name" required="1"/>
+                            <field name="customer_email" required="1"/>
+                            <field name="question" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="messages" string="Messages">
+                            <field name="message_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="role" required="1"/>
+                                    <field name="body" required="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_conversation_examples_tree" model="ir.ui.view">
+        <field name="name">aihd.conversation_examples.list</field>
+        <field name="model">aihd.conversation_examples</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="id"/>
+                <field name="description"/>
+                <field name="ticket_id"/>
+                <field name="write_date"/>
+                <field name="state" decoration-info="state == 'draft'" 
+                       decoration-success="state == 'published'"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_conversation_examples_action" model="ir.actions.act_window">
+        <field name="name">Dialogs</field>
+        <field name="res_model">aihd.conversation_examples</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="helpdesk_ticket_conversation_examples" 
+              name="Dialogs"
+              action="view_conversation_examples_action"
+              sequence="30" 
+              parent="helpdesk.helpdesk_ticket_menu_main"/>
+
+</odoo>

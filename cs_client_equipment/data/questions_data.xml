@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_jsa_question" model="ir.sequence">
+        <field name="name">Jsa Questions</field>
+        <field name="code">jsa.questions</field>
+        <field name="prefix">Q</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

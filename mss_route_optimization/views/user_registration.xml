@@ -1,0 +1,86 @@
+<!-- views/user_register_wizard_view.xml -->
+<odoo>
+    <record id="view_user_register_wizard" model="ir.ui.view">
+        <field name="name">user.register.wizard.form</field>
+        <field name="model">user.register.wizard</field>
+        <field name="arch" type="xml">
+          <form string="Activate Plugin">
+            <sheet>
+              <group string="User Information">
+                <field name="name"/>
+                <field name="phone"/>
+              </group>
+    
+              <group string="Verify your Email" col="2">
+                <group>
+                  <field name="email" widget="email" placeholder="name@example.com"/>
+                </group>
+                <group>
+                    <button name="action_get_otp" type="object" string="Get OTP"/>
+                    <button name="action_resend_otp" type="object" string="Resend OTP" class="btn btn-link"/>
+                </group>
+                <group>
+                  <field name="otp"/>
+                </group>
+                <group>
+                    <button name="action_verify_otp" type="object" string="Verify"/>
+                </group>
+              </group>
+    
+              <group string="Company Information">
+                <field name="company_name"/>
+                <field name="country_id" options="{'no_open': True, 'no_create': True}"/>
+              </group>
+    
+              <group string="Business Details">
+                <field name="employee_count"/>
+                <field name="customer_type"/>
+                <field name="business_type"/>
+                <field name="delivery_method"/>
+                <field name="annual_turnover"/>
+              </group>
+            </sheet>
+    
+            <footer>
+              <button string="Activate" type="object" name="action_register" class="btn-primary"/>
+              <button string="Cancel" class="btn-secondary" special="cancel"/>
+            </footer>
+    
+            <!-- Hidden -->
+            <field name="actual_name" invisible="1"/>
+            <field name="actual_email" invisible="1"/>
+            <field name="actual_phone" invisible="1"/>
+            <field name="actual_company_name" invisible="1"/>
+            <field name="actual_country" invisible="1"/>
+            <field name="is_verified" invisible="1"/>
+          </form>
+        </field>
+    </record>
+    
+    <record id="view_api_limit_popup" model="ir.ui.view">
+        <field name="name">api.limit.popup.form</field>
+        <field name="model">api.limit.popup</field>
+        <field name="arch" type="xml">
+            <form string="API Limit Reached">
+                <group>
+                    <div style="font-size:14px; margin-bottom:-17px">
+                        <p><strong>Your free API quota has been exhausted.</strong></p>
+                        <p>For uninterrupted access to route optimization, please contact our team.</p>
+                    </div>
+                </group>
+                <footer>
+                    <button string="Contact Us" type="object" name="action_contact" class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_user_register_wizard" model="ir.actions.act_window">
+        <field name="name">Activate Plugin</field>
+        <field name="res_model">user.register.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field> 
+      </record>
+  </odoo>
+  

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Feedback Template Tree View -->
+        <record id="view_feedback_template_tree" model="ir.ui.view">
+            <field name="name">feedback.template.tree</field>
+            <field name="model">feedback.template</field>
+            <field name="arch" type="xml">
+                <tree string="Feedback Templates">
+                    <field name="name"/>
+                    <field name="category_id"/>
+                    <field name="title"/>
+                    <field name="usage_count"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Feedback Template Form View -->
+        <record id="view_feedback_template_form" model="ir.ui.view">
+            <field name="name">feedback.template.form</field>
+            <field name="model">feedback.template</field>
+            <field name="arch" type="xml">
+                <form string="Feedback Template">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Template Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="category_id"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="usage_count"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Template Details">
+                                <group>
+                                    <field name="title"/>
+                                    <field name="description" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Template Fields">
+                                <field name="fields_ids">
+                                    <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="field_type"/>
+                                        <field name="required"/>
+                                        <field name="help_text"/>
+                                        <field name="selection_options" invisible="field_type not in ('select', 'radio')"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Usage History">
+                                <field name="feedback_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="title"/>
+                                        <field name="customer_id"/>
+                                        <field name="state"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Feedback Template Search View -->
+        <record id="view_feedback_template_search" model="ir.ui.view">
+            <field name="name">feedback.template.search</field>
+            <field name="model">feedback.template</field>
+            <field name="arch" type="xml">
+                <search string="Search Feedback Templates">
+                    <field name="name"/>
+                    <field name="title"/>
+                    <field name="category_id"/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="category" context="{'group_by': 'category_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Feedback Template Action -->
+        <record id="action_feedback_template" model="ir.actions.act_window">
+            <field name="name">Feedback Templates</field>
+            <field name="res_model">feedback.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first feedback template!
+                </p>
+                <p>
+                    Define templates to standardize feedback collection.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

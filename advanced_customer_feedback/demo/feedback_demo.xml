@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Demo Customer Feedbacks -->
+        <record id="demo_feedback_1" model="advanced.customer.feedback">
+            <field name="name">FB001</field>
+            <field name="title">Great Product Experience</field>
+            <field name="description">I recently purchased your product and I am very satisfied with the quality and service. The delivery was on time and the product exceeded my expectations.</field>
+            <field name="category_id" ref="advanced_customer_feedback.feedback_category_general"/>
+            <field name="customer_id" eval="False"/>
+            <field name="priority">1</field>
+            <field name="feedback_type">compliment</field>
+            <field name="state">resolved</field>
+            <field name="satisfaction_rating">5</field>
+            <field name="source">portal</field>
+            <field name="resolution_notes">Customer satisfied with response and thanked for feedback</field>
+            <field name="resolved_date" eval="DateTime.now() - relativedelta(days=2)"/>
+        </record>
+
+        <record id="demo_feedback_2" model="advanced.customer.feedback">
+            <field name="name">FB002</field>
+            <field name="title">Website Navigation Issue</field>
+            <field name="description">I found it difficult to navigate through the product categories on your website. The menu structure could be improved for better user experience.</field>
+            <field name="category_id" ref="advanced_customer_feedback.feedback_category_website"/>
+            <field name="customer_id" eval="False"/>
+            <field name="priority">2</field>
+            <field name="feedback_type">suggestion</field>
+            <field name="state">in_progress</field>
+            <field name="satisfaction_rating">3</field>
+            <field name="source">portal</field>
+            <field name="internal_notes">Working on website navigation improvements based on customer feedback</field>
+        </record>
+
+        <record id="demo_feedback_3" model="advanced.customer.feedback">
+            <field name="name">FB003</field>
+            <field name="title">Product Quality Concern</field>
+            <field name="description">The product I received has some quality issues. The packaging was damaged and the product itself has minor defects.</field>
+            <field name="category_id" ref="advanced_customer_feedback.feedback_category_product"/>
+            <field name="customer_id" eval="False"/>
+            <field name="priority">2</field>
+            <field name="feedback_type">complaint</field>
+            <field name="state">new</field>
+            <field name="satisfaction_rating">2</field>
+            <field name="source">portal</field>
+        </record>
+
+        <record id="demo_feedback_4" model="advanced.customer.feedback">
+            <field name="name">FB004</field>
+            <field name="title">Excellent Customer Service</field>
+            <field name="description">I want to commend your customer service team for their excellent support. They were very helpful and resolved my issue quickly.</field>
+            <field name="category_id" ref="advanced_customer_feedback.feedback_category_service"/>
+            <field name="customer_id" eval="False"/>
+            <field name="priority">0</field>
+            <field name="feedback_type">compliment</field>
+            <field name="state">new</field>
+            <field name="satisfaction_rating">5</field>
+            <field name="source">portal</field>
+        </record>
+
+        <record id="demo_feedback_5" model="advanced.customer.feedback">
+            <field name="name">FB005</field>
+            <field name="title">Bug in Mobile App</field>
+            <field name="description">I found a bug in your mobile application. When I try to add items to cart, the app crashes. This happens consistently on iOS devices.</field>
+            <field name="category_id" ref="advanced_customer_feedback.feedback_category_bug"/>
+            <field name="customer_id" eval="False"/>
+            <field name="priority">2</field>
+            <field name="feedback_type">bug_report</field>
+            <field name="state">new</field>
+            <field name="satisfaction_rating">1</field>
+            <field name="source">portal</field>
+        </record>
+    </data>
+</odoo>

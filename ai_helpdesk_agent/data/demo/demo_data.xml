@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="user_ai_agent" model="res.users">
+        <!-- TODO: move to Settings to select AI User?        -->
+        <field name="name">AI Agent</field>
+        <field name="login">ai_agent</field>
+        <field name="password">ai_agent</field>
+        <field name="signature" type="html">
+            <span>-- <br/>AI Agent</span>
+        </field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="company_ids" eval="[Command.link(ref('base.main_company'))]"/>
+    </record>
+
+    <function model="ir.config_parameter" name="set_param" eval="('ai_helpdesk_agent.Dry_Run_Mode', '0')"/>
+
+    <function model="ir.config_parameter" name="set_param" eval="('ai_helpdesk_agent.ai_user', ref('user_ai_agent'))"/>
+
+
+    <!--TODO: make it works        -->
+<!--    <function model="res.partner" name="write">-->
+<!--        <value model="res.partner" search="[('user_ids', '=', False),('is_company', '=', False)]"/>-->
+<!--        <value eval="{'ai_always_reply': True}"/>-->
+<!--    </function>-->
+
+</odoo>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Feedback Category Tree View -->
+        <record id="view_feedback_category_tree" model="ir.ui.view">
+            <field name="name">feedback.category.tree</field>
+            <field name="model">feedback.category</field>
+            <field name="arch" type="xml">
+                <tree string="Feedback Categories">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="feedback_count"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Feedback Category Form View -->
+        <record id="view_feedback_category_form" model="ir.ui.view">
+            <field name="name">feedback.category.form</field>
+            <field name="model">feedback.category</field>
+            <field name="arch" type="xml">
+                <form string="Feedback Category">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Category Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="sequence"/>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                <field name="color" widget="color_picker"/>
+                                <field name="feedback_count"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Description">
+                                <field name="description" nolabel="1"/>
+                            </page>
+                            <page string="Feedbacks">
+                                <field name="feedback_ids" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="title"/>
+                                        <field name="customer_id"/>
+                                        <field name="priority" widget="priority"/>
+                                        <field name="state"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Feedback Category Search View -->
+        <record id="view_feedback_category_search" model="ir.ui.view">
+            <field name="name">feedback.category.search</field>
+            <field name="model">feedback.category</field>
+            <field name="arch" type="xml">
+                <search string="Search Feedback Categories">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <filter string="Active" name="active" domain="[('is_active', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Sequence" name="sequence" context="{'group_by': 'sequence'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Feedback Category Action -->
+        <record id="action_feedback_category" model="ir.actions.act_window">
+            <field name="name">Feedback Categories</field>
+            <field name="res_model">feedback.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_active': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first feedback category!
+                </p>
+                <p>
+                    Define categories to organize customer feedback.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
