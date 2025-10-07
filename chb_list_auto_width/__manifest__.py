@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Smart List Auto Width",
-    "version": "18.0.0",
+    "version": "18.0.1.0.0",
     "summary": "Automatically adjust Odoo list view column widths based on content and headers",
     "description": """
         Smart List Auto Width automatically adjusts column widths in all Odoo list views, 

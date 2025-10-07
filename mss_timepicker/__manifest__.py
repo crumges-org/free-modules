@@ -1,6 +1,6 @@
 {
     'name': 'TimePicker Pro',
-    'version': '1.0',
+    'version': '18.0.1.0.0',
     'category': 'User Interface',
     'summary': 'An intuitive and user-friendly TimePicker Pro for Odoo.',
     'description': 'The Enhanced TimePicker Pro improves the time input experience in Odoo. '

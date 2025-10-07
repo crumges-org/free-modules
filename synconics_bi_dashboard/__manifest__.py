@@ -49,7 +49,7 @@
     "author": "Synconics Technologies Pvt. Ltd.",
     "website": "https://www.synconics.com",
     "category": "web",
-    "version": "1.0",
+    "version": "18.0.1.0.0",
     "depends": ["web", "mail"],
     "external_dependencies": {"python": ["imgkit"]},
     "assets": {

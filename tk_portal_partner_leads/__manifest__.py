@@ -5,7 +5,7 @@
           Lead Portal - Website
     """,
     'summary': 'Lead Portal - Website',
-    'version': '1.0',
+    'version': '18.0.1.0.0',
     'category': 'Website',
     'author': 'TechKhedut Inc.',
     'company': 'TechKhedut Inc.',

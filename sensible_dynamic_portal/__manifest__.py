@@ -3,7 +3,7 @@
 # © 2025 Sensible Consulting Services (<https://sensiblecs.com/>)
 {
     'name': 'Dynamic Portal | Dynamic Customer Portal | Dynamic User Portal | Dynamic Vendor Portal',
-    'version': '18.0.1.0',
+    'version': '18.0.1.0.0',
     'summary': '''Dynamic portals offer customizable, user-specific experiences with no coding required, 
         providing personalized access and role-based permissions.''',
     'description': '''Dynamic Portal

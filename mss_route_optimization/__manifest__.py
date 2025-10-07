@@ -4,7 +4,7 @@
 
 {
     'name': 'Route Optimization',
-    'version': '1.0',
+    'version': '18.0.1.0.0',
     'category': '',
     'sequence': 200,
     'summary': 'Route optimization in Odoo refers to enhancing the delivery and logistics process by minimizing travel distances, time, and costs                          .',
