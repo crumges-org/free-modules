@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="an_zatca_dashboard_kpi.ZatcaKPIDashboard">
+        <div class="o_zatca_kpi_dashboard border-bottom bg-white shadow-sm mb-3">
+            <div class="container-fluid py-3">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <h5 class="mb-0 text-muted">
+                            <i class="fa fa-file-text-o me-2"/>ZATCA Status
+                        </h5>
+                    </div>
+                    <div class="col">
+                        <div class="row g-3 justify-content-end">
+                            <!-- Sent KPI -->
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <div class="o_kpi_card p-3 rounded text-center cursor-pointer"
+                                     style="background-color: #d4edda;"
+                                     t-on-click="() => this.onKPIClick('sent')">
+                                    <i class="fa fa-check-circle fa-2x text-success mb-2 d-block"/>
+                                    <div class="fw-bold fs-4 text-success">
+                                        <t t-if="state.isLoading">-</t>
+                                        <t t-else="" t-out="state.kpiData.sent"/>
+                                    </div>
+                                    <div class="small text-muted">Sent</div>
+                                </div>
+                            </div>
+                            <!-- Pending KPI -->
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <div class="o_kpi_card p-3 rounded text-center cursor-pointer"
+                                     style="background-color: #cce5ff;"
+                                     t-on-click="() => this.onKPIClick('pending')">
+                                    <i class="fa fa-clock-o fa-2x text-info mb-2 d-block"/>
+                                    <div class="fw-bold fs-4 text-info">
+                                        <t t-if="state.isLoading">-</t>
+                                        <t t-else="" t-out="state.kpiData.pending"/>
+                                    </div>
+                                    <div class="small text-muted">Pending</div>
+                                </div>
+                            </div>
+                            <!-- Errors KPI -->
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <div class="o_kpi_card p-3 rounded text-center cursor-pointer"
+                                     style="background-color: #f8d7da;"
+                                     t-on-click="() => this.onKPIClick('errors')">
+                                    <i class="fa fa-exclamation-circle fa-2x text-danger mb-2 d-block"/>
+                                    <div class="fw-bold fs-4 text-danger">
+                                        <t t-if="state.isLoading">-</t>
+                                        <t t-else="" t-out="state.kpiData.errors"/>
+                                    </div>
+                                    <div class="small text-muted">Errors</div>
+                                </div>
+                            </div>
+                            <!-- Warnings KPI -->
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <div class="o_kpi_card p-3 rounded text-center cursor-pointer"
+                                     style="background-color: #fff3cd;"
+                                     t-on-click="() => this.onKPIClick('warnings')">
+                                    <i class="fa fa-exclamation-triangle fa-2x text-warning mb-2 d-block"/>
+                                    <div class="fw-bold fs-4 text-warning">
+                                        <t t-if="state.isLoading">-</t>
+                                        <t t-else="" t-out="state.kpiData.warnings"/>
+                                    </div>
+                                    <div class="small text-muted">Warnings</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

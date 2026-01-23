@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Email Notification Tree View -->
+        <record id="view_dynamic_form_email_notification_tree" model="ir.ui.view">
+            <field name="name">dynamic.form.email.notification.tree</field>
+            <field name="model">dynamic.form.email.notification</field>
+            <field name="arch" type="xml">
+                <list string="Email Notifications">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="trigger_type"/>
+                    <field name="email_type"/>
+                    <field name="trigger_field_id"/>
+                    <field name="trigger_value"/>
+                    <field name="email_template_id"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+        
+        <!-- Email Notification Form View -->
+        <record id="view_dynamic_form_email_notification_form" model="ir.ui.view">
+            <field name="name">dynamic.form.email.notification.form</field>
+            <field name="model">dynamic.form.email.notification</field>
+            <field name="arch" type="xml">
+                <form string="Email Notification">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Notification Name"/>
+                            </h1>
+                        </div>
+                        
+                        <group>
+                            <group string="Trigger Settings">
+                                <field name="trigger_type"/>
+                                <field name="trigger_field_id" 
+                                       invisible="trigger_type != 'on_field_value'"/>
+                                <field name="trigger_operator" 
+                                       invisible="trigger_type != 'on_field_value'"/>
+                                <field name="trigger_value" 
+                                       invisible="trigger_type != 'on_field_value'"/>
+                            </group>
+                            <group string="Email Settings">
+                                <field name="email_type"/>
+                                <field name="recipient_email" 
+                                       invisible="email_type != 'custom_recipient'"/>
+                                <field name="recipient_field_id" 
+                                       invisible="email_type != 'custom_recipient'"/>
+                                <field name="email_template_id"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <field name="description"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Email Notification Search View -->
+        <record id="view_dynamic_form_email_notification_search" model="ir.ui.view">
+            <field name="name">dynamic.form.email.notification.search</field>
+            <field name="model">dynamic.form.email.notification</field>
+            <field name="arch" type="xml">
+                <search string="Email Notifications">
+                    <field name="name"/>
+                    <field name="trigger_type"/>
+                    <field name="email_type"/>
+                    <field name="email_template_id"/>
+                    <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Trigger Type" name="group_trigger_type" context="{'group_by': 'trigger_type'}"/>
+                        <filter string="Email Type" name="group_email_type" context="{'group_by': 'email_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Email Notification Action -->
+        <record id="action_dynamic_form_email_notification" model="ir.actions.act_window">
+            <field name="name">Email Notifications</field>
+            <field name="res_model">dynamic.form.email.notification</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first email notification!
+                </p>
+                <p>
+                    Configure automatic email notifications to be sent when forms are submitted.
+                    You can set up different triggers and recipients for various scenarios.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,2071 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+                  <!-- Embed JavaScript Template -->
+          <template id="embed_js_template" name="Embed JavaScript Template">
+              <!-- Hidden fields for JavaScript data -->
+            
+              <![CDATA[
+              (function() {
+                  'use strict';
+                  
+                  // Store form configuration and base URL in JavaScript variables
+                  var formConfigStr = ']]><t t-raw="form_config"/><![CDATA[';
+                  var baseUrl = ']]><t t-esc="base_url"/><![CDATA[';
+                  
+                  // Parse form configuration
+                  var formConfig = {};
+                  try {
+                      if (formConfigStr && formConfigStr.trim()) {
+                          formConfig = JSON.parse(formConfigStr);
+                      }
+                  } catch (e) {
+                      console.error('Error parsing form configuration:', e);
+                      console.error('Form config string:', formConfigStr);
+                      formConfig = {};
+                  }
+                  
+                  console.log('Form Config:', formConfig);
+                  console.log('Base URL:', baseUrl);
+                  
+                  // Validate form config
+                  if (!formConfig || typeof formConfig !== 'object' || Object.keys(formConfig).length === 0) {
+                      console.error('Invalid form configuration');
+                      formConfig = {};
+                  }
+                  
+                  if (!baseUrl || typeof baseUrl !== 'string') {
+                      console.error('Invalid base URL');
+                      baseUrl = '';
+                  }
+                
+                // Create form container
+                function createFormContainer() {
+                    var container = document.createElement('div');
+                    container.id = 'dynamic-form-embed-' + formConfig.id;
+                    var layout = formConfig.layout || 'standard';
+                    container.className = 'dynamic-form-embed layout-' + layout;
+                    
+                    var baseStyles = `
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                        margin: 0 auto;
+                        background: white;
+                        overflow: hidden;
+                    `;
+                    
+                    // Layout-specific styles
+                    if (layout === 'card') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 800px;
+                            border-radius: 20px;
+                            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+                        `;
+                    } else if (layout === 'minimal') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 800px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                            border: 1px solid #e9ecef;
+                        `;
+                    } else if (layout === 'split') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 1000px;
+                            display: flex;
+                            border-radius: 0;
+                            box-shadow: none;
+                        `;
+                    } else if (layout === 'sidebar') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 1000px;
+                            display: flex;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        `;
+                    } else if (layout === 'wizard') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 800px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        `;
+                    } else if (layout === 'inline') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 100%;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        `;
+                    } else if (layout === 'grid') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 900px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        `;
+                    } else if (layout === 'modern') {
+                        container.style.cssText = baseStyles + `
+                            max-width: 800px;
+                            border-radius: 20px;
+                            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+                        `;
+                    } else {
+                        // standard, compact, tabbed, accordion
+                        container.style.cssText = baseStyles + `
+                            max-width: 800px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                            border: 1px solid #e9ecef;
+                        `;
+                    }
+                    
+                    return container;
+                }
+                
+                // Create form header
+                function createFormHeader() {
+                    // Check if header should be hidden
+                    if (formConfig.hide_header) {
+                        return null;
+                    }
+                    
+                    var header = document.createElement('div');
+                    var headerLayout = formConfig.header_layout || 'centered';
+                    header.className = 'form-header header-layout-' + headerLayout;
+                    
+                    // Get header colors - use form's custom colors if set, otherwise use theme colors
+                    var headerPrimaryColor = formConfig.primary_color || '#007bff';
+                    var headerSecondaryColor = formConfig.secondary_color || '#0056b3';
+                    
+                    // If theme is set and no custom colors, use theme defaults
+                    if (!formConfig.primary_color && !formConfig.secondary_color && formConfig.theme) {
+                        var themeColors = {
+                            'light': { primary: '#007bff', secondary: '#0056b3' },
+                            'dark': { primary: '#6c5ce7', secondary: '#5f3dc4' },
+                            'blue': { primary: '#0d6efd', secondary: '#0a58ca' },
+                            'green': { primary: '#198754', secondary: '#146c43' },
+                            'purple': { primary: '#6f42c1', secondary: '#5a32a3' },
+                            'orange': { primary: '#fd7e14', secondary: '#dc6502' },
+                            'custom': { primary: '#4CAF50', secondary: '#45a049' }
+                        };
+                        var themeColor = themeColors[formConfig.theme] || themeColors['light'];
+                        headerPrimaryColor = themeColor.primary;
+                        headerSecondaryColor = themeColor.secondary;
+                    }
+                    
+                    // Helper function to create logo element
+                    function createLogo() {
+                        if (!formConfig.logo) return null;
+                        
+                        var logo = document.createElement('img');
+                        var imageFormat = formConfig.logo_format || 'png';
+                        
+                        // Detect image format
+                        if (!formConfig.logo_format) {
+                            try {
+                                var binaryString = atob(formConfig.logo.substring(0, 100));
+                                var bytes = new Uint8Array(binaryString.length);
+                                for (var i = 0; i < binaryString.length; i++) {
+                                    bytes[i] = binaryString.charCodeAt(i);
+                                }
+                                
+                                if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47) {
+                                    imageFormat = 'png';
+                                } else if (bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF) {
+                                    imageFormat = 'jpeg';
+                                } else if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) {
+                                    imageFormat = 'gif';
+                                } else if (formConfig.logo.substring(0, 4) === 'iVBORw0KGgo') {
+                                    imageFormat = 'png';
+                                } else if (formConfig.logo.substring(0, 4) === '/9j/') {
+                                    imageFormat = 'jpeg';
+                                }
+                            } catch (e) {
+                                console.warn('Error detecting logo format:', e);
+                                imageFormat = 'png';
+                            }
+                        }
+                        
+                        logo.src = 'data:image/' + imageFormat + ';base64,' + formConfig.logo;
+                        logo.className = 'form-logo';
+                        logo.alt = 'Form Logo';
+                        logo.onerror = function() {
+                            console.error('Error loading logo image');
+                            this.style.display = 'none';
+                        };
+                        return logo;
+                    }
+                    
+                    // Create title element
+                    function createTitle() {
+                        var title = document.createElement('h1');
+                        title.textContent = formConfig.name || '';
+                        return title;
+                    }
+                    
+                    // Create description element
+                    function createDescription() {
+                        if (!formConfig.description) return null;
+                        var desc = document.createElement('p');
+                        desc.textContent = formConfig.description;
+                        return desc;
+                    }
+                    
+                    // Build header structure based on layout
+                    if (headerLayout === 'split') {
+                        // Split: Logo left, content right
+                        var logoSection = document.createElement('div');
+                        logoSection.className = 'header-logo-section';
+                        var logo = createLogo();
+                        if (logo) logoSection.appendChild(logo);
+                        
+                        var contentSection = document.createElement('div');
+                        contentSection.className = 'header-content-section';
+                        contentSection.appendChild(createTitle());
+                        var desc = createDescription();
+                        if (desc) contentSection.appendChild(desc);
+                        
+                        header.appendChild(logoSection);
+                        header.appendChild(contentSection);
+                        header.style.cssText = 'display: flex; align-items: center; gap: 30px; text-align: left; padding: 40px 30px; background: linear-gradient(135deg, ' + headerPrimaryColor + ' 0%, ' + headerSecondaryColor + ' 100%); color: white;';
+                        if (logo) logo.style.cssText = 'max-width: 120px; max-height: 120px; margin: 0;';
+                        
+                    } else if (headerLayout === 'split-reverse') {
+                        // Split Reverse: Content left, logo right
+                        var contentSection = document.createElement('div');
+                        contentSection.className = 'header-content-section';
+                        contentSection.style.cssText = 'flex: 1; order: 1;';
+                        contentSection.appendChild(createTitle());
+                        var desc = createDescription();
+                        if (desc) contentSection.appendChild(desc);
+                        
+                        var logoSection = document.createElement('div');
+                        logoSection.className = 'header-logo-section';
+                        logoSection.style.cssText = 'flex: 0 0 auto; order: 2;';
+                        var logo = createLogo();
+                        if (logo) logoSection.appendChild(logo);
+                        
+                        header.appendChild(contentSection);
+                        header.appendChild(logoSection);
+                        header.style.cssText = 'display: flex; align-items: center; gap: 30px; text-align: left; padding: 40px 30px; background: linear-gradient(135deg, ' + headerPrimaryColor + ' 0%, ' + headerSecondaryColor + ' 100%); color: white; flex-direction: row;';
+                        if (logo) logo.style.cssText = 'max-width: 120px; max-height: 120px; margin: 0;';
+                        
+                    } else if (headerLayout === 'inline') {
+                        // Inline: Logo, title, description in a row
+                        var logoSection = document.createElement('div');
+                        logoSection.className = 'header-logo-section';
+                        var logo = createLogo();
+                        if (logo) logoSection.appendChild(logo);
+                        
+                        var contentSection = document.createElement('div');
+                        contentSection.className = 'header-content-section';
+                        contentSection.appendChild(createTitle());
+                        var desc = createDescription();
+                        if (desc) contentSection.appendChild(desc);
+                        
+                        header.appendChild(logoSection);
+                        header.appendChild(contentSection);
+                        header.style.cssText = 'display: flex; align-items: center; gap: 20px; text-align: left; padding: 30px; background: linear-gradient(135deg, ' + headerPrimaryColor + ' 0%, ' + headerSecondaryColor + ' 100%); color: white;';
+                        if (logo) logo.style.cssText = 'max-width: 80px; max-height: 80px; margin: 0;';
+                        
+                    } else if (headerLayout === 'stacked') {
+                        // Stacked: All elements stacked vertically
+                        var logoSection = document.createElement('div');
+                        logoSection.className = 'header-logo-section';
+                        var logo = createLogo();
+                        if (logo) logoSection.appendChild(logo);
+                        
+                        var contentSection = document.createElement('div');
+                        contentSection.className = 'header-content-section';
+                        contentSection.appendChild(createTitle());
+                        var desc = createDescription();
+                        if (desc) contentSection.appendChild(desc);
+                        
+                        header.appendChild(logoSection);
+                        header.appendChild(contentSection);
+                        header.style.cssText = 'text-align: center; padding: 30px; background: linear-gradient(135deg, ' + headerPrimaryColor + ' 0%, ' + headerSecondaryColor + ' 100%); color: white;';
+                        
+                    } else if (headerLayout === 'compact') {
+                        // Compact: Logo and title side by side
+                        var logoSection = document.createElement('div');
+                        logoSection.className = 'header-logo-section';
+                        var logo = createLogo();
+                        if (logo) logoSection.appendChild(logo);
+                        
+                        var contentSection = document.createElement('div');
+                        contentSection.className = 'header-content-section';
+                        contentSection.appendChild(createTitle());
+                        var desc = createDescription();
+                        if (desc) {
+                            desc.className = 'header-description';
+                            contentSection.appendChild(desc);
+                        }
+                        
+                        header.appendChild(logoSection);
+                        header.appendChild(contentSection);
+                        header.style.cssText = 'display: flex; align-items: center; gap: 20px; text-align: left; padding: 25px 30px; background: linear-gradient(135deg, ' + headerPrimaryColor + ' 0%, ' + headerSecondaryColor + ' 100%); color: white;';
+                        if (logo) logo.style.cssText = 'max-width: 60px; max-height: 60px; margin: 0;';
+                        
+                    } else if (headerLayout === 'minimal') {
+                        // Minimal: Just title with border
+                        header.appendChild(createTitle());
+                        header.style.cssText = 'background: transparent; color: #333; border-bottom: 2px solid ' + headerPrimaryColor + '; padding: 20px 30px; text-align: left;';
+                        var title = header.querySelector('h1');
+                        if (title) title.style.cssText = 'color: #333; text-shadow: none; margin: 0; font-size: 24px;';
+                        
+                    } else {
+                        // Centered (default) or Banner: Logo above, title and description centered
+                        var logo = createLogo();
+                        if (logo) header.appendChild(logo);
+                        header.appendChild(createTitle());
+                        var desc = createDescription();
+                        if (desc) header.appendChild(desc);
+                        
+                        if (headerLayout === 'banner') {
+                            header.style.cssText = 'padding: 60px 30px; background: linear-gradient(135deg, ' + headerPrimaryColor + ' 0%, ' + headerSecondaryColor + ' 100%); position: relative; overflow: hidden; text-align: center; color: white;';
+                            var title = header.querySelector('h1');
+                            if (title) title.style.cssText = 'font-size: 36px; font-weight: 700; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); position: relative; z-index: 1;';
+                            if (desc) desc.style.cssText = 'font-size: 18px; opacity: 0.95; margin: 0; position: relative; z-index: 1;';
+                        } else {
+                            header.style.cssText = 'text-align: center; padding: 40px 30px; background: linear-gradient(135deg, ' + headerPrimaryColor + ' 0%, ' + headerSecondaryColor + ' 100%); color: white;';
+                        }
+                    }
+                    
+                    return header;
+                }
+                
+                // Create form body
+                function createFormBody() {
+                    var body = document.createElement('div');
+                    body.className = 'form-body';
+                    var layout = formConfig.layout || 'standard';
+                    
+                    // Layout-specific body styles
+                    if (layout === 'split' || layout === 'sidebar') {
+                        body.style.cssText = `
+                            flex: 0 0 60%;
+                            padding: 40px;
+                        `;
+                    } else if (layout === 'compact') {
+                        body.style.cssText = `
+                            padding: 20px;
+                        `;
+                    } else if (layout === 'modern') {
+                        body.style.cssText = `
+                            padding: 50px 40px;
+                        `;
+                    } else {
+                        body.style.cssText = `
+                            padding: 30px;
+                        `;
+                    }
+                    
+                    // Progress bar
+                    if (formConfig.show_progress_bar) {
+                        var progress = document.createElement('div');
+                        progress.className = 'form-progress';
+                        progress.style.cssText = `
+                            margin-bottom: 30px;
+                        `;
+                        
+                        var progressBar = document.createElement('div');
+                        progressBar.className = 'progress-bar';
+                        progressBar.style.cssText = `
+                            width: 100%;
+                            height: 6px;
+                            background-color: #e9ecef;
+                            border-radius: 3px;
+                            overflow: hidden;
+                        `;
+                        
+                        var progressFill = document.createElement('div');
+                        progressFill.className = 'progress-fill';
+                        progressFill.style.cssText = `
+                            height: 100%;
+                            background-color: ${formConfig.primary_color || '#007bff'};
+                            transition: width 0.3s ease;
+                            width: 0%;
+                        `;
+                        
+                        progressBar.appendChild(progressFill);
+                        progress.appendChild(progressBar);
+                        body.appendChild(progress);
+                    }
+                    
+                    // Messages container
+                    var messages = document.createElement('div');
+                    messages.id = 'form-messages';
+                    body.appendChild(messages);
+                    
+                    // Form element
+                    var form = document.createElement('form');
+                    form.id = 'dynamic-form';
+                    form.setAttribute('novalidate', '');
+                    
+                    // Layout-specific form styles
+                    if (layout === 'inline') {
+                        form.style.cssText = `
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 15px;
+                            align-items: flex-end;
+                        `;
+                    } else if (layout === 'grid') {
+                        form.style.cssText = `
+                            display: grid;
+                            grid-template-columns: repeat(2, 1fr);
+                            gap: 20px;
+                        `;
+                    }
+                    
+                    var fieldsContainer = document.createElement('div');
+                    fieldsContainer.id = 'form-fields';
+                    if (layout === 'inline') {
+                        fieldsContainer.style.cssText = `
+                            display: contents;
+                        `;
+                    } else if (layout === 'grid') {
+                        fieldsContainer.style.cssText = `
+                            display: contents;
+                        `;
+                    }
+                    form.appendChild(fieldsContainer);
+                    
+                    // Submit button
+                    if (formConfig.show_submit_button) {
+                        var submitButton = document.createElement('button');
+                        submitButton.type = 'submit';
+                        submitButton.className = 'submit-button';
+                        submitButton.textContent = formConfig.submit_button_text || 'Submit';
+                        
+                        if (layout === 'inline') {
+                            submitButton.style.cssText = `
+                                background-color: ${formConfig.primary_color || '#007bff'};
+                                color: white;
+                                border: none;
+                                padding: 12px 30px;
+                                font-size: 16px;
+                                font-weight: 600;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                transition: background-color 0.3s ease;
+                                flex: 0 0 auto;
+                                align-self: flex-end;
+                                margin-top: 0;
+                            `;
+                            form.appendChild(submitButton);
+                        } else if (layout === 'grid') {
+                            submitButton.style.cssText = `
+                                background-color: ${formConfig.primary_color || '#007bff'};
+                                color: white;
+                                border: none;
+                                padding: 15px 40px;
+                                font-size: 18px;
+                                font-weight: 600;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                transition: background-color 0.3s ease;
+                                grid-column: 1 / -1;
+                                justify-self: center;
+                                margin-top: 10px;
+                            `;
+                            form.appendChild(submitButton);
+                        } else {
+                            var submitDiv = document.createElement('div');
+                            submitDiv.className = 'form-submit';
+                            submitDiv.style.cssText = `
+                                text-align: center;
+                                margin-top: 30px;
+                            `;
+                            var submitStyles = `
+                                background-color: ${formConfig.primary_color || '#007bff'};
+                                color: white;
+                                border: none;
+                                padding: 15px 40px;
+                                font-size: 18px;
+                                font-weight: 600;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                transition: background-color 0.3s ease;
+                            `;
+                            
+                            if (layout === 'modern') {
+                                submitStyles = `
+                                    background: linear-gradient(135deg, ${formConfig.primary_color || '#007bff'} 0%, ${formConfig.secondary_color || '#0056b3'} 100%);
+                                    color: white;
+                                    border: none;
+                                    padding: 16px 50px;
+                                    font-size: 16px;
+                                    font-weight: 600;
+                                    border-radius: 50px;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    text-transform: uppercase;
+                                    letter-spacing: 1px;
+                                    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+                                `;
+                            } else if (layout === 'compact') {
+                                submitStyles = `
+                                    background-color: ${formConfig.primary_color || '#007bff'};
+                                    color: white;
+                                    border: none;
+                                    padding: 10px 25px;
+                                    font-size: 14px;
+                                    font-weight: 600;
+                                    border-radius: 6px;
+                                    cursor: pointer;
+                                    transition: background-color 0.3s ease;
+                                `;
+                            }
+                            
+                            submitButton.style.cssText = submitStyles;
+                            submitDiv.appendChild(submitButton);
+                            form.appendChild(submitDiv);
+                        }
+                    }
+                    
+                    body.appendChild(form);
+                    return body;
+                }
+                
+                // Create field element
+                function createFieldElement(field) {
+                    var fieldDiv = document.createElement('div');
+                    fieldDiv.className = 'form-group form-field';
+                    if (field.css_class) {
+                        fieldDiv.className += ' ' + field.css_class;
+                    }
+                    var layout = formConfig.layout || 'standard';
+                    
+                    // Layout-specific field styles
+                    var fieldStyles = '';
+                    if (layout === 'card') {
+                        fieldStyles = `
+                            margin-bottom: 20px;
+                            padding: 20px;
+                            background: #f8f9fa;
+                            border-radius: 12px;
+                            border: 1px solid #e9ecef;
+                        `;
+                    } else if (layout === 'wizard') {
+                        fieldStyles = `
+                            margin-bottom: 30px;
+                            padding-bottom: 30px;
+                            border-bottom: 2px dashed #e9ecef;
+                        `;
+                    } else if (layout === 'inline') {
+                        fieldStyles = `
+                            flex: 1;
+                            min-width: 200px;
+                            margin-bottom: 0;
+                            display: flex;
+                            flex-direction: column;
+                        `;
+                    } else if (layout === 'grid') {
+                        fieldStyles = `
+                            margin-bottom: 0;
+                        `;
+                    } else if (layout === 'compact') {
+                        fieldStyles = `
+                            margin-bottom: 15px;
+                        `;
+                    } else if (layout === 'modern') {
+                        fieldStyles = `
+                            margin-bottom: 30px;
+                        `;
+                    } else {
+                        fieldStyles = `
+                            margin-bottom: 25px;
+                        `;
+                    }
+                    
+                    fieldDiv.style.cssText = fieldStyles + `
+                        width: ${(layout === 'inline' || layout === 'grid') ? 'auto' : (field.width || 100) + '%'};
+                    `;
+                    
+                    // Accordion layout special handling
+                    if (layout === 'accordion') {
+                        var header = document.createElement('div');
+                        header.className = 'form-group-header';
+                        header.textContent = field.label;
+                        header.onclick = function() {
+                            fieldDiv.classList.toggle('active');
+                        };
+                        fieldDiv.appendChild(header);
+                        
+                        var content = document.createElement('div');
+                        content.className = 'form-group-content';
+                        
+                        var label = document.createElement('label');
+                        label.className = 'field-label';
+                        label.htmlFor = field.name;
+                        label.innerHTML = field.label;
+                        if (field.required) {
+                            label.innerHTML += ' <span class="field-required" style="color: #dc3545;">*</span>';
+                        }
+                        label.style.cssText = `
+                            display: block;
+                            font-weight: 500;
+                            color: #333;
+                            margin-bottom: 8px;
+                        `;
+                        
+                        var input = createInputElement(field);
+                        
+                        content.appendChild(label);
+                        content.appendChild(input);
+                        fieldDiv.appendChild(content);
+                        
+                        // Open first accordion by default
+                        var fieldIndex = formConfig.fields ? formConfig.fields.findIndex(function(f) { return f.name === field.name; }) : -1;
+                        if (fieldIndex === 0) {
+                            fieldDiv.classList.add('active');
+                        }
+                    } else {
+                        var label = document.createElement('label');
+                        label.className = 'field-label';
+                        label.htmlFor = field.name;
+                        label.innerHTML = field.label;
+                        if (field.required) {
+                            label.innerHTML += ' <span class="field-required" style="color: #dc3545;">*</span>';
+                        }
+                        
+                        // Layout-specific label styles
+                        var labelStyles = `
+                            display: block;
+                            font-weight: 500;
+                            color: #333;
+                            margin-bottom: 8px;
+                        `;
+                        
+                        if (layout === 'compact') {
+                            labelStyles = `
+                                display: block;
+                                font-weight: 500;
+                                color: #333;
+                                margin-bottom: 5px;
+                                font-size: 13px;
+                            `;
+                        } else if (layout === 'modern') {
+                            labelStyles = `
+                                display: block;
+                                font-weight: 600;
+                                color: #2d3436;
+                                margin-bottom: 10px;
+                                font-size: 14px;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                            `;
+                        }
+                        
+                        label.style.cssText = labelStyles;
+                        
+                        var input = createInputElement(field);
+                        
+                        // Modern layout input styles
+                        if (layout === 'modern') {
+                            input.style.border = 'none';
+                            input.style.borderBottom = '2px solid #e9ecef';
+                            input.style.borderRadius = '0';
+                            input.style.padding = '12px 0';
+                            input.style.background = 'transparent';
+                        } else if (layout === 'compact') {
+                            input.style.padding = '8px 12px';
+                            input.style.fontSize = '14px';
+                        }
+                        
+                        fieldDiv.appendChild(label);
+                        fieldDiv.appendChild(input);
+                    }
+                    
+                    if (field.help_text) {
+                        var help = document.createElement('div');
+                        help.className = 'field-help';
+                        help.innerHTML = field.help_text;
+                        help.style.cssText = `
+                            font-size: 14px;
+                            color: #666;
+                            margin-top: 5px;
+                        `;
+                        fieldDiv.appendChild(help);
+                    }
+                    
+                    return fieldDiv;
+                }
+                
+                // Create input element
+                function createInputElement(field) {
+                    var input;
+                    
+                    switch (field.type) {
+                        case 'textarea':
+                            input = document.createElement('textarea');
+                            input.style.cssText = `
+                                width: 100%;
+                                padding: 12px 15px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                font-size: 16px;
+                                transition: border-color 0.3s ease;
+                                min-height: 100px;
+                                resize: vertical;
+                                font-family: inherit;
+                            `;
+                            break;
+                        case 'select':
+                            input = document.createElement('select');
+                            input.style.cssText = `
+                                width: 100%;
+                                padding: 12px 15px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                font-size: 16px;
+                                transition: border-color 0.3s ease;
+                                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+                                background-position: right 12px center;
+                                background-repeat: no-repeat;
+                                background-size: 16px;
+                                padding-right: 40px;
+                                font-family: inherit;
+                            `;
+                            if (field.options) {
+                                field.options.forEach(function(option) {
+                                    var optionElement = document.createElement('option');
+                                    optionElement.value = option;
+                                    optionElement.textContent = option;
+                                    input.appendChild(optionElement);
+                                });
+                            }
+                            break;
+                        case 'radio':
+                            input = document.createElement('div');
+                            input.style.cssText = `
+                                display: flex;
+                                flex-direction: column;
+                                gap: 10px;
+                            `;
+                            if (field.options) {
+                                field.options.forEach(function(option, index) {
+                                    var radioDiv = document.createElement('div');
+                                    radioDiv.style.cssText = `
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 10px;
+                                    `;
+                                    
+                                    var radio = document.createElement('input');
+                                    radio.type = 'radio';
+                                    radio.name = field.name;
+                                    radio.value = option;
+                                    radio.id = field.name + '_' + index;
+                                    radio.style.cssText = `
+                                        width: 18px;
+                                        height: 18px;
+                                    `;
+                                    
+                                    var radioLabel = document.createElement('label');
+                                    radioLabel.htmlFor = field.name + '_' + index;
+                                    radioLabel.textContent = option;
+                                    radioLabel.style.cssText = `
+                                        font-family: inherit;
+                                        color: #333;
+                                    `;
+                                    
+                                    radioDiv.appendChild(radio);
+                                    radioDiv.appendChild(radioLabel);
+                                    input.appendChild(radioDiv);
+                                });
+                            }
+                            break;
+                        case 'checkbox':
+                            input = document.createElement('input');
+                            input.type = 'checkbox';
+                            input.style.cssText = `
+                                width: 18px;
+                                height: 18px;
+                            `;
+                            break;
+                        case 'file':
+                            input = document.createElement('input');
+                            input.type = 'file';
+                            input.accept = '*/*'; // Accept all file types
+                            input.style.cssText = `
+                                width: 100%;
+                                padding: 12px 15px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                font-size: 16px;
+                                transition: border-color 0.3s ease;
+                                font-family: inherit;
+                                cursor: pointer;
+                            `;
+                            
+                            // Add file change event listener for debugging
+                            input.addEventListener('change', function() {
+                                console.log('File input changed for field:', field.name);
+                                console.log('Files selected:', this.files.length);
+                                if (this.files.length > 0) {
+                                    console.log('Selected file:', this.files[0].name, 'Size:', this.files[0].size);
+                                }
+                            });
+                            break;
+                        default:
+                            input = document.createElement('input');
+                            input.type = field.type;
+                            input.style.cssText = `
+                                width: 100%;
+                                padding: 12px 15px;
+                                border: 2px solid #e9ecef;
+                                border-radius: 6px;
+                                font-size: 16px;
+                                transition: border-color 0.3s ease;
+                                font-family: inherit;
+                            `;
+                            break;
+                    }
+                    
+                    input.name = field.name;
+                    input.id = field.name;
+                    
+                    // Add CSS class to input if specified
+                    if (field.css_class) {
+                        input.className += ' ' + field.css_class;
+                    }
+                    
+                    if (field.required) {
+                        input.required = true;
+                    }
+                    
+                    if (field.readonly) {
+                        input.readOnly = true;
+                    }
+                    
+                    if (field.placeholder) {
+                        input.placeholder = field.placeholder;
+                    }
+                    
+                    if (field.default_value && field.type !== 'file') {
+                        input.value = field.default_value;
+                    }
+                    
+                    // Add focus styles
+                    input.addEventListener('focus', function() {
+                        this.style.outline = 'none';
+                        this.style.borderColor = formConfig.primary_color || '#007bff';
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        this.style.borderColor = '#e9ecef';
+                    });
+                    
+                    return input;
+                }
+                
+                // Setup form submission
+                function setupFormSubmission(form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        submitForm();
+                    });
+                }
+                
+                // Setup conditional logic
+                function setupConditionalLogic() {
+                    const fields = formConfig.fields || [];
+                    
+                    fields.forEach(function(field) {
+                        if (field.conditional_logic) {
+                            // Handle multi-condition system
+                            if (field.conditional_logic.conditions) {
+                                setupMultiConditionLogic(field, fields);
+                            } else {
+                                // Handle single condition
+                                setupSingleConditionLogic(field, fields);
+                            }
+                        }
+                    });
+                }
+                
+                // Setup multi-condition logic
+                function setupMultiConditionLogic(field, allFields) {
+                    const conditions = field.conditional_logic.conditions || [];
+                    const targetField = document.getElementById(field.name);
+                    
+                    if (!targetField) {
+                        console.warn('Target field not found:', field.name);
+                        return;
+                    }
+                    
+                    console.log('Setting up multi-condition logic:', {
+                        targetField: field.name,
+                        conditionsCount: conditions.length,
+                        logicType: field.conditional_logic.logic_type
+                    });
+                    
+                    // Get all condition fields
+                    const conditionFields = conditions.map(condition => {
+                        const conditionField = document.getElementById(condition.condition_field_name);
+                        if (!conditionField) {
+                            console.warn('Condition field not found:', condition.condition_field_name);
+                        }
+                        return conditionField;
+                    }).filter(field => field !== null);
+                    
+                    // Initial check
+                    const shouldShow = checkMultiCondition(field, targetField);
+                    updateFieldVisibility(targetField, shouldShow);
+                    
+                    // Add event listeners to all condition fields
+                    conditionFields.forEach(conditionField => {
+                        conditionField.addEventListener('input', function() {
+                            const shouldShow = checkMultiCondition(field, targetField);
+                            updateFieldVisibility(targetField, shouldShow);
+                        });
+                        
+                        conditionField.addEventListener('change', function() {
+                            const shouldShow = checkMultiCondition(field, targetField);
+                            updateFieldVisibility(targetField, shouldShow);
+                        });
+                    });
+                }
+                
+                // Setup single condition logic
+                function setupSingleConditionLogic(field, allFields) {
+                    const conditionFieldData = allFields.find(f => f.id === field.conditional_logic.field_id);
+                    if (conditionFieldData) {
+                        const conditionField = document.getElementById(conditionFieldData.name);
+                        const targetField = document.getElementById(field.name);
+                        
+                        if (conditionField && targetField) {
+                            console.log('Setting up single conditional logic:', {
+                                conditionField: conditionFieldData.name,
+                                targetField: field.name,
+                                operator: field.conditional_logic.operator,
+                                value: field.conditional_logic.value
+                            });
+                            
+                            // Initial check
+                            const shouldShow = checkSingleCondition(field, conditionField, targetField);
+                            updateFieldVisibility(targetField, shouldShow);
+                            
+                            // Add event listeners
+                            conditionField.addEventListener('input', function() {
+                                const shouldShow = checkSingleCondition(field, conditionField, targetField);
+                                updateFieldVisibility(targetField, shouldShow);
+                            });
+                            
+                            conditionField.addEventListener('change', function() {
+                                const shouldShow = checkSingleCondition(field, conditionField, targetField);
+                                updateFieldVisibility(targetField, shouldShow);
+                            });
+                        } else {
+                            console.warn('Single conditional logic setup failed:', {
+                                conditionFieldFound: !!conditionField,
+                                targetFieldFound: !!targetField,
+                                conditionFieldName: conditionFieldData.name,
+                                targetFieldName: field.name
+                            });
+                        }
+                    } else {
+                        console.warn('Single condition field not found for ID:', field.conditional_logic.field_id);
+                    }
+                }
+                
+                // Check multi-condition logic
+                function checkMultiCondition(field, targetField) {
+                    const logicType = field.conditional_logic.logic_type || 'and';
+                    const conditions = field.conditional_logic.conditions || [];
+                    
+                    if (conditions.length === 0) {
+                        return true;
+                    }
+                    
+                    console.log('Checking multi-condition:', {
+                        fieldName: field.name,
+                        logicType: logicType,
+                        conditionsCount: conditions.length
+                    });
+                    
+                    const results = conditions.map(condition => {
+                        const conditionField = document.getElementById(condition.condition_field_name);
+                        if (!conditionField) {
+                            console.warn('Condition field not found:', condition.condition_field_name);
+                            return false;
+                        }
+                        
+                        let conditionValue = conditionField.value;
+                        
+                        // Handle different field types
+                        if (conditionField.type === 'checkbox') {
+                            conditionValue = conditionField.checked ? 'true' : 'false';
+                        } else if (conditionField.type === 'file') {
+                            conditionValue = conditionField.files.length > 0 ? 'true' : 'false';
+                        }
+                        
+                        const result = evaluateCondition(conditionValue, condition.operator, condition.value);
+                        console.log('Condition result:', {
+                            conditionName: condition.name,
+                            conditionValue: conditionValue,
+                            operator: condition.operator,
+                            expectedValue: condition.value,
+                            result: result
+                        });
+                        
+                        return result;
+                    });
+                    
+                    // Apply logic type
+                    let finalResult = false;
+                    if (logicType === 'and') {
+                        finalResult = results.every(result => result === true);
+                    } else { // 'or'
+                        finalResult = results.some(result => result === true);
+                    }
+                    
+                    console.log('Multi-condition final result:', {
+                        fieldName: field.name,
+                        logicType: logicType,
+                        results: results,
+                        finalResult: finalResult
+                    });
+                    
+                    return finalResult;
+                }
+                
+                // Check single condition logic
+                function checkSingleCondition(field, conditionField, targetField) {
+                    let conditionValue = conditionField.value;
+                    const operator = field.conditional_logic.operator;
+                    const expectedValue = field.conditional_logic.value;
+                    
+                    // Handle checkbox values properly
+                    if (conditionField.type === 'checkbox') {
+                        conditionValue = conditionField.checked ? 'true' : 'false';
+                    }
+                    
+                    console.log('Checking single condition:', {
+                        conditionValue: conditionValue,
+                        conditionFieldType: conditionField.type,
+                        conditionFieldChecked: conditionField.type === 'checkbox' ? conditionField.checked : 'N/A',
+                        operator: operator,
+                        expectedValue: expectedValue,
+                        fieldName: field.name
+                    });
+                    
+                    return evaluateCondition(conditionValue, operator, expectedValue);
+                }
+                
+                // Evaluate single condition
+                function evaluateCondition(conditionValue, operator, expectedValue) {
+                    let shouldShow = false;
+                    
+                    switch (operator) {
+                        case 'equals':
+                            shouldShow = conditionValue === expectedValue;
+                            break;
+                        case 'not_equals':
+                            shouldShow = conditionValue !== expectedValue;
+                            break;
+                        case 'contains':
+                            shouldShow = conditionValue.includes(expectedValue);
+                            break;
+                        case 'not_contains':
+                            shouldShow = !conditionValue.includes(expectedValue);
+                            break;
+                        case 'greater_than':
+                            shouldShow = parseFloat(conditionValue) > parseFloat(expectedValue);
+                            break;
+                        case 'less_than':
+                            shouldShow = parseFloat(conditionValue) < parseFloat(expectedValue);
+                            break;
+                        case 'is_empty':
+                            shouldShow = !conditionValue || conditionValue.trim() === '';
+                            break;
+                        case 'is_not_empty':
+                            shouldShow = conditionValue && conditionValue.trim() !== '';
+                            break;
+                        default:
+                            shouldShow = true;
+                    }
+                    
+                    return shouldShow;
+                }
+                
+                // Update field visibility
+                function updateFieldVisibility(targetField, shouldShow) {
+                    const fieldContainer = targetField.closest('.form-field');
+                    if (fieldContainer) {
+                        console.log('Condition result for field', targetField.name, ':', shouldShow ? 'SHOW' : 'HIDE');
+                        
+                        if (shouldShow) {
+                            fieldContainer.style.display = 'block';
+                            fieldContainer.style.opacity = '1';
+                            // Enable the field
+                            if (targetField.type === 'checkbox' || targetField.type === 'radio') {
+                                targetField.disabled = false;
+                            } else {
+                                targetField.disabled = false;
+                            }
+                        } else {
+                            fieldContainer.style.display = 'none';
+                            fieldContainer.style.opacity = '0';
+                            // Disable the field and clear its value
+                            if (targetField.type === 'checkbox' || targetField.type === 'radio') {
+                                targetField.disabled = true;
+                                targetField.checked = false;
+                            } else {
+                                targetField.disabled = true;
+                                targetField.value = '';
+                            }
+                        }
+                    } else {
+                        console.warn('Field container not found for field:', targetField.name);
+                    }
+                }
+                
+                // Submit form
+                function submitForm() {
+                    var form = document.getElementById('dynamic-form');
+                    var submitButton = form.querySelector('.submit-button');
+                    var messagesContainer = document.getElementById('form-messages');
+                    
+                    // Show loading state
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Submitting...';
+                    submitButton.style.backgroundColor = '#6c757d';
+                    
+                    // Clear previous messages
+                    messagesContainer.innerHTML = '';
+                    
+                    // Collect form data (async for file processing)
+                    collectFormData().then(function(formData) {
+                        console.log('Form data before validation:', formData);
+                        
+                        // Validate form
+                        if (!validateForm(formData)) {
+                            submitButton.disabled = false;
+                            submitButton.textContent = formConfig.submit_button_text || 'Submit';
+                            submitButton.style.backgroundColor = formConfig.primary_color || '#007bff';
+                            return;
+                        }
+                        
+                        // Submit form
+                        var requestBody = JSON.stringify({
+                            form_data: formData
+                        });
+                        console.log('Submitting form data:', requestBody);
+                        
+                        fetch(baseUrl + '/dynamic-form/submit/' + formConfig.token, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                        },
+                        body: requestBody
+                    })
+                    .then(function(response) {
+                        console.log('Response status:', response.status);
+                        return response.json();
+                    })
+                    .then(function(data) {
+                        console.log('Response data:', data);
+                        
+                        // Handle JSON-RPC response format
+                        if (data.result) {
+                            data = data.result;
+                        }
+                        
+                        if (data.success) {
+                            showMessage('success', data.message || 'Form submitted successfully!');
+                            form.reset();
+                        } else {
+                            showMessage('error', data.error || 'An error occurred while submitting the form.');
+                        }
+                    })
+                    .catch(function(error) {
+                        showMessage('error', 'An error occurred. Please try again.');
+                        console.error('Error:', error);
+                    })
+                    .finally(function() {
+                        submitButton.disabled = false;
+                        submitButton.textContent = formConfig.submit_button_text || 'Submit';
+                        submitButton.style.backgroundColor = formConfig.primary_color || '#007bff';
+                    });
+                    }).catch(function(error) {
+                        showMessage('error', 'Error processing form data: ' + error.message);
+                        submitButton.disabled = false;
+                        submitButton.textContent = formConfig.submit_button_text || 'Submit';
+                        submitButton.style.backgroundColor = formConfig.primary_color || '#007bff';
+                    });
+                }
+                
+                // Collect form data
+                function collectFormData() {
+                    var form = document.getElementById('dynamic-form');
+                    var formData = {};
+                    
+                    var fields = form.querySelectorAll('input, select, textarea');
+                    var filePromises = [];
+                    
+                    fields.forEach(function(field) {
+                        if (field.type === 'checkbox') {
+                            formData[field.name] = field.checked;
+                        } else if (field.type === 'radio') {
+                            if (field.checked) {
+                                formData[field.name] = field.value;
+                            }
+                        } else if (field.type === 'file') {
+                            if (field.files.length > 0) {
+                                var file = field.files[0];
+                                var fieldName = field.name;
+                                var filePromise = convertFileToBase64(file).then(function(base64Data) {
+                                    formData[fieldName] = {
+                                        name: file.name,
+                                        data: base64Data,
+                                        type: file.type,
+                                        size: file.size
+                                    };
+                                    console.log('File processed for field:', fieldName, 'Size:', file.size);
+                                }).catch(function(error) {
+                                    console.error('Error processing file for field:', fieldName, error);
+                                    formData[fieldName] = null;
+                                });
+                                filePromises.push(filePromise);
+                            } else {
+                                formData[field.name] = null;
+                            }
+                        } else {
+                            formData[field.name] = field.value;
+                        }
+                    });
+                    
+                    console.log('Initial form data:', formData);
+                    console.log('File promises count:', filePromises.length);
+                    
+                    // Return a promise that resolves when all files are processed
+                    if (filePromises.length > 0) {
+                        return Promise.all(filePromises).then(function() {
+                            console.log('Final form data after file processing:', formData);
+                            return formData;
+                        });
+                    } else {
+                        return Promise.resolve(formData);
+                    }
+                }
+                
+                // Convert file to base64
+                function convertFileToBase64(file) {
+                    console.log('Converting file to base64:', file.name, 'Size:', file.size, 'Type:', file.type);
+                    
+                    return new Promise(function(resolve, reject) {
+                        var reader = new FileReader();
+                        reader.onload = function() {
+                            console.log('File read successfully, result length:', reader.result.length);
+                            // Remove the data URL prefix to get just the base64 data
+                            var base64Data = reader.result.split(',')[1];
+                            console.log('Base64 data length:', base64Data.length);
+                            resolve(base64Data);
+                        };
+                        reader.onerror = function(error) {
+                            console.error('Error reading file:', error);
+                            reject(new Error('Failed to read file: ' + error));
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                
+                // Validate form
+                function validateForm(formData) {
+                    var fields = formConfig.fields || [];
+                    var isValid = true;
+                    
+                    fields.forEach(function(field) {
+                        var value = formData[field.name];
+                        var fieldElement = document.getElementById(field.name);
+                        
+                        // Clear previous errors
+                        clearFieldError(fieldElement);
+                        
+                                                        // Required validation
+                                if (field.required && (!value || value === '')) {
+                            showFieldError(fieldElement, 'This field is required.');
+                            isValid = false;
+                            return;
+                        }
+                        
+                                                        // Type-specific validation
+                                if (value && value !== '') {
+                            if (!validateFieldValue(field, value)) {
+                                isValid = false;
+                            }
+                        }
+                    });
+                    
+                    return isValid;
+                }
+                
+                // Validate field value
+                function validateFieldValue(field, value) {
+                    var fieldElement = document.getElementById(field.name);
+                    
+                    // Email validation
+                    if (field.type === 'email') {
+                        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(value)) {
+                            showFieldError(fieldElement, 'Please enter a valid email address.');
+                            return false;
+                        }
+                    }
+                    
+                    // Length validation
+                    if (field.validation_rules) {
+                        var rules = field.validation_rules;
+                        
+                        // Length validation for text-based fields
+                        if (rules.min_length && value.length < rules.min_length) {
+                            showFieldError(fieldElement, 'Minimum length is ' + rules.min_length + ' characters.');
+                            return false;
+                        }
+                        
+                        if (rules.max_length && value.length > rules.max_length) {
+                            showFieldError(fieldElement, 'Maximum length is ' + rules.max_length + ' characters.');
+                            return false;
+                        }
+                        
+                        // Value validation only for numeric field types
+                        var numericFieldTypes = ['number', 'integer', 'float'];
+                        if (numericFieldTypes.indexOf(field.type) !== -1) {
+                            if (rules.min_value !== undefined && parseFloat(value) < rules.min_value) {
+                                showFieldError(fieldElement, 'Minimum value is ' + rules.min_value + '.');
+                                return false;
+                            }
+                            
+                            if (rules.max_value !== undefined && parseFloat(value) > rules.max_value) {
+                                showFieldError(fieldElement, 'Maximum value is ' + rules.max_value + '.');
+                                return false;
+                            }
+                        }
+                        
+                        if (rules.pattern) {
+                            var regex = new RegExp(rules.pattern);
+                            if (!regex.test(value)) {
+                                showFieldError(fieldElement, 'Format is invalid.');
+                                return false;
+                            }
+                        }
+                    }
+                    
+                    return true;
+                }
+                
+                // Show field error
+                function showFieldError(fieldElement, message) {
+                    if (!fieldElement) return;
+                    
+                    fieldElement.style.borderColor = '#dc3545';
+                    
+                    var errorDiv = document.createElement('div');
+                    errorDiv.className = 'field-error';
+                    errorDiv.textContent = message;
+                    errorDiv.style.cssText = `
+                        color: #dc3545;
+                        font-size: 14px;
+                        margin-top: 5px;
+                    `;
+                    
+                    fieldElement.parentNode.appendChild(errorDiv);
+                }
+                
+                // Clear field error
+                function clearFieldError(fieldElement) {
+                    if (!fieldElement) return;
+                    
+                    fieldElement.style.borderColor = '#e9ecef';
+                    
+                    var errorDiv = fieldElement.parentNode.querySelector('.field-error');
+                    if (errorDiv) {
+                        errorDiv.remove();
+                    }
+                }
+                
+                // Show message
+                function showMessage(type, message) {
+                    console.log('Showing message:', type, message);
+                    var messagesContainer = document.getElementById('form-messages');
+                    console.log('Messages container:', messagesContainer);
+                    
+                    if (!messagesContainer) {
+                        console.error('Messages container not found!');
+                        return;
+                    }
+                    
+                    var messageDiv = document.createElement('div');
+                    messageDiv.className = 'form-message message-' + type;
+                    
+                    var icon = type === 'success' ? '✓' : (type === 'error' ? '✕' : 'ℹ');
+                    var bgColor = type === 'success' ? '#d4edda' : (type === 'error' ? '#f8d7da' : '#d1ecf1');
+                    var textColor = type === 'success' ? '#155724' : (type === 'error' ? '#721c24' : '#0c5460');
+                    var borderColor = type === 'success' ? '#c3e6cb' : (type === 'error' ? '#f5c6cb' : '#bee5eb');
+                    var iconBg = type === 'success' ? '#28a745' : (type === 'error' ? '#dc3545' : '#17a2b8');
+                    
+                    messageDiv.innerHTML = `
+                        <span style="
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 28px;
+                            height: 28px;
+                            border-radius: 50%;
+                            background-color: ${iconBg};
+                            color: white;
+                            font-size: 14px;
+                            font-weight: bold;
+                            flex-shrink: 0;
+                            margin-right: 12px;
+                        ">${icon}</span>
+                        <span>${message}</span>
+                    `;
+                    
+                    messageDiv.style.cssText = `
+                        padding: 18px 20px;
+                        border-radius: 8px;
+                        margin-bottom: 20px;
+                        display: flex;
+                        align-items: center;
+                        background: linear-gradient(135deg, ${bgColor} 0%, ${bgColor}dd 100%);
+                        color: ${textColor};
+                        border-left: 4px solid ${borderColor};
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                        font-weight: 500;
+                        font-size: 15px;
+                        line-height: 1.6;
+                        animation: slideIn 0.3s ease-out;
+                    `;
+                    
+                    messagesContainer.appendChild(messageDiv);
+                    
+                    // Auto-remove success messages after 5 seconds
+                    if (type === 'success') {
+                        setTimeout(function() {
+                            messageDiv.remove();
+                        }, 5000);
+                    }
+                }
+                
+                // Setup progress bar
+                function setupProgressBar() {
+                    console.log('[Progress Bar] Starting setup...');
+                    console.log('[Progress Bar] Form config ID:', formConfig.id);
+                    console.log('[Progress Bar] Show progress bar:', formConfig.show_progress_bar);
+                    
+                    // Find the form container to scope our queries
+                    var formContainer = document.querySelector('#dynamic-form-embed-' + formConfig.id) || 
+                                       document.querySelector('.dynamic-form-embed');
+                    
+                    console.log('[Progress Bar] Form container found:', !!formContainer);
+                    if (formContainer) {
+                        console.log('[Progress Bar] Container ID:', formContainer.id);
+                        console.log('[Progress Bar] Container classes:', formContainer.className);
+                    }
+                    
+                    if (!formContainer) {
+                        console.error('[Progress Bar] Form container not found for progress bar');
+                        console.error('[Progress Bar] Tried selectors: #dynamic-form-embed-' + formConfig.id + ', .dynamic-form-embed');
+                        return;
+                    }
+                    
+                    var progressFill = formContainer.querySelector('.progress-fill');
+                    console.log('[Progress Bar] Progress fill element found:', !!progressFill);
+                    if (progressFill) {
+                        console.log('[Progress Bar] Progress fill current width:', progressFill.style.width);
+                    }
+                    
+                    if (!progressFill) {
+                        console.error('[Progress Bar] Progress bar element not found in container');
+                        console.error('[Progress Bar] Searching in container:', formContainer);
+                        var allProgressElements = formContainer.querySelectorAll('.progress-fill, .progress-bar, .form-progress');
+                        console.error('[Progress Bar] Found progress-related elements:', allProgressElements.length);
+                        return;
+                    }
+                    
+                    // Function to check if a field has a value
+                    function hasValue(input) {
+                        if (!input) {
+                            console.log('[Progress Bar] hasValue: input is null/undefined');
+                            return false;
+                        }
+                        
+                        var hasVal = false;
+                        
+                        // Handle different input types
+                        if (input.type === 'checkbox') {
+                            hasVal = input.checked;
+                            console.log('[Progress Bar] hasValue: checkbox', input.name, 'checked:', hasVal);
+                            return hasVal;
+                        }
+                        
+                        if (input.type === 'radio') {
+                            // Check if any radio in the group is checked
+                            var name = input.name;
+                            var radios = formContainer.querySelectorAll('input[type="radio"][name="' + name + '"]');
+                            for (var i = 0; i < radios.length; i++) {
+                                if (radios[i].checked) {
+                                    console.log('[Progress Bar] hasValue: radio', name, 'checked');
+                                    return true;
+                                }
+                            }
+                            console.log('[Progress Bar] hasValue: radio', name, 'not checked');
+                            return false;
+                        }
+                        
+                        if (input.type === 'file') {
+                            hasVal = input.files && input.files.length > 0;
+                            console.log('[Progress Bar] hasValue: file', input.name, 'has files:', hasVal);
+                            return hasVal;
+                        }
+                        
+                        // For text inputs, selects, and textareas
+                        var value = input.value;
+                        hasVal = value !== null && value !== undefined && value.toString().trim() !== '';
+                        if (hasVal) {
+                            console.log('[Progress Bar] hasValue: input', input.name, 'type', input.type, 'has value:', value.substring(0, 20));
+                        } else {
+                            console.log('[Progress Bar] hasValue: input', input.name, 'type', input.type, 'empty or whitespace');
+                        }
+                        return hasVal;
+                    }
+                    
+                    // Update progress bar function - defined outside setTimeout so it's accessible
+                    function updateProgress() {
+                        console.log('[Progress Bar] updateProgress called');
+                        
+                        // Re-query everything to ensure we have the latest state
+                        var currentProgressFill = formContainer.querySelector('.progress-fill');
+                        if (!currentProgressFill) {
+                            console.error('[Progress Bar] Progress fill element not found during update');
+                            return;
+                        }
+                        
+                        console.log('[Progress Bar] Progress fill element found, current width:', currentProgressFill.style.width);
+                        
+                        var currentFields = formContainer.querySelectorAll('.form-field');
+                        var currentTotalFields = currentFields.length;
+                        
+                        console.log('[Progress Bar] Found', currentTotalFields, 'form fields');
+                        
+                        if (currentTotalFields === 0) {
+                            console.error('[Progress Bar] No fields found for progress calculation');
+                            return;
+                        }
+                        
+                        var filledCount = 0;
+                        var fieldDetails = [];
+                        
+                        currentFields.forEach(function(field, fieldIndex) {
+                            // Skip if field is hidden
+                            var computedStyle = window.getComputedStyle(field);
+                            var isHidden = computedStyle.display === 'none' || field.offsetParent === null;
+                            
+                            if (isHidden) {
+                                console.log('[Progress Bar] Field', fieldIndex, 'is hidden, skipping');
+                                return;
+                            }
+                            
+                            var inputs = field.querySelectorAll('input, select, textarea');
+                            console.log('[Progress Bar] Field', fieldIndex, 'has', inputs.length, 'inputs');
+                            
+                            var fieldFilled = false;
+                            var fieldInfo = {
+                                index: fieldIndex,
+                                inputs: []
+                            };
+                            
+                            inputs.forEach(function(input, inputIndex) {
+                                // Skip submit buttons and hidden fields
+                                if (input.type === 'submit' || input.type === 'hidden') {
+                                    console.log('[Progress Bar] Field', fieldIndex, 'Input', inputIndex, 'skipped (type:', input.type + ')');
+                                    return;
+                                }
+                                
+                                var inputInfo = {
+                                    name: input.name || input.id,
+                                    type: input.type,
+                                    value: input.type === 'checkbox' ? input.checked : (input.value || ''),
+                                    hasValue: false
+                                };
+                                
+                                // For radio buttons, check once per group
+                                if (input.type === 'radio') {
+                                    var name = input.name;
+                                    var alreadyChecked = formContainer.querySelector('input[type="radio"][name="' + name + '"]:checked');
+                                    if (alreadyChecked && !fieldFilled) {
+                                        fieldFilled = true;
+                                        inputInfo.hasValue = true;
+                                        console.log('[Progress Bar] Field', fieldIndex, 'Input', inputIndex, 'radio', name, 'is checked');
+                                    }
+                                } else {
+                                    var hasVal = hasValue(input);
+                                    if (hasVal && !fieldFilled) {
+                                        fieldFilled = true;
+                                    }
+                                    inputInfo.hasValue = hasVal;
+                                }
+                                
+                                fieldInfo.inputs.push(inputInfo);
+                            });
+                            
+                            fieldInfo.filled = fieldFilled;
+                            fieldDetails.push(fieldInfo);
+                            
+                            if (fieldFilled) {
+                                filledCount++;
+                                console.log('[Progress Bar] Field', fieldIndex, 'is FILLED');
+                            } else {
+                                console.log('[Progress Bar] Field', fieldIndex, 'is EMPTY');
+                            }
+                        });
+                        
+                        var progress = currentTotalFields > 0 ? (filledCount / currentTotalFields) * 100 : 0;
+                        var progressPercent = Math.min(Math.max(progress, 0), 100);
+                        
+                        console.log('[Progress Bar] ===== PROGRESS CALCULATION =====');
+                        console.log('[Progress Bar] Filled fields:', filledCount);
+                        console.log('[Progress Bar] Total fields:', currentTotalFields);
+                        console.log('[Progress Bar] Progress percentage:', progressPercent.toFixed(1) + '%');
+                        console.log('[Progress Bar] Field details:', fieldDetails);
+                        console.log('[Progress Bar] Setting progress fill width to:', progressPercent + '%');
+                        
+                        currentProgressFill.style.width = progressPercent + '%';
+                        
+                        console.log('[Progress Bar] Progress fill width after update:', currentProgressFill.style.width);
+                        console.log('[Progress Bar] ====================================');
+                    }
+                    
+                    // Wait a bit for fields to be fully rendered
+                    console.log('[Progress Bar] Waiting 300ms for fields to render...');
+                    setTimeout(function() {
+                        console.log('[Progress Bar] Timeout completed, searching for fields...');
+                        
+                        // Get all form fields within the form container
+                        var fields = formContainer.querySelectorAll('.form-field');
+                        var totalFields = fields.length;
+                        
+                        console.log('[Progress Bar] Found', totalFields, 'fields with class .form-field');
+                        
+                        if (totalFields === 0) {
+                            console.error('[Progress Bar] No form fields found for progress bar. Retrying...');
+                            console.error('[Progress Bar] Container HTML:', formContainer.innerHTML.substring(0, 500));
+                            
+                            // Retry after a longer delay
+                            setTimeout(function() {
+                                console.log('[Progress Bar] Retry: Searching again...');
+                                var retryFields = formContainer.querySelectorAll('.form-field');
+                                console.log('[Progress Bar] Retry: Found', retryFields.length, 'fields');
+                                if (retryFields.length > 0) {
+                                    console.log('[Progress Bar] Retry: Calling setupProgressBar again');
+                                    setupProgressBar();
+                                } else {
+                                    console.error('[Progress Bar] Retry: Still no fields found');
+                                }
+                            }, 500);
+                            return;
+                        }
+                        
+                        // Log field details
+                        console.log('[Progress Bar] Field details:');
+                        fields.forEach(function(field, index) {
+                            var inputs = field.querySelectorAll('input, select, textarea');
+                            console.log('[Progress Bar]   Field', index + ':', {
+                                className: field.className,
+                                inputs: inputs.length,
+                                inputTypes: Array.from(inputs).map(function(i) { return i.type || i.tagName; })
+                            });
+                        });
+                        
+                        // Initial update
+                        console.log('[Progress Bar] Running initial progress update...');
+                        updateProgress();
+                        
+                        // Add event listeners using event delegation on the form
+                        var formElement = formContainer.querySelector('#dynamic-form');
+                        console.log('[Progress Bar] Form element found:', !!formElement);
+                        
+                        if (formElement) {
+                            console.log('[Progress Bar] Setting up event delegation on form element');
+                            
+                            // Use event delegation on the form element
+                            formElement.addEventListener('input', function(e) {
+                                console.log('[Progress Bar] INPUT event triggered on:', e.target.name || e.target.id, 'type:', e.target.type);
+                                if (e.target && e.target.tagName && 
+                                    (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) {
+                                    if (e.target.type !== 'submit' && e.target.type !== 'hidden') {
+                                        console.log('[Progress Bar] Calling updateProgress after input event');
+                                        setTimeout(updateProgress, 10); // Small delay to ensure value is updated
+                                    }
+                                }
+                            }, true); // Use capture phase
+                            
+                            formElement.addEventListener('change', function(e) {
+                                console.log('[Progress Bar] CHANGE event triggered on:', e.target.name || e.target.id, 'type:', e.target.type);
+                                if (e.target && e.target.tagName && 
+                                    (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA')) {
+                                    if (e.target.type !== 'submit' && e.target.type !== 'hidden') {
+                                        console.log('[Progress Bar] Calling updateProgress after change event');
+                                        setTimeout(updateProgress, 10);
+                                    }
+                                }
+                            }, true);
+                            
+                            formElement.addEventListener('click', function(e) {
+                                if (e.target && (e.target.type === 'checkbox' || e.target.type === 'radio')) {
+                                    console.log('[Progress Bar] CLICK event triggered on:', e.target.name || e.target.id, 'type:', e.target.type);
+                                    console.log('[Progress Bar] Calling updateProgress after click event');
+                                    setTimeout(updateProgress, 10);
+                                }
+                            }, true);
+                            
+                            // Also listen for keyup for text inputs
+                            formElement.addEventListener('keyup', function(e) {
+                                if (e.target && e.target.tagName && 
+                                    (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) {
+                                    if (e.target.type !== 'submit' && e.target.type !== 'hidden' && 
+                                        e.target.type !== 'checkbox' && e.target.type !== 'radio') {
+                                        console.log('[Progress Bar] KEYUP event triggered on:', e.target.name || e.target.id);
+                                        setTimeout(updateProgress, 10);
+                                    }
+                                }
+                            }, true);
+                            
+                            console.log('[Progress Bar] Event listeners attached successfully');
+                        } else {
+                            console.warn('[Progress Bar] Form element not found, using fallback method');
+                            // Fallback: add listeners to individual inputs
+                            console.log('[Progress Bar] Adding listeners to', fields.length, 'individual fields');
+                            var listenerCount = 0;
+                            fields.forEach(function(field, fieldIndex) {
+                                var inputs = field.querySelectorAll('input, select, textarea');
+                                inputs.forEach(function(input, inputIndex) {
+                                    // Skip submit buttons and hidden fields
+                                    if (input.type === 'submit' || input.type === 'hidden') {
+                                        return;
+                                    }
+                                    
+                                    console.log('[Progress Bar] Adding listeners to field', fieldIndex, 'input', inputIndex, input.name || input.id);
+                                    
+                                    // Add multiple event listeners for different field types
+                                    input.addEventListener('input', function() { 
+                                        console.log('[Progress Bar] Input event on', input.name || input.id);
+                                        setTimeout(updateProgress, 10); 
+                                    });
+                                    input.addEventListener('change', function() { 
+                                        console.log('[Progress Bar] Change event on', input.name || input.id);
+                                        setTimeout(updateProgress, 10); 
+                                    });
+                                    input.addEventListener('keyup', function() { 
+                                        console.log('[Progress Bar] Keyup event on', input.name || input.id);
+                                        setTimeout(updateProgress, 10); 
+                                    });
+                                    
+                                    listenerCount += 3;
+                                    
+                                    // For checkboxes and radios
+                                    if (input.type === 'checkbox' || input.type === 'radio') {
+                                        input.addEventListener('click', function() { 
+                                            console.log('[Progress Bar] Click event on', input.name || input.id);
+                                            setTimeout(updateProgress, 10); 
+                                        });
+                                        listenerCount++;
+                                    }
+                                });
+                            });
+                            console.log('[Progress Bar] Added', listenerCount, 'event listeners to individual inputs');
+                        }
+                        
+                        // Store updateProgress globally for debugging
+                        window.updateFormProgress = updateProgress;
+                        console.log('[Progress Bar] Setup complete! updateProgress available at window.updateFormProgress');
+                        
+                    }, 300); // Increased timeout to ensure fields are rendered
+                }
+                
+                // Initialize form
+                function initializeForm() {
+                    // Check if document body exists
+                    if (!document.body) {
+                        console.error('Document body not found. Waiting for DOM to be ready...');
+                        setTimeout(initializeForm, 100);
+                        return;
+                    }
+                    
+                    // Add layout-specific CSS styles
+                    var layout = formConfig.layout || 'standard';
+                    if (layout === 'accordion') {
+                        var style = document.createElement('style');
+                        style.textContent = `
+                            .layout-accordion .form-group {
+                                margin-bottom: 10px;
+                                border: 1px solid #e9ecef;
+                                border-radius: 8px;
+                                overflow: hidden;
+                            }
+                            .layout-accordion .form-group-header {
+                                padding: 15px 20px;
+                                background: #f8f9fa;
+                                cursor: pointer;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                font-weight: 500;
+                                color: #495057;
+                            }
+                            .layout-accordion .form-group-header:hover {
+                                background: #e9ecef;
+                            }
+                            .layout-accordion .form-group-header::after {
+                                content: '+';
+                                font-size: 20px;
+                                font-weight: bold;
+                                color: ${formConfig.primary_color || '#007bff'};
+                            }
+                            .layout-accordion .form-group.active .form-group-header::after {
+                                content: '−';
+                            }
+                            .layout-accordion .form-group-content {
+                                padding: 0 20px;
+                                max-height: 0;
+                                overflow: hidden;
+                                transition: max-height 0.3s ease, padding 0.3s ease;
+                            }
+                            .layout-accordion .form-group.active .form-group-content {
+                                padding: 20px;
+                                max-height: 1000px;
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                    
+                    var container = createFormContainer();
+                    var header = createFormHeader();
+                    var body = createFormBody();
+                    
+                    if (header) {
+                        container.appendChild(header);
+                    }
+                    container.appendChild(body);
+                    
+                    // Get the fields container from the created form body
+                    var fieldsContainer = body.querySelector('#form-fields');
+                    var form = body.querySelector('#dynamic-form');
+                    
+                    if (!fieldsContainer) {
+                        console.error('Fields container not found in form body');
+                        return;
+                    }
+                    
+                    // Render fields
+                    var fields = formConfig.fields || [];
+                    
+                    fields.forEach(function(field) {
+                        var fieldElement = createFieldElement(field);
+                        if (fieldElement) {
+                            fieldsContainer.appendChild(fieldElement);
+                        }
+                    });
+                    
+                    // Setup form submission
+                    if (form) {
+                        setupFormSubmission(form);
+                    }
+                    
+                    // Setup conditional logic
+                    setupConditionalLogic();
+                    
+                    // Apply positioning based on form configuration
+                    applyFormPositioning(container);
+                    
+                    // Find where to append the form
+                    var targetContainer = null;
+                    var containerId = null;
+                    
+                    // Option 1: Get container ID from the script tag's data attribute
+                    var scripts = document.getElementsByTagName('script');
+                    for (var i = 0; i < scripts.length; i++) {
+                        if (scripts[i].src && scripts[i].src.indexOf('/dynamic-form/view/') !== -1) {
+                            // Check for data-container-id attribute
+                            containerId = scripts[i].getAttribute('data-container-id');
+                            
+                            // If not found, check query parameter in src URL
+                            if (!containerId) {
+                                var urlParams = new URLSearchParams(scripts[i].src.split('?')[1] || '');
+                                containerId = urlParams.get('container');
+                            }
+                            
+                            // If still not found, check for data-target attribute
+                            if (!containerId) {
+                                containerId = scripts[i].getAttribute('data-target');
+                            }
+                            
+                            break;
+                        }
+                    }
+                    
+                    // Option 2: Look for the container element by ID
+                    if (containerId) {
+                        targetContainer = document.getElementById(containerId);
+                        if (!targetContainer) {
+                            console.warn('Container element with ID "' + containerId + '" not found. Appending to document.body');
+                        }
+                    }
+                    
+                    // Option 3: If no container ID specified, try default 'dynamic-form-container'
+                    if (!targetContainer) {
+                        targetContainer = document.getElementById('dynamic-form-container');
+                    }
+                    
+                    // Option 4: If still no container, append after script tag (for inline positioning)
+                    if (!targetContainer) {
+                        for (var i = 0; i < scripts.length; i++) {
+                            if (scripts[i].src && scripts[i].src.indexOf('/dynamic-form/view/') !== -1) {
+                                // If position is not modal/center, append after script
+                                if (formConfig.position !== 'modal' && formConfig.position !== 'center') {
+                                    if (scripts[i].parentNode) {
+                                        if (scripts[i].nextSibling) {
+                                            scripts[i].parentNode.insertBefore(container, scripts[i].nextSibling);
+                                        } else {
+                                            scripts[i].parentNode.appendChild(container);
+                                        }
+                                        console.log('Form appended after script tag');
+                                        
+                                        // Setup progress bar AFTER form is appended to DOM
+                                        if (formConfig.show_progress_bar) {
+                                            console.log('[Progress Bar] show_progress_bar is true, calling setupProgressBar after form append...');
+                                            setTimeout(function() {
+                                                setupProgressBar();
+                                            }, 50);
+                                        }
+                                        return;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    
+                    // Option 5: Default to document.body
+                    if (!targetContainer) {
+                        targetContainer = document.body;
+                    }
+                    
+                    // Append form to target container
+                    targetContainer.appendChild(container);
+                    
+                    console.log('Form appended to:', targetContainer.id || targetContainer.tagName || 'container');
+                    
+                    // Setup progress bar AFTER form is appended to DOM
+                    if (formConfig.show_progress_bar) {
+                        console.log('[Progress Bar] show_progress_bar is true, calling setupProgressBar after form append...');
+                        // Small delay to ensure DOM is fully updated
+                        setTimeout(function() {
+                            setupProgressBar();
+                        }, 50);
+                    } else {
+                        console.log('[Progress Bar] show_progress_bar is false, skipping progress bar setup');
+                    }
+                }
+                
+                // Apply form positioning
+                function applyFormPositioning(container) {
+                    var position = formConfig.position || 'center';
+                    
+                    switch (position) {
+                        case 'center':
+                            container.style.cssText += `
+                                position: fixed;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                z-index: 1000;
+                                max-height: 90vh;
+                                overflow-y: auto;
+                            `;
+                            break;
+                        case 'top':
+                            container.style.cssText += `
+                                position: fixed;
+                                top: 20px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                z-index: 1000;
+                                max-height: 90vh;
+                                overflow-y: auto;
+                            `;
+                            break;
+                        case 'bottom':
+                            container.style.cssText += `
+                                position: fixed;
+                                bottom: 20px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                z-index: 1000;
+                                max-height: 90vh;
+                                overflow-y: auto;
+                            `;
+                            break;
+                        case 'left':
+                            container.style.cssText += `
+                                position: fixed;
+                                top: 50%;
+                                left: 20px;
+                                transform: translateY(-50%);
+                                z-index: 1000;
+                                max-height: 90vh;
+                                overflow-y: auto;
+                            `;
+                            break;
+                        case 'right':
+                            container.style.cssText += `
+                                position: fixed;
+                                top: 50%;
+                                right: 20px;
+                                transform: translateY(-50%);
+                                z-index: 1000;
+                                max-height: 90vh;
+                                overflow-y: auto;
+                            `;
+                            break;
+                        case 'full-width':
+                            container.style.cssText += `
+                                position: relative;
+                                width: 100%;
+                                max-width: none;
+                                margin: 0;
+                            `;
+                            break;
+                        case 'inline':
+                        default:
+                            container.style.cssText += `
+                                position: relative;
+                                margin: 20px auto;
+                            `;
+                            break;
+                    }
+                }
+                
+                // Initialize when DOM is ready
+                function waitForBody() {
+                    if (document.body) {
+                        initializeForm();
+                    } else {
+                        setTimeout(waitForBody, 100);
+                    }
+                }
+                
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', waitForBody);
+                } else {
+                    waitForBody();
+                }
+                
+            })();
+            ]]>
+        </template>
+        
+    </data>
+</odoo>

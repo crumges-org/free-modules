@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Field Tree View -->
+        <record id="view_dynamic_form_field_tree" model="ir.ui.view">
+            <field name="name">dynamic.form.field.tree</field>
+            <field name="model">dynamic.form.field</field>
+            <field name="arch" type="xml">
+                <list string="Form Fields">
+                    <field name="sequence" widget="handle"/>
+                    <field name="label"/>
+                    <field name="field_type"/>
+                    <field name="options_count" invisible="field_type not in ['select', 'radio', 'checkbox']"/>
+                    <field name="options_preview" invisible="field_type not in ['select', 'radio', 'checkbox']"/>
+                    <field name="required"/>
+                    <field name="width"/>
+                    <field name="conditional_logic"/>
+                    <field name="active"/>
+                    <button name="action_configure_options" 
+                            type="object" 
+                            icon="fa-cog" 
+                            string="Configure Options"
+                            invisible="field_type not in ['select', 'radio', 'checkbox']"
+                            help="Configure options for this field"/>
+                </list>
+            </field>
+        </record>
+        
+        <!-- Field Form View -->
+        <record id="view_dynamic_form_field_form" model="ir.ui.view">
+            <field name="name">dynamic.form.field.form</field>
+            <field name="model">dynamic.form.field</field>
+            <field name="arch" type="xml">
+                <form string="Form Field">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="form_id"/>
+                                <field name="name"/>
+                                <field name="label"/>
+                                <field name="field_type"/>
+                                <field name="required"/>
+                                <field name="readonly"/>
+                                <field name="width"/>
+                            </group>
+                            <group>
+                                <field name="placeholder"/>
+                                <field name="default_value"/>
+                                <field name="css_class"/>
+                                <field name="active"/>
+                                <field name="sequence"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <!-- Validation Tab -->
+                            <page string="Validation" name="validation">
+                                <group>
+                                    <group>
+                                        <field name="min_length"/>
+                                        <field name="max_length"/>
+                                        <field name="pattern"/>
+                                    </group>
+                                    <group>
+                                        <field name="min_value" invisible="field_type != 'number'"/>
+                                        <field name="max_value" invisible="field_type != 'number'"/>
+                                    </group>
+                                </group>
+                            </page>
+                            
+                            <!-- Options Tab -->
+                            <page string="Options" name="options" invisible="field_type not in ['select', 'radio', 'checkbox']">
+                                <group>
+                                    <field name="options" widget="textarea" 
+                                           placeholder="Enter options, one per line.&#10;Example:&#10;Option 1&#10;Option 2&#10;Option 3"
+                                           invisible="field_type not in ['select', 'radio', 'checkbox']"/>
+                                    <field name="help_text" placeholder="Enter help text for this field"/>
+                                </group>
+                                <div class="alert alert-info" role="alert">
+                                    <strong>Instructions:</strong>
+                                    <ul>
+                                        <li>Enter each option on a separate line</li>
+                                        <li>For dropdown fields: Options will appear in a dropdown menu</li>
+                                        <li>For radio buttons: Options will appear as radio button choices</li>
+                                        <li>For checkboxes: Options will appear as individual checkboxes</li>
+                                    </ul>
+                                </div>
+                            </page>
+                            
+                            <!-- File Settings Tab -->
+                            <page string="File Settings" name="file_settings" invisible="field_type != 'file'">
+                                <group>
+                                    <field name="allowed_file_types" invisible="field_type != 'file'"/>
+                                    <field name="max_file_size" invisible="field_type != 'file'"/>
+                                </group>
+                            </page>
+                            
+                            <!-- Conditional Logic Tab -->
+                            <page string="Conditional Logic" name="conditional_logic">
+                                <group>
+                                    <field name="conditional_logic"/>
+                                    <field name="use_multi_condition" invisible="not conditional_logic"/>
+                                    <field name="condition_logic_type" invisible="not use_multi_condition"/>
+                                </group>
+                                
+                                <!-- Single Condition Section -->
+                                <group invisible="use_multi_condition">
+                                    <field name="condition_field_id" invisible="not conditional_logic"/>
+                                    <field name="condition_field_type" invisible="not conditional_logic" readonly="1"/>
+                                    <field name="condition_operator" invisible="not conditional_logic"/>
+                                    <field name="condition_value" invisible="not conditional_logic" 
+                                           placeholder="Enter the value to compare against. For checkboxes, use 'true' or 'false'"/>
+                                </group>
+                                
+                                <!-- Multi-Condition Section -->
+                                <group invisible="not use_multi_condition">
+                                    <field name="condition_ids" invisible="not use_multi_condition">
+                                        <list editable="bottom">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="name"/>
+                                            <field name="condition_field_id"/>
+                                            <field name="condition_field_name" readonly="1"/>
+                                            <field name="operator"/>
+                                            <field name="value"/>
+                                            <field name="active"/>
+                                        </list>
+                                    </field>
+                                </group>
+                                
+                                <div class="alert alert-info" role="alert" invisible="not conditional_logic">
+                                    <strong>Condition Value Guidelines:</strong>
+                                    <ul>
+                                        <li><strong>Text/Email/Textarea:</strong> Enter the exact text to match</li>
+                                        <li><strong>Number:</strong> Enter a numeric value</li>
+                                        <li><strong>Dropdown/Radio:</strong> Enter one of the option values exactly</li>
+                                        <li><strong>Checkbox:</strong> Use 'true' for checked, 'false' for unchecked</li>
+                                        <li><strong>Date:</strong> Use YYYY-MM-DD format</li>
+                                        <li><strong>File:</strong> Use 'true' if file is selected, 'false' if not</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="alert alert-warning" role="alert" invisible="not use_multi_condition">
+                                    <strong>Multi-Condition Logic:</strong>
+                                    <ul>
+                                        <li><strong>AND Logic:</strong> All conditions must be true for the field to show</li>
+                                        <li><strong>OR Logic:</strong> Any condition can be true for the field to show</li>
+                                        <li>Use the sequence field to reorder conditions</li>
+                                        <li>Inactive conditions are ignored</li>
+                                    </ul>
+                                </div>
+                            </page>
+                            
+                            <!-- Help Text Tab -->
+                            <page string="Help Text" name="help_text">
+                                <group>
+                                    <field name="help_text" widget="html"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Field Search View -->
+        <record id="view_dynamic_form_field_search" model="ir.ui.view">
+            <field name="name">dynamic.form.field.search</field>
+            <field name="model">dynamic.form.field</field>
+            <field name="arch" type="xml">
+                <search string="Search Form Fields">
+                    <field name="label"/>
+                    <field name="field_type"/>
+                    <field name="form_id"/>
+                    <filter string="Required Fields" name="required" domain="[('required', '=', True)]"/>
+                    <filter string="Conditional Fields" name="conditional" domain="[('conditional_logic', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Field Type" name="group_field_type" context="{'group_by': 'field_type'}"/>
+                        <filter string="Form" name="group_form" context="{'group_by': 'form_id'}"/>
+                        <filter string="Required" name="group_required" context="{'group_by': 'required'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Field Action -->
+        <record id="action_dynamic_form_field" model="ir.actions.act_window">
+            <field name="name">Form Fields</field>
+            <field name="res_model">dynamic.form.field</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first form field!
+                </p>
+                <p>
+                    Add fields to your dynamic forms. Choose from various field types
+                    and configure validation rules and conditional logic.
+                </p>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

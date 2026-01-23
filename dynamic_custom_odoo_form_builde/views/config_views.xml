@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Configuration Form View -->
+        <record id="view_dynamic_forms_config_form" model="ir.ui.view">
+            <field name="name">dynamic.forms.config.form</field>
+            <field name="model">dynamic.forms.config</field>
+            <field name="arch" type="xml">
+                <form string="Dynamic Forms Configuration">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Configuration Name"/>
+                            </h1>
+                        </div>
+                        
+                        <div class="oe_button_box" name="button_box">
+                            <button name="generate_new_security_token" 
+                                    type="object" 
+                                    string="Regenerate Security Token" 
+                                    class="oe_stat_button"
+                                    icon="fa-refresh"/>
+                            <button name="assign_demo_forms_to_models" 
+                                    type="object" 
+                                    string="Assign Demo Forms to Models" 
+                                    class="oe_stat_button"
+                                    icon="fa-link"
+                                    help="Automatically assign demo forms to their appropriate models based on installed modules"/>
+                        </div>
+                        
+                        <group>
+                            <group string="Web Access Control" name="web_access">
+                                <field name="enable_web_access"/>
+                                <field name="hide_website_interface"/>
+                                <field name="security_token" readonly="1"/>
+                                <field name="block_all_other_urls"/>
+                                <field name="allowed_form_tokens" 
+                                       placeholder="ZGVtby1mZWVkYmFjay1mb3ItMTExMTE=, dGVtbC1sZWFkLWZvcm0tNjc4OTA="/>
+                                <field name="allowed_form_tokens_decoded" readonly="1" widget="text"/>
+                            </group>
+                            
+                            <group string="Security Settings" name="security">
+                                <field name="enable_rate_limiting"/>
+                                <field name="default_rate_limit"/>
+                                <field name="enable_captcha_by_default"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group string="Embedding Settings" name="embedding">
+                                <field name="allow_javascript_embedding"/>
+                                <field name="allow_iframe_embedding"/>
+                            </group>
+                            
+                            <group string="Analytics &amp; Debug" name="analytics">
+                                <field name="enable_analytics"/>
+                                <field name="debug_mode"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Demo Forms Management" name="demo_forms">
+                                <div class="demo-forms-management-container" style="padding: 20px;">
+                                    <!-- Action Card -->
+                                    <div class="demo-action-card" style="
+                                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                        border-radius: 12px;
+                                        padding: 30px;
+                                        margin-bottom: 30px;
+                                        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+                                        text-align: center;
+                                        color: white;
+                                    ">
+                                        <div style="font-size: 48px; margin-bottom: 15px;">
+                                            <i class="fa fa-link" style="opacity: 0.9;" title="Link"></i>
+                                        </div>
+                                        <h3 style="color: white; margin: 0 0 10px 0; font-size: 24px; font-weight: 600;">
+                                            Assign Demo Forms to Models
+                                        </h3>
+                                        <p style="color: rgba(255,255,255,0.9); margin: 0 0 25px 0; font-size: 15px; line-height: 1.6;">
+                                            Automatically assign demo forms to their appropriate models based on installed Odoo modules
+                                        </p>
+                                        <button name="assign_demo_forms_to_models" 
+                                                type="object" 
+                                                string="Assign Now" 
+                                                class="btn btn-primary"
+                                                style="
+                                                    background: white;
+                                                    color: #667eea;
+                                                    border: none;
+                                                    padding: 14px 40px;
+                                                    font-size: 16px;
+                                                    font-weight: 600;
+                                                    border-radius: 8px;
+                                                    cursor: pointer;
+                                                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                                                    transition: all 0.3s ease;
+                                                "
+                                                icon="fa-link"/>
+                                    </div>
+                                    
+                                    <!-- How It Works Section -->
+                                    <div class="demo-info-section" style="
+                                        background: #f8f9fa;
+                                        border-radius: 12px;
+                                        padding: 25px;
+                                        margin-bottom: 30px;
+                                        border-left: 4px solid #667eea;
+                                    ">
+                                        <h4 style="
+                                            color: #2d3436;
+                                            margin: 0 0 15px 0;
+                                            font-size: 18px;
+                                            font-weight: 600;
+                                            display: flex;
+                                            align-items: center;
+                                            gap: 10px;
+                                        ">
+                                            <i class="fa fa-info-circle" style="color: #667eea;" title="Information"></i>
+                                            How It Works
+                                        </h4>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px;">
+                                            <div style="
+                                                background: white;
+                                                padding: 20px;
+                                                border-radius: 8px;
+                                                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                                            ">
+                                                <div style="font-size: 32px; color: #667eea; margin-bottom: 10px;">
+                                                    <i class="fa fa-search" title="Search"></i>
+                                                </div>
+                                                <h5 style="margin: 0 0 8px 0; color: #2d3436; font-size: 15px; font-weight: 600;">
+                                                    Scans Forms
+                                                </h5>
+                                                <p style="margin: 0; color: #6c757d; font-size: 13px; line-height: 1.5;">
+                                                    Scans all demo forms in the system
+                                                </p>
+                                            </div>
+                                            <div style="
+                                                background: white;
+                                                padding: 20px;
+                                                border-radius: 8px;
+                                                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                                            ">
+                                                <div style="font-size: 32px; color: #667eea; margin-bottom: 10px;">
+                                                    <i class="fa fa-check-circle" title="Check"></i>
+                                                </div>
+                                                <h5 style="margin: 0 0 8px 0; color: #2d3436; font-size: 15px; font-weight: 600;">
+                                                    Checks Modules
+                                                </h5>
+                                                <p style="margin: 0; color: #6c757d; font-size: 13px; line-height: 1.5;">
+                                                    Checks which Odoo modules are installed
+                                                </p>
+                                            </div>
+                                            <div style="
+                                                background: white;
+                                                padding: 20px;
+                                                border-radius: 8px;
+                                                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                                            ">
+                                                <div style="font-size: 32px; color: #667eea; margin-bottom: 10px;">
+                                                    <i class="fa fa-link" title="Link"></i>
+                                                </div>
+                                                <h5 style="margin: 0 0 8px 0; color: #2d3436; font-size: 15px; font-weight: 600;">
+                                                    Assigns Models
+                                                </h5>
+                                                <p style="margin: 0; color: #6c757d; font-size: 13px; line-height: 1.5;">
+                                                    Automatically assigns forms to correct models
+                                                </p>
+                                            </div>
+                                            <div style="
+                                                background: white;
+                                                padding: 20px;
+                                                border-radius: 8px;
+                                                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                                            ">
+                                                <div style="font-size: 32px; color: #667eea; margin-bottom: 10px;">
+                                                    <i class="fa fa-list-alt" title="List"></i>
+                                                </div>
+                                                <h5 style="margin: 0 0 8px 0; color: #2d3436; font-size: 15px; font-weight: 600;">
+                                                    Shows Summary
+                                                </h5>
+                                                <p style="margin: 0; color: #6c757d; font-size: 13px; line-height: 1.5;">
+                                                    Displays a summary of what was updated
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Forms Table Section -->
+                                    <div class="demo-forms-table-section" style="
+                                        background: white;
+                                        border-radius: 12px;
+                                        padding: 25px;
+                                        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                                        border: 1px solid #e9ecef;
+                                    ">
+                                        <h4 style="
+                                            color: #2d3436;
+                                            margin: 0 0 20px 0;
+                                            font-size: 18px;
+                                            font-weight: 600;
+                                            display: flex;
+                                            align-items: center;
+                                            gap: 10px;
+                                        ">
+                                            <i class="fa fa-table" style="color: #667eea;" title="Table"></i>
+                                            Forms That Will Be Assigned
+                                        </h4>
+                                        <table class="table table-bordered" style="
+                                            width: 100%;
+                                            border-collapse: collapse;
+                                            margin: 0;
+                                        ">
+                                            <thead>
+                                                <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                                    <th style="padding: 12px 15px; text-align: left; font-weight: 600; border: none;">
+                                                        <i class="fa fa-file-text-o" style="margin-right: 8px;" title="Form Name"></i>
+                                                        Form Name
+                                                    </th>
+                                                    <th style="padding: 12px 15px; text-align: left; font-weight: 600; border: none;">
+                                                        <i class="fa fa-database" style="margin-right: 8px;" title="Database"></i>
+                                                        Target Model
+                                                    </th>
+                                                    <th style="padding: 12px 15px; text-align: left; font-weight: 600; border: none;">
+                                                        <i class="fa fa-puzzle-piece" style="margin-right: 8px;" title="Module"></i>
+                                                        Required Module
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="border-bottom: 1px solid #e9ecef;">
+                                                    <td style="padding: 12px 15px; color: #2d3436; font-weight: 500;">Lead Generation Form</td>
+                                                    <td style="padding: 12px 15px;"><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; color: #667eea; font-size: 13px;">crm.lead</code></td>
+                                                    <td style="padding: 12px 15px;"><span style="background: #e3f2fd; color: #1976d2; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;">CRM</span></td>
+                                                </tr>
+                                                <tr style="border-bottom: 1px solid #e9ecef; background: #fafbfc;">
+                                                    <td style="padding: 12px 15px; color: #2d3436; font-weight: 500;">Sales Order Request</td>
+                                                    <td style="padding: 12px 15px;"><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; color: #667eea; font-size: 13px;">sale.order</code></td>
+                                                    <td style="padding: 12px 15px;"><span style="background: #fff3e0; color: #f57c00; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;">Sale</span></td>
+                                                </tr>
+                                                <tr style="border-bottom: 1px solid #e9ecef;">
+                                                    <td style="padding: 12px 15px; color: #2d3436; font-weight: 500;">Task Request Form</td>
+                                                    <td style="padding: 12px 15px;"><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; color: #667eea; font-size: 13px;">project.task</code></td>
+                                                    <td style="padding: 12px 15px;"><span style="background: #e8f5e9; color: #388e3c; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;">Project</span></td>
+                                                </tr>
+                                                <tr style="border-bottom: 1px solid #e9ecef; background: #fafbfc;">
+                                                    <td style="padding: 12px 15px; color: #2d3436; font-weight: 500;">Support Ticket</td>
+                                                    <td style="padding: 12px 15px;"><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; color: #667eea; font-size: 13px;">helpdesk.ticket</code></td>
+                                                    <td style="padding: 12px 15px;"><span style="background: #fce4ec; color: #c2185b; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;">Helpdesk</span></td>
+                                                </tr>
+                                                <tr style="border-bottom: 1px solid #e9ecef;">
+                                                    <td style="padding: 12px 15px; color: #2d3436; font-weight: 500;">Product Inquiry</td>
+                                                    <td style="padding: 12px 15px;"><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; color: #667eea; font-size: 13px;">product.template</code></td>
+                                                    <td style="padding: 12px 15px;"><span style="background: #e1f5fe; color: #0277bd; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;">Product</span></td>
+                                                </tr>
+                                                <tr style="border-bottom: 1px solid #e9ecef; background: #fafbfc;">
+                                                    <td style="padding: 12px 15px; color: #2d3436; font-weight: 500;">Product Review</td>
+                                                    <td style="padding: 12px 15px;"><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; color: #667eea; font-size: 13px;">product.template</code></td>
+                                                    <td style="padding: 12px 15px;"><span style="background: #e1f5fe; color: #0277bd; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;">Product</span></td>
+                                                </tr>
+                                                <tr style="border-bottom: none;">
+                                                    <td style="padding: 12px 15px; color: #2d3436; font-weight: 500;">Message Board</td>
+                                                    <td style="padding: 12px 15px;"><code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px; color: #667eea; font-size: 13px;">mail.message</code></td>
+                                                    <td style="padding: 12px 15px;"><span style="background: #f3e5f5; color: #7b1fa2; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500;">Mail</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <!-- Note Section -->
+                                    <div class="demo-note-section" style="
+                                        background: #fff3cd;
+                                        border-left: 4px solid #ffc107;
+                                        border-radius: 8px;
+                                        padding: 20px;
+                                        margin-top: 25px;
+                                    ">
+                                        <p style="margin: 0; color: #856404; font-size: 14px; line-height: 1.6;">
+                                            <i class="fa fa-info-circle" style="margin-right: 8px; color: #ffc107;" title="Information"></i>
+                                            <strong>Note:</strong> Forms will only be assigned if the corresponding module is installed. Forms for uninstalled modules will remain using the default <code style="background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 3px;">res.partner</code> model.
+                                        </p>
+                                    </div>
+                                </div>
+                            </page>
+                            
+                            <page string="Help &amp; Information" name="help">
+                                <div class="alert alert-info" role="alert">
+                                    <h4>Web Access Control</h4>
+                                    <p><strong>Enable Web Access:</strong> Master switch to allow/deny all web form access.</p>
+                                    <p><strong>Hide Website Interface:</strong> When enabled, completely hides the website/public interface for dynamic forms.</p>
+                                    <p><strong>Security Token:</strong> Base64-encoded security token for enhanced form access control. Use this token in external integrations.</p>
+                                    <p><strong>Block All Other URLs:</strong> When enabled, only explicitly allowed form tokens can be accessed via web URLs.</p>
+                                    <p><strong>Allowed Form Tokens:</strong> Comma-separated list of form tokens that are allowed web access. Leave empty to allow all published forms.</p>
+                                    
+                                    <h4>Example Configuration</h4>
+                                    <p>To allow only specific forms, enter their tokens:</p>
+                                    <code>ZGVtby1mZWVkYmFjay1mb3ItMTExMTE=, dGVtbC1sZWFkLWZvcm0tNjc4OTA=</code>
+                                    
+                                    <p>This will:</p>
+                                    <ul>
+                                        <li>Allow: <code>http://localhost:8006/dynamic-form/view/ZGVtby1mZWVkYmFjay1mb3ItMTExMTE=</code></li>
+                                        <li>Allow: <code>http://localhost:8006/dynamic-form/view/dGVtbC1sZWFkLWZvcm0tNjc4OTA=</code></li>
+                                        <li>Block (404): <code>http://localhost:8006/dynamic-form/view/any-other-token</code></li>
+                                    </ul>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Configuration Tree View -->
+        <record id="view_dynamic_forms_config_tree" model="ir.ui.view">
+            <field name="name">dynamic.forms.config.tree</field>
+            <field name="model">dynamic.forms.config</field>
+            <field name="arch" type="xml">
+                <list string="Dynamic Forms Configuration">
+                    <field name="name"/>
+                    <field name="enable_web_access"/>
+                    <field name="hide_website_interface"/>
+                    <field name="security_token"/>
+                    <field name="block_all_other_urls"/>
+                    <field name="allowed_form_tokens"/>
+                    <field name="allowed_form_tokens_decoded"/>
+                    <field name="enable_rate_limiting"/>
+                    <field name="enable_captcha_by_default"/>
+                    <field name="enable_analytics"/>
+                </list>
+            </field>
+        </record>
+        
+        <!-- Configuration Action -->
+        <record id="action_dynamic_forms_config" model="ir.actions.act_window">
+            <field name="name">Configuration</field>
+            <field name="res_model">dynamic.forms.config</field>
+            <field name="view_mode">form,list</field>
+            <field name="view_id" ref="view_dynamic_forms_config_form"/>
+            <field name="target">current</field>
+            <field name="context">{'default_name': 'Dynamic Forms Settings'}</field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Set up configuration with demo form tokens -->
+        <!-- This runs after demo data is loaded -->
+        <record id="default_dynamic_forms_config" model="dynamic.forms.config">
+            <field name="allowed_form_tokens" eval="'ZGVtby1jb250YWN0LWZvcm0tMTIzNDU=, ZGVtby1sZWFkLWdlbmVyYXRpb24tZm9ybQ==, ZGVtby1mZWVkYmFjay1zdXJ2ZXktZm9ybQ=='"/>
+            <field name="enable_web_access">true</field>
+            <field name="hide_website_interface">false</field>
+            <field name="security_token" eval="'ZGVtby1jb25maWd1cmF0aW9uLXNlY3VyaXR5LXRva2Vu'"/>
+        </record>
+        
+    </data>
+</odoo>

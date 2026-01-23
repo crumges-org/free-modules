@@ -1,0 +1,32 @@
+{
+    "name": "Server Monitor",
+    "version": "18.0.1.0.1",
+    "summary": "Real-time server metrics dashboard",
+    "author": "Hoang Minh Hieu",
+    "support": "hieuhoangminh1996@gmail.com",
+    "category": "Tools",
+    "depends": ["web"],
+    "external_dependencies": {"python": ["psutil"]},
+    "data": [
+        "security/server_monitor_security.xml",
+        "views/server_monitor_views.xml",
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "server_monitor/static/src/server_monitor/server_monitor.css",
+            "server_monitor/static/src/postgres_monitor/postgres_monitor.css",
+            "server_monitor/static/src/odoo_monitor/odoo_monitor.css",
+            "server_monitor/static/src/server_monitor/server_monitor.js",
+            "server_monitor/static/src/postgres_monitor/postgres_monitor.js",
+            "server_monitor/static/src/odoo_monitor/odoo_monitor.js",
+            "server_monitor/static/src/odoo_monitor/odoo_log.js",
+            "server_monitor/static/src/server_monitor/server_monitor.xml",
+            "server_monitor/static/src/postgres_monitor/postgres_monitor.xml",
+            "server_monitor/static/src/odoo_monitor/odoo_monitor.xml",
+            "server_monitor/static/src/odoo_monitor/odoo_log.xml",
+        ],
+    },
+    "application": True,
+    "license": "LGPL-3",
+    'images': ['static/description/main_screenshot.png'],
+}

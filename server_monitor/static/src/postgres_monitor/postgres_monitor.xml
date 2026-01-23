@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="server_monitor.PostgresMonitor">
+        <div class="o_server_monitor_pg">
+            <t t-if="state.error">
+                <div class="o_server_monitor_alert">
+                    <span class="o_server_monitor_alert_text" t-esc="state.error.message" />
+                    <div class="o_server_monitor_alert_actions">
+                        <button
+                            type="button"
+                            class="o_server_monitor_alert_action"
+                            t-on-click="() => this.fetchMetrics()"
+                            t-att-disabled="state.isFetching"
+                        >
+                            Retry now
+                        </button>
+                        <t t-if="state.isFetching">
+                            <span class="o_server_monitor_alert_status">Retrying...</span>
+                        </t>
+                    </div>
+                </div>
+            </t>
+
+            <div class="o_server_monitor_pg_header">
+                <div>
+                    <div class="o_server_monitor_pg_title">PostgreSQL Monitor</div>
+                    <div class="o_server_monitor_pg_meta">
+                        Last updated: <span t-esc="state.lastUpdated || '--'" />
+                    </div>
+                </div>
+                <div class="o_server_monitor_pg_controls">
+                    <label class="o_server_monitor_pg_label">
+                        Database
+                        <select
+                            class="o_server_monitor_pg_select"
+                            t-on-change="onDbChange"
+                            t-att-value="state.selectedDb"
+                        >
+                            <t t-foreach="state.dbOverview" t-as="db" t-key="db.name">
+                                <option t-att-value="db.name" t-esc="db.name" />
+                            </t>
+                        </select>
+                    </label>
+                    <label class="o_server_monitor_pg_label">
+                        Cache min %
+                        <input
+                            class="o_server_monitor_pg_input"
+                            type="number"
+                            min="1"
+                            max="100"
+                            step="1"
+                            t-att-placeholder="state.config.alertCacheHitMin ? state.config.alertCacheHitMin + '%' : '--'"
+                            t-att-value="state.alertInputs.cacheHitMin"
+                            t-on-input="(ev) => this.onAlertInputChange('cacheHitMin', ev)"
+                            t-on-change="(ev) => this.onAlertOverrideChange('cacheHitMin', ev)"
+                        />
+                    </label>
+                    <label class="o_server_monitor_pg_label">
+                        Conn max %
+                        <input
+                            class="o_server_monitor_pg_input"
+                            type="number"
+                            min="1"
+                            max="100"
+                            step="1"
+                            t-att-placeholder="state.config.alertConnPct ? state.config.alertConnPct + '%' : '--'"
+                            t-att-value="state.alertInputs.connPctMax"
+                            t-on-input="(ev) => this.onAlertInputChange('connPctMax', ev)"
+                            t-on-change="(ev) => this.onAlertOverrideChange('connPctMax', ev)"
+                        />
+                    </label>
+                </div>
+                <div class="o_server_monitor_pg_header_stats">
+                    <div class="o_server_monitor_pg_stat">
+                        <span class="o_server_monitor_pg_stat_label">Active</span>
+                        <span class="o_server_monitor_pg_stat_value" t-esc="formatNumber(state.display.connections.active)" />
+                    </div>
+                    <div class="o_server_monitor_pg_stat">
+                        <span class="o_server_monitor_pg_stat_label">Total</span>
+                        <span class="o_server_monitor_pg_stat_value" t-esc="formatNumber(state.display.connections.total)" />
+                    </div>
+                    <div class="o_server_monitor_pg_stat">
+                        <span class="o_server_monitor_pg_stat_label">Max</span>
+                        <span class="o_server_monitor_pg_stat_value" t-esc="formatNumber(state.display.connections.max)" />
+                    </div>
+                    <div class="o_server_monitor_pg_stat">
+                        <span class="o_server_monitor_pg_stat_label">Cache hit</span>
+                        <span class="o_server_monitor_pg_stat_value" t-esc="formatPercent(state.display.cacheHitRatio)" />
+                    </div>
+                    <div class="o_server_monitor_pg_stat">
+                        <span class="o_server_monitor_pg_stat_label">Conn usage</span>
+                        <span class="o_server_monitor_pg_stat_value" t-esc="formatPercent(state.display.connections.pct)" />
+                    </div>
+                </div>
+            </div>
+
+            <t t-if="state.alerts.length">
+                <div class="o_server_monitor_pg_alerts">
+                    <t t-foreach="state.alerts" t-as="alert" t-key="alert.label">
+                        <div class="o_server_monitor_pg_alert">
+                            <span class="o_server_monitor_pg_alert_label" t-esc="alert.label" />
+                            <span class="o_server_monitor_pg_alert_value" t-esc="alert.value" />
+                        </div>
+                    </t>
+                </div>
+            </t>
+
+            <div class="o_server_monitor_pg_cards">
+                <div class="o_server_monitor_pg_card">
+                    <div class="o_server_monitor_pg_card_title">Connections</div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Active</span>
+                        <span t-esc="formatNumber(state.display.connections.active)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Idle</span>
+                        <span t-esc="formatNumber(state.display.connections.idle)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Idle in TX</span>
+                        <span t-esc="formatNumber(state.display.connections.idleInTx)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Total</span>
+                        <span t-esc="formatNumber(state.display.connections.total)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Max</span>
+                        <span t-esc="formatNumber(state.display.connections.max)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Usage</span>
+                        <span t-esc="formatPercent(state.display.connections.pct)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_pg_card">
+                    <div class="o_server_monitor_pg_card_title">Database</div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Name</span>
+                        <span t-esc="state.selectedDb || '--'" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Size</span>
+                        <span t-esc="formatBytes(state.display.dbSize)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Cache hit</span>
+                        <span t-esc="formatPercent(state.display.cacheHitRatio)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Index hit</span>
+                        <span t-esc="formatPercent(state.display.indexHitRatio)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_pg_card">
+                    <div class="o_server_monitor_pg_card_title">Transactions</div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Commit</span>
+                        <span t-esc="formatNumber(state.display.transactions.commit)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Rollback</span>
+                        <span t-esc="formatNumber(state.display.transactions.rollback)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_pg_card">
+                    <div class="o_server_monitor_pg_card_title">Tuples</div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Inserted</span>
+                        <span t-esc="formatNumber(state.display.tuples.inserted)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Updated</span>
+                        <span t-esc="formatNumber(state.display.tuples.updated)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Deleted</span>
+                        <span t-esc="formatNumber(state.display.tuples.deleted)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_pg_card">
+                    <div class="o_server_monitor_pg_card_title">Locks</div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Waiting</span>
+                        <span t-esc="formatNumber(state.locks)" />
+                    </div>
+                    <t t-if="!state.lockBreakdown.length">
+                        <div class="o_server_monitor_pg_empty">No waiting locks.</div>
+                    </t>
+                    <t t-foreach="state.lockBreakdown" t-as="lock" t-key="lock.mode">
+                        <div class="o_server_monitor_pg_kv">
+                            <span t-esc="lock.mode" />
+                            <span t-esc="formatNumber(lock.count)" />
+                        </div>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_pg_card">
+                    <div class="o_server_monitor_pg_card_title">WAL / Checkpoints</div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>WAL bytes</span>
+                        <span t-esc="formatBytes(state.wal.bytes)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Checkpoints timed</span>
+                        <span t-esc="formatNumber(state.bgwriter.checkpoints_timed)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Checkpoints req</span>
+                        <span t-esc="formatNumber(state.bgwriter.checkpoints_req)" />
+                    </div>
+                    <div class="o_server_monitor_pg_kv">
+                        <span>Buffers backend</span>
+                        <span t-esc="formatNumber(state.bgwriter.buffers_backend)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="o_server_monitor_pg_charts">
+                <div class="o_server_monitor_pg_chart">
+                    <div class="o_server_monitor_pg_chart_title">Cache hit &amp; connection usage</div>
+                    <canvas t-ref="cacheCanvas" />
+                </div>
+                <div class="o_server_monitor_pg_chart">
+                    <div class="o_server_monitor_pg_chart_title">Commit vs. rollback rate</div>
+                    <canvas t-ref="transactionsCanvas" />
+                </div>
+            </div>
+
+            <div class="o_server_monitor_pg_bottom">
+                <div class="o_server_monitor_pg_card o_server_monitor_pg_card_table">
+                    <div class="o_server_monitor_pg_card_title">
+                        Long Queries (&gt; <t t-esc="state.config.slowQuerySeconds" />s)
+                    </div>
+                    <t t-if="!state.isCurrentDbSelected">
+                        <div class="o_server_monitor_pg_empty">Available for the current database only.</div>
+                    </t>
+                    <t t-if="state.isCurrentDbSelected">
+                    <t t-if="!state.longQueries.length">
+                        <div class="o_server_monitor_pg_empty">No long queries.</div>
+                    </t>
+                    <t t-if="state.longQueries.length">
+                        <table class="o_server_monitor_pg_table">
+                            <thead>
+                                <tr>
+                                    <th>PID</th>
+                                    <th>Duration</th>
+                                    <th>Query</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.longQueries" t-as="row" t-key="row.pid">
+                                    <tr>
+                                        <td t-esc="row.pid" />
+                                        <td t-esc="formatDuration(row.duration)" />
+                                        <td t-esc="row.query || '--'" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_pg_card o_server_monitor_pg_card_table">
+                    <div class="o_server_monitor_pg_card_title">Blocked Queries</div>
+                    <t t-if="!state.isCurrentDbSelected">
+                        <div class="o_server_monitor_pg_empty">Available for the current database only.</div>
+                    </t>
+                    <t t-if="state.isCurrentDbSelected">
+                    <t t-if="!state.blockedQueries.length">
+                        <div class="o_server_monitor_pg_empty">No blocked queries.</div>
+                    </t>
+                    <t t-if="state.blockedQueries.length">
+                        <table class="o_server_monitor_pg_table">
+                            <thead>
+                                <tr>
+                                    <th>PID</th>
+                                    <th>Blocking</th>
+                                    <th>Duration</th>
+                                    <th>Query</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.blockedQueries" t-as="row" t-key="row.pid">
+                                    <tr>
+                                        <td t-esc="row.pid" />
+                                        <td t-esc="row.blocking_pids || '--'" />
+                                        <td t-esc="formatDuration(row.duration)" />
+                                        <td t-esc="row.query || '--'" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_pg_card o_server_monitor_pg_card_table">
+                    <div class="o_server_monitor_pg_card_title">pg_stat_statements</div>
+                    <t t-if="!state.isCurrentDbSelected">
+                        <div class="o_server_monitor_pg_empty">Available for the current database only.</div>
+                    </t>
+                    <t t-if="state.isCurrentDbSelected">
+                    <t t-if="!state.statStatements.length">
+                        <div class="o_server_monitor_pg_empty">No statement stats.</div>
+                    </t>
+                    <t t-if="state.statStatements.length">
+                        <table class="o_server_monitor_pg_table">
+                            <thead>
+                                <tr>
+                                    <th>Calls</th>
+                                    <th>Total</th>
+                                    <th>Mean</th>
+                                    <th>Query</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.statStatements" t-as="row" t-key="row.query">
+                                    <tr>
+                                        <td t-esc="formatNumber(row.calls)" />
+                                        <td t-esc="formatMs(row.total_time)" />
+                                        <td t-esc="formatMs(row.mean_time)" />
+                                        <td t-esc="row.query || '--'" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_pg_card o_server_monitor_pg_card_table">
+                    <div class="o_server_monitor_pg_card_title">Autovacuum</div>
+                    <t t-if="!state.isCurrentDbSelected">
+                        <div class="o_server_monitor_pg_empty">Available for the current database only.</div>
+                    </t>
+                    <t t-if="state.isCurrentDbSelected">
+                    <t t-if="!state.autovacuum.length">
+                        <div class="o_server_monitor_pg_empty">No autovacuum data.</div>
+                    </t>
+                    <t t-if="state.autovacuum.length">
+                        <table class="o_server_monitor_pg_table">
+                            <thead>
+                                <tr>
+                                    <th>Table</th>
+                                    <th>Dead</th>
+                                    <th>Last auto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.autovacuum" t-as="row" t-key="row.table">
+                                    <tr>
+                                        <td t-esc="row.table" />
+                                        <td t-esc="formatNumber(row.dead_tup)" />
+                                        <td t-esc="formatTimestamp(row.last_autovacuum)" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_pg_card o_server_monitor_pg_card_table">
+                    <div class="o_server_monitor_pg_card_title">Databases</div>
+                    <t t-if="!state.dbOverview.length">
+                        <div class="o_server_monitor_pg_empty">No database stats.</div>
+                    </t>
+                    <t t-if="state.dbOverview.length">
+                        <table class="o_server_monitor_pg_table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Size</th>
+                                    <th>Conn</th>
+                                    <th>Cache</th>
+                                    <th>Index</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.dbOverview" t-as="row" t-key="row.name">
+                                    <tr>
+                                        <td t-esc="row.name" />
+                                        <td t-esc="formatBytes(row.size)" />
+                                        <td t-esc="formatNumber(row.connections)" />
+                                        <td t-esc="formatPercent(row.cache_hit_ratio)" />
+                                        <td t-esc="formatPercent(row.index_hit_ratio)" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_pg_card o_server_monitor_pg_card_table">
+                    <div class="o_server_monitor_pg_card_title">Warnings</div>
+                    <t t-if="!state.warnings.length and !state.errors.length">
+                        <div class="o_server_monitor_pg_empty">No warnings.</div>
+                    </t>
+                    <t t-if="state.warnings.length || state.errors.length">
+                        <ul class="o_server_monitor_pg_list">
+                            <t t-foreach="state.warnings" t-as="warning" t-key="warning">
+                                <li t-esc="warning" />
+                            </t>
+                            <t t-foreach="state.errors" t-as="error" t-key="error">
+                                <li t-esc="'error: ' + error" />
+                            </t>
+                        </ul>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

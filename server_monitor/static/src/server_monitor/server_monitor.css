@@ -1,0 +1,333 @@
+.o_server_monitor {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    overflow: auto;
+    height: 100%;
+    gap: 24px;
+    padding: 24px;
+    align-items: start;
+    box-sizing: border-box;
+}
+
+.o_server_monitor_sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.o_server_monitor_item {
+    border: 0;
+    background: transparent;
+    text-align: left;
+    padding: 12px 14px;
+    border-radius: 8px;
+    color: #0f4c4c;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.o_server_monitor_item.is-active {
+    background: #00a39b;
+    color: #ffffff;
+}
+
+.o_server_monitor_item_title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.o_server_monitor_item_sublabel {
+    font-weight: 500;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.o_server_monitor_item_value {
+    font-size: 12px;
+    opacity: 0.9;
+    white-space: pre-line;
+}
+
+.o_server_monitor_chart {
+    display: flex;
+    flex-direction: column;
+    min-height: 360px;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 16px 20px 20px;
+    align-self: start;
+    height: auto;
+}
+
+.o_server_monitor_alert {
+    border: 1px solid #f7c7c4;
+    background: #fff4f4;
+    color: #9c2b1f;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.o_server_monitor_alert_actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.o_server_monitor_alert_action {
+    border: 0;
+    background: #ff6b5a;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.o_server_monitor_alert_action[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.o_server_monitor_alert_status {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.o_server_monitor_chart_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 16px;
+}
+
+.o_server_monitor_chart_controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.o_server_monitor_thresholds {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.o_server_monitor_thresholds_label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #3a4a5b;
+}
+
+.o_server_monitor_threshold {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #3a4a5b;
+}
+
+.o_server_monitor_threshold_input {
+    width: 70px;
+    border: 1px solid #d9dde3;
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-size: 12px;
+    color: #1f2d3d;
+    background: #ffffff;
+}
+
+.o_server_monitor_alerts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.o_server_monitor_alert_chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #fff4e6;
+    color: #8a4b08;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.o_server_monitor_alert_threshold {
+    opacity: 0.7;
+    font-weight: 500;
+}
+
+.o_server_monitor_chart_heading {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.o_server_monitor_chart_title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2d3d;
+}
+
+.o_server_monitor_chart_meta {
+    font-size: 12px;
+    color: #6b6b6b;
+}
+
+.o_server_monitor_chart_meta_label {
+    margin-right: 6px;
+    font-weight: 600;
+}
+
+.o_server_monitor_stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.o_server_monitor_stat {
+    background: #f7f8fa;
+    border-radius: 6px;
+    padding: 6px 10px;
+    display: flex;
+    gap: 6px;
+    font-size: 12px;
+    color: #1f2d3d;
+}
+
+.o_server_monitor_stat_label {
+    font-weight: 600;
+    color: #3a4a5b;
+}
+
+.o_server_monitor_chart_canvas {
+    position: relative;
+    flex: 0 0 auto;
+    height: clamp(240px, 42vh, 420px);
+    min-height: 240px;
+}
+
+.o_server_monitor_chart_canvas canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.o_server_monitor_details {
+    margin-top: 16px;
+    column-width: 240px;
+    column-gap: 16px;
+}
+
+.o_server_monitor_detail_section {
+    background: #f8f9fb;
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    break-inside: avoid;
+    margin-bottom: 16px;
+}
+
+.o_server_monitor_detail_title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1f2d3d;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.o_server_monitor_detail_subtitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: #3a4a5b;
+    margin-top: 4px;
+}
+
+.o_server_monitor_detail_item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    color: #1f2d3d;
+    line-height: 1.45;
+}
+
+.o_server_monitor_detail_label {
+    font-weight: 600;
+    color: #3a4a5b;
+}
+
+.o_server_monitor_detail_value {
+    text-align: right;
+    color: #1f2d3d;
+    word-break: break-word;
+}
+
+.o_server_monitor_detail_note {
+    font-size: 12px;
+    color: #6b6b6b;
+}
+
+.o_server_monitor_detail_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 6px;
+}
+
+.o_server_monitor_detail_chip {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 6px 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #1f2d3d;
+}
+
+@media (max-width: 992px) {
+    .o_server_monitor {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .o_server_monitor_chart {
+        min-height: 320px;
+    }
+
+    .o_server_monitor_chart_header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .o_server_monitor_stats {
+        justify-content: flex-start;
+    }
+
+    .o_server_monitor_details {
+        column-width: 200px;
+    }
+
+    .o_server_monitor_chart_canvas {
+        min-height: 240px;
+    }
+}

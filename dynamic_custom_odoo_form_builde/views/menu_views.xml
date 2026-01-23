@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Main Menu -->
+        <menuitem id="menu_dynamic_forms_root"
+                  name="Dynamic Forms"
+                  web_icon="dynamic_custom_odoo_form_builde,static/description/icon.png"
+                  sequence="50"/>
+        
+        <!-- Forms Menu -->
+        <menuitem id="menu_dynamic_forms"
+                  name="Forms"
+                  parent="menu_dynamic_forms_root"
+                  sequence="10"/>
+        
+        <menuitem id="menu_dynamic_form"
+                  name="Forms"
+                  parent="menu_dynamic_forms"
+                  action="action_dynamic_form"
+                  sequence="10"/>
+        
+        <menuitem id="menu_dynamic_form_field"
+                  name="Form Fields"
+                  parent="menu_dynamic_forms"
+                  action="action_dynamic_form_field"
+                  sequence="20"/>
+        
+        <!-- Submissions Menu -->
+        <menuitem id="menu_dynamic_forms_submissions"
+                  name="Submissions"
+                  parent="menu_dynamic_forms_root"
+                  sequence="20"/>
+        
+        <menuitem id="menu_dynamic_form_submission"
+                  name="Form Submissions"
+                  parent="menu_dynamic_forms_submissions"
+                  action="action_dynamic_form_submission"
+                  sequence="10"/>
+        
+        <!-- Email Notifications Menu -->
+        <menuitem id="menu_dynamic_forms_email"
+                  name="Email Notifications"
+                  parent="menu_dynamic_forms_root"
+                  sequence="30"/>
+        
+        <menuitem id="menu_dynamic_form_email_notification"
+                  name="Email Notifications"
+                  parent="menu_dynamic_forms_email"
+                  action="action_dynamic_form_email_notification"
+                  sequence="10"/>
+        
+        <!-- Configuration Menu -->
+        <menuitem id="menu_dynamic_forms_config"
+                  name="Configuration"
+                  parent="menu_dynamic_forms_root"
+                  sequence="100"/>
+        
+        <menuitem id="menu_dynamic_forms_config_settings"
+                  name="Settings"
+                  parent="menu_dynamic_forms_config"
+                  action="action_dynamic_forms_config"
+                  sequence="10"/>
+        
+        <!-- Reporting Menu -->
+        <menuitem id="menu_dynamic_forms_reporting"
+                  name="Reporting"
+                  parent="menu_dynamic_forms_root"
+                  sequence="90"/>
+        
+        <menuitem id="menu_dynamic_forms_analytics"
+                  name="Analytics Dashboard"
+                  parent="menu_dynamic_forms_reporting"
+                  action="action_dynamic_forms_analytics"
+                  sequence="10"/>
+        
+        <menuitem id="menu_dynamic_forms_submission_statistics"
+                  name="Submission Statistics"
+                  parent="menu_dynamic_forms_reporting"
+                  action="action_dynamic_forms_submission_statistics"
+                  sequence="20"/>
+        
+        <menuitem id="menu_dynamic_forms_pdf_reports"
+                  name="PDF Reports"
+                  parent="menu_dynamic_forms_reporting"
+                  action="action_dynamic_form_submission"
+                  sequence="30"/>
+        
+    </data>
+</odoo>

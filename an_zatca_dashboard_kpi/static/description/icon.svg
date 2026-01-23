@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Purple background -->
+  <rect width="128" height="128" rx="16" fill="#714B67"/>
+
+  <!-- White card background -->
+  <rect x="14" y="14" width="100" height="100" rx="8" fill="white"/>
+
+  <!-- KPI boxes -->
+  <!-- Sent (green) -->
+  <rect x="22" y="22" width="42" height="38" rx="4" fill="#d4edda"/>
+  <circle cx="43" cy="36" r="8" fill="#28a745"/>
+  <path d="M39 36 L42 39 L48 33" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="30" y="48" width="26" height="4" rx="2" fill="#28a745"/>
+
+  <!-- Pending (blue) -->
+  <rect x="70" y="22" width="42" height="38" rx="4" fill="#cce5ff"/>
+  <circle cx="91" cy="36" r="8" fill="#17a2b8"/>
+  <circle cx="91" cy="36" r="4" fill="none" stroke="white" stroke-width="2"/>
+  <line x1="91" y1="34" x2="91" y2="36" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <line x1="91" y1="36" x2="93" y2="38" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <rect x="78" y="48" width="26" height="4" rx="2" fill="#17a2b8"/>
+
+  <!-- Errors (red) -->
+  <rect x="22" y="66" width="42" height="38" rx="4" fill="#f8d7da"/>
+  <circle cx="43" cy="80" r="8" fill="#dc3545"/>
+  <text x="43" y="85" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" font-weight="bold">!</text>
+  <rect x="30" y="92" width="26" height="4" rx="2" fill="#dc3545"/>
+
+  <!-- Warnings (yellow) -->
+  <rect x="70" y="66" width="42" height="38" rx="4" fill="#fff3cd"/>
+  <path d="M91 72 L99 88 L83 88 Z" fill="#ffc107"/>
+  <text x="91" y="86" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle" font-weight="bold">!</text>
+  <rect x="78" y="92" width="26" height="4" rx="2" fill="#ffc107"/>
+
+  <!-- ZATCA text badge -->
+  <rect x="34" y="108" width="60" height="14" rx="7" fill="#006c35"/>
+  <text x="64" y="118" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle" font-weight="bold">ZATCA</text>
+</svg>

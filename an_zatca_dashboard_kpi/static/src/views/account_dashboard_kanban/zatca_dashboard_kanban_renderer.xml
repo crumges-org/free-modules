@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="an_zatca_dashboard_kpi.ZatcaDashboardKanbanRenderer" t-inherit="account.DashboardKanbanRenderer" t-inherit-mode="primary">
+        <xpath expr="//div[@t-ref='root']" position="before">
+            <ZatcaKPIDashboard/>
+        </xpath>
+    </t>
+</templates>

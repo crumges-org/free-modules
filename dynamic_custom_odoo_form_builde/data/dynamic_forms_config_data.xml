@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Default Dynamic Forms Configuration -->
+        <record id="default_dynamic_forms_config" model="dynamic.forms.config">
+            <field name="name">Dynamic Forms Settings</field>
+            <field name="enable_web_access">true</field>
+            <field name="hide_website_interface">false</field>
+            <field name="security_token" eval="'ZGVtby1jb25maWd1cmF0aW9uLXNlY3VyaXR5LXRva2Vu'"/>
+            <field name="allowed_form_tokens"></field>
+            <field name="block_all_other_urls">true</field>
+            <field name="enable_rate_limiting">true</field>
+            <field name="default_rate_limit">10</field>
+            <field name="enable_captcha_by_default">true</field>
+            <field name="allow_javascript_embedding">false</field>
+            <field name="allow_iframe_embedding">false</field>
+            <field name="enable_analytics">false</field>
+            <field name="debug_mode">false</field>
+        </record>
+        
+    </data>
+</odoo>

@@ -1,0 +1,1340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Form Template -->
+        <template id="form_template" name="Dynamic Form Template">
+            <html>
+                <head>
+                    <meta charset="utf-8"/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                    <title>Dynamic Form</title>
+                    <style>
+                        /* Embedded Form Styles */
+                        
+                        /* Base Styles */
+                        * {
+                            box-sizing: border-box;
+                        }
+                        
+                        body {
+                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                            margin: 0;
+                            padding: 20px;
+                            background-color: #f8f9fa;
+                        }
+                        
+                        .dynamic-form-container {
+                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                            max-width: 800px;
+                            margin: 0 auto;
+                            background: var(--background-color, white);
+                            border-radius: var(--border-radius, 8px);
+                            box-shadow: var(--box-shadow, 0 2px 10px rgba(0,0,0,0.1));
+                            overflow: hidden;
+                            border: 1px solid var(--border-color, #e9ecef);
+                            color: var(--text-color, #333);
+                        }
+                        
+                        .form-header {
+                            padding: 30px;
+                            text-align: center;
+                            border-bottom: 1px solid var(--border-color, #e9ecef);
+                        }
+                        
+                        .form-logo {
+                            max-width: 150px;
+                            max-height: 80px;
+                            margin-bottom: 20px;
+                        }
+                        
+                        .form-title {
+                            font-size: 28px;
+                            font-weight: 600;
+                            color: var(--text-color, #333);
+                            margin: 0 0 10px 0;
+                        }
+                        
+                        .form-description {
+                            color: var(--text-muted, #666);
+                            font-size: 16px;
+                            line-height: 1.5;
+                        }
+                        
+                        .form-body {
+                            padding: 30px;
+                        }
+                        
+                        .form-field {
+                            margin-bottom: 25px;
+                        }
+                        
+                        .field-label {
+                            display: block;
+                            font-weight: 500;
+                            color: var(--text-color, #333);
+                            margin-bottom: 8px;
+                        }
+                        
+                        .field-required {
+                            color: #dc3545;
+                        }
+                        
+                        .field-input {
+                            width: 100%;
+                            padding: 12px 15px;
+                            border: 2px solid var(--border-color, #e9ecef);
+                            border-radius: 6px;
+                            font-size: 16px;
+                            transition: border-color 0.3s ease;
+                            font-family: inherit;
+                            background-color: var(--background-color, white);
+                            color: var(--text-color, #333);
+                        }
+                        
+                        .field-input:focus {
+                            outline: none;
+                            border-color: var(--primary-color, #007bff);
+                        }
+                        
+                        .field-textarea {
+                            min-height: 100px;
+                            resize: vertical;
+                        }
+                        
+                        .field-select {
+                            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+                            background-position: right 12px center;
+                            background-repeat: no-repeat;
+                            background-size: 16px;
+                            padding-right: 40px;
+                        }
+                        
+                        .field-radio-group,
+                        .field-checkbox-group {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px;
+                        }
+                        
+                        .field-radio-item,
+                        .field-checkbox-item {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+                        }
+                        
+                        .field-radio-item input,
+                        .field-checkbox-item input {
+                            width: 18px;
+                            height: 18px;
+                        }
+                        
+                        .field-radio-item label,
+                        .field-checkbox-item label {
+                            font-family: inherit;
+                            color: var(--text-color, #333);
+                            margin: 0;
+                        }
+                        
+                        .field-help {
+                            font-size: 14px;
+                            color: var(--text-muted, #666);
+                            margin-top: 5px;
+                        }
+                        
+                        .field-error {
+                            color: #dc3545;
+                            font-size: 14px;
+                            margin-top: 5px;
+                        }
+                        
+                        .form-progress {
+                            margin-bottom: 30px;
+                        }
+                        
+                        .progress-bar {
+                            width: 100%;
+                            height: 6px;
+                            background-color: #e9ecef;
+                            border-radius: 3px;
+                            overflow: hidden;
+                        }
+                        
+                        .progress-fill {
+                            height: 100%;
+                            background-color: var(--primary-color, #007bff);
+                            transition: width 0.3s ease;
+                        }
+                        
+                        .form-submit {
+                            text-align: center;
+                            margin-top: 30px;
+                        }
+                        
+                        .submit-button {
+                            background-color: var(--primary-color, #007bff);
+                            color: white;
+                            border: none;
+                            padding: 15px 40px;
+                            font-size: 18px;
+                            font-weight: 600;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            transition: background-color 0.3s ease;
+                            font-family: inherit;
+                        }
+                        
+                        .submit-button:hover {
+                            background-color: var(--primary-color-dark, #0056b3);
+                            filter: brightness(0.9);
+                        }
+                        
+                        .submit-button:disabled {
+                            background-color: #6c757d;
+                            cursor: not-allowed;
+                        }
+                        
+                        .form-message {
+                            padding: 15px;
+                            border-radius: 6px;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        }
+                        
+                        .message-success {
+                            background: linear-gradient(135deg, #d4edda 0%, #d4eddadd 100%);
+                            color: #155724;
+                            border-left: 4px solid #c3e6cb;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                            padding: 18px 20px;
+                            border-radius: 8px;
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            animation: slideIn 0.3s ease-out;
+                        }
+                        
+                        .message-error {
+                            background: linear-gradient(135deg, #f8d7da 0%, #f8d7dadd 100%);
+                            color: #721c24;
+                            border-left: 4px solid #f5c6cb;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                            padding: 18px 20px;
+                            border-radius: 8px;
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            animation: slideIn 0.3s ease-out;
+                        }
+                        
+                        .message-info {
+                            background: linear-gradient(135deg, #d1ecf1 0%, #d1ecf1dd 100%);
+                            color: #0c5460;
+                            border-left: 4px solid #bee5eb;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                            padding: 18px 20px;
+                            border-radius: 8px;
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            animation: slideIn 0.3s ease-out;
+                        }
+                        
+                        @keyframes slideIn {
+                            from {
+                                opacity: 0;
+                                transform: translateY(-10px);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                        }
+                        
+                        /* Theme Classes - Applied to form container */
+                        .dynamic-form-container.theme-light {
+                            --primary-color: #007bff;
+                            --secondary-color: #6c757d;
+                            --background-color: #fff;
+                            --text-color: #333;
+                            --border-color: #e9ecef;
+                        }
+                        
+                        .dynamic-form-container.theme-dark {
+                            --primary-color: #0d6efd;
+                            --secondary-color: #adb5bd;
+                            --background-color: #212529;
+                            --text-color: #fff;
+                            --border-color: #495057;
+                        }
+                        
+                        .dynamic-form-container.theme-blue {
+                            --primary-color: #0d6efd;
+                            --secondary-color: #6c757d;
+                            --background-color: #f8f9fa;
+                            --text-color: #212529;
+                            --border-color: #dee2e6;
+                        }
+                        
+                        .dynamic-form-container.theme-green {
+                            --primary-color: #198754;
+                            --secondary-color: #6c757d;
+                            --background-color: #f8fff9;
+                            --text-color: #212529;
+                            --border-color: #d1e7dd;
+                        }
+                        
+                        .dynamic-form-container.theme-purple {
+                            --primary-color: #6f42c1;
+                            --secondary-color: #6c757d;
+                            --background-color: #f8f5ff;
+                            --text-color: #212529;
+                            --border-color: #e2d9f3;
+                        }
+                        
+                        .dynamic-form-container.theme-orange {
+                            --primary-color: #fd7e14;
+                            --secondary-color: #6c757d;
+                            --background-color: #fff8f0;
+                            --text-color: #212529;
+                            --border-color: #ffe5cc;
+                        }
+                        
+                        .dynamic-form-container.theme-custom {
+                            --primary-color: var(--custom-primary-color, #007bff);
+                            --secondary-color: var(--custom-secondary-color, #6c757d);
+                            --background-color: var(--custom-background-color, #fff);
+                            --text-color: var(--custom-text-color, #333);
+                            --border-color: var(--custom-border-color, #e9ecef);
+                        }
+                        
+                        /* Position Classes - Applied to form container */
+                        .dynamic-form-container.position-center {
+                            max-width: 800px;
+                            margin: 0 auto;
+                        }
+                        
+                        .dynamic-form-container.position-left {
+                            max-width: 400px;
+                            margin: 0;
+                            float: left;
+                            margin-right: 20px;
+                        }
+                        
+                        .dynamic-form-container.position-right {
+                            max-width: 400px;
+                            margin: 0;
+                            float: right;
+                            margin-left: 20px;
+                        }
+                        
+                        .dynamic-form-container.position-full {
+                            max-width: 100%;
+                            margin: 0;
+                            border-radius: 0;
+                            box-shadow: none;
+                        }
+                        
+                        .dynamic-form-container.position-modal {
+                            max-width: 600px;
+                            margin: 20px auto;
+                            position: relative;
+                            z-index: 1000;
+                        }
+                        
+                        /* Modal Overlay */
+                        .modal-overlay {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, 0.5);
+                            z-index: 999;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        
+                        .modal-overlay .dynamic-form-container {
+                            margin: 0;
+                            max-height: 90vh;
+                            overflow-y: auto;
+                        }
+                        
+                        /* Responsive Design */
+                        @media (max-width: 768px) {
+                            body {
+                                padding: 10px;
+                            }
+                            
+                            .dynamic-form-container {
+                                margin: 10px;
+                                border-radius: 6px;
+                            }
+                            
+                            .form-header,
+                            .form-body {
+                                padding: 20px;
+                            }
+                            
+                            .form-title {
+                                font-size: 24px;
+                            }
+                            
+                            .submit-button {
+                                width: 100%;
+                                padding: 15px 20px;
+                            }
+                            
+                            .position-left .dynamic-form-container,
+                            .position-right .dynamic-form-container {
+                                max-width: 100%;
+                                float: none;
+                                margin: 10px 0;
+                            }
+                            
+                            .position-modal .dynamic-form-container {
+                                margin: 10px;
+                                max-height: 95vh;
+                            }
+                        }
+                        
+                        /* Animation Classes */
+                        .fade-in {
+                            animation: fadeIn 0.3s ease-in-out;
+                        }
+                        
+                        @keyframes fadeIn {
+                            from {
+                                opacity: 0;
+                                transform: translateY(10px);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
+                        }
+                        
+                        .slide-in {
+                            animation: slideIn 0.3s ease-out;
+                        }
+                        
+                        @keyframes slideIn {
+                            from {
+                                transform: translateX(-100%);
+                            }
+                            to {
+                                transform: translateX(0);
+                            }
+                        }
+                        
+                        /* Focus Indicators for Accessibility */
+                        .field-input:focus-visible,
+                        .submit-button:focus-visible {
+                            outline: 2px solid var(--primary-color, #007bff);
+                            outline-offset: 2px;
+                        }
+                        
+                        /* Loading States */
+                        .form-loading {
+                            text-align: center;
+                            padding: 40px;
+                            color: var(--text-muted, #666);
+                        }
+                        
+                        .form-loading::before {
+                            content: "Loading form...";
+                        }
+                        
+                        /* Custom CSS Injection */
+                        <t t-raw="form.custom_css or ''"/>
+                    </style>
+                </head>
+                <body>
+                    <t t-if="form.position == 'modal'">
+                        <div class="modal-overlay">
+                            <div t-att-class="'dynamic-form-container theme-' + form.theme + ' position-' + form.position">
+                                <div class="form-header">
+                                    <t t-if="form.logo">
+                                        <img t-att-src="'data:image/png;base64,' + form.logo.decode('utf-8')" 
+                                             class="form-logo" alt="Logo"/>
+                                    </t>
+                                    <h1 class="form-title"><t t-esc="form.name"/></h1>
+                                    <t t-if="form.description">
+                                        <p class="form-description"><t t-esc="form.description"/></p>
+                                    </t>
+                                </div>
+                                
+                                <div class="form-body">
+                                    <t t-if="form.show_progress_bar">
+                                        <div class="form-progress">
+                                            <div class="progress-bar">
+                                                <div class="progress-fill" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    
+                                    <div id="form-messages"></div>
+                                    
+                                    <form id="dynamic-form" novalidate="novalidate">
+                                        <div id="form-fields"></div>
+                                        
+                                        <t t-if="form.show_submit_button">
+                                            <div class="form-submit">
+                                                <button type="submit" class="submit-button">
+                                                    <t t-esc="form.submit_button_text or 'Submit'"/>
+                                                </button>
+                                            </div>
+                                        </t>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="form.position != 'modal'">
+                        <div t-att-class="'dynamic-form-container theme-' + form.theme + ' position-' + form.position">
+                            <div class="form-header">
+                                <t t-if="form.logo">
+                                    <img t-att-src="'data:image/png;base64,' + form.logo.decode('utf-8')" 
+                                         class="form-logo" alt="Logo"/>
+                                </t>
+                                <h1 class="form-title"><t t-esc="form.name"/></h1>
+                                <t t-if="form.description">
+                                    <p class="form-description"><t t-esc="form.description"/></p>
+                                </t>
+                            </div>
+                            
+                            <div class="form-body">
+                                <t t-if="form.show_progress_bar">
+                                    <div class="form-progress">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </t>
+                                
+                                <div id="form-messages"></div>
+                                
+                                <form id="dynamic-form" novalidate="novalidate">
+                                    <div id="form-fields"></div>
+                                    
+                                    <t t-if="form.show_submit_button">
+                                        <div class="form-submit">
+                                            <button type="submit" class="submit-button">
+                                                <t t-esc="form.submit_button_text or 'Submit'"/>
+                                            </button>
+                                        </div>
+                                    </t>
+                                </form>
+                            </div>
+                        </div>
+                    </t>
+                    
+                    <!-- Hidden fields for JavaScript data -->
+                    <div style="display: none;" id="form_config_data" t-esc="form_config"/>
+                    <div style="display: none;" id="base_url_data" t-esc="base_url"/>
+                    
+                    <script>
+                        //<![CDATA[
+                        // Form configuration
+                        const formConfigElement = document.getElementById('form_config_data').textContent.trim();
+                        const baseUrlElement = document.getElementById('base_url_data').textContent.trim();
+                        console.log(formConfigElement);
+                        console.log(baseUrlElement);
+                        console.log(formConfigElement);
+                        console.log(baseUrlElement);
+                        
+                        if (formConfigElement && baseUrlElement) {
+                            try {
+                                window.formConfig = JSON.parse(formConfigElement);
+                                window.baseUrl = baseUrlElement;
+                                console.log('Form Config loaded:', window.formConfig);
+                            } catch (e) {
+                                console.error('Error parsing form config:', e);
+                                window.formConfig = {};
+                                window.baseUrl = '';
+                            }
+                        } else {
+                            console.error('Hidden form data elements not found');
+                            window.formConfig = {};
+                            window.baseUrl = '';
+                        }
+                        
+                        // Debug logging
+                        console.log('Base URL:', window.baseUrl);
+                        console.log('Fields count:', window.formConfig.fields ? window.formConfig.fields.length : 0);
+                        
+                        // Initialize form when DOM is ready
+                        console.log('Script loaded, waiting for DOM...');
+                        document.addEventListener('DOMContentLoaded', function() {
+                            console.log('DOM ready, initializing form...');
+                            initializeForm();
+                        });
+                        
+                        function initializeForm() {
+                            const form = document.getElementById('dynamic-form');
+                            const fieldsContainer = document.getElementById('form-fields');
+                            
+                            if (!form || !fieldsContainer) return;
+                            
+                            // Render fields
+                            renderFields(fieldsContainer);
+                            
+                            // Setup form submission
+                            setupFormSubmission(form);
+                            
+                            // Setup conditional logic
+                            setupConditionalLogic();
+                            
+                            // Setup progress bar
+                            if (window.formConfig.show_progress_bar) {
+                                setupProgressBar();
+                            }
+                        }
+                        
+                        function renderFields(container) {
+                            const fields = window.formConfig.fields || [];
+                            console.log('Rendering fields:', fields);
+                            
+                            fields.forEach(function(field) {
+                                console.log('Creating field:', field);
+                                const fieldElement = createFieldElement(field);
+                                if (fieldElement) {
+                                    container.appendChild(fieldElement);
+                                    console.log('Field added to container');
+                                }
+                            });
+                        }
+                        
+                        function createFieldElement(field) {
+                            const fieldDiv = document.createElement('div');
+                            fieldDiv.className = 'form-field';
+                            if (field.css_class) {
+                                fieldDiv.className += ' ' + field.css_class;
+                            }
+                            fieldDiv.style.width = field.width + '%';
+                            
+                            const label = document.createElement('label');
+                            label.className = 'field-label';
+                            label.htmlFor = field.name;
+                            label.innerHTML = field.label;
+                            if (field.required) {
+                                label.innerHTML += ' <span class="field-required">*</span>';
+                            }
+                            
+                            const input = createInputElement(field);
+                            
+                            fieldDiv.appendChild(label);
+                            fieldDiv.appendChild(input);
+                            
+                            if (field.help_text) {
+                                const help = document.createElement('div');
+                                help.className = 'field-help';
+                                help.innerHTML = field.help_text;
+                                fieldDiv.appendChild(help);
+                            }
+                            
+                            return fieldDiv;
+                        }
+                        
+                        function createInputElement(field) {
+                            let input;
+                            
+                            switch (field.type) {
+                                case 'textarea':
+                                    input = document.createElement('textarea');
+                                    input.className = 'field-input field-textarea';
+                                    break;
+                                case 'select':
+                                    input = document.createElement('select');
+                                    input.className = 'field-input field-select';
+                                    if (field.options) {
+                                        field.options.forEach(function(option) {
+                                            const optionElement = document.createElement('option');
+                                            optionElement.value = option;
+                                            optionElement.textContent = option;
+                                            input.appendChild(optionElement);
+                                        });
+                                    }
+                                    break;
+                                case 'radio':
+                                    input = document.createElement('div');
+                                    input.className = 'field-radio-group';
+                                    if (field.options) {
+                                        field.options.forEach(function(option, index) {
+                                            const radioDiv = document.createElement('div');
+                                            radioDiv.className = 'field-radio-item';
+                                            
+                                            const radio = document.createElement('input');
+                                            radio.type = 'radio';
+                                            radio.name = field.name;
+                                            radio.value = option;
+                                            radio.id = field.name + '_' + index;
+                                            
+                                            const radioLabel = document.createElement('label');
+                                            radioLabel.htmlFor = field.name + '_' + index;
+                                            radioLabel.textContent = option;
+                                            
+                                            radioDiv.appendChild(radio);
+                                            radioDiv.appendChild(radioLabel);
+                                            input.appendChild(radioDiv);
+                                        });
+                                    }
+                                    break;
+                                case 'checkbox':
+                                    input = document.createElement('input');
+                                    input.type = 'checkbox';
+                                    input.className = 'field-input';
+                                    break;
+                                case 'file':
+                                    input = document.createElement('input');
+                                    input.type = 'file';
+                                    input.accept = '*/*'; // Accept all file types
+                                    input.className = 'field-input';
+                                    
+                                    // Add file change event listener for debugging
+                                    input.addEventListener('change', function() {
+                                        console.log('File input changed for field:', field.name);
+                                        console.log('Files selected:', this.files.length);
+                                        if (this.files.length > 0) {
+                                            console.log('Selected file:', this.files[0].name, 'Size:', this.files[0].size);
+                                        }
+                                    });
+                                    break;
+                                default:
+                                    input = document.createElement('input');
+                                    input.type = field.type;
+                                    input.className = 'field-input';
+                                    break;
+                            }
+                            
+                            input.name = field.name;
+                            input.id = field.name;
+                            
+                            // Add CSS class to input if specified
+                            if (field.css_class) {
+                                input.className += ' ' + field.css_class;
+                            }
+                            
+                            if (field.required) {
+                                input.required = true;
+                            }
+                            
+                            if (field.readonly) {
+                                input.readOnly = true;
+                            }
+                            
+                            if (field.placeholder) {
+                                input.placeholder = field.placeholder;
+                            }
+                            
+                            if (field.default_value && field.type !== 'file') {
+                                input.value = field.default_value;
+                            }
+                            
+                            return input;
+                        }
+                        
+                        function setupFormSubmission(form) {
+                            form.addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                submitForm();
+                            });
+                        }
+                        
+                        // Setup conditional logic
+                        function setupConditionalLogic() {
+                            const fields = window.formConfig.fields || [];
+                            
+                            fields.forEach(function(field) {
+                                if (field.conditional_logic) {
+                                    // Handle multi-condition system
+                                    if (field.conditional_logic.conditions) {
+                                        setupMultiConditionLogic(field, fields);
+                                    } else {
+                                        // Handle single condition
+                                        setupSingleConditionLogic(field, fields);
+                                    }
+                                }
+                            });
+                        }
+                        
+                        // Setup multi-condition logic
+                        function setupMultiConditionLogic(field, allFields) {
+                            const conditions = field.conditional_logic.conditions || [];
+                            const targetField = document.getElementById(field.name);
+                            
+                            if (!targetField) {
+                                console.warn('Target field not found:', field.name);
+                                return;
+                            }
+                            
+                            console.log('Setting up multi-condition logic:', {
+                                targetField: field.name,
+                                conditionsCount: conditions.length,
+                                logicType: field.conditional_logic.logic_type
+                            });
+                            
+                            // Get all condition fields
+                            const conditionFields = conditions.map(condition => {
+                                const conditionField = document.getElementById(condition.condition_field_name);
+                                if (!conditionField) {
+                                    console.warn('Condition field not found:', condition.condition_field_name);
+                                }
+                                return conditionField;
+                            }).filter(field => field !== null);
+                            
+                            // Initial check
+                            const shouldShow = checkMultiCondition(field, targetField);
+                            updateFieldVisibility(targetField, shouldShow);
+                            
+                            // Add event listeners to all condition fields
+                            conditionFields.forEach(conditionField => {
+                                conditionField.addEventListener('input', function() {
+                                    const shouldShow = checkMultiCondition(field, targetField);
+                                    updateFieldVisibility(targetField, shouldShow);
+                                });
+                                
+                                conditionField.addEventListener('change', function() {
+                                    const shouldShow = checkMultiCondition(field, targetField);
+                                    updateFieldVisibility(targetField, shouldShow);
+                                });
+                            });
+                        }
+                        
+                        // Setup single condition logic
+                        function setupSingleConditionLogic(field, allFields) {
+                            const conditionFieldData = allFields.find(f => f.id === field.conditional_logic.field_id);
+                            if (conditionFieldData) {
+                                const conditionField = document.getElementById(conditionFieldData.name);
+                                const targetField = document.getElementById(field.name);
+                                
+                                if (conditionField && targetField) {
+                                    console.log('Setting up single conditional logic:', {
+                                        conditionField: conditionFieldData.name,
+                                        targetField: field.name,
+                                        operator: field.conditional_logic.operator,
+                                        value: field.conditional_logic.value
+                                    });
+                                    
+                                    // Initial check
+                                    const shouldShow = checkSingleCondition(field, conditionField, targetField);
+                                    updateFieldVisibility(targetField, shouldShow);
+                                    
+                                    // Add event listeners
+                                    conditionField.addEventListener('input', function() {
+                                        const shouldShow = checkSingleCondition(field, conditionField, targetField);
+                                        updateFieldVisibility(targetField, shouldShow);
+                                    });
+                                    
+                                    conditionField.addEventListener('change', function() {
+                                        const shouldShow = checkSingleCondition(field, conditionField, targetField);
+                                        updateFieldVisibility(targetField, shouldShow);
+                                    });
+                                } else {
+                                    console.warn('Single conditional logic setup failed:', {
+                                        conditionFieldFound: !!conditionField,
+                                        targetFieldFound: !!targetField,
+                                        conditionFieldName: conditionFieldData.name,
+                                        targetFieldName: field.name
+                                    });
+                                }
+                            } else {
+                                console.warn('Single condition field not found for ID:', field.conditional_logic.field_id);
+                            }
+                        }
+                        
+                        // Check multi-condition logic
+                        function checkMultiCondition(field, targetField) {
+                            const logicType = field.conditional_logic.logic_type || 'and';
+                            const conditions = field.conditional_logic.conditions || [];
+                            
+                            if (conditions.length === 0) {
+                                return true;
+                            }
+                            
+                            console.log('Checking multi-condition:', {
+                                fieldName: field.name,
+                                logicType: logicType,
+                                conditionsCount: conditions.length
+                            });
+                            
+                            const results = conditions.map(condition => {
+                                const conditionField = document.getElementById(condition.condition_field_name);
+                                if (!conditionField) {
+                                    console.warn('Condition field not found:', condition.condition_field_name);
+                                    return false;
+                                }
+                                
+                                let conditionValue = conditionField.value;
+                                
+                                // Handle different field types
+                                if (conditionField.type === 'checkbox') {
+                                    conditionValue = conditionField.checked ? 'true' : 'false';
+                                } else if (conditionField.type === 'file') {
+                                    conditionValue = conditionField.files.length > 0 ? 'true' : 'false';
+                                }
+                                
+                                const result = evaluateCondition(conditionValue, condition.operator, condition.value);
+                                console.log('Condition result:', {
+                                    conditionName: condition.name,
+                                    conditionValue: conditionValue,
+                                    operator: condition.operator,
+                                    expectedValue: condition.value,
+                                    result: result
+                                });
+                                
+                                return result;
+                            });
+                            
+                            // Apply logic type
+                            let finalResult = false;
+                            if (logicType === 'and') {
+                                finalResult = results.every(result => result === true);
+                            } else { // 'or'
+                                finalResult = results.some(result => result === true);
+                            }
+                            
+                            console.log('Multi-condition final result:', {
+                                fieldName: field.name,
+                                logicType: logicType,
+                                results: results,
+                                finalResult: finalResult
+                            });
+                            
+                            return finalResult;
+                        }
+                        
+                        // Check single condition logic
+                        function checkSingleCondition(field, conditionField, targetField) {
+                            let conditionValue = conditionField.value;
+                            const operator = field.conditional_logic.operator;
+                            const expectedValue = field.conditional_logic.value;
+                            
+                            // Handle checkbox values properly
+                            if (conditionField.type === 'checkbox') {
+                                conditionValue = conditionField.checked ? 'true' : 'false';
+                            }
+                            
+                            console.log('Checking single condition:', {
+                                conditionValue: conditionValue,
+                                conditionFieldType: conditionField.type,
+                                conditionFieldChecked: conditionField.type === 'checkbox' ? conditionField.checked : 'N/A',
+                                operator: operator,
+                                expectedValue: expectedValue,
+                                fieldName: field.name
+                            });
+                            
+                            return evaluateCondition(conditionValue, operator, expectedValue);
+                        }
+                        
+                        // Evaluate single condition
+                        function evaluateCondition(conditionValue, operator, expectedValue) {
+                            let shouldShow = false;
+                            
+                            switch (operator) {
+                                case 'equals':
+                                    shouldShow = conditionValue === expectedValue;
+                                    break;
+                                case 'not_equals':
+                                    shouldShow = conditionValue !== expectedValue;
+                                    break;
+                                case 'contains':
+                                    shouldShow = conditionValue.includes(expectedValue);
+                                    break;
+                                case 'not_contains':
+                                    shouldShow = !conditionValue.includes(expectedValue);
+                                    break;
+                                case 'greater_than':
+                                    shouldShow = parseFloat(conditionValue) > parseFloat(expectedValue);
+                                    break;
+                                case 'less_than':
+                                    shouldShow = parseFloat(conditionValue) < parseFloat(expectedValue);
+                                    break;
+                                case 'is_empty':
+                                    shouldShow = !conditionValue || conditionValue.trim() === '';
+                                    break;
+                                case 'is_not_empty':
+                                    shouldShow = conditionValue && conditionValue.trim() !== '';
+                                    break;
+                                default:
+                                    shouldShow = true;
+                            }
+                            
+                            return shouldShow;
+                        }
+                        
+                        // Update field visibility
+                        function updateFieldVisibility(targetField, shouldShow) {
+                            const fieldContainer = targetField.closest('.form-field');
+                            if (fieldContainer) {
+                                console.log('Condition result for field', targetField.name, ':', shouldShow ? 'SHOW' : 'HIDE');
+                                
+                                if (shouldShow) {
+                                    fieldContainer.style.display = 'block';
+                                    fieldContainer.style.opacity = '1';
+                                    // Enable the field
+                                    if (targetField.type === 'checkbox' || targetField.type === 'radio') {
+                                        targetField.disabled = false;
+                                    } else {
+                                        targetField.disabled = false;
+                                    }
+                                } else {
+                                    fieldContainer.style.display = 'none';
+                                    fieldContainer.style.opacity = '0';
+                                    // Disable the field and clear its value
+                                    if (targetField.type === 'checkbox' || targetField.type === 'radio') {
+                                        targetField.disabled = true;
+                                        targetField.checked = false;
+                                    } else {
+                                        targetField.disabled = true;
+                                        targetField.value = '';
+                                    }
+                                }
+                            } else {
+                                console.warn('Field container not found for field:', targetField.name);
+                            }
+                        }
+                        
+                        function submitForm() {
+                            const form = document.getElementById('dynamic-form');
+                            const submitButton = form.querySelector('.submit-button');
+                            const messagesContainer = document.getElementById('form-messages');
+                            
+                            // Show loading state
+                            submitButton.disabled = true;
+                            submitButton.textContent = 'Submitting...';
+                            
+                            // Clear previous messages
+                            messagesContainer.innerHTML = '';
+                            
+                            // Collect form data (async for file processing)
+                            collectFormData().then(function(formData) {
+                                console.log('Form data before validation:', formData);
+                                
+                                // Validate form
+                                if (!validateForm(formData)) {
+                                    submitButton.disabled = false;
+                                    submitButton.textContent = window.formConfig.submit_button_text || 'Submit';
+                                    return;
+                                }
+                                
+                                // Submit form
+                                var requestBody = JSON.stringify({
+                                    form_data: formData
+                                });
+                                console.log('Submitting form data:', requestBody);
+                                
+                                fetch(window.baseUrl + '/dynamic-form/submit/' + window.formConfig.token, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                },
+                                body: JSON.stringify({
+                                    form_data: formData
+                                })
+                            })
+                            .then(response => {
+                                console.log('Response status:', response.status);
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log('Response data:', data);
+                                
+                                // Handle JSON-RPC response format
+                                if (data.result) {
+                                    data = data.result;
+                                }
+                                
+                                if (data.success) {
+                                    showMessage('success', data.message || 'Form submitted successfully!');
+                                    form.reset();
+                                } else {
+                                    showMessage('error', data.error || 'An error occurred while submitting the form.');
+                                }
+                            })
+                            .catch(error => {
+                                showMessage('error', 'An error occurred. Please try again.');
+                                console.error('Error:', error);
+                            })
+                            .finally(() => {
+                                submitButton.disabled = false;
+                                submitButton.textContent = window.formConfig.submit_button_text || 'Submit';
+                            });
+                            }).catch(function(error) {
+                                showMessage('error', 'Error processing form data: ' + error.message);
+                                submitButton.disabled = false;
+                                submitButton.textContent = window.formConfig.submit_button_text || 'Submit';
+                            });
+                        }
+                        
+                        function collectFormData() {
+                            const form = document.getElementById('dynamic-form');
+                            const formData = {};
+                            
+                            const fields = form.querySelectorAll('input, select, textarea');
+                            const filePromises = [];
+                            
+                            fields.forEach(function(field) {
+                                if (field.type === 'checkbox') {
+                                    formData[field.name] = field.checked;
+                                } else if (field.type === 'radio') {
+                                    if (field.checked) {
+                                        formData[field.name] = field.value;
+                                    }
+                                } else if (field.type === 'file') {
+                                    if (field.files.length > 0) {
+                                        const file = field.files[0];
+                                        const fieldName = field.name;
+                                        const filePromise = convertFileToBase64(file).then(function(base64Data) {
+                                            formData[fieldName] = {
+                                                name: file.name,
+                                                data: base64Data,
+                                                type: file.type,
+                                                size: file.size
+                                            };
+                                            console.log('File processed for field:', fieldName, 'Size:', file.size);
+                                        }).catch(function(error) {
+                                            console.error('Error processing file for field:', fieldName, error);
+                                            formData[fieldName] = null;
+                                        });
+                                        filePromises.push(filePromise);
+                                    } else {
+                                        formData[field.name] = null;
+                                    }
+                                } else {
+                                    formData[field.name] = field.value;
+                                }
+                            });
+                            
+                            console.log('Initial form data:', formData);
+                            console.log('File promises count:', filePromises.length);
+                            
+                            // Return a promise that resolves when all files are processed
+                            if (filePromises.length > 0) {
+                                return Promise.all(filePromises).then(function() {
+                                    console.log('Final form data after file processing:', formData);
+                                    return formData;
+                                });
+                            } else {
+                                return Promise.resolve(formData);
+                            }
+                        }
+                        
+                        // Convert file to base64
+                        function convertFileToBase64(file) {
+                            console.log('Converting file to base64:', file.name, 'Size:', file.size, 'Type:', file.type);
+                            
+                            return new Promise(function(resolve, reject) {
+                                const reader = new FileReader();
+                                reader.onload = function() {
+                                    console.log('File read successfully, result length:', reader.result.length);
+                                    // Remove the data URL prefix to get just the base64 data
+                                    const base64Data = reader.result.split(',')[1];
+                                    console.log('Base64 data length:', base64Data.length);
+                                    resolve(base64Data);
+                                };
+                                reader.onerror = function(error) {
+                                    console.error('Error reading file:', error);
+                                    reject(new Error('Failed to read file: ' + error));
+                                };
+                                reader.readAsDataURL(file);
+                            });
+                        }
+                        
+                        function validateForm(formData) {
+                            const fields = window.formConfig.fields || [];
+                            let isValid = true;
+                            
+                            fields.forEach(function(field) {
+                                const value = formData[field.name];
+                                const fieldElement = document.getElementById(field.name);
+                                
+                                // Clear previous errors
+                                clearFieldError(fieldElement);
+                                
+                                // Required validation
+                                if (field.required && (!value || value === '')) {
+                                    showFieldError(fieldElement, 'This field is required.');
+                                    isValid = false;
+                                    return;
+                                }
+                                
+                                // Type-specific validation
+                                if (value && value !== '') {
+                                    if (!validateFieldValue(field, value)) {
+                                        isValid = false;
+                                    }
+                                }
+                            });
+                            
+                            return isValid;
+                        }
+                        
+                        function validateFieldValue(field, value) {
+                            const fieldElement = document.getElementById(field.name);
+                            
+                            // Email validation
+                            if (field.type === 'email') {
+                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                if (!emailRegex.test(value)) {
+                                    showFieldError(fieldElement, 'Please enter a valid email address.');
+                                    return false;
+                                }
+                            }
+                            
+                            // Length validation
+                            if (field.validation_rules) {
+                                const rules = field.validation_rules;
+                                
+                                if (rules.min_length && value.length < rules.min_length) {
+                                    showFieldError(fieldElement, `Minimum length is ${rules.min_length} characters.`);
+                                    return false;
+                                }
+                                
+                                if (rules.max_length && value.length > rules.max_length) {
+                                    showFieldError(fieldElement, `Maximum length is ${rules.max_length} characters.`);
+                                    return false;
+                                }
+                                
+                                if (rules.min_value !== undefined && parseFloat(value) < rules.min_value) {
+                                    showFieldError(fieldElement, `Minimum value is ${rules.min_value}.`);
+                                    return false;
+                                }
+                                
+                                if (rules.max_value !== undefined && parseFloat(value) > rules.max_value) {
+                                    showFieldError(fieldElement, `Maximum value is ${rules.max_value}.`);
+                                    return false;
+                                }
+                                
+                                if (rules.pattern) {
+                                    const regex = new RegExp(rules.pattern);
+                                    if (!regex.test(value)) {
+                                        showFieldError(fieldElement, 'Format is invalid.');
+                                        return false;
+                                    }
+                                }
+                            }
+                            
+                            return true;
+                        }
+                        
+                        function showFieldError(fieldElement, message) {
+                            if (!fieldElement) return;
+                            
+                            fieldElement.style.borderColor = '#dc3545';
+                            
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'field-error';
+                            errorDiv.textContent = message;
+                            
+                            fieldElement.parentNode.appendChild(errorDiv);
+                        }
+                        
+                        function clearFieldError(fieldElement) {
+                            if (!fieldElement) return;
+                            
+                            fieldElement.style.borderColor = '#e9ecef';
+                            
+                            const errorDiv = fieldElement.parentNode.querySelector('.field-error');
+                            if (errorDiv) {
+                                errorDiv.remove();
+                            }
+                        }
+                        
+                        function showMessage(type, message) {
+                            console.log('Showing message:', type, message);
+                            const messagesContainer = document.getElementById('form-messages');
+                            console.log('Messages container:', messagesContainer);
+                            
+                            if (!messagesContainer) {
+                                console.error('Messages container not found!');
+                                return;
+                            }
+                            
+                            const messageDiv = document.createElement('div');
+                            messageDiv.className = 'form-message message-' + type;
+                            
+                            const icon = type === 'success' ? '✓' : (type === 'error' ? '✕' : 'ℹ');
+                            const bgColor = type === 'success' ? '#d4edda' : (type === 'error' ? '#f8d7da' : '#d1ecf1');
+                            const textColor = type === 'success' ? '#155724' : (type === 'error' ? '#721c24' : '#0c5460');
+                            const borderColor = type === 'success' ? '#c3e6cb' : (type === 'error' ? '#f5c6cb' : '#bee5eb');
+                            const iconBg = type === 'success' ? '#28a745' : (type === 'error' ? '#dc3545' : '#17a2b8');
+                            
+                            messageDiv.innerHTML = `
+                                <span style="
+                                    display: inline-flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 28px;
+                                    height: 28px;
+                                    border-radius: 50%;
+                                    background-color: ${iconBg};
+                                    color: white;
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    flex-shrink: 0;
+                                    margin-right: 12px;
+                                ">${icon}</span>
+                                <span>${message}</span>
+                            `;
+                            
+                            messageDiv.style.cssText = `
+                                padding: 18px 20px;
+                                border-radius: 8px;
+                                margin-bottom: 20px;
+                                display: flex;
+                                align-items: center;
+                                background: linear-gradient(135deg, ${bgColor} 0%, ${bgColor}dd 100%);
+                                color: ${textColor};
+                                border-left: 4px solid ${borderColor};
+                                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                                font-weight: 500;
+                                font-size: 15px;
+                                line-height: 1.6;
+                                animation: slideIn 0.3s ease-out;
+                            `;
+                            
+                            messagesContainer.appendChild(messageDiv);
+                            
+                            // Auto-remove success messages after 5 seconds
+                            if (type === 'success') {
+                                setTimeout(() => {
+                                    messageDiv.remove();
+                                }, 5000);
+                            }
+                        }
+                        
+                        function setupProgressBar() {
+                            const progressFill = document.querySelector('.progress-fill');
+                            if (!progressFill) return;
+                            
+                            const fields = document.querySelectorAll('.form-field');
+                            const totalFields = fields.length;
+                            
+                            fields.forEach(function(field, index) {
+                                const inputs = field.querySelectorAll('input, select, textarea');
+                                inputs.forEach(function(input) {
+                                    input.addEventListener('input', function() {
+                                        updateProgress();
+                                    });
+                                });
+                            });
+                            
+                            function updateProgress() {
+                                const filledFields = document.querySelectorAll('.form-field input:not([type="submit"]):valid, .form-field select:valid, .form-field textarea:valid');
+                                const progress = (filledFields.length / totalFields) * 100;
+                                progressFill.style.width = Math.min(progress, 100) + '%';
+                            }
+                        }
+                        //]]>
+                    </script>
+                </body>
+            </html>
+        </template>
+        
+    </data>
+</odoo>

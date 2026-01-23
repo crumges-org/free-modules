@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="server_monitor.OdooMonitor">
+        <div class="o_server_monitor_odoo">
+            <t t-if="state.error">
+                <div class="o_server_monitor_alert">
+                    <span class="o_server_monitor_alert_text" t-esc="state.error.message" />
+                    <div class="o_server_monitor_alert_actions">
+                        <button
+                            type="button"
+                            class="o_server_monitor_alert_action"
+                            t-on-click="() => this.fetchMetrics()"
+                            t-att-disabled="state.isFetching"
+                        >
+                            Retry now
+                        </button>
+                        <t t-if="state.isFetching">
+                            <span class="o_server_monitor_alert_status">Retrying...</span>
+                        </t>
+                    </div>
+                </div>
+            </t>
+
+            <div class="o_server_monitor_odoo_header">
+                <div>
+                    <div class="o_server_monitor_odoo_title">Odoo Dashboard</div>
+                    <div class="o_server_monitor_odoo_meta">
+                        <span class="o_server_monitor_odoo_meta_label">Database:</span>
+                        <span t-esc="state.dbName || '--'" />
+                    </div>
+                    <div class="o_server_monitor_odoo_meta">
+                        <span class="o_server_monitor_odoo_meta_label">Last updated:</span>
+                        <span t-esc="state.lastUpdated || '--'" />
+                    </div>
+                </div>
+                <div class="o_server_monitor_odoo_header_stats">
+                    <div class="o_server_monitor_odoo_stat">
+                        <span class="o_server_monitor_odoo_stat_label">Requests (60s)</span>
+                        <span class="o_server_monitor_odoo_stat_value" t-esc="formatNumber(state.http.summary.total_requests)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_stat">
+                        <span class="o_server_monitor_odoo_stat_label">Error rate</span>
+                        <span class="o_server_monitor_odoo_stat_value" t-esc="formatPercent(state.http.summary.error_rate)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_stat">
+                        <span class="o_server_monitor_odoo_stat_label">P95 latency</span>
+                        <span class="o_server_monitor_odoo_stat_value" t-esc="formatMs(state.http.summary.p95_ms)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_stat">
+                        <span class="o_server_monitor_odoo_stat_label">Workers</span>
+                        <span class="o_server_monitor_odoo_stat_value" t-esc="formatNumber(state.workers.count)" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="o_server_monitor_odoo_charts">
+                <div class="o_server_monitor_odoo_chart">
+                    <div class="o_server_monitor_odoo_chart_title">Requests per second</div>
+                    <canvas t-ref="requestsCanvas" />
+                </div>
+                <div class="o_server_monitor_odoo_chart">
+                    <div class="o_server_monitor_odoo_chart_title">Latency (p95 / p99)</div>
+                    <canvas t-ref="latencyCanvas" />
+                </div>
+            </div>
+
+            <div class="o_server_monitor_odoo_cards">
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">Workers</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Total</span>
+                        <span t-esc="formatNumber(state.workers.count)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Busy</span>
+                        <span t-esc="formatNumber(state.workers.busy)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>RSS total</span>
+                        <span t-esc="formatBytes(state.workers.memory_rss)" />
+                    </div>
+                    <t t-if="state.workers.processes.length">
+                        <div class="o_server_monitor_odoo_card_note">Top processes</div>
+                        <t t-foreach="state.workers.processes.slice(0, 3)" t-as="proc" t-key="proc.pid">
+                            <div class="o_server_monitor_odoo_kv">
+                                <span t-esc="proc.name + ' (' + proc.pid + ')'" />
+                                <span t-esc="formatPercent(proc.cpu_percent)" />
+                            </div>
+                        </t>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">Cron</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Total</span>
+                        <span t-esc="formatNumber(state.cron.total)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Active</span>
+                        <span t-esc="formatNumber(state.cron.active)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Running</span>
+                        <span t-esc="formatNumber(state.cron.running_count)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Overdue</span>
+                        <span t-esc="formatNumber(state.cron.overdue)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Failed</span>
+                        <span t-esc="formatNumber(state.cron.failed)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">Bus / Longpolling</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Pending</span>
+                        <span t-esc="formatNumber(state.bus.pending)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Online</span>
+                        <span t-esc="formatNumber(state.bus.online)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">Mail queue</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Outgoing</span>
+                        <span t-esc="formatNumber(state.mail.outgoing)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Failed</span>
+                        <span t-esc="formatNumber(state.mail.failed)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Sent (1h)</span>
+                        <span t-esc="formatNumber(state.mail.sent_recent)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">Filestore</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Attachments</span>
+                        <span t-esc="formatNumber(state.filestore.attachments)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>DB attachments</span>
+                        <span t-esc="formatNumber(state.filestore.db_attachments)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Size</span>
+                        <span t-esc="formatBytes(state.filestore.size)" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">Cache</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Caches</span>
+                        <span t-esc="formatNumber(state.cache.count)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Entries</span>
+                        <span t-esc="formatNumber(state.cache.entries)" />
+                    </div>
+                    <t t-if="state.cache.largest.length">
+                        <div class="o_server_monitor_odoo_card_note">Largest</div>
+                        <t t-foreach="state.cache.largest" t-as="cache" t-key="cache.name">
+                            <div class="o_server_monitor_odoo_kv">
+                                <span t-esc="cache.name" />
+                                <span t-esc="formatNumber(cache.entries)" />
+                            </div>
+                        </t>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">External services</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Mail servers</span>
+                        <span t-esc="formatNumber(state.external.mail_servers)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Payment providers</span>
+                        <span t-esc="formatNumber(state.external.payment_providers)" />
+                    </div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Attachment location</span>
+                        <span t-esc="state.external.attachment_location || '--'" />
+                    </div>
+                </div>
+
+                <div class="o_server_monitor_odoo_card">
+                    <div class="o_server_monitor_odoo_card_title">Errors</div>
+                    <div class="o_server_monitor_odoo_kv">
+                        <span>Recent errors</span>
+                        <span t-esc="formatNumber(state.errors.total)" />
+                    </div>
+                    <t t-if="state.errors.top.length">
+                        <div class="o_server_monitor_odoo_card_note">Top errors</div>
+                        <t t-foreach="state.errors.top" t-as="err" t-key="err.name">
+                            <div class="o_server_monitor_odoo_kv">
+                                <span t-esc="err.name" />
+                                <span t-esc="formatNumber(err.count)" />
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </div>
+
+            <div class="o_server_monitor_odoo_bottom">
+                <div class="o_server_monitor_odoo_card o_server_monitor_odoo_card_table o_server_monitor_odoo_card--wide">
+                    <div class="o_server_monitor_odoo_card_title">Active cron jobs</div>
+                    <t t-if="!state.cron.active_jobs.length">
+                        <div class="o_server_monitor_odoo_empty">No active cron jobs.</div>
+                    </t>
+                    <t t-if="state.cron.active_jobs.length">
+                        <table class="o_server_monitor_odoo_table">
+                            <thead>
+                                <tr>
+                                    <th>Job</th>
+                                    <th>Status</th>
+                                    <th>Next</th>
+                                    <th>Last</th>
+                                    <th>Fails</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.cron.active_jobs" t-as="row" t-key="row.id">
+                                    <tr>
+                                        <td t-esc="row.name" />
+                                        <td>
+                                            <span
+                                                class="o_server_monitor_odoo_status"
+                                                t-att-class="'o_server_monitor_odoo_status--' + row.status"
+                                                t-esc="row.status"
+                                            />
+                                        </td>
+                                        <td t-esc="formatTimestamp(row.nextcall)" />
+                                        <td t-esc="formatTimestamp(row.lastcall)" />
+                                        <td t-esc="formatNumber(row.failure_count)" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_odoo_card o_server_monitor_odoo_card_table">
+                    <div class="o_server_monitor_odoo_card_title">Slow endpoints (60s)</div>
+                    <t t-if="!state.http.slow_endpoints.length">
+                        <div class="o_server_monitor_odoo_empty">No endpoint data yet.</div>
+                    </t>
+                    <t t-if="state.http.slow_endpoints.length">
+                        <table class="o_server_monitor_odoo_table">
+                            <thead>
+                                <tr>
+                                    <th>Path</th>
+                                    <th>Count</th>
+                                    <th>Avg</th>
+                                    <th>P95</th>
+                                    <th>Error</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.http.slow_endpoints" t-as="row" t-key="row.path">
+                                    <tr>
+                                        <td t-esc="row.path" />
+                                        <td t-esc="formatNumber(row.count)" />
+                                        <td t-esc="formatMs(row.avg_ms)" />
+                                        <td t-esc="formatMs(row.p95_ms)" />
+                                        <td t-esc="formatPercent(row.error_rate)" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_odoo_card o_server_monitor_odoo_card_table">
+                    <div class="o_server_monitor_odoo_card_title">HTTP errors (60s)</div>
+                    <t t-if="!state.http.top_errors.length">
+                        <div class="o_server_monitor_odoo_empty">No HTTP errors.</div>
+                    </t>
+                    <t t-if="state.http.top_errors.length">
+                        <table class="o_server_monitor_odoo_table">
+                            <thead>
+                                <tr>
+                                    <th>Error</th>
+                                    <th>Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.http.top_errors" t-as="row" t-key="row.name">
+                                    <tr>
+                                        <td t-esc="row.name" />
+                                        <td t-esc="formatNumber(row.count)" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_odoo_card o_server_monitor_odoo_card_table">
+                    <div class="o_server_monitor_odoo_card_title">Cron failures</div>
+                    <t t-if="!state.cron.top_failed.length">
+                        <div class="o_server_monitor_odoo_empty">No failed jobs.</div>
+                    </t>
+                    <t t-if="state.cron.top_failed.length">
+                        <table class="o_server_monitor_odoo_table">
+                            <thead>
+                                <tr>
+                                    <th>Job</th>
+                                    <th>Failures</th>
+                                    <th>Next</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.cron.top_failed" t-as="row" t-key="row.name">
+                                    <tr>
+                                        <td t-esc="row.name" />
+                                        <td t-esc="formatNumber(row.failure_count)" />
+                                        <td t-esc="formatTimestamp(row.nextcall)" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+
+                <div class="o_server_monitor_odoo_card o_server_monitor_odoo_card_table">
+                    <div class="o_server_monitor_odoo_card_title">Top ORM queries</div>
+                    <t t-if="!state.orm.available">
+                        <div class="o_server_monitor_odoo_empty">pg_stat_statements not available.</div>
+                    </t>
+                    <t t-if="state.orm.available and !state.orm.statements.length">
+                        <div class="o_server_monitor_odoo_empty">No statement stats.</div>
+                    </t>
+                    <t t-if="state.orm.statements.length">
+                        <table class="o_server_monitor_odoo_table">
+                            <thead>
+                                <tr>
+                                    <th>Calls</th>
+                                    <th>Total</th>
+                                    <th>Mean</th>
+                                    <th>Query</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.orm.statements" t-as="row" t-key="row.query">
+                                    <tr>
+                                        <td t-esc="formatNumber(row.calls)" />
+                                        <td t-esc="formatMs(row.total_time)" />
+                                        <td t-esc="formatMs(row.mean_time)" />
+                                        <td t-esc="row.query || '--'" />
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

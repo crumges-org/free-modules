@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Submission Tree View -->
+        <record id="view_dynamic_form_submission_tree" model="ir.ui.view">
+            <field name="name">dynamic.form.submission.tree</field>
+            <field name="model">dynamic.form.submission</field>
+            <field name="arch" type="xml">
+                <list string="Form Submissions" multi_edit="1">
+                    <field name="name"/>
+                    <field name="form_id"/>
+                    <field name="state"/>
+                    <field name="target_record_name"/>
+                    <field name="ip_address"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+        
+        <!-- Submission Form View -->
+        <record id="view_dynamic_form_submission_form" model="ir.ui.view">
+            <field name="name">dynamic.form.submission.form</field>
+            <field name="model">dynamic.form.submission</field>
+            <field name="arch" type="xml">
+                <form string="Form Submission">
+                    <header>
+                        <button name="action_process_submission" type="object" string="Process" 
+                                class="btn-primary" invisible="state != 'submitted'"/>
+                        <button name="action_retry_processing" type="object" string="Retry" 
+                                class="btn-warning" invisible="state != 'error'"/>
+                        <button name="action_reset_to_draft" type="object" string="Reset to Draft" 
+                                class="btn-secondary" invisible="state == 'draft'"/>
+                        <button name="action_view_target_record" type="object" string="View Record" 
+                                class="btn-info" invisible="not target_record_id"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,processed"/>
+                        <button name="action_export_csv" type="object" string="Export CSV" 
+                                class="btn-secondary" icon="fa-download"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="form_id"/>
+                                <field name="target_model"/>
+                                <field name="target_record_id"/>
+                                <field name="target_record_name"/>
+                            </group>
+                            <group>
+                                <field name="ip_address"/>
+                                <field name="user_agent"/>
+                                <field name="referrer"/>
+                                <field name="processed_date"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <!-- Form Data Tab -->
+                            <page string="Form Data" name="form_data">
+                                <field name="parsed_data" readonly="1" nolabel="1"/>
+                                <div class="alert alert-info" role="alert">
+                                    <strong>Formatted JSON Data:</strong> This shows the raw form submission data in a beautifully formatted JSON structure with syntax highlighting.
+                                </div>
+                                <group>
+                                    <field name="formatted_json_data" readonly="1" widget="text" 
+                                           options="{'rows': 20}"/>
+                                </group>
+                            </page>
+                            
+                            <!-- Processing Tab -->
+                            <page string="Processing" name="processing">
+                                <group>
+                                    <field name="processing_error" readonly="1" widget="html"/>
+                                </group>
+                            </page>
+                            
+                            <!-- Attachments Tab -->
+                            <page string="Attachments" name="attachments">
+                                <field name="attachment_ids" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="mimetype"/>
+                                        <field name="file_size"/>
+                                        <field name="create_date"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Submission Search View -->
+        <record id="view_dynamic_form_submission_search" model="ir.ui.view">
+            <field name="name">dynamic.form.submission.search</field>
+            <field name="model">dynamic.form.submission</field>
+            <field name="arch" type="xml">
+                <search string="Search Form Submissions">
+                    <field name="name"/>
+                    <field name="form_id"/>
+                    <field name="target_record_name"/>
+                    <field name="ip_address"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Submitted" name="submitted" domain="[('state', '=', 'submitted')]"/>
+                    <filter string="Processed" name="processed" domain="[('state', '=', 'processed')]"/>
+                    <filter string="Error" name="error" domain="[('state', '=', 'error')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Form" name="group_form" context="{'group_by': 'form_id'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Date" name="group_date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- Submission Action -->
+        <record id="action_dynamic_form_submission" model="ir.actions.act_window">
+            <field name="name">Form Submissions</field>
+            <field name="res_model">dynamic.form.submission</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No form submissions yet!
+                </p>
+                <p>
+                    Form submissions will appear here once users start filling out your published forms.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Export Submissions to CSV Action -->
+        <record id="action_export_submissions_csv" model="ir.actions.server">
+            <field name="name">Export Submissions to CSV</field>
+            <field name="model_id" ref="model_dynamic_form_submission"/>
+            <field name="binding_model_id" ref="model_dynamic_form_submission"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    reporting = env['dynamic.forms.reporting']
+    action = reporting.export_submissions_to_csv(records.ids)
+</field>
+        </record>
+        
+        <!-- Export Submissions to PDF Action -->
+        <record id="action_export_submissions_pdf" model="ir.actions.server">
+            <field name="name">Print PDF Report</field>
+            <field name="model_id" ref="model_dynamic_form_submission"/>
+            <field name="binding_model_id" ref="model_dynamic_form_submission"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+if records:
+    report_action = env.ref('dynamic_custom_odoo_form_builde.action_form_submission_report', False)
+    if report_action:
+        action = report_action.report_action(records.ids)
+    else:
+        action = {
+            'type': 'ir.actions.report',
+            'report_name': 'dynamic_custom_odoo_form_builde.form_submission_report',
+            'report_type': 'qweb-pdf',
+            'report_file': 'dynamic_custom_odoo_form_builde.form_submission_report',
+            'context': {'active_ids': records.ids, 'active_model': 'dynamic.form.submission'},
+        }
+</field>
+        </record>
+        
+    </data>
+</odoo>

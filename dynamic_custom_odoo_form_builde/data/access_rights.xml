@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Access Rights for Dynamic Forms -->
+        <record id="access_dynamic_form_user" model="ir.model.access">
+            <field name="name">dynamic.form.user</field>
+            <field name="model_id" ref="model_dynamic_form"/>
+            <field name="group_id" ref="group_dynamic_forms_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <record id="access_dynamic_form_manager" model="ir.model.access">
+            <field name="name">dynamic.form.manager</field>
+            <field name="model_id" ref="model_dynamic_form"/>
+            <field name="group_id" ref="group_dynamic_forms_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <record id="access_dynamic_form_admin" model="ir.model.access">
+            <field name="name">dynamic.form.admin</field>
+            <field name="model_id" ref="model_dynamic_form"/>
+            <field name="group_id" ref="group_dynamic_forms_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Form Fields -->
+        <record id="access_dynamic_form_field_user" model="ir.model.access">
+            <field name="name">dynamic.form.field.user</field>
+            <field name="model_id" ref="model_dynamic_form_field"/>
+            <field name="group_id" ref="group_dynamic_forms_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <record id="access_dynamic_form_field_manager" model="ir.model.access">
+            <field name="name">dynamic.form.field.manager</field>
+            <field name="model_id" ref="model_dynamic_form_field"/>
+            <field name="group_id" ref="group_dynamic_forms_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <record id="access_dynamic_form_field_admin" model="ir.model.access">
+            <field name="name">dynamic.form.field.admin</field>
+            <field name="model_id" ref="model_dynamic_form_field"/>
+            <field name="group_id" ref="group_dynamic_forms_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Form Submissions -->
+        <record id="access_dynamic_form_submission_user" model="ir.model.access">
+            <field name="name">dynamic.form.submission.user</field>
+            <field name="model_id" ref="model_dynamic_form_submission"/>
+            <field name="group_id" ref="group_dynamic_forms_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <record id="access_dynamic_form_submission_manager" model="ir.model.access">
+            <field name="name">dynamic.form.submission.manager</field>
+            <field name="model_id" ref="model_dynamic_form_submission"/>
+            <field name="group_id" ref="group_dynamic_forms_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <record id="access_dynamic_form_submission_admin" model="ir.model.access">
+            <field name="name">dynamic.form.submission.admin</field>
+            <field name="model_id" ref="model_dynamic_form_submission"/>
+            <field name="group_id" ref="group_dynamic_forms_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Form Field Conditions -->
+        <record id="access_dynamic_form_field_condition_user" model="ir.model.access">
+            <field name="name">dynamic.form.field.condition.user</field>
+            <field name="model_id" ref="model_dynamic_form_field_condition"/>
+            <field name="group_id" ref="group_dynamic_forms_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <record id="access_dynamic_form_field_condition_manager" model="ir.model.access">
+            <field name="name">dynamic.form.field.condition.manager</field>
+            <field name="model_id" ref="model_dynamic_form_field_condition"/>
+            <field name="group_id" ref="group_dynamic_forms_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <record id="access_dynamic_form_field_condition_admin" model="ir.model.access">
+            <field name="name">dynamic.form.field.condition.admin</field>
+            <field name="model_id" ref="model_dynamic_form_field_condition"/>
+            <field name="group_id" ref="group_dynamic_forms_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Form Field Mappings -->
+        <record id="access_dynamic_form_field_mapping_user" model="ir.model.access">
+            <field name="name">dynamic.form.field.mapping.user</field>
+            <field name="model_id" ref="model_dynamic_form_field_mapping"/>
+            <field name="group_id" ref="group_dynamic_forms_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <record id="access_dynamic_form_field_mapping_manager" model="ir.model.access">
+            <field name="name">dynamic.form.field.mapping.manager</field>
+            <field name="model_id" ref="model_dynamic_form_field_mapping"/>
+            <field name="group_id" ref="group_dynamic_forms_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <record id="access_dynamic_form_field_mapping_admin" model="ir.model.access">
+            <field name="name">dynamic.form.field.mapping.admin</field>
+            <field name="model_id" ref="model_dynamic_form_field_mapping"/>
+            <field name="group_id" ref="group_dynamic_forms_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Form Email Notifications -->
+        <record id="access_dynamic_form_email_notification_user" model="ir.model.access">
+            <field name="name">dynamic.form.email.notification.user</field>
+            <field name="model_id" ref="model_dynamic_form_email_notification"/>
+            <field name="group_id" ref="group_dynamic_forms_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <record id="access_dynamic_form_email_notification_manager" model="ir.model.access">
+            <field name="name">dynamic.form.email.notification.manager</field>
+            <field name="model_id" ref="model_dynamic_form_email_notification"/>
+            <field name="group_id" ref="group_dynamic_forms_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <record id="access_dynamic_form_email_notification_admin" model="ir.model.access">
+            <field name="name">dynamic.form.email.notification.admin</field>
+            <field name="model_id" ref="model_dynamic_form_email_notification"/>
+            <field name="group_id" ref="group_dynamic_forms_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Forms Configuration -->
+        <record id="access_dynamic_forms_config_admin" model="ir.model.access">
+            <field name="name">dynamic.forms.config.admin</field>
+            <field name="model_id" ref="model_dynamic_forms_config"/>
+            <field name="group_id" ref="group_dynamic_forms_admin"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <record id="access_dynamic_forms_config_manager" model="ir.model.access">
+            <field name="name">dynamic.forms.config.manager</field>
+            <field name="model_id" ref="model_dynamic_forms_config"/>
+            <field name="group_id" ref="group_dynamic_forms_manager"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Form Field Options Wizard -->
+        <record id="access_dynamic_form_field_options_wizard" model="ir.model.access">
+            <field name="name">dynamic.form.field.options.wizard</field>
+            <field name="model_id" ref="model_dynamic_form_field_options_wizard"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Form Field Options Wizard Line -->
+        <record id="access_dynamic_form_field_options_wizard_line" model="ir.model.access">
+            <field name="name">dynamic.form.field.options.wizard.line</field>
+            <field name="model_id" ref="model_dynamic_form_field_options_wizard_line"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Forms Analytics (Transient Model) -->
+        <record id="access_dynamic_forms_analytics" model="ir.model.access">
+            <field name="name">dynamic.forms.analytics</field>
+            <field name="model_id" ref="model_dynamic_forms_analytics"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+        <!-- Access Rights for Dynamic Forms Reporting (Transient Model) -->
+        <record id="access_dynamic_forms_reporting" model="ir.model.access">
+            <field name="name">dynamic.forms.reporting</field>
+            <field name="model_id" ref="model_dynamic_forms_reporting"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        
+    </data>
+</odoo>

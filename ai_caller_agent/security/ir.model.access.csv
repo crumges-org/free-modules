@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_automation_campaign_user,automation.campaign user,model_automation_campaign,base.group_user,1,1,1,1
+access_automation_campaign_log_user,automation.campaign.log user,model_automation_campaign_log,base.group_user,1,1,1,0
