@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <!--
+        Popup Comment Composer Widget
+    -->
+    <t t-name="mx_elearning_plus.PopupCommentComposer">
+        <div t-if="widget.options['display_composer']" class="modal fade" id="commentpopupcomposer" tabindex="-1" role="dialog" aria-labelledby="commentpopupcomposerlabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title o_comment_popup_composer_label" style="color: black;" id="commentpopupcomposerlabel">
+                            Add your comment
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="o_portal_chatter_composer"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

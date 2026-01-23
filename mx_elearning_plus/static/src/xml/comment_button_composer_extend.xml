@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="mx_elearning_plus.portalComposer" t-inherit="portal.Composer" t-inherit-mode="primary">
+        <xpath expr="//button[hasclass('o_portal_chatter_composer_btn')]" position="replace">
+            <t t-if="widget.options['is_comment_fullscreen']">
+                <button t-attf-data-action="/mail/slide/comment" class="o_portal_chatter_composer_btn btn btn-primary" type="submit">Send</button>
+            </t>
+            <t t-else="">
+                <button t-attf-data-action="/mail/message/post" class="o_portal_chatter_composer_btn btn btn-primary" type="submit">Send</button>
+            </t>
+        </xpath>
+    </t>
+</templates>
