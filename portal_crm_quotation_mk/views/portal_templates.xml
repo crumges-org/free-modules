@@ -1,0 +1,1242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Add CRM entries to Portal Home -->
+    <template id="portal_my_home_crm" name="Show CRM in Portal Home" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_service_category_enable" t-value="True"/>
+        </xpath>
+        <xpath expr="//div[@id='portal_service_category']" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                <t t-set="title">CRM Dashboard</t>
+                <t t-set="url" t-value="'/my/crm/dashboard'"/>
+                <t t-set="text">Manage your leads, opportunities, and quotations</t>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                <t t-set="title">My Leads</t>
+                <t t-set="url" t-value="'/my/leads'"/>
+                <t t-set="text">View and manage your leads</t>
+                <t t-set="placeholder_count" t-value="'lead_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                <t t-set="title">My Opportunities</t>
+                <t t-set="url" t-value="'/my/opportunities'"/>
+                <t t-set="text">Track your sales opportunities</t>
+                <t t-set="placeholder_count" t-value="'opportunity_count'"/>
+            </t>
+        </xpath>
+    </template>
+    
+    <!-- CRM Dashboard -->
+    <template id="portal_crm_dashboard" name="CRM Dashboard">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">CRM Dashboard</t>
+            <div class="container mt-3 mb-5">
+                <!-- Header -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h1 class="mb-0">CRM Dashboard</h1>
+                        <p class="text-muted">Welcome to your CRM management portal</p>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Cards -->
+                <div class="row mb-4">
+                    <!-- Total Leads Card -->
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 shadow-sm crm-stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted mb-1">Total Leads</h6>
+                                        <h2 class="mb-0"><t t-esc="total_leads"/></h2>
+                                        <small class="text-muted">This Month: <t t-esc="this_month_leads"/></small>
+                                    </div>
+                                    <div class="crm-icon crm-icon-leads">📋</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Opportunities Card -->
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 shadow-sm crm-stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted mb-1">Opportunities</h6>
+                                        <h2 class="mb-0"><t t-esc="total_opportunities"/></h2>
+                                        <small class="text-muted">This Month: <t t-esc="this_month_opportunities"/></small>
+                                    </div>
+                                    <div class="crm-icon crm-icon-opportunities">💼</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Quotations Card -->
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 shadow-sm crm-stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted mb-1">Quotations</h6>
+                                        <h2 class="mb-0"><t t-esc="total_quotations"/></h2>
+                                        <small class="text-muted">This Month: <t t-esc="this_month_quotations"/></small>
+                                    </div>
+                                    <div class="crm-icon crm-icon-quotations">📄</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expected Revenue Card -->
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 shadow-sm crm-stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-muted mb-1">Expected Revenue</h6>
+                                        <h2 class="mb-0"><t t-esc="'%.0f' % total_expected_revenue"/></h2>
+                                        <small class="text-muted">Total Pipeline</small>
+                                    </div>
+                                    <div class="crm-icon crm-icon-revenue">💰</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opportunity Status Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 shadow-sm crm-stat-card crm-stat-active">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-1">Active</h6>
+                                <h3 class="mb-0"><t t-esc="active_opportunities"/></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 shadow-sm crm-stat-card crm-stat-won">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-1">Won</h6>
+                                <h3 class="mb-0"><t t-esc="won_opportunities"/></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 shadow-sm crm-stat-card crm-stat-lost">
+                            <div class="card-body">
+                                <h6 class="text-muted mb-1">Lost</h6>
+                                <h3 class="mb-0"><t t-esc="lost_opportunities"/></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activities Alert -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="alert" t-attf-class="alert-#{overdue_activities > 0 and 'danger' or (due_activities > 0 and 'warning' or 'info')}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>Activities:</strong>
+                                    <span t-if="overdue_activities > 0" class="badge bg-danger ms-2">
+                                        <t t-esc="overdue_activities"/> Overdue
+                                    </span>
+                                    <span t-if="due_activities > 0" class="badge bg-warning ms-2">
+                                        <t t-esc="due_activities"/> Due Today
+                                    </span>
+                                    <span class="ms-2">Total: <t t-esc="total_activities"/></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 mb-2">
+                                        <a href="/my/crm/dashboard" class="btn btn-outline-primary w-100">
+                                            <i class="fa fa-dashboard me-2"></i>Dashboard
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <a href="/my/leads" class="btn btn-outline-primary w-100">
+                                            <i class="fa fa-list me-2"></i>My Leads
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <a href="/my/opportunities" class="btn btn-outline-primary w-100">
+                                            <i class="fa fa-briefcase me-2"></i>My Opportunities
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createLeadModal">
+                                            <i class="fa fa-plus me-2"></i>Create Lead
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Leads/Opportunities -->
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h5 class="mb-0">Recent Leads/Opportunities</h5>
+                            </div>
+                            <div class="card-body">
+                                <div t-if="not recent_leads" class="text-muted">No recent leads/opportunities</div>
+                                <div t-if="recent_leads" class="list-group list-group-flush">
+                                    <t t-foreach="recent_leads" t-as="lead">
+                                        <a t-attf-href="/my/#{lead.type == 'opportunity' and 'opportunity' or 'lead'}/#{lead.id}" 
+                                           class="list-group-item list-group-item-action">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <h6 class="mb-1"><t t-esc="lead.name"/></h6>
+                                                    <small class="text-muted">
+                                                        <t t-if="lead.contact_name"><t t-esc="lead.contact_name"/> - </t>
+                                                        <t t-esc="lead.partner_name or 'No Company'"/>
+                                                    </small>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span t-attf-class="badge bg-#{lead.type == 'opportunity' and 'info' or 'secondary'}">
+                                                        <t t-esc="lead.type == 'opportunity' and 'Opportunity' or 'Lead'"/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-header">
+                                <h5 class="mb-0">Recent Quotations</h5>
+                            </div>
+                            <div class="card-body">
+                                <div t-if="not recent_quotations" class="text-muted">No recent quotations</div>
+                                <div t-if="recent_quotations" class="list-group list-group-flush">
+                                    <t t-foreach="recent_quotations" t-as="quotation">
+                                        <a t-attf-href="/my/orders/#{quotation.id}" 
+                                           class="list-group-item list-group-item-action">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <h6 class="mb-1"><t t-esc="quotation.name"/></h6>
+                                                    <small class="text-muted">
+                                                        <t t-esc="quotation.partner_id.name or 'No Customer'"/>
+                                                    </small>
+                                                </div>
+                                                <div class="text-end">
+                                                    <span t-field="quotation.amount_total"/>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Lead Modal -->
+            <div class="modal fade" id="createLeadModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create New Lead</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="createLeadForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Lead Name *</label>
+                                    <input type="text" class="form-control" name="name" required="required"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Name</label>
+                                    <input type="text" class="form-control" name="contact_name"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" name="partner_name"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email_from"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" name="phone"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" name="description" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="createLead()">Create Lead</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Leads List View -->
+    <template id="portal_my_leads" name="My Leads">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My Leads</t>
+            <div class="container mt-3 mb-5">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h2>My Leads</h2>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createLeadModal">
+                            <i class="fa fa-plus me-2"></i>Create Lead
+                        </button>
+                    </div>
+                </div>
+
+                <div t-if="not leads" class="alert alert-info">
+                    You don't have any leads yet. <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createLeadModal">Create your first lead</button>
+                </div>
+
+                <div t-if="leads" class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Company</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Activities</th>
+                                        <th>Created</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="leads" t-as="lead">
+                                        <tr>
+                                            <td>
+                                                <a t-attf-href="/my/lead/#{lead.id}">
+                                                    <strong><t t-esc="lead.name"/></strong>
+                                                </a>
+                                            </td>
+                                            <td><t t-esc="lead.contact_name or '-'"/></td>
+                                            <td><t t-esc="lead.partner_name or '-'"/></td>
+                                            <td><t t-esc="lead.email_from or '-'"/></td>
+                                            <td><t t-esc="lead.phone or '-'"/></td>
+                                            <td>
+                                                <t t-set="lead_activities" t-value="leads_activities.get(lead.id, {})"/>
+                                                <span t-if="lead_activities.get('overdue', 0) > 0" 
+                                                      class="badge bg-danger" 
+                                                      t-att-title="'Overdue: ' + str(lead_activities.get('overdue', 0))">
+                                                    <t t-esc="lead_activities.get('overdue', 0)"/>
+                                                </span>
+                                                <span t-if="lead_activities.get('due', 0) > 0" 
+                                                      class="badge bg-warning" 
+                                                      t-att-title="'Due: ' + str(lead_activities.get('due', 0))">
+                                                    <t t-esc="lead_activities.get('due', 0)"/>
+                                                </span>
+                                                <span t-if="lead_activities.get('total', 0) == 0" class="text-muted">-</span>
+                                            </td>
+                                            <td><span t-field="lead.create_date" t-options="{'widget': 'date'}"/></td>
+                                            <td class="text-end">
+                                                <a t-attf-href="/my/lead/#{lead.id}" class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-eye"></i> View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <t t-if="pager" t-call="portal.pager"/>
+            </div>
+
+            <!-- Create Lead Modal -->
+            <div class="modal fade" id="createLeadModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create New Lead</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="createLeadForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Lead Name *</label>
+                                    <input type="text" class="form-control" name="name" required="required"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Contact Name</label>
+                                    <input type="text" class="form-control" name="contact_name"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" name="partner_name"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" name="email_from"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" name="phone"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" name="description" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="createLead()">Create Lead</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Opportunities List View -->
+    <template id="portal_my_opportunities" name="My Opportunities">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My Opportunities</t>
+            <div class="container mt-3 mb-5">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <h2>My Opportunities</h2>
+                    </div>
+                </div>
+
+                <div t-if="not opportunities" class="alert alert-info">
+                    You don't have any opportunities yet.
+                </div>
+
+                <div t-if="opportunities" class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Company</th>
+                                        <th>Stage</th>
+                                        <th>Expected Revenue</th>
+                                        <th>Probability</th>
+                                        <th>Activities</th>
+                                        <th class="text-end">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="opportunities" t-as="opp">
+                                        <tr>
+                                            <td>
+                                                <a t-attf-href="/my/opportunity/#{opp.id}">
+                                                    <strong><t t-esc="opp.name"/></strong>
+                                                </a>
+                                            </td>
+                                            <td><t t-esc="opp.contact_name or '-'"/></td>
+                                            <td><t t-esc="opp.partner_name or '-'"/></td>
+                                            <td>
+                                                <span t-if="opp.stage_id" class="badge bg-info">
+                                                    <t t-esc="opp.stage_id.name"/>
+                                                </span>
+                                                <span t-else="" class="text-muted">-</span>
+                                            </td>
+                                            <td><span t-field="opp.expected_revenue"/></td>
+                                            <td>
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar" role="progressbar" 
+                                                         t-attf-style="width: #{opp.probability}%"
+                                                         t-attf-aria-valuenow="#{opp.probability}">
+                                                        <t t-esc="opp.probability"/>%
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <t t-set="opp_activities" t-value="opportunities_activities.get(opp.id, {})"/>
+                                                <span t-if="opp_activities.get('overdue', 0) > 0" 
+                                                      class="badge bg-danger">
+                                                    <t t-esc="opp_activities.get('overdue', 0)"/>
+                                                </span>
+                                                <span t-if="opp_activities.get('due', 0) > 0" 
+                                                      class="badge bg-warning">
+                                                    <t t-esc="opp_activities.get('due', 0)"/>
+                                                </span>
+                                            </td>
+                                            <td class="text-end">
+                                                <a t-attf-href="/my/opportunity/#{opp.id}" class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-eye"></i> View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <t t-if="pager" t-call="portal.pager"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- Lead Detail View -->
+    <template id="portal_my_lead" name="Lead Detail">
+        <t t-call="portal.portal_layout">
+            <t t-set="title" t-esc="lead.name"/>
+            <div class="container mt-3 mb-5">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <a href="/my/leads" class="btn btn-sm btn-secondary">
+                            <i class="fa fa-arrow-left me-2"></i>Back to Leads
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Statusbar with Action Buttons (Like Odoo Backend) -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="mb-2 mb-md-0">
+                                <h5 class="mb-0">Status</h5>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="button" 
+                                        class="btn btn-sm btn-primary" 
+                                        onclick="toggleEditMode()"
+                                        title="Edit Lead">
+                                    <i class="fa fa-edit me-1"></i>Edit
+                                </button>
+                                <button type="button" 
+                                        class="btn btn-sm btn-success" 
+                                        onclick="createQuotation()"
+                                        title="Create Quotation">
+                                    <i class="fa fa-file-text me-1"></i>New Quotation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Statusbar (Like Odoo Backend) -->
+                        <div class="crm-statusbar">
+                            <div class="crm-statusbar-stages">
+                                <t t-foreach="stages" t-as="stage">
+                                    <div t-attf-class="crm-statusbar-stage #{lead.stage_id.id == stage.id and 'active' or ''} #{stage.id &lt; lead.stage_id.id and 'done' or ''}"
+                                         t-attf-data-stage-id="#{stage.id}"
+                                         onclick="changeStage(this)"
+                                         t-att-title="stage.name">
+                                        <span class="crm-statusbar-stage-name"><t t-esc="stage.name"/></span>
+                                        <t t-if="lead.stage_id.id == stage.id">
+                                            <span class="crm-statusbar-stage-indicator"></span>
+                                        </t>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0"><t t-esc="lead.name"/></h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="leadForm">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Lead Name</label>
+                                            <input type="text" class="form-control" name="name" t-att-value="lead.name" readonly="readonly"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Contact Name</label>
+                                            <input type="text" class="form-control" name="contact_name" t-att-value="lead.contact_name or ''" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Company Name</label>
+                                            <input type="text" class="form-control" name="partner_name" t-att-value="lead.partner_name or ''" readonly="readonly"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" name="email_from" t-att-value="lead.email_from or ''" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Phone</label>
+                                            <input type="text" class="form-control" name="phone" t-att-value="lead.phone or ''" readonly="readonly"/>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control" name="description" rows="5" readonly="readonly" t-esc="lead.description or ''"/>
+                                    </div>
+                                    <div class="text-end" id="saveBtnContainer" style="display: none;">
+                                        <button type="button" class="btn btn-success" onclick="saveLead()">
+                                            <i class="fa fa-save me-2"></i>Save Changes
+                                        </button>
+                                        <button type="button" class="btn btn-secondary" onclick="cancelEdit()">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+                        <!-- Quick Actions -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Quick Actions</h5>
+                            </div>
+                            <div class="card-body">
+                                <button type="button" class="btn btn-success w-100 mb-2" onclick="createQuotation()">
+                                    <i class="fa fa-file-text me-2"></i>Create Quotation
+                                </button>
+                                <a t-attf-href="/my/lead/#{lead.id}/quotations" class="btn btn-info w-100 mb-2">
+                                    <i class="fa fa-list me-2"></i>View Quotations
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chatter Section (Like Odoo Backend) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Communication History</h5>
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#scheduleActivityModal">
+                                        <i class="fa fa-calendar me-1"></i>Schedule Activity
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#logNoteModal">
+                                        <i class="fa fa-sticky-note me-1"></i>Log Note
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Activities List -->
+                                <div t-if="activities" class="mb-4">
+                                    <h6 class="text-muted mb-3">Activities</h6>
+                                    <div class="list-group">
+                                        <t t-foreach="activities" t-as="activity">
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-start">
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1">
+                                                            <i class="fa fa-calendar me-2"></i>
+                                                            <t t-esc="activity.activity_type_id.name or 'Activity'"/>
+                                                        </h6>
+                                                        <p class="mb-1"><t t-esc="activity.summary or ''"/></p>
+                                                        <small class="text-muted">
+                                                            Due: <t t-esc="activity.date_deadline.strftime('%Y-%m-%d') if activity.date_deadline else 'No date'"/>
+                                                            <t t-if="activity.state == 'overdue'">
+                                                                <span class="badge bg-danger ms-2">Overdue</span>
+                                                            </t>
+                                                            <t t-elif="activity.state == 'today'">
+                                                                <span class="badge bg-warning ms-2">Due Today</span>
+                                                            </t>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                
+                                <!-- Messages/Notes List -->
+                                <div t-if="messages">
+                                    <h6 class="text-muted mb-3">Notes &amp; Messages</h6>
+                                    <div class="o_portal_chatter_messages">
+                                        <t t-foreach="messages" t-as="message">
+                                            <div class="d-flex o_portal_chatter_message mb-4">
+                                                <div class="o_avatar o_portal_chatter_avatar rounded me-3" style="width: 40px; height: 40px; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <div class="o_portal_chatter_message_title">
+                                                        <h6 class="mb-1">
+                                                            <t t-esc="message.author_id.name if message.author_id else 'System'"/>
+                                                        </h6>
+                                                        <p class="o_portal_chatter_puslished_date text-muted small mb-2">
+                                                            <t t-esc="message.date.strftime('%Y-%m-%d %H:%M') if message.date else ''"/>
+                                                        </p>
+                                                    </div>
+                                                    <div t-out="message.body"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                
+                                <div t-if="not activities and not messages" class="text-muted text-center py-4">
+                                    <i class="fa fa-comments fa-3x mb-3"></i>
+                                    <p>There are no comments for now.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Activity Modal -->
+            <div class="modal fade" id="scheduleActivityModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Schedule Activity</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="scheduleActivityForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Activity Type *</label>
+                                    <select class="form-select" name="activity_type_id" required="required">
+                                        <option value="">Select Activity Type</option>
+                                        <t t-foreach="activity_types" t-as="act_type">
+                                            <option t-att-value="act_type.id"><t t-esc="act_type.name"/></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Summary *</label>
+                                    <input type="text" class="form-control" name="summary" required="required"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Due Date *</label>
+                                    <input type="date" class="form-control" name="date_deadline" required="required"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Note</label>
+                                    <textarea class="form-control" name="note" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="scheduleActivity()">Schedule</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Log Note Modal -->
+            <div class="modal fade" id="logNoteModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Log Internal Note</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="logNoteForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Note *</label>
+                                    <textarea class="form-control" name="note" rows="5" required="required"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="logNote()">Log Note</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Opportunity Detail View -->
+    <template id="portal_my_opportunity" name="Opportunity Detail">
+        <t t-call="portal.portal_layout">
+            <t t-set="title" t-esc="opportunity.name"/>
+            <div class="container mt-3 mb-5">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <a href="/my/opportunities" class="btn btn-sm btn-secondary">
+                            <i class="fa fa-arrow-left me-2"></i>Back to Opportunities
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Statusbar with Action Buttons (Like Odoo Backend) -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-light">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="mb-2 mb-md-0">
+                                <h5 class="mb-0">Status</h5>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button t-if="opportunity.type == 'opportunity' and opportunity.active and opportunity.probability != 100" 
+                                        type="button" 
+                                        class="btn btn-sm btn-success" 
+                                        onclick="winOpportunity()"
+                                        title="Mark as won">
+                                    <i class="fa fa-trophy me-1"></i>Won
+                                </button>
+                                <button t-if="opportunity.type == 'opportunity' and opportunity.active" 
+                                        type="button" 
+                                        class="btn btn-sm btn-danger" 
+                                        onclick="lostOpportunity()"
+                                        title="Mark as lost">
+                                    <i class="fa fa-times me-1"></i>Lost
+                                </button>
+                                <button t-if="opportunity.type == 'opportunity' and not opportunity.active and opportunity.probability == 0" 
+                                        type="button" 
+                                        class="btn btn-sm btn-secondary" 
+                                        onclick="restoreOpportunity()"
+                                        title="Restore">
+                                    <i class="fa fa-undo me-1"></i>Restore
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Statusbar (Like Odoo Backend) -->
+                        <div class="crm-statusbar">
+                            <div class="crm-statusbar-stages">
+                                <t t-foreach="stages" t-as="stage">
+                                    <div t-attf-class="crm-statusbar-stage #{opportunity.stage_id.id == stage.id and 'active' or ''} #{stage.id &lt; opportunity.stage_id.id and 'done' or ''}"
+                                         t-attf-data-stage-id="#{stage.id}"
+                                         onclick="changeStage(this)"
+                                         t-att-title="stage.name">
+                                        <span class="crm-statusbar-stage-name"><t t-esc="stage.name"/></span>
+                                        <t t-if="opportunity.stage_id.id == stage.id">
+                                            <span class="crm-statusbar-stage-indicator"></span>
+                                        </t>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0"><t t-esc="opportunity.name"/></h4>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="toggleEditMode()">
+                                    <i class="fa fa-edit me-2"></i>Edit
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <!-- Similar form structure as lead detail -->
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Contact:</strong> <t t-esc="opportunity.contact_name or '-'"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Company:</strong> <t t-esc="opportunity.partner_name or '-'"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <strong>Expected Revenue:</strong> <span t-field="opportunity.expected_revenue"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Probability:</strong> <t t-esc="opportunity.probability"/>%
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <strong>Description:</strong>
+                                    <div t-esc="opportunity.description or 'No description'"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quotations Section -->
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Related Quotations</h5>
+                            </div>
+                            <div class="card-body">
+                                <button type="button" class="btn btn-success mb-3" onclick="createQuotation()">
+                                    <i class="fa fa-plus me-2"></i>New Quotation
+                                </button>
+                                <div t-if="quotations" class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Quotation</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>State</th>
+                                                <th class="text-end">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="quotations" t-as="quotation">
+                                                <tr>
+                                                    <td><t t-esc="quotation.name"/></td>
+                                                    <td><span t-field="quotation.date_order" t-options="{'widget': 'date'}"/></td>
+                                                    <td><span t-field="quotation.amount_total"/></td>
+                                                    <td>
+                                                        <span t-attf-class="badge bg-#{quotation.state == 'sent' and 'info' or 'secondary'}">
+                                                            <t t-esc="quotation.state"/>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <a t-attf-href="/my/orders/#{quotation.id}" class="btn btn-sm btn-primary">
+                                                            <i class="fa fa-eye"></i> View
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div t-if="not quotations" class="text-muted">No quotations yet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chatter Section (Like Odoo Backend) -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card shadow-sm mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Communication History</h5>
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#scheduleActivityModal">
+                                        <i class="fa fa-calendar me-1"></i>Schedule Activity
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#logNoteModal">
+                                        <i class="fa fa-sticky-note me-1"></i>Log Note
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Activities List -->
+                                <div t-if="activities" class="mb-4">
+                                    <h6 class="text-muted mb-3">Activities</h6>
+                                    <div class="list-group">
+                                        <t t-foreach="activities" t-as="activity">
+                                            <div class="list-group-item">
+                                                <div class="d-flex justify-content-between align-items-start">
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="mb-1">
+                                                            <i class="fa fa-calendar me-2"></i>
+                                                            <t t-esc="activity.activity_type_id.name or 'Activity'"/>
+                                                        </h6>
+                                                        <p class="mb-1"><t t-esc="activity.summary or ''"/></p>
+                                                        <small class="text-muted">
+                                                            Due: <t t-esc="activity.date_deadline.strftime('%Y-%m-%d') if activity.date_deadline else 'No date'"/>
+                                                            <t t-if="activity.state == 'overdue'">
+                                                                <span class="badge bg-danger ms-2">Overdue</span>
+                                                            </t>
+                                                            <t t-elif="activity.state == 'today'">
+                                                                <span class="badge bg-warning ms-2">Due Today</span>
+                                                            </t>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                
+                                <!-- Messages/Notes List -->
+                                <div t-if="messages">
+                                    <h6 class="text-muted mb-3">Notes &amp; Messages</h6>
+                                    <div class="o_portal_chatter_messages">
+                                        <t t-foreach="messages" t-as="message">
+                                            <div class="d-flex o_portal_chatter_message mb-4">
+                                                <div class="o_avatar o_portal_chatter_avatar rounded me-3" style="width: 40px; height: 40px; background-color: #ddd; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <div class="o_portal_chatter_message_title">
+                                                        <h6 class="mb-1">
+                                                            <t t-esc="message.author_id.name if message.author_id else 'System'"/>
+                                                        </h6>
+                                                        <p class="o_portal_chatter_puslished_date text-muted small mb-2">
+                                                            <t t-esc="message.date.strftime('%Y-%m-%d %H:%M') if message.date else ''"/>
+                                                        </p>
+                                                    </div>
+                                                    <div t-out="message.body"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                
+                                <div t-if="not activities and not messages" class="text-muted text-center py-4">
+                                    <i class="fa fa-comments fa-3x mb-3"></i>
+                                    <p>There are no comments for now.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modals (same as lead detail) -->
+            <t t-call="portal_crm_quotation_mk.schedule_activity_modal"/>
+            <t t-call="portal_crm_quotation_mk.log_note_modal"/>
+        </t>
+    </template>
+
+    <!-- Reusable Modals -->
+    <template id="create_lead_modal" name="Create Lead Modal">
+        <div class="modal fade" id="createLeadModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create New Lead</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="createLeadForm">
+                            <div class="mb-3">
+                                <label class="form-label">Lead Name *</label>
+                                <input type="text" class="form-control" name="name" required="required"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Contact Name</label>
+                                <input type="text" class="form-control" name="contact_name"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-control" name="partner_name"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email_from"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="text" class="form-control" name="phone"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" name="description" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="createLead()">Create Lead</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="schedule_activity_modal" name="Schedule Activity Modal">
+        <div class="modal fade" id="scheduleActivityModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Schedule Activity</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="scheduleActivityForm">
+                            <div class="mb-3">
+                                <label class="form-label">Activity Type *</label>
+                                <select class="form-select" name="activity_type_id" required="required">
+                                    <option value="">Select Activity Type</option>
+                                    <t t-foreach="activity_types" t-as="act_type">
+                                        <option t-att-value="act_type.id"><t t-esc="act_type.name"/></option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Summary *</label>
+                                <input type="text" class="form-control" name="summary" required="required"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Due Date *</label>
+                                <input type="date" class="form-control" name="date_deadline" required="required"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Note</label>
+                                <textarea class="form-control" name="note" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="scheduleActivity()">Schedule</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="log_note_modal" name="Log Note Modal">
+        <div class="modal fade" id="logNoteModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Log Internal Note</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="logNoteForm">
+                            <div class="mb-3">
+                                <label class="form-label">Note *</label>
+                                <textarea class="form-control" name="note" rows="5" required="required"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="logNote()">Log Note</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Sale Order Portal View with Product Selection -->
+    <template id="portal_sale_order_crm" name="Sale Order Portal with Product Selection" inherit_id="sale.sale_order_portal_content" priority="20">
+        <xpath expr="//section[@id='details']" position="after">
+            <!-- Product Selection Form (only for draft/sent orders) -->
+            <section t-if="sale_order.state in ('draft', 'sent')" id="product_selection" class="mt-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h5 class="mb-0">Add Products</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="addProductForm" class="row g-3">
+                            <div class="col-md-5">
+                                <label class="form-label">Product *</label>
+                                <select class="form-select" name="product_id" id="productSelect" required="required" onchange="updateProductPrice()">
+                                    <option value="">Select a product</option>
+                                    <t t-foreach="request.env['product.product'].sudo().search([('sale_ok', '=', True)], limit=100)" t-as="product">
+                                        <option t-att-value="product.id" t-att-data-price="product.list_price">
+                                            <t t-esc="product.name"/>
+                                            <t t-if="product.list_price"> - <t t-esc="'%.2f' % product.list_price"/></t>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Quantity *</label>
+                                <input type="number" class="form-control" name="quantity" value="1" min="0.01" step="0.01" required="required"/>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Unit Price</label>
+                                <input type="number" class="form-control" name="price_unit" id="priceUnit" step="0.01" readonly="readonly"/>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="form-label"> </label>
+                                <button type="button" class="btn btn-success w-100" onclick="addProductLine()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </xpath>
+        
+        <xpath expr="//div[@id='intro_row']" position="inside">
+            <div t-if="sale_order.state in ('draft', 'sent')" class="col-12 col-lg-auto text-end">
+                <button type="button" class="btn btn-primary" onclick="openSendEmailWizard()">
+                    <i class="fa fa-envelope me-2"></i>Send By Email
+                </button>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Send Email Wizard Modal - Add to sale order portal -->
+    <template id="send_email_wizard_modal_sale" name="Send Email Wizard Modal for Sale Order" inherit_id="sale.sale_order_portal_content" priority="21">
+        <xpath expr="//div[@id='content']" position="inside">
+            <!-- Send Email Wizard Modal -->
+            <div class="modal fade" id="sendEmailWizardModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Send Quotation by Email</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="sendEmailForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Email Template</label>
+                                    <select class="form-select" name="template_id" id="emailTemplateSelect">
+                                        <option value="">Default Template</option>
+                                        <t t-foreach="request.env['mail.template'].sudo().search([('model', '=', 'sale.order')], limit=20)" t-as="template">
+                                            <option t-att-value="template.id"><t t-esc="template.name"/></option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Recipients *</label>
+                                    <input type="text" class="form-control" name="recipients" id="emailRecipients" 
+                                           t-att-value="sale_order.partner_id.email or ''" 
+                                           placeholder="email@example.com" required="required"/>
+                                    <small class="form-text text-muted">Separate multiple emails with commas</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <input type="text" class="form-control" name="subject" id="emailSubject" 
+                                           t-attf-value="Quotation #{sale_order.name}"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Message</label>
+                                    <textarea class="form-control" name="body" id="emailBody" rows="5" 
+                                              placeholder="Add a message to the email..."></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="sendQuotationEmail()">
+                                <i class="fa fa-paper-plane me-2"></i>Send Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
