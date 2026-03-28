@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <!--  shipping product  -->
+    <record id="shipping_product" model="product.product">
+        <field name="name">Tiendanube Shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0.0</field>
+        <field name="sale_ok">False</field>
+        <field name="purchase_ok">False</field>
+    </record>
+
+    <record id="region_mx" model="solt.region">
+        <field name="name">Todos</field>
+        <field name="code">ALL</field>
+        <field name="country_id" ref="base.mx"/>
+    </record>
+
+</odoo>

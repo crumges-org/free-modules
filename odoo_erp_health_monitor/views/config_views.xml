@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Configuration Form View -->
+    <record id="view_erp_health_config_form" model="ir.ui.view">
+        <field name="name">erp.health.config.form</field>
+        <field name="model">erp.health.config</field>
+        <field name="arch" type="xml">
+            <form string="ERP Health Monitor Configuration" create="false" delete="false">
+                <header>
+                    <button name="action_cleanup_now" string="Clean Up Now" type="object" 
+                            class="btn-warning" icon="fa-trash"
+                            confirm="This will permanently delete old data based on retention settings. Continue?"/>
+                </header>
+                <sheet>
+                    <div class="oe_title mb-4">
+                        <h1>
+                            <i class="fa fa-cog text-primary me-3" style="font-size: 40px;"/>
+                            <span>Configuration Settings</span>
+                        </h1>
+                        <p class="text-muted">
+                            Configure data retention policies to optimize database storage
+                        </p>
+                    </div>
+
+                    <group>
+                        <group string="Auto Cleanup Settings">
+                            <field name="auto_cleanup" widget="boolean_toggle"/>
+                            <field name="last_cleanup" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Data Retention Policies">
+                        <group>
+                            <field name="system_logs_retention" widget="radio"/>
+                            <field name="cron_logs_retention" widget="radio"/>
+                            <field name="slow_queries_retention" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="server_metrics_retention" widget="radio"/>
+                            <field name="database_locks_retention" widget="radio"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-info mt-3">
+                        <i class="fa fa-info-circle me-2"/>
+                        <strong>Note:</strong> Data older than the selected retention period will be automatically deleted 
+                        if Auto Cleanup is enabled. A scheduled action runs daily to clean old data.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Configuration Action -->
+    <record id="action_erp_health_config" model="ir.actions.act_window">
+        <field name="name">Configuration</field>
+        <field name="res_model">erp.health.config</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'create': False}</field>
+        <field name="limit">1</field>
+    </record>
+
+    <!-- Menu for Configuration -->
+    <menuitem id="menu_erp_health_config"
+              name="Configuration"
+              parent="menu_erp_health_root"
+              action="action_erp_health_config"
+              sequence="30"
+              groups="base.group_system"/>
+</odoo>

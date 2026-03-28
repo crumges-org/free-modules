@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_quotation_inherit_demo" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+            <div>
+                <t t-if="doc.terms_and_conditions_id and doc.show_in_report == 'yes'">
+                    <strong>Terms Details:</strong>
+                    <span t-field="doc.terms_and_conditions_detail"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

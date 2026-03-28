@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="Docutils" />
+    <title>Smile Checklist</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+    <div class="document">
+        <p>
+            <img src="https://img.shields.io/badge/licence-AGPL--3-blue.svg" alt="License: AGPL-3" />
+            <a class="reference external" href="https://github.com/Smile-SA/odoo_addons/tree/18.0/smile_checklist">
+                <img alt="Smile-SA/odoo_addons" src="https://img.shields.io/badge/github-Smile--SA%2Fodoo_addons-lightgray.png?logo=github" />
+            </a>
+        </p>
+
+        <div class="section" id="smile-checklist">
+            <h1>Smile Checklist</h1>
+
+            <p>This module allows adding checklists to forms to track their filling progress and add actions to be triggered once their checklist is fully completed.</p>
+
+            <p>A checklist applies to a single object and is composed of:</p>
+            <ul>
+                <li>Tasks
+                    <ul>
+                        <li>List of fields to fill or boolean expressions to respect</li>
+                        <li>Server Action executed if the task is completed</li>
+                    </ul>
+                </li>
+                <li>Views on which the checklist is visible</li>
+                <li>Server Action executed if the checklist is completed
+                    <ul>
+                        <li>all action types: email, sms, object creation/update, etc</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p><strong>Table of contents</strong></p>
+            <div class="contents local topic" id="contents">
+                <ul class="simple">
+                    <li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
+                    <li><a class="reference internal" href="#known-issues" id="toc-entry-2">Known issues</a></li>
+                    <li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+                    <li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a>
+                        <ul>
+                            <li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
+                            <li><a class="reference internal" href="#maintainer" id="toc-entry-6">Maintainer</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section" id="usage">
+                <h2><a href="#toc-entry-1">Usage</a></h2>
+                <p>In our example, we will create a checklist to check if the contact's address is completed. Once completed, a server action will send an email automatically to the manager.</p>
+                <ol>
+                    <li>Go to the new menu **Settings > Technical > Checklists** and create a new checklist:
+                        <div class="image">
+                            <img src="creation.png" alt="create a new checklist" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>Select the action that will execute when the checklist is completed:
+                        <div class="image">
+                            <img src="action_server.png" alt="create an action server" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>To create a task, write the field name of the object:
+                        <div class="image">
+                            <img src="field_object.png" alt="Fill expression" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>Write the domain to check when the task is completed:
+                        <div class="image">
+                            <img src="complete_if_domain.png" alt="Complete if domain" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>Choose the views and menus where the checklist appears:
+                        <div class="image">
+                            <img src="full_visibility.png" alt="Add visibility in menus and views" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>See the checklist in the specified form view:
+                        <div class="image">
+                            <img src="contact_form.png" alt="contact form" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>Click on the smart button to see a wizard containing the checklist fields:
+                        <div class="image">
+                            <img src="click_smart_button.png" alt="Checklist fields" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>Once the checklist is completed, the server sends the email:
+                        <div class="image">
+                            <img src="email_received.png" alt="receiving email" style="width: 850px;" />
+                        </div>
+                    </li>
+                    <li>See the checklist in the list view added in visibility options:
+                        <div class="image">
+                            <img src="contacts_list.png" alt="contact list" style="width: 850px;" />
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="section" id="known-issues">
+                <h2><a href="#toc-entry-2">Known issues</a></h2>
+                <p>Need to restart the server to display the checklist on model's views after creation.</p>
+            </div>
+
+            <div class="section" id="bug-tracker">
+                <h2><a href="#toc-entry-3">Bug Tracker</a></h2>
+                <p>Bugs are tracked on <a class="reference external" href="https://github.com/Smile-SA/odoo_addons/issues">GitHub Issues</a>.
+                In case of trouble, please check there if your issue has already been reported.
+                If you spotted it first, help us smash it by providing detailed and welcomed feedback
+                <a class="reference external" href="https://github.com/Smile-SA/odoo_addons/issues/new?body=module:%20smile_checklist%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">here</a>.</p>
+                <p>Do not contact contributors directly about support or help with technical issues.</p>
+            </div>
+
+            <div class="section" id="credits">
+                <h2><a href="#toc-entry-4">Credits</a></h2>
+                <div class="section" id="contributors">
+                    <h3><a href="#toc-entry-5">Contributors</a></h3>
+                    <ul>
+                      <li>Smile SA Development Team</li>
+                        <li>Corentin Pouhet-Brunerie</li>
+                    </ul>
+                </div>
+
+                <div class="section" id="maintainer">
+                    <h3><a href="#toc-entry-6">Maintainer</a></h3>
+                    <p>This module is maintained by Smile SA.</p>
+                    <p>Since 1991 Smile has been a pioneer of technology and also the European expert in open source solutions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

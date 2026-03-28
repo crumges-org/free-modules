@@ -1,0 +1,153 @@
+/* Brand Selector Styles */
+.brand-selector {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.brand-selector-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0 5px;
+}
+
+.brand-selector-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #495057;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.brand-clear-btn {
+    font-size: 12px;
+    padding: 2px 8px;
+}
+
+.brand-selector-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.brand-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: #ffffff;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+}
+
+.brand-item:hover {
+    border-color: #714B67;
+    background-color: #faf6f9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(113, 75, 103, 0.15);
+}
+
+.brand-item.selected {
+    border-color: #714B67;
+    background-color: #714B67;
+    color: #ffffff;
+}
+
+.brand-item.selected .brand-name,
+.brand-item.selected .brand-icon,
+.brand-item.selected .brand-all-icon {
+    color: #ffffff;
+}
+
+.brand-item-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.brand-image {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.brand-icon,
+.brand-all-icon {
+    font-size: 18px;
+    color: #714B67;
+    width: 32px;
+    text-align: center;
+}
+
+.brand-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #495057;
+    white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .brand-selector {
+        padding: 8px;
+    }
+    
+    .brand-item {
+        padding: 6px 10px;
+        min-width: 60px;
+    }
+    
+    .brand-image {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .brand-name {
+        font-size: 12px;
+    }
+}
+
+/* Scrollbar styling */
+.brand-selector::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.brand-selector::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.brand-selector::-webkit-scrollbar-thumb {
+    background: #714B67;
+    border-radius: 3px;
+}
+
+.brand-selector::-webkit-scrollbar-thumb:hover {
+    background: #5a3a51;
+}
+
+/* Product card brand badge */
+.product-brand-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #714B67;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -1,0 +1,79 @@
+<odoo>
+    <data>
+        <record id="tnube_register_webhook_view_form" model="ir.ui.view">
+            <field name="name">tnube.register.webhook.view.form</field>
+            <field name="model">solt.register.webhook</field>
+            <field name="arch" type="xml">
+                <form string="Tiendanube Webhook Registrations">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="event"/>
+                            <field name="automation_id" options="{'no_create': True}"/>
+                            <field name="webhook_url"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" options="{'no_create': True}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="tnube_register_webhook_view_list" model="ir.ui.view">
+            <field name="name">tnube.register.webhook.view.list</field>
+            <field name="model">solt.register.webhook</field>
+            <field name="arch" type="xml">
+                <list string="Tiendanube Webhook Registrations" decoration-muted="(not active)">
+                    <field name="name"/>
+                    <field name="event"/>
+                    <field name="automation_id" string="Webhook"/>
+                    <field name="webhook_url"/>
+                    <field name="active" optional="show"/>
+                    <field name="connector_id" optional="hide"/>
+                    <field name="company_id" optional="hide"/>
+                    <field name="is_connector_active" column_invisible="True"/>
+                    <button name="toggle_active" icon="fa-unlock fa-2x" type="object"
+                            title="Activate Webhook"
+                            invisible="active or not is_connector_active"
+                            context="{'wh_action': 'public'}"
+                            confirm="The action will activate and publish the webhook. Do you want to continue?"
+                    />
+                    <button name="toggle_active" icon="fa-archive fa-2x" type="object"
+                            title="Deactivate Webhook"
+                            context="{'wh_action': 'delete'}"
+                            invisible="not active or not is_connector_active"
+                            confirm="The action will deactivate the webhook. Do you want to continue?"
+                    />
+                </list>
+            </field>
+        </record>
+
+        <record id="tnube_register_webhook_view_search" model="ir.ui.view">
+            <field name="name">tnube.register.webhook.view.search</field>
+            <field name="model">solt.register.webhook</field>
+            <field name="arch" type="xml">
+                <search string="Tiendanube Webhook Registrations">
+                    <field name="name"/>
+                    <field name="event"/>
+                    <separator/>
+                    <filter string="All" name="all" domain="['|', ('active', '=', False), ('active', '=', True)]"/>
+                    <separator/>
+                    <filter string="Active" name="filter_active" domain="[('active', '=', True)]"/>
+                    <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_company" string="Company" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="tnube_register_webhook_view_action" model="ir.actions.act_window">
+            <field name="name">Tiendanube Webhook Registrations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">solt.register.webhook</field>
+            <field name="context">{'active_test': False, 'search_default_all': 1}</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

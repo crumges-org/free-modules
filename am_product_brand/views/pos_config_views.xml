@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add Brand Settings to POS Config Form -->
+    <record id="pos_config_view_form_brand" model="ir.ui.view">
+        <field name="name">pos.config.form.brand</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Brand section in the form -->
+            <xpath expr="//form/sheet" position="inside">
+                <group string="Product Brands" col="2">
+                    <group>
+                        <field name="use_product_brand"/>
+                        <field name="show_brand_images"
+                               invisible="not use_product_brand"/>
+                    </group>
+                    <group>
+                        <field name="default_brand_id"
+                               invisible="not use_product_brand"
+                               options="{'no_create_edit': True}"/>
+                    </group>
+                    <group colspan="2">
+                        <field name="available_brand_ids"
+                               widget="many2many_tags"
+                               invisible="not use_product_brand"
+                               options="{'no_create_edit': True, 'color_field': 'color'}"
+                               placeholder="All brands available (leave empty for all)"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Add color field to brand for tags widget -->
+    
+
+</odoo>

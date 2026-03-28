@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="nube_res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">nube.res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//notebook" position="inside">
+                    <page name="integration_page" string="Tiendanube Integration">
+                        <group string="Address">
+                            <field name="nube_id_default_address" readonly="True" force_save="1" invisible="1"/>
+                            <field name="region_id"/>
+                        </group>
+                    </page>
+                </xpath>
+                <field name="email" position="attributes">
+                    <attribute name="required">True</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="region_view_list">
+            <field name="name">solt.region.list</field>
+            <field name="model">solt.region</field>
+            <field name="arch" type="xml">
+                <list editable="top" sample="1">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="country_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_regions">
+            <field name="name">Region</field>
+            <field name="res_model">solt.region</field>
+            <field name="view_mode">list</field>
+        </record>
+    </data>
+</odoo>

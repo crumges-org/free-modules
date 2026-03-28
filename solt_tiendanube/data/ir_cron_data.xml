@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_sync_tn_inventory" model="ir.cron">
+            <field name="name">Tiendanube: sync available stock</field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model._sync_inventory(0, 50)</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(minutes=40)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="active" eval="False"/>
+            <field name="priority">1000</field>
+        </record>
+
+        <record id="ir_cron_sync_tn_variant_cost" model="ir.cron">
+            <field name="name">Tiendanube: sync variants cost</field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model._sync_variants_cost(0, 50)</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(minutes=40)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="active" eval="False"/>
+            <field name="priority">1000</field>
+        </record>
+
+        <record id="ir_cron_sync_tn_solt" model="ir.cron">
+            <field name="name">Tiendanube: sync solt</field>
+            <field name="model_id" ref="model_res_company"/>
+            <field name="state">code</field>
+            <field name="code">model._sync_solt_install()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(minutes=40)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

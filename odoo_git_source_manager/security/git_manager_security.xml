@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Security Groups -->
+        <record id="group_git_manager_user" model="res.groups">
+            <field name="name">Git Source Manager / User</field>
+            <field name="category_id" ref="base.module_category_hidden" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+            <field name="comment">Users can view repositories and trigger updates, but cannot modify
+                configuration.</field>
+        </record>
+
+        <record id="group_git_manager_admin" model="res.groups">
+            <field name="name">Git Source Manager / Admin</field>
+            <field name="category_id" ref="base.module_category_hidden" />
+            <field name="implied_ids"
+                eval="[(4, ref('group_git_manager_user')), (4, ref('base.group_system'))]" />
+            <field name="comment">Administrators have full access to manage repositories, configure
+                authentication, and assign to entities.</field>
+        </record>
+
+        <!-- Record Rules -->
+
+        <!-- Allow users to see all repositories (read-only) -->
+        <record id="git_repo_user_rule" model="ir.rule">
+            <field name="name">Git Repository: User can read all</field>
+            <field name="model_id" ref="model_git_source_repo" />
+            <field name="groups" eval="[(4, ref('group_git_manager_user'))]" />
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True" />
+            <field name="perm_write" eval="False" />
+            <field name="perm_create" eval="False" />
+            <field name="perm_unlink" eval="False" />
+        </record>
+
+        <!-- Allow admins full access to repositories -->
+        <record id="git_repo_admin_rule" model="ir.rule">
+            <field name="name">Git Repository: Admin full access</field>
+            <field name="model_id" ref="model_git_source_repo" />
+            <field name="groups" eval="[(4, ref('base.group_system'))]" />
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True" />
+            <field name="perm_write" eval="True" />
+            <field name="perm_create" eval="True" />
+            <field name="perm_unlink" eval="True" />
+        </record>
+
+        <!-- Multi-tenant workspace rule (optional - restrict by company if needed) -->
+        <!-- Uncomment if you want to restrict workspaces by company -->
+        <!--
+        <record id="git_workspace_company_rule" model="ir.rule">
+            <field name="name">Git Workspace: User can see own company workspaces</field>
+            <field name="model_id" ref="model_git_workspace"/>
+            <field name="groups" eval="[(4, ref('group_git_manager_user'))]"/>
+            <field name="domain_force">[('entity_id.company_id', 'in', company_ids)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        -->
+
+    </data>
+</odoo>

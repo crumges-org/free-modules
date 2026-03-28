@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <template id="report_invoice_tnc_inherit" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <div>
+                <t t-if="o.tnc_id and o.show_in_report == 'yes'">
+                    <strong>Terms Details:</strong>
+                    <span t-field="o.terms_and_conditions_detail" />
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="nube_view_product_image_form" model="ir.ui.view">
+        <field name="name">product.image.form</field>
+        <field name="model">solt.product.image</field>
+        <field name="arch" type="xml">
+            <form string="Product Images">
+                <field name="sequence" invisible="1"/>
+                <field name="product_tmpl_id" invisible="1"/>
+                <field name="has_product_tmpl_variant" invisible="1"/>
+                <div class="row o_website_sale_image_modal">
+                    <div class="col-md-6 col-xl-5">
+                        <label for="name" string="Name"/>
+                        <h2><field name="name" placeholder="Image name"/></h2>
+                        <label for="image_url" string="Image URL"/><br/>
+                        <field name="image_url"/><br/>
+                        <label for="image_url" string="Variants" invisible="not has_product_tmpl_variant"/><br/>
+                        <field name="product_variant_ids" widget="many2many_tags" invisible="not has_product_tmpl_variant"
+                            placeholder="(Leave empty to be visible for all variants)"
+                            options="{'no_create': True}"
+                        /><br/>
+                    </div>
+                    <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
+                        <div class="row">
+                            <div class="col">
+                                 <field name="image_1920" widget="image"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="nube_product_image_view_kanban" model="ir.ui.view">
+        <field name="name">nube.product.image.view.kanban</field>
+        <field name="model">solt.product.image</field>
+        <field name="arch" type="xml">
+            <kanban string="Product Images" default_order="sequence">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="image_1920"/>
+                <field name="sequence" widget="handle"/>
+                <field name="product_variant_ids" />
+                <field name="product_variant_count" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="card oe_kanban_global_click p-0" style="width: 50%;height: 50%;">
+                            <div class="o_squared_image">
+                                <img class="card-img-top" t-att-src="kanban_image('solt.product.image', 'image_1920', record.id.raw_value)" t-att-alt="record.name.value"/>
+                            </div>
+                            <div class="card-body p-0">
+                                <h4 class="card-title p-2 m-0 bg-200">
+                                    <small><field name="name"/></small>
+                                </h4>
+                                <br/>
+                                <small><span t-if="record.product_variant_count.value == 0">
+                                    <i>Visible for all variants</i>
+                                </span></small>
+                                <small><span t-if="record.product_variant_count.value != 0">
+                                    <i>Visible in <field
+                                            name="product_variant_count"
+                                        /> variant(s)</i>
+                                </span></small>
+                            </div>
+                            <!-- below 100 Kb: good -->
+                            <t t-if="record.image_1920.raw_value.length &lt; 100*1000">
+                                <t t-set="size_status" t-value="'text-bg-success'"/>
+                                <t t-set="message">Acceptable file size</t>
+                            </t>
+                            <!-- below 1000 Kb: decent -->
+                            <t t-elif="record.image_1920.raw_value.length &lt; 1000*1000">
+                                <t t-set="size_status" t-value="'text-bg-warning'" />
+                                <t t-set="message">Huge file size. The image should be optimized or reduced.</t>
+                            </t>
+                            <!-- above 1000 Kb: bad -->
+                            <t t-else="1">
+                                <t t-set="size_status" t-value="'text-bg-danger'"/>
+                                <t t-set="message">Optimization required! Reduce the image size or increase compression.</t>
+                            </t>
+                            <span t-attf-class="badge #{size_status} o_product_image_size" t-esc="record.image_1920.value" t-att-title="message"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>

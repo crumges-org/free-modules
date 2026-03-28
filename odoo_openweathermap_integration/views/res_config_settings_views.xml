@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit_openweathermap" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.openweathermap</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <block name="integration" position="inside">
+                    <setting id="openweathermap_setting" string="OpenWeatherMap API Key"
+                        help="Enter your OpenWeatherMap API key here to enable weather data integration.">
+                        <field name="openweathermap_api_key" password="True"
+                            placeholder="Api Key..." />
+
+                        <a class="text-decoration-none text-warning fw-bold d-block mt-2"
+                            href="https://home.openweathermap.org/api_keys" target="_blank">
+                            Don't have an API key? Sign up and generate one (free) here.</a>
+                    </setting>
+                </block>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_solt_register_webhook_user,solt.register.webhook user,model_solt_register_webhook,base.group_user,1,0,0,0
+access_solt_register_webhook_manager,solt.register.webhook manager,model_solt_register_webhook,solt_api_connector.group_api_integration_manager,1,1,1,1
+access_solt_product_image_public,solt.product.image public,model_solt_product_image,base.group_user,1,0,0,0
+access_solt_product_image_manager,solt.product.image manager,model_solt_product_image,solt_api_connector.group_api_integration_manager,1,1,1,1
+access_solt_product_image_group_system,solt.product.image.group.system,model_solt_product_image,base.group_system,1,1,1,1
+access_solt_product_image_stock_manager,solt.product.image stock_manager,model_solt_product_image,stock.group_stock_manager,1,1,1,1
+
+access_solt_region_user,access.solt.region.user,model_solt_region,base.group_user,1,0,0,0
+access_solt_region_manager,access.solt.region.manager,model_solt_region,base.group_partner_manager,1,1,1,1
+access_solt_warehouse_sync_mapping_user,access.warehouse.sync.mapping.user,model_solt_warehouse_sync_mapping,base.group_user,1,0,0,0
+access_solt_warehouse_sync_mapping_group_system,solt.warehouse.sync.mapping.group.system,model_solt_warehouse_sync_mapping,base.group_system,1,1,1,1
+access_solt_warehouse_sync_mapping_stock_manager,solt.warehouse.sync.mapping stock_manager,model_solt_warehouse_sync_mapping,stock.group_stock_manager,1,1,1,1
+access_solt_warehouse_sync_mapping_manager,solt.warehouse.sync.mapping manager,model_solt_warehouse_sync_mapping,solt_api_connector.group_api_integration_manager,1,1,1,1
+
+access_product_brand_product_manager,product.brand.manager,model_solt_product_brand,stock.group_stock_manager,1,1,1,1
+access_product_brand_user,product.brand.user,model_solt_product_brand,base.group_user,1,0,0,0
+

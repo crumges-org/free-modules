@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Git Workspace Tree View -->
+    <record id="view_git_workspace_tree" model="ir.ui.view">
+        <field name="name">git.workspace.tree</field>
+        <field name="model">git.workspace</field>
+        <field name="arch" type="xml">
+            <list string="Workspaces" decoration-success="status == 'ok'"
+                decoration-danger="status == 'failed'" decoration-warning="status == 'updating'"
+                decoration-muted="status == 'unknown'">
+                <field name="entity_id" />
+                <field name="repo_id" />
+                <field name="path" />
+                <field name="status" decoration-success="status == 'ok'"
+                    decoration-danger="status == 'failed'" decoration-warning="status == 'updating'" />
+                <field name="last_updated" />
+                <field name="current_commit" />
+                <button name="action_update_now" string="Update" type="object" icon="fa-refresh"
+                    class="btn-link" />
+                <button name="action_refresh_status" string="Refresh" type="object" icon="fa-sync"
+                    class="btn-link" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Git Workspace Form View -->
+    <record id="view_git_workspace_form" model="ir.ui.view">
+        <field name="name">git.workspace.form</field>
+        <field name="model">git.workspace</field>
+        <field name="arch" type="xml">
+            <form string="Workspace">
+                <header>
+                    <button name="action_update_now" string="Update Now" type="object"
+                        class="oe_highlight" invisible="status == 'updating'" />
+                    <button name="action_refresh_status" string="Refresh Status" type="object" />
+                    <field name="status" widget="statusbar"
+                        statusbar_visible="unknown,ok,failed,updating" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_logs" type="object" class="oe_stat_button"
+                            icon="fa-list">
+                            <field name="log_count" widget="statinfo" string="Logs" />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <div class="alert alert-info" role="alert">
+                        <strong>Cross-Platform Path Support:</strong> This module automatically
+                        normalizes paths for Windows and Linux. You can use forward slashes (/) or
+                        backslashes (\) on Windows - both work correctly. <a
+                            href="/odoo_git_source_manager/static/description/CROSS_PLATFORM_GUIDE.md"
+                            target="_blank">View Path Configuration Guide</a>
+                    </div>
+                    <group>
+                        <group name="workspace_info">
+                            <field name="entity_link_id" readonly="1" />
+                            <field name="entity_id" readonly="1" />
+                            <field name="repo_id" readonly="1" />
+                        </group>
+                        <group name="git_info">
+                            <field name="path" readonly="1" widget="char" class="text-monospace"
+                                placeholder="e.g., C:/git/repos/project (Windows) or /opt/odoo/repos/project (Linux)" />
+                            <field name="current_commit" readonly="1" widget="char"
+                                class="text-monospace" />
+                            <field name="last_updated" readonly="1" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Update Logs" name="logs">
+                            <field name="log_ids">
+                                <list decoration-success="result == 'success'"
+                                    decoration-danger="result == 'failure'">
+                                    <field name="timestamp" />
+                                    <field name="action" />
+                                    <field name="result" />
+                                    <field name="commit_hash" />
+                                    <field name="message" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Git Workspace Kanban View -->
+    <record id="view_git_workspace_kanban" model="ir.ui.view">
+        <field name="name">git.workspace.kanban</field>
+        <field name="model">git.workspace</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="entity_id" />
+                <field name="repo_id" />
+                <field name="status" />
+                <field name="last_updated" />
+                <field name="current_commit" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name" />
+                                    </strong>
+                                </div>
+                                <span
+                                    t-attf-class="badge badge-pill badge-#{status == 'ok' ? 'success' : status == 'failed' ? 'danger' : status == 'updating' ? 'warning' : 'secondary'}">
+                                    <field name="status" />
+                                </span>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <field name="entity_id" />
+                                <br />
+                                <field name="repo_id" />
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="last_updated" widget="date" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Git Workspace Search View -->
+    <record id="view_git_workspace_search" model="ir.ui.view">
+        <field name="name">git.workspace.search</field>
+        <field name="model">git.workspace</field>
+        <field name="arch" type="xml">
+            <search string="Search Workspaces">
+                <field name="path" />
+                <field name="entity_id" />
+                <field name="repo_id" />
+                <filter string="OK" name="status_ok" domain="[('status', '=', 'ok')]" />
+                <filter string="Failed" name="status_failed" domain="[('status', '=', 'failed')]" />
+                <filter string="Updating" name="status_updating"
+                    domain="[('status', '=', 'updating')]" />
+                <separator />
+                <filter string="Recently Updated" name="recent"
+                    domain="[('last_updated', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]" />
+                <group expand="0" string="Group By">
+                    <filter string="Entity" name="group_entity" context="{'group_by': 'entity_id'}" />
+                    <filter string="Repository" name="group_repo" context="{'group_by': 'repo_id'}" />
+                    <filter string="Status" name="group_status" context="{'group_by': 'status'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Git Workspace Action -->
+    <record id="action_git_workspace" model="ir.actions.act_window">
+        <field name="name">Workspaces</field>
+        <field name="res_model">git.workspace</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No workspaces found
+            </p>
+            <p>
+                Workspaces are created automatically when you link a repository to an entity.
+            </p>
+        </field>
+    </record>
+
+</odoo>

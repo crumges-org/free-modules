@@ -1,0 +1,156 @@
+/* ERP Health Dashboard Custom Styles */
+
+/* Card Hover Effects */
+.card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Stat Button Cards */
+.oe_stat_button .card {
+    cursor: pointer;
+    min-height: 150px;
+}
+
+/* Alert Cards with Status */
+.alert {
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* Progress bars styling */
+.progress {
+    border-radius: 10px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    border-radius: 10px;
+    transition: width 0.6s ease;
+}
+
+/* Badge Styling */
+.badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* Button Styling */
+.btn-lg {
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-warning:hover,
+.btn-outline-danger:hover,
+.btn-outline-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dashboard Title */
+.oe_title h1 {
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.oe_title p {
+    font-size: 16px;
+}
+
+/* Card Headers */
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: 600;
+    padding: 15px 20px;
+}
+
+/* Stats Cards Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.5s ease;
+}
+
+/* Progress Animation */
+@keyframes progressAnimation {
+    from {
+        width: 0;
+    }
+}
+
+.progress-bar {
+    animation: progressAnimation 1s ease-out;
+}
+
+/* Icon Pulse Effect */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.card:hover .fa-microchip,
+.card:hover .fa-server,
+.card:hover .fa-hdd-o,
+.card:hover .fa-clock-o,
+.card:hover .fa-database,
+.card:hover .fa-lock,
+.card:hover .fa-exclamation-triangle {
+    animation: pulse 1s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-3, .col-md-4, .col-md-6 {
+        margin-bottom: 15px;
+    }
+    
+    .btn-lg {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}
+
+/* Custom scrollbar */
+.o_content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.o_content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.o_content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.o_content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

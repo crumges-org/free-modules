@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_address_form" model="ir.ui.view">
+        <field name="name">hr.employee.address</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='private_street2']" position="before">
+                <div class="oe_edit_only o_row">
+                    <field name="private_street_number" placeholder="House #" style="flex: 1 1 auto"/>
+                    <span> - </span>
+                    <field name="private_street_number2" placeholder="Door #" style="flex: 1 1 auto"/>
+                </div>
+                <field name="country_enforce_cities" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='private_city']" position="replace"/>
+            <xpath expr="//field[@name='private_state_id']" position="replace"/>
+            <xpath expr="//field[@name='private_zip']" position="replace"/>
+            <xpath expr="//field[@name='private_country_id']" position="replace">
+                <field name="country_enforce_cities" invisible="True"/>
+                <field name="country_enforce_districts" invisible="True"/>
+                <field name="country_enforce_localities" invisible="True"/>
+                <field name="private_country_id"
+                       placeholder="Country"
+                       class="o_address_country"
+                       options='{"no_open": True, "no_create": True}'/>
+                <field name="private_locality_id"
+                       placeholder="Locality..."
+                       domain="[('state_id','=', private_state_id)]"
+                       options='{"no_create": True}'
+                       invisible="not country_enforce_localities"/>
+                <field name="private_locality"
+                       invisible="country_enforce_localities"
+                       placeholder="Locality..."/>
+                <div class="o_address_street">
+                    <field name="private_district_id" placeholder="Colony..."
+                           invisible="not country_enforce_districts"/>
+                    <field name="private_colony" placeholder="Colony..."
+                           style="flex: 2 1 auto"
+                           invisible="country_enforce_districts"/>
+                    <field name="private_zip" placeholder="ZIP" class="o_address_zip"/>
+                </div>
+                <field name="private_colony_code" placeholder="Colony Code..."
+                       invisible="country_enforce_districts"/>
+                <div class="o_address_street">
+                    <field name="private_city_id"
+                           placeholder="City"
+                           domain="[('country_id', '=', private_country_id)]"
+                           invisible="not country_enforce_cities"
+                           context="{'default_country_id': private_country_id, 'default_state_id': private_state_id, 'default_zipcode': private_zip}"/>
+                    <field name="private_city"
+                           placeholder="City"
+                           class="o_address_city"
+                           invisible="country_enforce_cities"
+                    />
+                    <field name="private_state_id"
+                           class="o_address_state"
+                           placeholder="State"
+                           options="{'no_open': True, 'no_quick_create': True}"
+                           context="{'default_country_id': private_country_id}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

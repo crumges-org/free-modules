@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_helpdesk_ticket_form_inherit_emotion" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.form.inherit.emotion</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='priority']" position="after">
+                    <field name="emotion" invisible="1"/>
+                    <field name="emotion_display" readonly="1"/>
+                    <field name="ultimate_emotion" readonly="1"/>
+                    <field name="summary" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_helpdesk_ticket_list_inherit_emotion" model="ir.ui.view">
+            <field name="name">helpdesk.ticket.list.inherit.emotion</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="emotion_display" readonly="1"/>
+                    <field name="ultimate_emotion" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

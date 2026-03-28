@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_property_form_terms_and_con" model="ir.ui.view">
+        <field name="name">res.partner.carrier.terms.con.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='misc']" position="after">
+                <group string="Sales Default Terms and Conditions" name="sales_term_conditions">
+                    <field name="sale_term_condition_id"
+                           invisible="company_id"
+                           domain="[('term_type', '=', 'sale'), ('company_ids', '=', False)]"/>
+                    <field name="sale_term_condition_id"
+                           invisible="not company_id"
+                           domain="[('term_type', '=', 'sale'), ('company_ids', 'in', [company_id])]"/>
+<!--                    <field name="sale_term_condition_id"-->
+<!--                           domain="['&amp;', ('term_type', '=', 'sale'), '|', ('company_ids', '=', False),-->
+<!--                           ('company_ids', 'in', [company_id])]"/>-->
+                    <field name="sale_terms_detail"/>
+                </group>
+                <group string="Purchase Default Terms and Conditions" name="purchase_term_conditions">
+                    <field name="purchase_term_condition_id"
+                           invisible="company_id"
+                            domain="[('term_type', '=', 'purchase'), ('company_ids', '=', False)]"/>
+                    <field name="purchase_term_condition_id"
+                           invisible="not company_id"
+                           domain="[('term_type', '=', 'purchase'), ('company_ids', 'in', [company_id])]"/>
+<!--                    <field name="purchase_term_condition_id"-->
+<!--                           domain="['&amp;', ('term_type', '=', 'purchase'), '|', ('company_ids', '=', False), ('company_ids', 'in', [company_id])]"/>-->
+                    <field name="purchase_terms_detail"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

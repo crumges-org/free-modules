@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    
+    <t t-name="odoo_git_source_manager.GitUpdateWidget">
+        <div class="git_update_widget">
+            <button t-if="!state.updating" 
+                    class="btn btn-primary"
+                    t-on-click="() => this.updateNow(props.workspace_id)">
+                <i class="fa fa-refresh"/> Update Now
+            </button>
+            <button t-if="state.updating" 
+                    class="btn btn-secondary" 
+                    disabled="disabled">
+                <i class="fa fa-spinner fa-spin"/> Updating...
+            </button>
+            <span t-if="state.status" class="ml-2 badge" 
+                  t-attf-class="badge-{{state.status === 'ok' ? 'success' : state.status === 'failed' ? 'danger' : 'warning'}}">
+                <t t-esc="state.status"/>
+            </span>
+        </div>
+    </t>
+
+</templates>

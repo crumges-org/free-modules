@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="chatter_screen_recoder.ChatterScreenRecorder" t-inherit="mail.Chatter" t-inherit-mode="extension">
+        <xpath expr="//button[contains(@class, 'o-mail-Chatter-logNote')]" position="after">
+            <button t-if="!screenRecorder.isRecording and !screenRecorder.isPaused and !screenRecorder.isUploading"
+                    class="o-mail-Chatter-screenRecord btn btn-secondary text-nowrap me-1"
+                    t-att-class="{'my-2': !props.compactHeight}"
+                    t-att-disabled="!state.thread?.canPostMessage and props.threadId"
+                    t-on-click="onStartScreenRecording">
+                <i class="fa fa-video-camera me-1"/>
+                <span>Record</span>
+            </button>
+        </xpath>
+    </t>
+</templates>

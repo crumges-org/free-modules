@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_company_form_inherit_l10n_mx_extended" model="ir.ui.view">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <div class="o_address_format" position="replace">
+                    <div class="o_address_format">
+                        <field name="country_enforce_cities" invisible="True"/>
+                        <field name="country_enforce_districts" invisible="True"/>
+                        <field name="country_enforce_localities" invisible="True"/>
+                        <field name="street" placeholder="Street..." class="o_address_street oe_read_only"/>
+                        <div class="oe_edit_only o_row">
+                            <field name="street_name" placeholder="Street" style="flex: 3 1 auto"/>
+                        </div>
+                        <div class="oe_edit_only o_row">
+                            <field name="street_number" placeholder="House #" style="flex: 1 1 auto"/>
+                            <span> - </span>
+                            <field name="street_number2" placeholder="Door #" style="flex: 1 1 auto"/>
+                        </div>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="country_id"
+                               placeholder="Country"
+                               class="o_address_country"
+                               options='{"no_open": True, "no_create": True}'/>
+                        <field name="l10n_mx_locality_id"
+                               placeholder="Locality..."
+                               domain="[('state_id','=', state_id)]"
+                               options='{"no_create": True}'
+                               invisible="not country_enforce_localities"/>
+                        <field name="l10n_mx_locality"
+                               invisible="country_enforce_localities"
+                               placeholder="Locality..."/>
+                        <div class="o_address_street">
+                            <field name="district_id" placeholder="Colony..."
+                                   invisible="not country_enforce_districts"/>
+                            <field name="l10n_mx_colony" placeholder="Colony..."
+                                   style="flex: 2 1 auto"
+                                   invisible="country_enforce_districts"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        </div>
+                        <field name="l10n_mx_colony_code" placeholder="Colony Code..."
+                               invisible="country_enforce_districts"/>
+                        <div class="o_address_street">
+                            <field name="city_id"
+                                   placeholder="City"
+                                   domain="[('country_id', '=', country_id)]"
+                                   invisible="not country_enforce_cities"
+                                   context="{'default_country_id': country_id, 'default_state_id': state_id, 'default_zipcode': zip}"/>
+                            <field name="city"
+                                   placeholder="City"
+                                   class="o_address_city"
+                                   invisible="country_enforce_cities"/>
+                            <field name="state_id"
+                                   class="o_address_state"
+                                   placeholder="State"
+                                   options="{'no_open': True, 'no_quick_create': True}"
+
+                                   context="{'default_country_id': country_id}"/>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

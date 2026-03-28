@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Auto Post Odoo Addon Installation Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <div class="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg mt-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Installation and Configuration Guide for YouTube Auto Post Odoo Addon</h1>
+        
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Overview</h2>
+            <p class="text-lg">
+                The <code>youtube_auto_post</code> Odoo addon enables users to schedule and automate video uploads to YouTube using the YouTube Data API. Key features include:
+            </p>
+            <ul class="list-disc pl-6 mb-4">
+                <li>Uploading videos stored as Odoo attachments (<code>ir.attachment</code>).</li>
+                <li>Scheduling uploads via Odoo's cron job.</li>
+                <li>Managing YouTube API credentials (<code>client_secrets.json</code>) through a settings interface.</li>
+                <li>Handling OAuth 2.0 authentication to generate a <code>token_youtube_v3.pickle</code> file.</li>
+            </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Prerequisites</h2>
+            <ul class="list-disc pl-6">
+                <li><strong>Odoo Installation</strong>: Odoo 18. See <a href="https://www.odoo.com/documentation/16.0/developer.html" class="text-blue-600 hover:underline">Odoo Documentation</a>.</li>
+                <li><strong>Python Environment</strong>: A Python environment with Odoo dependencies installed.</li>
+                <li><strong>Google Cloud Account</strong>: Sign up at <a href="https://console.cloud.google.com/" class="text-blue-600 hover:underline">Google Cloud Console</a>.</li>
+                <li><strong>Video Files</strong>: Must be in MP4, MOV, or AVI formats and stored as Odoo attachments.</li>
+                <li><strong>System Requirements</strong>: Write permissions for the Odoo addons directory and an internet connection.</li>
+                <li><strong>Admin Access</strong>: Access to Odoo’s settings menu (requires <code>base.group_system</code> permissions).</li>
+            </ul>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Step 1: Set Up Google Cloud and Create <code>client_secrets.json</code></h2>
+            
+            <h3 class="text-xl font-medium mb-2">1.1 Create a Google Cloud Project</h3>
+            <p>
+                - Visit <a href="https://console.cloud.google.com/" class="text-blue-600 hover:underline">Google Cloud Console</a>.<br>
+                - Click <strong>New Project</strong>, enter a name (e.g., <code>youtubeAutoPost</code>), and click <strong>Create</strong>.<br>
+                - Select the project from the top dropdown.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">1.2 Enable YouTube Data API</h3>
+            <p>
+                - Go to <strong>APIs & Services</strong> &gt; <strong>Library</strong>.<br>
+                - Search for <strong>YouTube Data API v3</strong> and click <strong>Enable</strong>.<br>
+                - See <a href="https://developers.google.com/youtube/v3" class="text-blue-600 hover:underline">YouTube Data API Documentation</a>.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">1.3 Create OAuth 2.0 Credentials</h3>
+            <p>
+                - Navigate to <strong>APIs & Services</strong> &gt; <strong>Credentials</strong>.<br>
+                - Click <strong>Create Credentials</strong> &gt; <strong>OAuth 2.0 Client IDs</strong>.<br>
+                - Select <strong>Desktop app</strong>, enter a name (e.g., <code>YouTube Upload Client</code>), and click <strong>Create</strong>.<br>
+                - Download the <code>client_secrets.json</code> file by clicking the download icon.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">1.4 Configure OAuth Consent Screen</h3>
+            <p>
+                - Go to <strong>APIs & Services</strong> &gt; <strong>OAuth consent screen</strong>.<br>
+                - Select <strong>External</strong> and click <strong>Create</strong>.<br>
+                - Fill in:
+                    <ul class="list-disc pl-6">
+                        <li><strong>App name</strong>: <code>youtubeAutoPost</code></li>
+                        <li><strong>User support email</strong>: Your email.</li>
+                        <li><strong>Developer contact information</strong>: Your email.</li>
+                    </ul>
+                - Under <strong>Scopes</strong>, ensure <code>https://www.googleapis.com/auth/youtube.upload</code> is included.<br>
+                - Under <strong>Test users</strong>, add the Google account email you’ll use for YouTube uploads to avoid the "Access blocked" error.<br>
+                - Save and set to <strong>Testing</strong> mode.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">1.5 Verify Your YouTube Account (Optional)</h3>
+            <p>
+                - For videos longer than 15 minutes, verify your YouTube account at <a href="https://www.youtube.com/verify" class="text-blue-600 hover:underline">YouTube Verification</a>.<br>
+                - See <a href="https://support.google.com/youtube/answer/71673" class="text-blue-600 hover:underline">YouTube Upload Guidelines</a>.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Step 2: Install the Odoo Addon</h2>
+
+            <h3 class="text-xl font-medium mb-2">2.1 Install Python Dependencies</h3>
+            <p>
+                Run in your Odoo Python environment:
+                <pre class="bg-gray-200 p-4 rounded"><code>pip install google-api-python-client google-auth-oauthlib google-auth-httplib2</code></pre>
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">2.2 Install the Addon</h3>
+            <p>
+                - Copy the <code>youtube_auto_post</code> addon folder to your custom addons directory (e.g., <code>/path/to/custom/addons/youtube_auto_post</code>).<br>
+                - Alternatively, scaffold the module:
+                <pre class="bg-gray-200 p-4 rounded"><code>cd /path/to/odoo
+./odoo-bin scaffold youtube_auto_post /path/to/custom/addons</code></pre>
+                Replace generated files with provided addon files. See <a href="https://www.odoo.com/documentation/16.0/developer/tutorials/module.html" class="text-blue-600 hover:underline">Odoo Module Development</a>.<br>
+                - Create a <code>static/</code> folder:
+                <pre class="bg-gray-200 p-4 rounded"><code>mkdir -p /path/to/custom/addons/youtube_auto_post/static
+chmod -R u+w /path/to/custom/addons/youtube_auto_post/static</code></pre>
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">2.3 Update Odoo Configuration</h3>
+            <p>
+                Edit <code>odoo.conf</code>:
+                <pre class="bg-gray-200 p-4 rounded"><code>[options]
+addons_path = /path/to/odoo/addons,/path/to/custom/addons</code></pre>
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">2.4 Install in Odoo</h3>
+            <p>
+                - Start/restart Odoo:
+                <pre class="bg-gray-200 p-4 rounded"><code>./odoo-bin -c /path/to/odoo.conf</code></pre>
+                - Enable <strong>Developer Mode</strong> (Settings &gt; Activate the developer mode).<br>
+                - Go to <strong>Apps</strong> &gt; <strong>Update Apps List</strong>, search for <strong>YouTube Video Auto Posting</strong>, and click <strong>Install</strong> or <strong>Upgrade</strong>.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Step 3: Configure the Addon in Odoo</h2>
+
+            <h3 class="text-xl font-medium mb-2">3.1 Upload <code>client_secrets.json</code></h3>
+            <p>
+                - Log in as an admin user (<code>base.group_system</code> permissions).<br>
+                - Go to <strong>Settings &gt; YouTube API Settings</strong>.<br>
+                - Upload the <code>client_secrets.json</code> file (from <a href="https://console.cloud.google.com/" class="text-blue-600 hover:underline">Google Cloud Console</a>) in the <strong>Client Secrets JSON</strong> field.<br>
+                - Save the record.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">3.2 Authenticate with YouTube</h3>
+            <p>
+                - Go to <strong>Website &gt; Configuration &gt; YouTube Uploads</strong>.<br>
+                - Create a new record and fill in:
+                    <ul class="list-disc pl-6">
+                        <li><strong>Title</strong>: Video title for YouTube.</li>
+                        <li><strong>Description</strong>: Optional description.</li>
+                        <li><strong>Tags</strong>: Comma-separated (e.g., <code>video,odoo,automation</code>).</li>
+                        <li><strong>Category</strong>: Select a category (e.g., <code>People & Blogs</code>). See <a href="https://developers.google.com/youtube/v3/docs/videoCategories/list" class="text-blue-600 hover:underline">YouTube Video Categories</a>.</li>
+                        <li><strong>Privacy Status</strong>: <code>public</code>, <code>private</code>, or <code>unlisted</code>.</li>
+                        <li><strong>Video File</strong>: Attach an MP4, MOV, or AVI file.</li>
+                        <li><strong>Schedule Date</strong>: Optional date/time for scheduled uploads.</li>
+                    </ul>
+                - Click <strong>Upload Now</strong>.<br>
+                - A browser window will open for OAuth authentication. Sign in with the Google account added as a test user (Step 1.4) and authorize the app.<br>
+                - The addon generates <code>token_youtube_v3.pickle</code> in <code>youtube_auto_post/static/</code>.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">3.3 Configure the Scheduler</h3>
+            <p>
+                - The cron job runs every 15 minutes to process scheduled uploads.<br>
+                - Adjust the schedule in <strong>Settings &gt; Technical &gt; Automation &gt; Scheduled Actions</strong> under <strong>YouTube Video Upload</strong>.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Step 4: Use the Addon</h2>
+
+            <h3 class="text-xl font-medium mb-2">4.1 Manual Upload</h3>
+            <p>
+                - Create a record in <strong>YouTube Uploads</strong>, attach a video, and click <strong>Upload Now</strong>.<br>
+                - Check the <strong>YouTube Video ID</strong> and <strong>Status</strong> fields.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">4.2 Scheduled Upload</h3>
+            <p>
+                - Set a <strong>Schedule Date</strong>, click <strong>Schedule Upload</strong>, and wait for the cron job.<br>
+                - Verify the upload via <strong>YouTube Video ID</strong> and <strong>Status</strong>.
+            </p>
+
+            <h3 class="text-xl font-medium mb-2">4.3 View on YouTube</h3>
+            <p>
+                - Access the video at <code>https://www.youtube.com/watch?v=VIDEO_ID</code>.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Troubleshooting</h2>
+
+            <h3 class="text-xl font-medium mb-2">Common Issues</h3>
+            <ul class="list-disc pl-6">
+                <li><strong>"Access blocked: youtubeAutoPost has not completed the Google verification process"</strong>:<br>
+                    - Add the Google account as a test user in <a href="https://console.cloud.google.com/" class="text-blue-600 hover:underline">Google Cloud Console</a> &gt; <strong>OAuth consent screen</strong> &gt; <strong>Test users</strong>.<br>
+                    - Delete <code>token_youtube_v3.pickle</code>:
+                    <pre class="bg-gray-200 p-4 rounded"><code>rm /path/to/custom/addons/youtube_auto_post/static/token_youtube_v3.pickle</code></pre>
+                </li>
+                <li><strong>No <code>.pickle</code> File</strong>:<br>
+                    - Verify <code>client_secrets.json</code> is uploaded in <strong>YouTube API Settings</strong>.<br>
+                    - Check permissions:
+                    <pre class="bg-gray-200 p-4 rounded"><code>chmod -R u+w /path/to/custom/addons/youtube_auto_post/static</code></pre>
+                </li>
+                <li><strong>File Format Errors</strong>: Ensure videos are MP4, MOV, or AVI.</li>
+                <li><strong>Quota Limits</strong>: Uploads use ~1,600 units of 10,000 daily quota. Request an increase at <a href="https://console.cloud.google.com/" class="text-blue-600 hover:underline">Google Cloud Console</a>. See <a href="https://developers.google.com/youtube/v3/getting-started#quota" class="text-blue-600 hover:underline">YouTube API Quota</a>.</li>
+                <li><strong>Cron Not Running</strong>: Verify the scheduled action in <strong>Settings &gt; Technical &gt; Scheduled Actions</strong>.</li>
+            </ul>
+
+            <h3 class="text-xl font-medium mb-2">Debugging</h3>
+            <p>
+                - Check Odoo logs:
+                <pre class="bg-gray-200 p-4 rounded"><code>./odoo-bin -c /path/to/odoo.conf --log-level=debug</code></pre>
+                - Ensure YouTube Data API is enabled in <a href="https://console.cloud.google.com/" class="text-blue-600 hover:underline">Google Cloud Console</a>.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Security Notes</h2>
+            <p>
+                - Protect <code>token_youtube_v3.pickle</code>:
+                <pre class="bg-gray-200 p-4 rounded"><code>chmod 600 /path/to/custom/addons/youtube_auto_post/static/token_youtube_v3.pickle</code></pre>
+                - Restrict <code>client_secrets.json</code> access to admin users in Odoo.<br>
+                - Ensure the <code>static/</code> folder is not publicly accessible.
+            </p>
+        </section>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Additional Notes</h2>
+            <ul class="list-disc pl-6">
+                <li><strong>Video Length</strong>: Up to 12 hours or 256 GB if verified at <a href="https://www.youtube.com/verify" class="text-blue-600 hover:underline">YouTube Verification</a>.</li>
+                <li><strong>Production Use</strong>: Submit for Google verification in <a href="https://console.cloud.google.com/" class="text-blue-600 hover:underline">Google Cloud Console</a>. See <a href="https://support.google.com/cloud/answer/10311645" class="text-blue-600 hover:underline">Google API Verification</a>.</li>
+                <li><strong>Customization</strong>: Extend the addon for additional features. See <a href="https://www.odoo.com/documentation/16.0/developer/tutorials/module.html" class="text-blue-600 hover:underline">Odoo Module Development</a>.</li>
+                <li><strong>Support</strong>: Visit <a href="https://developers.google.com/youtube/v3" class="text-blue-600 hover:underline">YouTube Data API Documentation</a> or <a href="https://www.odoo.com/forum" class="text-blue-600 hover:underline">Odoo Community Forums</a>.</li>
+            </ul>
+        </section>
+
+        <footer class="text-center text-gray-600 mt-8">
+            <p>Created by <a href="https://devscodespace.com/" class="text-blue-600 hover:underline">https://devscodespace.com/</a></p>
+        </footer>
+    </div>
+</body>
+</html>

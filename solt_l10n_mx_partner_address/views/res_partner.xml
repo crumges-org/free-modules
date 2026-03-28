@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mx_partner_address_form" model="ir.ui.view">
+            <field name="name">solt.l10n_mx.res.partner.address.form</field>
+            <field name="model">res.partner</field>
+            <field name="priority" eval="901"/>
+            <field name="arch" type="xml">
+                <form>
+                    <div class="o_address_format">
+                        <field name="country_enforce_cities" invisible="True"/>
+                        <field name="country_enforce_districts" invisible="True"/>
+                        <field name="country_enforce_localities" invisible="True"/>
+                        <field name="parent_id" invisible="True"/>
+                        <field name="is_company" invisible="True"/>
+                        <field name="type" invisible="True"/>
+                        <field name="street" placeholder="Street..." class="o_address_street oe_read_only"/>
+                        <div class="oe_edit_only o_row">
+                            <field name="street_name" placeholder="Street" style="flex: 3 1 auto"
+                                   readonly="type == 'contact' and parent_id"/>
+                        </div>
+                        <div class="oe_edit_only o_row">
+                            <field name="street_number" placeholder="House #" style="flex: 1 1 auto"
+                                   readonly="type == 'contact' and parent_id"/>
+                            <span> - </span>
+                            <field name="street_number2" placeholder="Door #" style="flex: 1 1 auto"
+                                   readonly="type == 'contact' and parent_id"/>
+                        </div>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"
+                               readonly="type == 'contact' and parent_id"/>
+                        <field name="country_id"
+                               placeholder="Country"
+                               class="o_address_country"
+                               readonly="type == 'contact' and parent_id"
+                               options='{"no_open": True, "no_create": True}'/>
+                        <field name="l10n_mx_locality_id"
+                               placeholder="Locality..."
+                               domain="[('state_id','=', state_id)]"
+                               options='{"no_create": True}'
+                               invisible="not country_enforce_localities"
+                               readonly="type == 'contact' and parent_id"/>
+                        <field name="l10n_mx_locality"
+                               invisible="country_enforce_localities"
+                               readonly="type == 'contact' and parent_id"
+                               placeholder="Locality..."/>
+                        <div class="o_address_street">
+                            <field name="district_id" placeholder="Colony..."
+                                   readonly="type == 'contact' and parent_id"
+                                   context="{'recursive_onchanges': False}"
+                                   invisible="not country_enforce_districts"/>
+                            <field name="l10n_mx_colony" placeholder="Colony..."
+                                   readonly="type == 'contact' and parent_id" style="flex: 2 1 auto"
+                                   invisible="country_enforce_districts"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                   context="{'recursive_onchanges': False}"
+                                   readonly="type == 'contact' and parent_id"/>
+                        </div>
+                        <field name="l10n_mx_colony_code" placeholder="Colony Code..."
+                                   readonly="type == 'contact' and parent_id"
+                                   invisible="country_enforce_districts"/>
+                        <div class="o_address_street">
+                            <field name="city_id"
+                                   placeholder="City"
+                                   domain="[('country_id', '=', country_id)]"
+                                   invisible="not country_enforce_cities"
+                                   readonly="type == 'contact' and parent_id"
+                                   context="{'default_country_id': country_id, 'default_state_id': state_id,
+                                   'default_zipcode': zip, 'recursive_onchanges': False}"/>
+                            <field name="city"
+                                   placeholder="City"
+                                   class="o_address_city"
+                                   invisible="country_enforce_cities"
+                                   readonly="type == 'contact' and parent_id"/>
+                            <field name="state_id"
+                                   class="o_address_state"
+                                   placeholder="State"
+                                   domain="[('country_id', '=', country_id)]"
+                                   options="{'no_open': True, 'no_quick_create': True}"
+                                   readonly="type == 'contact' and parent_id"
+                                   context="{'default_country_id': country_id, 'recursive_onchanges': False}"/>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

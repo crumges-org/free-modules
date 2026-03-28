@@ -1,0 +1,432 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* wb_terms_and_conditions
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-11 05:12+0000\n"
+"PO-Revision-Date: 2025-06-11 05:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.view_move_form_tnc_inherit
+msgid "Account Terms And Conditions"
+msgstr "Account Terms And Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_needaction
+msgid "Action Needed"
+msgstr "Action Needed"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_ids
+msgid "Activities"
+msgstr "Activities"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Activity Exception Decoration"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_state
+msgid "Activity State"
+msgstr "Activity State"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Activity Type Icon"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_attachment_count
+msgid "Attachment Count"
+msgstr "Attachment Count"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__company_ids
+msgid "Companies"
+msgstr "Companies"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model,name:wb_terms_and_conditions.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__create_uid
+msgid "Created by"
+msgstr "Created by"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__create_date
+msgid "Created on"
+msgstr "Created on"
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.actions.act_window,help:wb_terms_and_conditions.action_wb_terms_condition_po
+msgid "Define your custom purchase terms and conditions here."
+msgstr "Define your custom purchase terms and conditions here."
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.actions.act_window,help:wb_terms_and_conditions.action_wb_terms_condition_so
+msgid "Define your custom sales terms and conditions here."
+msgstr "Define your custom sales terms and conditions here."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_bank_statement_line__terms_and_conditions_detail
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_move__terms_and_conditions_detail
+msgid "Details"
+msgstr "Details"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_purchase_order__show_in_report
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_sale_order__show_in_report
+msgid "Display in Reports?"
+msgstr "Display in Reports?"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_follower_ids
+msgid "Followers"
+msgstr "Followers"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Followers (Partners)"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Font awesome icon e.g. fa-tasks"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__has_message
+msgid "Has Message"
+msgstr "Has Message"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__id
+msgid "ID"
+msgstr "ID"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_exception_icon
+msgid "Icon"
+msgstr "Icon"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icon to indicate an exception activity."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "If checked, new messages require your attention."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__message_has_error
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "If checked, some messages have a delivery error."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_is_follower
+msgid "Is Follower"
+msgstr "Is Follower"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model,name:wb_terms_and_conditions.model_account_move
+msgid "Journal Entry"
+msgstr "Journal Entry"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__write_uid
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__write_date
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Next Activity Deadline"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_summary
+msgid "Next Activity Summary"
+msgstr "Next Activity Summary"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_type_id
+msgid "Next Activity Type"
+msgstr "Next Activity Type"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__account_move__show_in_report__no
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__purchase_order__show_in_report__no
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__sale_order__show_in_report__no
+msgid "No"
+msgstr "No"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Number of Actions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_has_error_counter
+msgid "Number of errors"
+msgstr "Number of errors"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Number of messages requiring action"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Number of messages with delivery error"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__account_move__term_type_domain__purchase
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__wb_terms_condition__term_type__purchase
+msgid "Purchase"
+msgstr "Purchase"
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.view_partner_property_form_terms_and_con
+msgid "Purchase Default Terms and Conditions"
+msgstr "Purchase Default Terms and Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model,name:wb_terms_and_conditions.model_purchase_order
+msgid "Purchase Order"
+msgstr "Purchase Order"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_partner__purchase_term_condition_id
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_users__purchase_term_condition_id
+msgid "Purchase Terms & Conditions"
+msgstr "Purchase Terms & Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.ui.menu,name:wb_terms_and_conditions.term_conditions_po_config_menu
+#: model:res.groups,name:wb_terms_and_conditions.group_po_tnc
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.purchase_order_form_inherit_purchase_order
+msgid "Purchase Terms And Conditions"
+msgstr "Purchase Terms And Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_partner__purchase_terms_detail
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_users__purchase_terms_detail
+msgid "Purchase Terms Detail"
+msgstr "Purchase Terms Detail"
+
+#. module: wb_terms_and_conditions
+#: model:ir.actions.act_window,name:wb_terms_and_conditions.action_wb_terms_condition_po
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_purchase_order__terms_and_conditions_id
+msgid "Purchase Terms and Conditions"
+msgstr "Purchase Terms and Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__activity_user_id
+msgid "Responsible User"
+msgstr "Responsible User"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS Delivery error"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__wb_terms_condition__term_type__sale
+msgid "Sale"
+msgstr "Sale"
+
+#. module: wb_terms_and_conditions
+#: model:ir.ui.menu,name:wb_terms_and_conditions.term_conditions_sale_config_menu
+#: model:res.groups,name:wb_terms_and_conditions.group_so_tnc
+msgid "Sale Terms And Conditions"
+msgstr "Sale Terms And Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.actions.act_window,name:wb_terms_and_conditions.action_wb_terms_condition_so
+msgid "Sale Terms and Conditions"
+msgstr "Sale Terms and Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__account_move__term_type_domain__sale
+msgid "Sales"
+msgstr "Sales"
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.view_partner_property_form_terms_and_con
+msgid "Sales Default Terms and Conditions"
+msgstr "Sales Default Terms and Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model,name:wb_terms_and_conditions.model_sale_order
+msgid "Sales Order"
+msgstr "Sales Order"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_partner__sale_term_condition_id
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_users__sale_term_condition_id
+msgid "Sales Terms & Conditions"
+msgstr "Sales Terms & Conditions"
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.wb_sale_order_form_view_inherit
+msgid "Sales Terms And Conditions"
+msgstr "Sales Terms And Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_partner__sale_terms_detail
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_res_users__sale_terms_detail
+msgid "Sales Terms Detail"
+msgstr ""
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_sale_order__terms_and_conditions_id
+msgid "Sales Terms and Conditions"
+msgstr "Sales Terms and Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_account_bank_statement_line__tnc_id
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_account_move__tnc_id
+msgid "Select applicable Terms & Conditions."
+msgstr "Select applicable Terms & Conditions."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_purchase_order__terms_and_conditions_id
+msgid "Select the terms and conditions to apply to this purchase order."
+msgstr "Select the terms and conditions to apply to this purchase order."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_sale_order__terms_and_conditions_id
+msgid "Select the terms and conditions to apply to this sale order."
+msgstr ""
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_bank_statement_line__show_in_report
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_move__show_in_report
+msgid "Show on Report?"
+msgstr "Show on Report?"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_purchase_order__show_in_report
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_sale_order__show_in_report
+msgid "Show these terms and conditions on printed reports by default."
+msgstr "Show these terms and conditions on printed reports by default."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_bank_statement_line__term_type_domain
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_move__term_type_domain
+msgid "Term Type Domain"
+msgstr "Term Type Domain"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__tnc_con
+msgid "Terms & Conditions"
+msgstr "Terms & Conditions"
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.purchase_order_form_inherit_purchase_order
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.wb_sale_order_form_view_inherit
+msgid "Terms And Conditions"
+msgstr "Terms And Conditions"
+
+#. module: wb_terms_and_conditions
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.report_invoice_tnc_inherit
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.report_purchaseorder_document_custom_tnc
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.report_purchaseorder_document_request_tnc
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.report_quotation_inherit_demo
+msgid "Terms Details:"
+msgstr "Terms Details:"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model,name:wb_terms_and_conditions.model_wb_terms_condition
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_bank_statement_line__tnc_id
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_account_move__tnc_id
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.view_wb_terms_condition_form
+#: model_terms:ir.ui.view,arch_db:wb_terms_and_conditions.view_wb_terms_condition_tree
+msgid "Terms and Conditions"
+msgstr "Terms and Conditions"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_purchase_order__terms_and_conditions_detail
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_sale_order__terms_and_conditions_detail
+msgid "Terms and Conditions Detail"
+msgstr "Terms and Conditions Detail"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_purchase_order__terms_and_conditions_detail
+msgid "The text of the terms and conditions for this purchase order."
+msgstr "The text of the terms and conditions for this purchase order."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_sale_order__terms_and_conditions_detail
+msgid "The text of the terms and conditions for this sale order."
+msgstr "The text of the terms and conditions for this sale order."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__name
+msgid "Title"
+msgstr "Title"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__term_type
+msgid "Type"
+msgstr "Type"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Type of the exception activity on record."
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,field_description:wb_terms_and_conditions.field_wb_terms_condition__website_message_ids
+msgid "Website Messages"
+msgstr "Website Messages"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields,help:wb_terms_and_conditions.field_wb_terms_condition__website_message_ids
+msgid "Website communication history"
+msgstr "Website communication history"
+
+#. module: wb_terms_and_conditions
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__account_move__show_in_report__yes
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__purchase_order__show_in_report__yes
+#: model:ir.model.fields.selection,name:wb_terms_and_conditions.selection__sale_order__show_in_report__yes
+msgid "Yes"
+msgstr "Yes"

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Modern Dashboard Form View -->
+    <record id="view_erp_health_dashboard_form" model="ir.ui.view">
+        <field name="name">erp.health.dashboard.form</field>
+        <field name="model">erp.health.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="ERP Health Dashboard" create="false" edit="false">
+                <header>
+                    <button name="action_collect_metrics" string="🔄 Collect Metrics" 
+                            type="object" class="btn-primary"/>
+                    <button name="action_refresh_slow_queries" string="🔍 Refresh Queries" 
+                            type="object" class="btn-secondary"/>
+                    <button name="action_refresh_locks" string="🔒 Check Locks" 
+                            type="object" class="btn-warning"/>
+                    <button name="action_refresh_logs" string="📋 Refresh Logs" 
+                            type="object" class="btn-info"/>
+                </header>
+                
+                <sheet>
+                    <div class="oe_title mb-3">
+                        <h1>
+                            <i class="fa fa-dashboard"/> ERP Health Monitor
+                        </h1>
+                        <p class="text-muted">
+                            Real-time system monitoring and performance insights
+                        </p>
+                    </div>
+
+                    <!-- Server Status Cards -->
+                    <div class="row">
+                        <!-- CPU Card -->
+                        <div class="col-md-4">
+                            <div class="alert alert-primary" role="alert" style="border-left: 4px solid #007bff;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <i class="fa fa-microchip"/> CPU Usage
+                                        </h6>
+                                        <h3 class="mb-0">
+                                            <field name="cpu_percent"/>%
+                                        </h3>
+                                        <field name="cpu_status" invisible="1"/>
+                                    </div>
+                                    <div style="font-size: 48px; opacity: 0.3;">
+                                        <i class="fa fa-microchip"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RAM Card -->
+                        <div class="col-md-4">
+                            <div class="alert alert-info" role="alert" style="border-left: 4px solid #17a2b8;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <i class="fa fa-server"/> RAM Usage
+                                        </h6>
+                                        <h3 class="mb-0">
+                                            <field name="ram_percent"/>%
+                                        </h3>
+                                        <field name="ram_status" invisible="1"/>
+                                    </div>
+                                    <div style="font-size: 48px; opacity: 0.3;">
+                                        <i class="fa fa-server"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Disk Card -->
+                        <div class="col-md-4">
+                            <div class="alert alert-warning" role="alert" style="border-left: 4px solid #ffc107;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <i class="fa fa-hdd-o"/> Disk Usage
+                                        </h6>
+                                        <h3 class="mb-0">
+                                            <field name="disk_percent"/>%
+                                        </h3>
+                                        <field name="disk_status" invisible="1"/>
+                                    </div>
+                                    <div style="font-size: 48px; opacity: 0.3;">
+                                        <i class="fa fa-hdd-o"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="row mt-3">
+                        <!-- Cron Jobs Card -->
+                        <div class="col-md-3">
+                            <div class="card border-primary shadow-sm">
+                                <div class="card-body text-center" style="cursor: pointer;">
+                                    <button name="action_view_cron_logs" type="object" class="btn btn-link p-0 text-decoration-none w-100">
+                                        <i class="fa fa-clock-o text-primary" style="font-size: 32px;"/>
+                                        <h4 class="mt-2 mb-1">
+                                            <field name="total_crons"/>
+                                        </h4>
+                                        <p class="text-muted mb-1">Cron Jobs</p>
+                                        <small class="text-danger">
+                                            <field name="failed_crons"/> Failed | 
+                                            <field name="slow_crons"/> Slow
+                                        </small>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slow Queries Card -->
+                        <div class="col-md-3">
+                            <div class="card border-warning shadow-sm">
+                                <div class="card-body text-center" style="cursor: pointer;">
+                                    <button name="action_view_slow_queries" type="object" class="btn btn-link p-0 text-decoration-none w-100">
+                                        <i class="fa fa-database text-warning" style="font-size: 32px;"/>
+                                        <h4 class="mt-2 mb-1">
+                                            <field name="queries_today"/>
+                                        </h4>
+                                        <p class="text-muted mb-1">Slow Queries Today</p>
+                                        <small class="text-muted">
+                                            Total: <field name="total_queries"/>
+                                        </small>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Database Locks Card -->
+                        <div class="col-md-3">
+                            <div class="card border-danger shadow-sm">
+                                <div class="card-body text-center" style="cursor: pointer;">
+                                    <button name="action_view_database_locks" type="object" class="btn btn-link p-0 text-decoration-none w-100">
+                                        <i class="fa fa-lock text-danger" style="font-size: 32px;"/>
+                                        <h4 class="mt-2 mb-1">
+                                            <field name="total_locks"/>
+                                        </h4>
+                                        <p class="text-muted mb-1">Database Locks</p>
+                                        <small class="text-muted">Today</small>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Logs Card -->
+                        <div class="col-md-3">
+                            <div class="card border-info shadow-sm">
+                                <div class="card-body text-center" style="cursor: pointer;">
+                                    <button name="action_view_odoo_logs" type="object" class="btn btn-link p-0 text-decoration-none w-100">
+                                        <i class="fa fa-exclamation-triangle text-info" style="font-size: 32px;"/>
+                                        <h4 class="mt-2 mb-1">
+                                            <field name="error_logs"/>
+                                        </h4>
+                                        <p class="text-muted mb-1">Error Logs</p>
+                                        <small class="text-muted">Today</small>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Metrics Section -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <h4 class="border-bottom pb-2">
+                                <i class="fa fa-line-chart"/> Detailed Monitoring
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fa fa-server"/> Server Metrics
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <button name="action_view_server_metrics" 
+                                            string="View Detailed Metrics &amp; Trends" 
+                                            type="object" 
+                                            class="btn btn-primary btn-block mb-2"/>
+                                    <p class="text-muted mb-1">
+                                        <small>
+                                            <i class="fa fa-clock-o"/> Last Updated: 
+                                            <field name="last_update" widget="relative"/>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card shadow-sm">
+                                <div class="card-header bg-success text-white">
+                                    <h5 class="mb-0">
+                                        <i class="fa fa-tasks"/> Quick Actions
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <button name="action_view_cron_logs" type="object"
+                                            class="btn btn-outline-primary btn-block mb-2">
+                                        <i class="fa fa-clock-o"/> View Cron Logs
+                                    </button>
+                                    <button name="action_view_slow_queries" type="object"
+                                            class="btn btn-outline-warning btn-block mb-2">
+                                        <i class="fa fa-database"/> View Slow Queries
+                                    </button>
+                                    <button name="action_view_database_locks" type="object"
+                                            class="btn btn-outline-danger btn-block mb-2">
+                                        <i class="fa fa-lock"/> View Database Locks
+                                    </button>
+                                    <button name="action_view_odoo_logs" type="object"
+                                            class="btn btn-outline-info btn-block">
+                                        <i class="fa fa-file-text-o"/> View System Logs
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Info -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="alert alert-light">
+                                <p class="mb-0 text-center text-muted">
+                                    <small>
+                                        <i class="fa fa-info-circle"/> 
+                                        Dashboard auto-refreshes data on each reload. Use action buttons above to manually refresh specific components.
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dashboard Action -->
+    <record id="action_erp_health_dashboard" model="ir.actions.act_window">
+        <field name="name">ERP Health Dashboard</field>
+        <field name="res_model">erp.health.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_erp_health_dashboard_form"/>
+        <field name="target">current</field>
+    </record>
+</odoo>

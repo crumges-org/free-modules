@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_slow_query_manager,access.slow.query.manager,model_erp_health_slow_query,group_erp_health_manager,1,1,1,1
+access_cron_log_manager,access.cron.log.manager,model_erp_health_cron_log,group_erp_health_manager,1,1,1,1
+access_server_metrics_manager,access.server.metrics.manager,model_erp_health_server_metrics,group_erp_health_manager,1,1,1,1
+access_dashboard_manager,access.dashboard.manager,model_erp_health_dashboard,group_erp_health_manager,1,1,1,1
+access_odoo_log_manager,access.odoo.log.manager,model_erp_health_odoo_log,group_erp_health_manager,1,1,1,1
+access_database_lock_manager,access.database.lock.manager,model_erp_health_database_lock,group_erp_health_manager,1,1,1,1
+access_erp_health_config_manager,access_erp_health_config_manager,model_erp_health_config,group_erp_health_manager,1,1,1,1

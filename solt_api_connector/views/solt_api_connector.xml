@@ -1,0 +1,316 @@
+<odoo>
+    <!-- Vistas para solt.api.connector -->
+    <record id="view_solt_api_connector_form" model="ir.ui.view">
+        <field name="name">solt.api.connector.form</field>
+        <field name="model">solt.api.connector</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Activate" name="toggle_active" type="object" invisible="active"
+                            class="btn-primary"
+                            confirm="This action will activate the connector. Continue?"/>
+                    <button string="Deactivate" name="toggle_active" type="object" invisible="not active"
+                            class="btn-primary"
+                            confirm="This action will deactivate the connector. Continue?"/>
+                    <button name="test_connection" string="Test Connection" type="object" class="btn-primary"
+                            invisible="auth_type in ['none'] or not active"/>
+                    <button name="action_all_active" string="Activate Webhooks/Automations" type="object" class="btn-secondary"
+                            invisible="not active"
+                            confirm="This action will activate all webhook/automation records. Continue?"/>
+                    <button name="action_all_inactive" string="Deactivate Webhooks/Automations" type="object" class="btn-secondary"
+                            invisible="not active"
+                            confirm="This action will deactivate all webhook/automation records. Continue?"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_call_logs" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="call_log_count" widget="statinfo" string="API Calls"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Connector name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="base_url"/>
+                            <field name="active" readonly="True" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="auth_type"/>
+                            <field name="username"
+                                   invisible="auth_type != 'basic'"
+                                   required="auth_type == 'basic'"/>
+                            <field name="password"
+                                   invisible="auth_type != 'basic'"
+                                   required="auth_type == 'basic'"
+                                   password="1"/>
+                            <field name="token"
+                                   invisible="auth_type not in ['bearer', 'api_key']"
+                                   required="auth_type == 'api_key'"/>
+                            <field name="api_key_name"
+                                   invisible="auth_type != 'api_key'"
+                                   required="auth_type == 'api_key'"/>
+                            <field name="api_key_in"
+                                   invisible="auth_type != 'api_key'"/>
+                            <field name="timeout"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <field name="id" invisible="1"/>
+                        <page string="Webhooks/Automations" name="automations" invisible="not id">
+                            <field name="automation_ids"
+                                   context="{'default_solt_connector_id': id, 'active_test': False}">
+                                <list decoration-muted="(not active)">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="trigger"/>
+                                    <field name="model_id"/>
+                                    <field name="active"/>
+                                    <button name="toggle_active" icon="fa-unlock fa-2x" type="object"
+                                            title="Activate Webhook/Automations"
+                                            invisible="active or not parent.active"
+                                            confirm="This action will activate the rule. Continue?"
+                                    />
+                                    <button name="toggle_active" icon="fa-archive fa-2x" type="object"
+                                            title="Deactivate Webhook/Automations"
+                                            confirm="This action will deactivate the rule and prevent execution. Continue?"
+                                    />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Endpoints" name="endpoints" invisible="not id">
+                            <field name="endpoint_ids"/>
+                        </page>
+                        <page string="Companies" name="companies" invisible="not id">
+                            <field name="company_ids">
+                                <list create="False" edit="False" delete="False" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="external_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Additional Headers" name="headers">
+                            <field name="headers" widget="ace"/>
+                        </page>
+                        <page name="meta_fields" string="Default field configuration" invisible="not id">
+                            <p colspan="2" class="mb-4">This section lists all default dynamic fields to add to configured Odoo models.</p>
+                            <button name="action_create_all_meta_fields"
+                                    colspan="2"
+                                    string="Create meta fields"
+                                    type="object"
+                                    invisible="not active"
+                                    confirm="This action will add dynamic fields to the configured Odoo models and views."/>
+                            <field name="meta_field_ids" nolabel="1" mode="list,form" context="{'default_connector_id': id}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="model_id"/>
+                                </list>
+                                <form string="Meta fields">
+                                    <group>
+                                        <group>
+                                            <field name="name" required="1"/>
+                                            <field name="connector_id" options="{'no_create': True, 'no_open': False}" readonly="True" force_save="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="model_id" domain="[('transient','=',False)]"
+                                                   required="1"
+                                                   options="{'no_create': True}"/>
+                                        </group>
+                                    </group>
+                                    <notebook invisible="not model_id">
+                                        <page string="Metadata" name="config_meta">
+                                            <group>
+                                                <group>
+                                                    <field name="create_dinamic_view"/>
+                                                    <field name="meta_tab_label" string="Tab label" invisible="not create_dinamic_view"/>
+                                                    <field name="model" invisible="True"/>
+                                                </group>
+                                                <group>
+                                                    <button name="action_create_meta_fields"
+                                                            colspan="2"
+                                                            string="Create meta fields"
+                                                            type="object"
+                                                            invisible="not parent.active"
+                                                            confirm="This action will add the dynamic fields to the configured Odoo model and its views."/>
+                                                </group>
+                                            </group>
+                                            <group string="Views">
+                                                <group name="form_view_group">
+                                                    <field name="form_view_id"
+                                                           domain="[('model','=',model),('type','=','form')]"/>
+                                                    <field name="extended_form_view_id"
+                                                           domain="[('id','=',0)]" invisible="not create_dinamic_view"/>
+                                                    <field name="list_view_id"
+                                                           domain="[('model','=',model),('type','=','list'),('mode','=','primary')]"/>
+                                                    <field name="extended_list_view_id"
+                                                           domain="[('id','=',0)]" invisible="not create_dinamic_view"/>
+                                                </group>
+                                                <group name="search_view_group">
+                                                    <field name="search_view_id"
+                                                           domain="[('model','=',model),('type','=','search'),('mode','=','primary')]"/>
+                                                    <field name="extended_search_view_id"
+                                                           domain="[('id','=',0)]" invisible="not create_dinamic_view"/>
+                                                </group>
+
+                                            </group>
+                                            <group string="Fields">
+                                                <field name="ir_meta_field_ids" nolabel="1" colspan="2"
+                                                       context="{'default_model_id': model_id,'default_model': model}">
+                                                    <list delete="0" create="0">
+                                                        <field name="name"/>
+                                                        <field name="field_description"/>
+                                                        <field name="ttype"/>
+                                                    </list>
+                                                </field>
+                                            </group>
+                                        </page>
+                                    </notebook>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Initial Import Actions" name="initial_import" invisible="not id">
+                            <field name="ini_import_acion_server_ids" context="{'default_connector_id': id, 'default_use_for_initial_import': True}">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="model_id"/>
+                                    <field name="connector_id" column_invisible="True"/>
+                                    <field name="last_import_date" optional="show"/>
+                                    <field name="import_result" optional="hide"/>
+                                    <field name="importing_state" widget="badge" decoration-warning="importing_state == 'scheduled'"
+                                           decoration-info="importing_state == 'running'" decoration-success="importing_state == 'done'"
+                                           decoration-danger="importing_state == 'error'" optional="show"/>
+                                    <field name="use_for_initial_import" column_invisible="True"/>
+                                    <button name="execute_initial_import" icon="fa-cloud-download fa-2x" type="object"
+                                            title="Importar"
+                                            invisible="not connector_id or not parent.active or not use_for_initial_import"
+                                    />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Initial Export Actions" name="initial_export" invisible="not id">
+                            <field name="ini_export_action_server_ids" context="{'default_connector_id': id, 'default_use_for_initial_export': True}">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="model_id"/>
+                                    <field name="connector_id" column_invisible="True"/>
+                                    <field name="last_export_date" optional="show"/>
+                                    <field name="export_result" optional="hide"/>
+                                    <field name="exporting_state" widget="badge" decoration-warning="exporting_state == 'scheduled'"
+                                           decoration-info="exporting_state == 'running'" decoration-success="exporting_state == 'done'"
+                                           decoration-danger="exporting_state == 'error'" optional="show"/>
+                                    <field name="use_for_initial_export" column_invisible="True"/>
+                                    <button name="execute_initial_export" icon="fa-cloud-upload fa-2x" type="object"
+                                            title="Export"
+                                    />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_solt_api_connector_list" model="ir.ui.view">
+        <field name="name">solt.api.connector.list</field>
+        <field name="model">solt.api.connector</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="(not active)">
+                <field name="name"/>
+                <field name="base_url"/>
+                <field name="auth_type"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_solt_api_connector_search" model="ir.ui.view">
+        <field name="name">solt.api.connector.search</field>
+        <field name="model">solt.api.connector</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="base_url"/>
+                <separator/>
+                <filter string="All" name="all" domain="['|', ('active', '=', False), ('active', '=', True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Authentication Type" name="group_by_auth" context="{'group_by':'auth_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_solt_api_connector_kanban" model="ir.ui.view">
+        <field name="name">solt.api.connector.kanban</field>
+        <field name="model">solt.api.connector</field>
+        <field name="arch" type="xml">
+            <kanban class="o_connector_kanban">
+                <field name="name"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <t t-set="styles" t-value="record.active.raw_value ? '' : 'opacity: 0.5;'"/>
+
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill" t-att-style="styles">
+                            <t t-set="module_name" t-value="'solt_api_connector'"/>
+
+                            <div id="image_div" class="o_kanban_image_fill_left d-none d-md-block"
+                                 t-att-style="'background-image:url(/' + module_name + '/static/description/icon.png); min-width:150px;'"/>
+
+                            <div class="oe_kanban_details d-flex flex-column px-2">
+                                <h2 class=""><field name="name"/></h2>
+                                <div class="row mb-3">
+                                    <div class="col text-center">
+                                        <a class="hoverable-card d-block pt-2 pb-2 text-black" href="#">
+                                            <span class="h2 d-block">
+                                                <field name="company_sync_count"/> / <field name="company_count"/>
+                                            </span>
+                                            stores synced / total stores
+                                        </a>
+                                    </div>
+                                    <div class="col text-center" id="orders_info">
+                                        <a/>
+                                    </div>
+                                </div>
+
+                                <ul id="ul_list" class="mb-3"/>
+
+                                <div class="btn-group" role="group" aria-label="Integration actions" groups="solt_api_connector.group_api_integration_manager">
+                                    <button string="Activate" name="toggle_active" type="object" invisible="active"
+                                            class="btn btn-outline-success d-inline-block"
+                                            confirm="This action will activate the connector. Continue?"/>
+                                    <button string="Deactivate" name="toggle_active" type="object" invisible="not active"
+                                            class="btn btn-outline-danger d-inline-block"
+                                            confirm="This action will deactivate the connector. Continue?"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Menu actions -->
+    <record id="action_solt_api_connector" model="ir.actions.act_window">
+        <field name="name">API Connectors</field>
+        <field name="res_model">solt.api.connector</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_all': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new API connector
+            </p>
+            <p>
+                API connectors allow Odoo to connect with external services.
+            </p>
+        </field>
+    </record>
+
+</odoo>

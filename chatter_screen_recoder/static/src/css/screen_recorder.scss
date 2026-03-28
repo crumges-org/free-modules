@@ -1,0 +1,19 @@
+@keyframes o_screen_recorder_blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.o_screen_recorder_systray_dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: red;
+    animation: o_screen_recorder_blink 1s infinite;
+}
+
+.o_screen_recorder_systray_btn {
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05) !important;
+    }
+}

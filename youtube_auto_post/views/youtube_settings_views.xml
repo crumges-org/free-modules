@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_youtube_api_settings_form" model="ir.ui.view">
+        <field name="name">youtube.api.settings.form</field>
+        <field name="model">youtube.api.settings</field>
+        <field name="arch" type="xml">
+            <form string="YouTube API Settings">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="client_secrets_attachment_id" options="{'no_create': True}" readonly="1" force_save="1"/>
+                        <field name="file_name" invisible="1"/>
+                        <field name="file_data" filename="file_name"/>
+                    </group>
+                    <div>
+                        <p>Upload the <code>client_secrets.json</code> file downloaded from <a href="https://console.cloud.google.com/">Google Cloud Console</a>.</p>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_youtube_api_settings" model="ir.actions.act_window">
+        <field name="name">YouTube API Settings</field>
+        <field name="res_model">youtube.api.settings</field>
+        <field name="view_mode">list,form</field>
+        <field name="target">inline</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure YouTube API settings by uploading the client_secrets.json file.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_youtube_api_settings" name="YouTube API Settings" action="action_youtube_api_settings" parent="youtube_auto_post.menu_youtube_video_upload" sequence="10" groups="base.group_system"/>
+</odoo>

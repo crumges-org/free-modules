@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_erp_health_root"
+              name="ERP Health"
+              sequence="100"
+              groups="group_erp_health_manager"/>
+
+    <!-- Dashboard Menu - Main Entry Point -->
+    <menuitem id="menu_erp_health_dashboard"
+              name="Dashboard"
+              parent="menu_erp_health_root"
+              action="action_erp_health_dashboard"
+              sequence="1"/>
+
+    <!-- Monitoring Section -->
+    <menuitem id="menu_erp_health_monitoring"
+              name="Monitoring"
+              parent="menu_erp_health_root"
+              sequence="10"/>
+
+    <menuitem id="menu_erp_health_server_metrics"
+              name="Server Metrics"
+              parent="menu_erp_health_monitoring"
+              action="action_server_metrics"
+              sequence="1"/>
+
+    <menuitem id="menu_erp_health_slow_queries"
+              name="Slow Queries"
+              parent="menu_erp_health_monitoring"
+              action="action_slow_query"
+              sequence="2"/>
+
+    <menuitem id="menu_erp_health_cron_logs"
+              name="Cron Logs"
+              parent="menu_erp_health_monitoring"
+              action="action_cron_log"
+              sequence="3"/>
+
+    <menuitem id="menu_erp_health_database_locks"
+              name="Database Locks"
+              parent="menu_erp_health_monitoring"
+              action="action_database_lock"
+              sequence="4"/>
+
+    <!-- System Logs Section -->
+    <menuitem id="menu_erp_health_logs"
+              name="System Logs"
+              parent="menu_erp_health_root"
+              action="action_odoo_log"
+              sequence="20"/>
+
+</odoo>

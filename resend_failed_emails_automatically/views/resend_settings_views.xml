@@ -1,0 +1,26 @@
+<odoo>
+    <record id="view_resend_email_settings_form" model="ir.ui.view">
+        <field name="name">resend.email.settings.form</field>
+        <field name="model">resend.email.settings</field>
+        <field name="arch" type="xml">
+            <form string="Resend Email Settings">
+                <sheet>
+                    <group>
+                        <field name="active"/>
+                        <field name="resend_interval"/>
+                        <field name="resend_unit"/>
+                        <field name="enable_report"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_resend_email_settings" model="ir.actions.act_window">
+        <field name="name">Resend Email Configuration</field>
+        <field name="res_model">resend.email.settings</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    <menuitem id="menu_resend_email_settings" name="Resend Email Configuration"
+              parent="base.menu_email" action="resend_failed_emails_automatically.action_resend_email_settings"/>
+</odoo>

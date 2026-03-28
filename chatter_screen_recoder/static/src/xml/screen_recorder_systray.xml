@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="chatter_screen_recoder.ScreenRecorderSystray">
+    <t t-if="isVisible">
+        <Dropdown position="'bottom-end'" state="dropdown" menuClass="'p-3'" >
+            <button class="o_screen_recorder_systray_btn border-0 bg-transparent d-flex align-items-center">
+                <i class="fa fa-video-camera text-danger"/>
+                <t t-if="screenRecorder.isRecording and !screenRecorder.isPaused">
+                    <span class="o_screen_recorder_systray_dot ms-1"/>
+                    <span class="ms-1 text-danger fw-bold small" t-esc="screenRecorder.timerDisplay"/>
+                </t>
+                <t t-if="screenRecorder.isPaused">
+                    <i class="fa fa-pause ms-1 text-warning small"/>
+                    <span class="ms-1 text-warning fw-bold small" t-esc="screenRecorder.timerDisplay"/>
+                </t>
+                <t t-if="screenRecorder.isUploading">
+                    <i class="fa fa-spinner fa-spin ms-1 text-warning"/>
+                </t>
+            </button>
+            <t t-set-slot="content">
+                <div class="o_screen_recorder_systray_menu" style="min-width: 260px;">
+                    <!-- Header -->
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fa fa-video-camera text-danger me-2"/>
+                        <span class="fw-bold">Screen Recording</span>
+                    </div>
+
+                    <!-- Source record name -->
+                    <div t-if="screenRecorder.sourceName" class="text-muted small mb-2 text-truncate">
+                        Recording: <span t-esc="screenRecorder.sourceName"/>
+                    </div>
+
+                    <!-- Timer -->
+                    <div class="d-flex align-items-center justify-content-center mb-3 py-2 bg-light rounded">
+                        <t t-if="screenRecorder.isRecording and !screenRecorder.isPaused">
+                            <span class="o_screen_recorder_systray_dot me-2"/>
+                            <span class="fs-4 fw-bold text-danger font-monospace" t-esc="screenRecorder.timerDisplay"/>
+                        </t>
+                        <t t-if="screenRecorder.isPaused">
+                            <i class="fa fa-pause text-warning me-2"/>
+                            <span class="fs-4 fw-bold text-warning font-monospace" t-esc="screenRecorder.timerDisplay"/>
+                        </t>
+                        <t t-if="screenRecorder.isUploading">
+                            <i class="fa fa-spinner fa-spin text-warning me-2"/>
+                            <span class="fs-5 fw-bold text-muted">Uploading...</span>
+                        </t>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div t-if="!screenRecorder.isUploading" class="d-flex gap-2">
+                        <button class="btn btn-success flex-fill" t-on-click="onClickSave">
+                            <i class="fa fa-save me-1"/>Save
+                        </button>
+                        <button t-if="!screenRecorder.isPaused"
+                                class="btn btn-warning flex-fill" t-on-click="onClickPause">
+                            <i class="fa fa-pause me-1"/>Pause
+                        </button>
+                        <button t-if="screenRecorder.isPaused"
+                                class="btn btn-primary flex-fill" t-on-click="onClickResume">
+                            <i class="fa fa-play me-1"/>Resume
+                        </button>
+                        <button class="btn btn-outline-danger flex-fill" t-on-click="onClickDiscard">
+                            <i class="fa fa-trash me-1"/>Discard
+                        </button>
+                    </div>
+                </div>
+            </t>
+        </Dropdown>
+    </t>
+</t>
+
+</templates>

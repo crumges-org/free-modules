@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="point_of_sale.PrintReceiptButtonExtension" t-inherit="point_of_sale.ProductScreen"
+       t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('subpads')]" position="before">
+            <t t-if="this.pos.config.enable_pre_receipt">
+                <div class="o-pos-control d-flex justify-content-center pt-1 pb-1">
+                    <button class="pos-receipt-btn btn btn-secondary rounded-0 fw-bolder"
+                            t-on-click="() => this.printReceipt()">
+                        <i class="fa fa-print me-1"/>
+                        <span>Print Receipt</span>
+                    </button>
+                </div>
+            </t>
+        </xpath>
+    </t>
+    <t t-name="pos.ReceiptScreen" t-inherit="point_of_sale.ReceiptScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_payment_successful')]//div[hasclass('border-success')]" position="attributes">
+            <attribute name="t-if">!props.preReceipt</attribute>
+        </xpath>
+    </t>
+</templates>

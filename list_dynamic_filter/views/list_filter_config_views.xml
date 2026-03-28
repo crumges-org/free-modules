@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="list_filter_config_view_list" model="ir.ui.view">
+        <field name="name">list.filter.config.list</field>
+        <field name="model">list.filter.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="model_id" />
+                <field name="active" />
+            </list>
+        </field>
+    </record>
+
+    <record id="list_filter_config_view_form" model="ir.ui.view">
+        <field name="name">list.filter.config.form</field>
+        <field name="model">list.filter.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="model_id" />
+                        <field name="active" />
+                    </group>
+                    <notebook>
+                        <page string="Filter Fields" name="filter_fields">
+                            <field name="filter_field_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" />
+                                    <field name="model_id" column_invisible="1" />
+                                    <field name="field_id" />
+                                    <field name="field_type" />
+                                    <field name="comodel_name" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="list_filter_config_view_search" model="ir.ui.view">
+        <field name="name">list.filter.config.search</field>
+        <field name="model">list.filter.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="model_id" />
+                <filter string="Archived" name="inactive"
+                    domain="[('active', '=', False)]" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_list_filter_config" model="ir.actions.act_window">
+        <field name="name">List Filter Configurations</field>
+        <field name="res_model">list.filter.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new list filter configuration
+            </p>
+            <p>
+                Configure dynamic filters for your list views.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="menu_list_filter_config"
+        name="List Filters"
+        parent="base.next_id_2"
+        action="action_list_filter_config"
+        sequence="30" />
+</odoo>

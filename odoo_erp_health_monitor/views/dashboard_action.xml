@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dashboard Action - Simple approach -->
+    <record id="action_erp_health_dashboard" model="ir.actions.act_window">
+        <field name="name">ERP Health Dashboard</field>
+        <field name="res_model">erp.health.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'create': False}</field>
+        <field name="limit">1</field>
+    </record>
+</odoo>

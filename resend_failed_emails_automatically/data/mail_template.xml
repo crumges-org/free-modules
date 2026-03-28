@@ -1,0 +1,17 @@
+<odoo>
+    <record id="failed_email_report_template" model="mail.template">
+        <field name="name">Failed Email Report</field>
+        <field name="model_id" ref="resend_failed_emails_automatically.model_mail_auto_resend_cron"/>
+        <field name="subject">Daily Failed Emails Report</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.email_formatted }}</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Hello,</p>
+            <p>The total failed emails count for today is: <strong>${ctx.get('failed_count', 0)}</strong></p>
+            <p>Regards,</p>
+            <p>Your Odoo System</p>
+            ]]>
+        </field>
+    </record>
+</odoo>

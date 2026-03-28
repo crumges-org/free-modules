@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_users_auto_complete_so_view" model="ir.ui.view">
+        <field name="name">res.users.auto.complete.so</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']" position="inside">
+                <group string="Sale Order Automation">
+                    <field name="so_auto_complete"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

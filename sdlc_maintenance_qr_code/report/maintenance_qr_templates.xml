@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Single QR label cell -->
+    <template id="report_simple_qr_label_cell">
+        <div class="qr-label-cell" t-attf-style="
+            width: #{100 // columns}%;
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+            padding: 4px;
+            box-sizing: border-box;
+            page-break-inside: avoid;
+        ">
+            <!-- Header band -->
+            <div t-attf-style="
+                background-color: #{header_color};
+                color: white;
+                font-size: 8pt;
+                font-weight: bold;
+                padding: 2px 4px;
+                text-transform: uppercase;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            ">
+                PROPERTY OF <t t-esc="company.name"/>
+            </div>
+            <!-- QR code image -->
+            <div style="margin: 4px 0;">
+                <span t-if="equipment.x_qr_payload"
+                      t-field="equipment.x_qr_payload"
+                      t-options="{'widget': 'barcode', 'symbology': 'QR', 'width': qr_px, 'height': qr_px}"/>
+            </div>
+            <!-- Equipment code -->
+            <div style="font-family: monospace; font-size: 9pt; font-weight: bold;">
+                <t t-esc="equipment._qr_display_code()"/>
+            </div>
+            <!-- Equipment name -->
+            <div style="font-size: 8pt; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <t t-esc="equipment.x_qr_name_display or equipment.name"/>
+            </div>
+        </div>
+    </template>
+
+    <!-- Full report document -->
+    <template id="report_maintenance_equipment_qr">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="pages" t-value="pages"/>
+                <t t-set="columns" t-value="columns"/>
+                <t t-set="rows" t-value="rows"/>
+                <t t-set="qr_px" t-value="qr_px"/>
+                <t t-set="header_color" t-value="header_color"/>
+                <t t-set="company" t-value="company"/>
+
+                <t t-foreach="pages" t-as="page">
+                    <div class="page" style="page-break-after: always; margin: 0; padding: 0;">
+                        <t t-foreach="page" t-as="row">
+                            <div style="white-space: nowrap; font-size: 0;">
+                                <t t-foreach="row" t-as="equipment">
+                                    <t t-call="sdlc_maintenance_qr_code.report_simple_qr_label_cell"/>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

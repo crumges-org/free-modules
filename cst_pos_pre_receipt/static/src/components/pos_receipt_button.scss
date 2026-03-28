@@ -1,0 +1,23 @@
+.pos-receipt-btn {
+    font-weight: bolder;
+    color: #212529;
+
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #714B67;
+        color: #f8f9fa;
+    }
+
+    i {
+        margin-right: 0.5rem;
+    }
+}
+
+.o-pos-control{
+border: 1px solid #ccc;
+
+    border-radius: 0.25rem;
+
+}

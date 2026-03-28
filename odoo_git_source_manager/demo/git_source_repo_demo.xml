@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================ -->
+        <!-- DEMO REPOSITORIES                            -->
+        <!-- ============================================ -->
+
+        <!-- Repository 1: Odoo Core 17.0 -->
+        <record id="demo_repo_odoo_core" model="git.source.repo">
+            <field name="name">Odoo Core 17.0</field>
+            <field name="repo_url">https://github.com/odoo/odoo.git</field>
+            <field name="provider">github</field>
+            <field name="branch">17.0</field>
+            <field name="auth_type">none</field>
+            <field name="is_active" eval="True" />
+            <field name="notes">Official Odoo 17.0 core repository from GitHub.
+
+                This is the main Odoo framework repository containing all core modules including:
+                - Base system
+                - CRM, Sales, Inventory
+                - Accounting, HR
+                - Website, eCommerce
+                - And more...
+
+                Branch: 17.0 (stable release branch)
+                Update frequency: Regular security and bug fixes</field>
+        </record>
+
+        <!-- Repository 2: Example Private Repository (Disabled) -->
+        <record id="demo_repo_private_company" model="git.source.repo">
+            <field name="name">Company Private Modules</field>
+            <field name="repo_url">https://github.com/mycompany/odoo-custom.git</field>
+            <field name="provider">github</field>
+            <field name="branch">main</field>
+            <field name="auth_type">token</field>
+            <field name="token_param">git_mgr.token.company</field>
+            <field name="is_active" eval="False" />
+            <field name="notes">⚠️ EXAMPLE - NOT CONFIGURED
+
+                This is an example of a private repository configuration.
+
+                To use:
+                1. Generate a personal access token from GitHub
+                2. Add to System Parameters: git_mgr.token.company
+                3. Enable this repository
+                4. Test connection
+
+                Security: Token provides read-only access to private repos</field>
+        </record>
+
+        <!-- Repository 3: Example GitLab Repository -->
+        <record id="demo_repo_gitlab_example" model="git.source.repo">
+            <field name="name">GitLab Custom Modules</field>
+            <field name="repo_url">https://gitlab.com/mycompany/odoo-modules.git</field>
+            <field name="provider">gitlab</field>
+            <field name="branch">17.0</field>
+            <field name="auth_type">token</field>
+            <field name="token_param">git_mgr.token.gitlab</field>
+            <field name="is_active" eval="False" />
+            <field name="notes">⚠️ EXAMPLE - GitLab Repository
+
+                Example configuration for GitLab-hosted repositories.
+
+                Setup:
+                1. Create project access token in GitLab
+                2. Store in: git_mgr.token.gitlab
+                3. Enable and test connection</field>
+        </record>
+
+        <!-- Repository 4: Example SSH Repository -->
+        <record id="demo_repo_ssh_example" model="git.source.repo">
+            <field name="name">SSH Private Repository</field>
+            <field name="repo_url">git@github.com:mycompany/private-repo.git</field>
+            <field name="provider">github</field>
+            <field name="branch">main</field>
+            <field name="auth_type">ssh</field>
+            <field name="ssh_private_key_param">git_mgr.ssh_key_path</field>
+            <field name="is_active" eval="False" />
+            <field name="notes">⚠️ EXAMPLE - SSH Authentication
+
+                Example using SSH key authentication.
+
+                Setup:
+                1. Generate SSH key: ssh-keygen -t ed25519 -f /home/odoo/.ssh/git_mgr_id
+                2. Add public key to GitHub/GitLab
+                3. Store key path in: git_mgr.ssh_key_path
+                4. Set permissions: chmod 600 /home/odoo/.ssh/git_mgr_id
+                5. Enable and test</field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- DEMO ENTITY LINKS                            -->
+        <!-- NOTE: Entity links are NOT included in demo data -->
+        <!-- to prevent unique constraint violations on module upgrade. -->
+        <!-- Users can create entity links manually via the UI: -->
+        <!-- Git Source Manager → Entity Links → Create -->
+        <!-- ============================================ -->
+
+        <!-- ============================================ -->
+        <!-- DEMO WORKSPACES (Auto-created by links)     -->
+        <!-- Note: Workspaces are automatically created  -->
+        <!-- when entity links are created               -->
+        <!-- ============================================ -->
+
+        <!-- ============================================ -->
+        <!-- DEMO UPDATE LOGS                             -->
+        <!-- ============================================ -->
+
+        <!-- NOTE: Update logs are created automatically when you run updates -->
+        <!-- To generate demo logs: -->
+        <!-- 1. Enable an entity link (e.g., "My Company - Odoo Core 17.0") -->
+        <!-- 2. Click "Update Workspace" button -->
+        <!-- 3. View the generated logs in Update Logs menu -->
+
+        <!-- Sample log formats for reference: -->
+        <!--
+        SUCCESS LOG Example:
+        - Action: clone/pull/fetch
+        - Result: success
+        - Message: Git command output with details
+        - Commit Hash: SHA hash of the commit
+        
+        FAILURE LOG Example:
+        - Action: clone/pull
+        - Result: failure  
+        - Message: Error description and troubleshooting hints
+        - Commit Hash: (empty on failure)
+        -->
+
+        <!-- ============================================ -->
+        <!-- DEMO NOTES & DOCUMENTATION                   -->
+        <!-- ============================================ -->
+
+        <!-- Note: Entity links are NOT included in demo data to prevent -->
+        <!-- unique constraint violations on module upgrade. -->
+        <!-- -->
+        <!-- To use the demo repositories: -->
+        <!-- 1. Go to Git Source Manager → Entity Links -->
+        <!-- 2. Click Create -->
+        <!-- 3. Select a repository and entity -->
+        <!-- 4. Enable the link -->
+        <!-- 5. Click "Update Workspace" to test -->
+
+    </data>
+
+    <!-- System Parameters with noupdate to preserve user-configured values -->
+    <data noupdate="1">
+
+        <record id="param_workspace_base_path" model="ir.config_parameter">
+            <field name="key">git_mgr.workspace_base_path</field>
+            <field name="value">/var/lib/odoo/gitworkspaces</field>
+        </record>
+
+        <record id="param_update_timeout" model="ir.config_parameter">
+            <field name="key">git_mgr.update_timeout</field>
+            <field name="value">300</field>
+        </record>
+
+        <!-- Placeholder parameters for authentication (empty by default) -->
+        <record id="param_token_company" model="ir.config_parameter">
+            <field name="key">git_mgr.token.company</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="param_token_gitlab" model="ir.config_parameter">
+            <field name="key">git_mgr.token.gitlab</field>
+            <field name="value"></field>
+        </record>
+
+        <record id="param_ssh_key_path" model="ir.config_parameter">
+            <field name="key">git_mgr.ssh_key_path</field>
+            <field name="value">/home/odoo/.ssh/git_mgr_id</field>
+        </record>
+
+    </data>
+</odoo>

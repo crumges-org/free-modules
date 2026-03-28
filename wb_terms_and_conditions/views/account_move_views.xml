@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<odoo>
+    <record id="view_move_form_tnc_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.tnc.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_info']" position="after">
+                <page string="Account Terms And Conditions" name="terms_conditions_page">
+                    <group>
+                        <field name="show_in_report"/>
+                    </group>
+                    <group>
+                        <field name="tnc_id"
+                               domain="[('term_type', '=', term_type_domain), ('company_ids', 'in', [company_id])]"
+                               readonly="state in ['posted']"/>
+                        <field name="terms_and_conditions_detail"
+                               readonly="state in ['posted']"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

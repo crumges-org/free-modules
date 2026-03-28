@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template">
+  <t t-name="odoo_openweathermap_integration.systrayWeatherMenu" owl="1">
+    <Dropdown t-if="this.user.show_weather_notification and this.isWeatherGroup" state="dropdown" position="'bottom-end'" menuClass="weatherSystray.menuClass" disabled="!state.weather and !state.error">
+      <!-- single toggler element -->
+      <button t-att-class="state.heatClass or ''" class="fw-bolder">
+        <t t-if="state.weather">
+          <img t-att-src="'https://openweathermap.org/img/wn/' + state.weather.weather[0].icon + '@2x.png'"
+                           alt="Weather Icon" style="height: 40px; width: 40px;"/>
+          <t t-if="state.weather.name?.length > 10">
+            <span t-out="state.weather.name.slice(0, 10)"/>..,
+          </t>
+          <t t-else="">
+            <span t-out="state.weather.name"/>,
+          </t>
+          <span t-out="state.displayTemp" class="ms-1"/>
+          <span t-out="state.unitLabel"/>
+        </t>
+        <t t-else="">
+          <i class="fa fa-exclamation-triangle text-warning"/>
+        </t>
+      </button>
+
+      <!-- dropdown content -->
+      <t t-set-slot="content">
+        <t t-if="state.weather">
+          <div class="card border-0">
+            <div class="card-header border-0 p-0">
+              <img class="px-1"
+                  t-att-src="'/odoo_openweathermap_integration/static/src/img/weather_card.png'"
+                  alt="Weather" style="width:360px;height:100px;"/>
+              <div class="card-img-overlay fw-bold">
+                <h2 class="card-title text-white">
+                  <span t-out="state.weather.name"/>, <span t-out="state.weather.sys.country"/>
+                </h2>
+                <small class="card-text text-white font-light">
+                  <span t-out="state.weather.weather[0].main"/>
+                </small>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                  <div class="d-flex">
+                    <div name="weather-icon" class="col-2">
+                      <img t-att-src="'https://openweathermap.org/img/wn/' + state.weather.weather[0].icon + '@2x.png'"
+                           alt="Weather Icon" class="img-fluid"/>
+                    </div>
+                    <div>
+                      <h2 class="fw-bold" t-att-class="state.heatClass"
+                          t-if="state.displayTemp !== null">
+                        <span t-out="state.displayTemp"/>
+                        <t t-out="state.unitLabel"/>
+                      </h2>
+                      <small>
+                        Feels like <span t-out="state.feelsLikeTemp"/>
+                        <t t-out="state.unitLabel"/>. <span t-out="state.weather.weather[0].description" class="text-capitalize"/>
+                      </small>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+        </t>
+
+        <div t-else="" class="alert alert-warning" role="alert" style="margin-top: -7px; margin-bottom: -7px;">
+          <i class="fa fa-exclamation-triangle"/>
+          <strong>Warning! </strong>
+          <t t-if="state.error">
+            <span t-out="state.error"/><br/>
+            <span t-out="state.errorMessage"/>
+          </t>
+          <t t-else="">
+            No weather data available.<br/>
+            Configure API key and Location.
+          </t>
+        </div>
+      </t>
+    </Dropdown>
+  </t>
+</templates>

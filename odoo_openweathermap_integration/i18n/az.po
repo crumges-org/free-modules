@@ -1,0 +1,282 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_openweathermap_integration
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20251021\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-01 07:57+0000\n"
+"PO-Revision-Date: 2025-12-01 13:11+0400\n"
+"Last-Translator: ERPGO LLC\n"
+"Language-Team: ERPGO LLC\n"
+"Language: az\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: odoo_openweathermap_integration
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.view_users_form_inherit_openweathermap
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.view_users_form_simple_modif_inherit_openweathermap
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\"/> User has not Timezone. Please set "
+"your timezone from <b>Preferences</b> tab."
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/> İstifadəçinin Saat Qurşağı təyin "
+"edilməyib. Zəhmət olmasa <b>Tərcihlər</b> bölməsindən saat qurşağınızı "
+"seçin."
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,help:odoo_openweathermap_integration.field_res_company__openweathermap_api_key
+#: model:ir.model.fields,help:odoo_openweathermap_integration.field_res_config_settings__openweathermap_api_key
+msgid "API key from OpenWeatherMap"
+msgstr "OpenWeatherMap üçün API açarı"
+
+#. module: odoo_openweathermap_integration
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.res_config_settings_view_form_inherit_openweathermap
+msgid "Api Key..."
+msgstr "Api Açarı..."
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields.selection,name:odoo_openweathermap_integration.selection__res_users__weather_location_type__auto
+msgid "Browser Location"
+msgstr "Brauzer Yeri"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,help:odoo_openweathermap_integration.field_res_users__weather_city
+msgid "City of the user"
+msgstr "İstifadəçinin şəhəri"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model,name:odoo_openweathermap_integration.model_res_company
+msgid "Companies"
+msgstr "Şirkətlər"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model,name:odoo_openweathermap_integration.model_res_config_settings
+msgid "Config Settings"
+msgstr "Parametrləri Konfiqurasiya edin"
+
+#. module: odoo_openweathermap_integration
+#. odoo-javascript
+#: code:addons/odoo_openweathermap_integration/static/src/xml/weather_notification_templates.xml:0
+msgid "Configure API key and Location."
+msgstr "API açarını və Yeri konfiqurasiya edin."
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Could not fetch geolocation. Please check your network connection."
+msgstr ""
+"Coğrafi mövqe əldə edilə bilmədi. Zəhmət olmasa şəbəkə bağlantınızı "
+"yoxlayın."
+
+#. module: odoo_openweathermap_integration
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.res_config_settings_view_form_inherit_openweathermap
+msgid "Don't have an API key? Sign up and generate one (free) here."
+msgstr "API açarınız yoxdur? Qeydiyyatdan keçin və (pulsuz) açar yaradın."
+
+#. module: odoo_openweathermap_integration
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.res_config_settings_view_form_inherit_openweathermap
+msgid ""
+"Enter your OpenWeatherMap API key here to enable weather data integration."
+msgstr ""
+"Hava məlumatlarının inteqrasiyasını aktivləşdirmək üçün OpenWeatherMap API "
+"açarınızı burada daxil edin."
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Error fetching geolocation"
+msgstr "Coğrafi mövqeni əldə edərkən xəta baş verdi"
+
+#. module: odoo_openweathermap_integration
+#. odoo-javascript
+#: code:addons/odoo_openweathermap_integration/static/src/xml/weather_notification_templates.xml:0
+msgid "Feels like"
+msgstr "Hiss olunur"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Geocoder library is not available"
+msgstr "Geocoder kitabxanası mövcud deyil"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields.selection,name:odoo_openweathermap_integration.selection__res_users__weather_temp_scale_type__imperial
+msgid "Imperial (°F)"
+msgstr "İmperial (°F)"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields.selection,name:odoo_openweathermap_integration.selection__res_users__weather_location_type__manual
+msgid "Manual Location"
+msgstr "Əl ilə Təyin Edilmiş Yer"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields.selection,name:odoo_openweathermap_integration.selection__res_users__weather_temp_scale_type__metric
+msgid "Metric (°C)"
+msgstr "Metrik (°C)"
+
+#. module: odoo_openweathermap_integration
+#. odoo-javascript
+#: code:addons/odoo_openweathermap_integration/static/src/xml/weather_notification_templates.xml:0
+msgid "No weather data available."
+msgstr "Hava məlumatı mövcud deyil."
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,field_description:odoo_openweathermap_integration.field_res_company__openweathermap_api_key
+#: model:ir.model.fields,field_description:odoo_openweathermap_integration.field_res_config_settings__openweathermap_api_key
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.res_config_settings_view_form_inherit_openweathermap
+msgid "OpenWeatherMap API Key"
+msgstr "OpenWeatherMap API Açarı"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Please enable weather notification in your user settings."
+msgstr ""
+"Zəhmət olmasa istifadəçi parametrlərində hava bildirişlərini aktiv edin."
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Please install the geocoder library to use automatic location."
+msgstr ""
+"Avtomatik məkan funksiyasını istifadə etmək üçün zəhmət olmasa geocoder "
+"kitabxanasını quraşdırın."
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Please set your OpenWeatherMap API key in general settings."
+msgstr ""
+"Zəhmət olmasa OpenWeatherMap API açarınızı ümumi parametrlərdə təyin edin."
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Please set your city in your user settings."
+msgstr "Zəhmət olmasa şəhərinizi istifadəçi parametrlərində təyin edin."
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Please set your location type in your user settings."
+msgstr "Zəhmət olmasa məkan növünü istifadəçi parametrlərində təyin edin."
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Please set your timezone in your user settings."
+msgstr "Zəhmət olmasa saat qurşağınızı istifadəçi parametrlərində təyin edin."
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,help:odoo_openweathermap_integration.field_res_users__weather_temp_scale_type
+msgid "Select the temperature scale for weather data"
+msgstr "Hava məlumatları üçün temperatur vahidini seçin"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,field_description:odoo_openweathermap_integration.field_res_users__weather_location_type
+msgid "Set Location"
+msgstr "Məkanı təyin edin"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,help:odoo_openweathermap_integration.field_res_users__weather_location_type
+msgid "Setting and managing locations"
+msgstr "Məkanların təyini və idarə olunması"
+
+#. module: odoo_openweathermap_integration
+#: model:res.groups,name:odoo_openweathermap_integration.group_show_weather_forecast
+msgid "Show Weather Forecast"
+msgstr "Hava Proqnozunu Göstər"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields.selection,name:odoo_openweathermap_integration.selection__res_users__weather_temp_scale_type__standard
+msgid "Standard (K)"
+msgstr "Standart (K)"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,field_description:odoo_openweathermap_integration.field_res_users__weather_temp_scale_type
+msgid "Temperature Scale"
+msgstr "Temperatur Şkalası"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "This error response is from OpenWeatherMap API."
+msgstr "Bu xəta cavabı OpenWeatherMap API-dən gəlmişdir."
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model,name:odoo_openweathermap_integration.model_res_users
+msgid "User"
+msgstr "İstifadəçi"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "User timezone is not set"
+msgstr "İstifadəçinin saat qurşağı təyin edilməyib"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields.selection,name:odoo_openweathermap_integration.selection__res_users__weather_location_type__timezone
+msgid "User's Timezone"
+msgstr "İstifadəçinin Saat Qurşağı"
+
+#. module: odoo_openweathermap_integration
+#. odoo-javascript
+#: code:addons/odoo_openweathermap_integration/static/src/xml/weather_notification_templates.xml:0
+msgid "Warning!"
+msgstr "Xəbərdarlıq!"
+
+#. module: odoo_openweathermap_integration
+#. odoo-javascript
+#: code:addons/odoo_openweathermap_integration/static/src/xml/weather_notification_templates.xml:0
+msgid "Weather"
+msgstr "Hava"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Weather API key is not set"
+msgstr "Hava API açarı təyin edilməyib"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,field_description:odoo_openweathermap_integration.field_res_users__weather_city
+msgid "Weather City"
+msgstr "Hava Şəhəri"
+
+#. module: odoo_openweathermap_integration
+#. odoo-javascript
+#: code:addons/odoo_openweathermap_integration/static/src/xml/weather_notification_templates.xml:0
+msgid "Weather Icon"
+msgstr "Hava İkonu"
+
+#. module: odoo_openweathermap_integration
+#: model:ir.model.fields,field_description:odoo_openweathermap_integration.field_res_users__show_weather_notification
+msgid "Weather Notification"
+msgstr "Hava Bildirişi"
+
+#. module: odoo_openweathermap_integration
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.view_users_form_inherit_openweathermap
+#: model_terms:ir.ui.view,arch_db:odoo_openweathermap_integration.view_users_form_simple_modif_inherit_openweathermap
+msgid "Weather Settings"
+msgstr "Hava Parametrləri"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Weather city is not set"
+msgstr "Hava şəhəri təyin edilməyib"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Weather location type is not set"
+msgstr "Hava məkan növü təyin edilməyib"
+
+#. module: odoo_openweathermap_integration
+#. odoo-python
+#: code:addons/odoo_openweathermap_integration/controllers/weather_notification.py:0
+msgid "Weather notification is disabled"
+msgstr "Hava bildirişi deaktiv edilib"

@@ -1,0 +1,24 @@
+/* format json structure in code html tag */
+.o_format_json_structure {
+  white-space: pre-line;
+}
+
+.o_connector_kanban {
+  --KanbanRecord-width: 500px;
+  --KanbanRecord-width-small: 400px;
+}
+
+.o_connector_kanban {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .hoverable-card {
+    // We add white border to avoid the card to move when the border is added on hover
+    border: 1px solid #FFFFFF;
+  }
+
+  //.hoverable-card:hover {
+  //    border: 1px solid #C9CCD2;
+  //}
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add Brand to Product Template Form -->
+    <record id="product_template_form_view_brand" model="ir.ui.view">
+        <field name="name">product.template.form.brand</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="brand_id" options="{'no_create_edit': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Add Brand to Product Template Tree -->
+    <record id="product_template_tree_view_brand" model="ir.ui.view">
+        <field name="name">product.template.tree.brand</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="brand_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Add Brand to Product Template Search -->
+    <record id="product_template_search_view_brand" model="ir.ui.view">
+        <field name="name">product.template.search.brand</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="brand_id"/>
+            </field>
+            <filter name="filter_to_sell" position="after">
+                <separator/>
+                <filter name="group_by_brand" string="Brand" context="{'group_by': 'brand_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- Add Brand to Product Kanban -->
+    <record id="product_template_kanban_view_brand" model="ir.ui.view">
+        <field name="name">product.template.kanban.brand</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <kanban position="inside">
+                <field name="brand_id"/>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>

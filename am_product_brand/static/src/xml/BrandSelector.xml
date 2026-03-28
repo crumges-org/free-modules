@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Brand Selector Component -->
+    <t t-name="am_product_brand.BrandSelector">
+        <div class="brand-selector" t-if="isEnabled">
+            <div class="brand-selector-header">
+                <span class="brand-selector-title">Brands</span>
+                <button t-if="state.selectedBrandId" 
+                        class="brand-clear-btn btn btn-sm btn-secondary"
+                        t-on-click="clearBrand">
+                    <i class="fa fa-times"/> Clear
+                </button>
+            </div>
+            <div class="brand-selector-items">
+                <!-- All Brands option -->
+                <div t-attf-class="brand-item #{!state.selectedBrandId ? 'selected' : ''}"
+                     t-on-click="() => this.clearBrand()">
+                    <div class="brand-item-content">
+                        <i class="fa fa-th-large brand-all-icon"/>
+                        <span class="brand-name">All</span>
+                    </div>
+                </div>
+                
+                <!-- Brand items -->
+                <t t-foreach="brands" t-as="brand" t-key="brand.id">
+                    <div t-attf-class="brand-item #{state.selectedBrandId === brand.id ? 'selected' : ''}"
+                         t-on-click="() => this.selectBrand(brand.id)">
+                        <div class="brand-item-content">
+                            <t t-if="showBrandImages and brand.image_128">
+                                <img t-att-src="getBrandImage(brand)" 
+                                     class="brand-image"
+                                     t-att-alt="brand.name"/>
+                            </t>
+                            <t t-else="">
+                                <i class="fa fa-tag brand-icon"/>
+                            </t>
+                            <span class="brand-name" t-esc="brand.name"/>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <!-- Extend ProductScreen to include BrandSelector -->
+    <t t-name="am_product_brand.ProductScreenBrand" t-inherit="point_of_sale.ProductScreen" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-screen')]" position="inside">
+            <BrandSelector t-if="showBrandSelector" onBrandSelect.bind="onBrandSelect"/>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,448 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* solt_l10n_mx_partner_address
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0-20241226\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-27 01:13+0000\n"
+"PO-Revision-Date: 2024-12-27 01:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "<span> - </span>"
+msgstr ""
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.actions.act_window,help:solt_l10n_mx_partner_address.action_res_city_district
+msgid "Add City's Districts"
+msgstr "Agregar colonias de la ciudad"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_country__enforce_districts
+msgid ""
+"Check this box to ensure every address created in that country has a "
+"'District' chosen in the list of the City's districts."
+msgstr ""
+"Marque esta casilla para asegurarse de que cada dirección creada en ese país"
+" tenga una 'Colonia' elegida en la lista de colonieas de la ciudad."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_country__enforce_localities
+msgid ""
+"Check this box to ensure every address created in that country has a "
+"'Locality' chosen in the list of the City's Localities."
+msgstr ""
+"Marque esta casilla para asegurarse de que cada dirección creada en ese país"
+" tenga una 'Localidad' elegida en la lista de localidades de la ciudad."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.ui.menu,name:solt_l10n_mx_partner_address.menu_res_city
+msgid "Cities"
+msgstr "Ciudades"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model,name:solt_l10n_mx_partner_address.model_res_city
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__city_id
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "City"
+msgstr "Ciudad"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model,name:solt_l10n_mx_partner_address.model_res_city_district
+msgid "City District"
+msgstr "Colonia"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_city_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__city_id
+msgid "City ID"
+msgstr ""
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_locality_view_form
+msgid "City Name"
+msgstr "Nombre de la Ciudad"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__code
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__code
+msgid "Code"
+msgstr "Código"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city__l10n_mx_code
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_country__l10n_mx_code
+msgid "Code MX"
+msgstr "Código MX"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_country__l10n_mx_code
+msgid ""
+"Code of country defined by the SAT in the catalog for the CFDI version 4.0 "
+"and new complements. It will be used in the CFDI to indicate the country "
+"reference."
+msgstr ""
+"Código de país definido por el SAT en el catálogo para el CFDI versión 4.0y "
+"nuevos complementos. Se utilizará en el CFDI para indicar la referencia del "
+"país."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_city__l10n_mx_code
+msgid ""
+"Code to use in the CFDI with external trade complement. It is based on the "
+"SAT catalog."
+msgstr ""
+"Código a utilizar en el CFDI con complemento de comercio exterior. Se basa "
+"en el catálogo del SAT."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_colony_code
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__l10n_mx_colony_code
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__l10n_mx_colony_code
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__l10n_mx_colony_code
+msgid "Colony Code"
+msgstr "Código de colonia"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "Colony Code..."
+msgstr "Código de colonia..."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_colony
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__l10n_mx_colony
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__l10n_mx_colony
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__l10n_mx_colony
+msgid "Colony Name"
+msgstr "Colonia"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "Colony..."
+msgstr "Colonia..."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model,name:solt_l10n_mx_partner_address.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model,name:solt_l10n_mx_partner_address.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model,name:solt_l10n_mx_partner_address.model_res_country
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__country_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__country_id
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_locality_view_filter
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "Country"
+msgstr "País"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__country_code
+msgid "Country Code"
+msgstr "Código de país"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__country_enforce_cities
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__country_enforce_cities
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__country_enforce_cities
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__country_enforce_cities
+msgid "Country Enforce Cities"
+msgstr "Establecer ciudades"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__create_uid
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__create_date
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__display_name
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.actions.act_window,help:solt_l10n_mx_partner_address.action_res_locality_view
+msgid ""
+"Display and manage the list of all localities that can be assigned to\n"
+"                your partner records."
+msgstr ""
+"Mostrar y administrar la lista de todas las localidades que se pueden\n"
+"                asignar a sus registros de contactos."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_district_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__district_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__district_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__district_id
+msgid "District"
+msgstr "Colonia"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_country__district_label
+msgid "District Label"
+msgstr "Etiqueta de distrito"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.actions.act_window,name:solt_l10n_mx_partner_address.action_res_city_district
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city__district_ids
+#: model:ir.ui.menu,name:solt_l10n_mx_partner_address.menu_res_city_district
+msgid "Districts"
+msgstr "Colonias"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_street_number2
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__street_number2
+msgid "Door"
+msgstr "No. interior"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "Door #"
+msgstr "No. interior"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model,name:solt_l10n_mx_partner_address.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__country_enforce_districts
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__country_enforce_districts
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_country__enforce_districts
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__country_enforce_districts
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__country_enforce_districts
+msgid "Enforce Districts"
+msgstr "Establecer distritos"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__country_enforce_localities
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__country_enforce_localities
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_country__enforce_localities
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__country_enforce_localities
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__country_enforce_localities
+msgid "Enforce Localities"
+msgstr "Establecer localidades"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_locality_view_filter
+msgid "Group By..."
+msgstr "Agrupar por..."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_street_number
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__street_number
+msgid "House"
+msgstr "No. exterior"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "House #"
+msgstr "No. exterior"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__id
+msgid "ID"
+msgstr ""
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__write_uid
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__write_date
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.actions.act_window,name:solt_l10n_mx_partner_address.action_res_locality_view
+#: model:ir.ui.menu,name:solt_l10n_mx_partner_address.menu_res_locality
+msgid "Localities"
+msgstr "Localidades"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model,name:solt_l10n_mx_partner_address.model_res_locality
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_locality_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__l10n_mx_locality_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__l10n_mx_locality_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__l10n_mx_locality_id
+msgid "Locality"
+msgstr "Localidad"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_hr_employee__private_locality
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__l10n_mx_locality
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_partner__l10n_mx_locality
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_users__l10n_mx_locality
+msgid "Locality Name"
+msgstr "Localidad"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "Locality..."
+msgstr "Localidad..."
+
+#. module: solt_l10n_mx_partner_address
+#. odoo-python
+#: code:addons/solt_l10n_mx_partner_address/models/hr_employee.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/hr_employee.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_company.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_company.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_partner.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_partner.py:0
+#, python-format
+msgid "Municipality"
+msgstr "Municipio"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__name
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_hr_employee__private_colony_code
+msgid ""
+"Colony code that will be used in the CFDI. It must be a code "
+"from the SAT catalog."
+msgstr ""
+"Código de colonia configurado para este empleado. Se utiliza en el "
+"CFDI. Debe ser un código del catálogo del SAT."
+
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_company__l10n_mx_colony_code
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_partner__l10n_mx_colony_code
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_users__l10n_mx_colony_code
+msgid ""
+"Note: Only use this field if this partner is the company address or if it is a branch office.\n"
+"Colony code that will be used in the CFDI with the external trade as Emitter colony. It must be a code from the SAT catalog."
+msgstr ""
+"Código de colonia configurado para esta empresa. Se utiliza en el "
+"complemento de comercio exterior para definir la colonia donde se encuentra "
+"el domicilio."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_hr_employee__private_locality_id
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_company__l10n_mx_locality_id
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_partner__l10n_mx_locality_id
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_users__l10n_mx_locality_id
+msgid ""
+"Optional attribute used in the XML that serves to define the locality where "
+"the domicile is located."
+msgstr "Municipio configurado para esta compañía"
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__state_id
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_locality__state_id
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_locality_view_filter
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "State"
+msgstr "Estado"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+msgid "Street"
+msgstr "Calle"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+msgid "Street 2..."
+msgstr "Calle 2..."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_company__street_name
+msgid "Street Name"
+msgstr "Nombre de la calle"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+msgid "Street..."
+msgstr "Calle..."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_company__country_code
+msgid ""
+"The ISO country code in two chars. \n"
+"You can use this field for quick search."
+msgstr ""
+"Código de país ISO en dos caracteres.\n"
+"Puede utilizar este campo para búsquedas rápidas."
+
+#. module: solt_l10n_mx_partner_address
+#. odoo-python
+#: code:addons/solt_l10n_mx_partner_address/models/hr_employee.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_company.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_partner.py:0
+#, python-format
+msgid "The zip code does not exists."
+msgstr "El código postal no existe."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,help:solt_l10n_mx_partner_address.field_res_country__district_label
+msgid "Use this field if you want to change vat label."
+msgstr "Utilice este campo si desea cambiar la etiqueta del VAT."
+
+#. module: solt_l10n_mx_partner_address
+#. odoo-python
+#: code:addons/solt_l10n_mx_partner_address/models/hr_employee.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_company.py:0
+#: code:addons/solt_l10n_mx_partner_address/models/res_partner.py:0
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: solt_l10n_mx_partner_address
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.mx_partner_address_form
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.res_company_form_inherit_l10n_mx_extended
+#: model_terms:ir.ui.view,arch_db:solt_l10n_mx_partner_address.view_employee_address_form
+msgid "ZIP"
+msgstr "C.P."
+
+#. module: solt_l10n_mx_partner_address
+#: model:ir.model.fields,field_description:solt_l10n_mx_partner_address.field_res_city_district__zip_code
+msgid "Zip Code"
+msgstr "Código Postal"

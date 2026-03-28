@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal Requisition</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <style>
+        :root {
+            --primary-color: #7f54b3;
+            --bg-white: #fff;
+            --text-color: #121212;
+            --text-color-light: #64728f;
+        }
+
+        body {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active {
+            color: #121212;
+            font-family: Montserrat;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            border-radius: 30px;
+            line-height: normal;
+            text-transform: capitalize;
+            background-color: #F5F5F5;
+            border: none;
+            margin-bottom: 0;
+            padding: 12px 24px;
+        }
+
+        .nav-tabs .nav-link:focus,
+        .nav-tabs .nav-link:hover {
+            border-color: transparent;
+            isolation: isolate;
+        }
+
+        .nav-tabs .nav-link:focus-visible {
+            border-color: transparent;
+            box-shadow: none;
+        }
+
+        /* owl-carosel */
+        .owl-carousel .owl-nav {
+            position: absolute;
+            top: 42%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-42%);
+        }
+
+        .owl-carousel .owl-nav button.owl-prev {
+            position: absolute;
+            right: -36px;
+            font-size: 28px;
+            background-color: #e4e4e4;
+            border-radius: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .owl-carousel .owl-nav button.owl-next {
+            position: absolute;
+            left: -36px;
+            font-size: 28px;
+            background-color: #e4e4e4;
+            border-radius: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- overview -->
+    <div class="container">
+        <div class="my-5">
+            <div class="tab-content" id="myTabContent">
+                <!-- description -->
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="position-relative" style="border-radius: 16px; background: rgb(235, 228, 213); padding: 20px 0; border-radius: 10px; border:15px rgb(237, 232, 232) ridge">
+                        <div class="row " style="
+          padding: 2rem 0rem 0 !important;
+        ">
+                            <div class="col-lg-8 mx-auto gap-4 d-flex flex-column align-items-center">
+                                <p class="my-1 text-center text-uppercase" style="
+              letter-spacing: 4px !important;
+              color: #fa8c2b;
+              font-weight: bold;
+              text-align: center;
+              font-size: 14px;
+              font-weight: 600;
+              line-height: 15.96px;
+              text-transform: uppercase;
+            ">
+                                    Streamline internal item requests and approvals with automated workflows and
+                                    purchase integration.
+                                </p>
+                                <h1 class="text-center text-uppercase my-0" style="
+              color: #121212;
+              font-size: 46px;
+              font-weight: 700;
+              line-height: normal;
+            ">Internal Requisition Module</span>
+                                </h1>
+                            </div>
+                            <div class="col-lg-12 d-flex justify-content-center align-items-center"
+                                style="margin: 3rem 0;">
+                                <img src="./assets/icons/mob.png" width="100%" height="auto" style="width: 30%"
+                                    class="img-responsive" />
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <a href="mailto:support@mattobell.net" target="_blank" style="background-color: transparent;border-radius: 35px;
+                                      font-family: Montserrat;
+                                      display: inline-block;
+                                      padding: 7px 33px;
+                                      border: 1px solid #fa8c2b;
+                                      color: #fa8c2b;
+                                      text-decoration: none;
+                                      width: 231px;
+                                    " class="mx-1 mb-2 deep-1 deep_hover">
+                                    <img class="img" style="width: 24px" src="./assets/icons/mail.svg" />
+                                    <span class="pl-2" style=" font-size: 16px; vertical-align: middle">Email Us</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- key-highlight -->
+
+                    <div class="mt64 mb64">
+                        <h2 class="text-center text-uppercase"
+                            style="font-family: Montserrat, 'sans-serif'!important; margin-top:20px;  font-size: 30px !important; color:#5154a5; font-weight: 900 !important;">
+                            <span style="font-weight: bold;color:#fa8c2b;">Why Use Internal Requisition?</span>
+                        </h2>
+                        <div class="row" style="border-radius: 10px; border:15px rgb(237, 232, 232) ridge">
+                            <div class="col-md-6 col-sm-12 mt32">
+                                <div class="container shadow d-flex align-items-center justify-content-center"
+                                    style="border-radius: 5px;padding: 33px 0px;min-height: 180px; margin: 15px auto;">
+                                    <div class="col-md-3 d-flex align-items-center justify-content-center"
+                                        style="float:left">
+                                        <img class="img img-responsive" style="width:105px;"
+                                            src="assets/icons/why1.png">
+                                    </div>
+                                    <div class="col-md-9" style="padding-left:0; float:left; width:70%">
+                                        <h3 class="mt16 mb0"
+                                            style="font-family:Roboto; font-weight:500; font-size:22px; color: #151413;">
+                                            Streamlines internal item requests and
+                                            procurement</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 mt32">
+                                <div class="container shadow d-flex align-items-center justify-content-center"
+                                    style="border-radius: 5px;padding: 33px 0px;min-height: 180px; margin: 15px auto;">
+                                    <div class="col-md-3 d-flex align-items-center justify-content-center"
+                                        style="float:left">
+                                        <img class="img img-responsive" style="width:105px;"
+                                            src="assets/icons/why2.png">
+                                    </div>
+                                    <div class="col-md-9" style="padding-left:0; float:left; width:70%">
+                                        <h3 class="mt16 mb0"
+                                            style="font-family:Roboto; font-weight:500; font-size:22px; color: #151413;">
+                                            Enforces clear, auditable approval
+                                            workflows</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 mt32">
+                                <div class="container shadow d-flex align-items-center justify-content-center"
+                                    style="border-radius: 5px;padding: 33px 0px;min-height: 180px; margin: 15px auto;">
+                                    <div class="col-md-3 d-flex align-items-center justify-content-center"
+                                        style="float:left">
+                                        <img class="img img-responsive" style="width:105px;"
+                                            src="assets/icons/why3.png">
+                                    </div>
+                                    <div class="col-md-9" style="padding-left:0; float:left; width:70%">
+                                        <h3 class="mt16 mb0"
+                                            style="font-family:Roboto; font-weight:500; font-size:22px; color: #151413;">
+                                            Enhances collaboration across
+                                            departments</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 mt32">
+                                <div class="container shadow d-flex align-items-center justify-content-center"
+                                    style="border-radius: 5px;padding: 33px 0px;min-height: 180px; margin: 15px auto;">
+                                    <div class="col-md-3 d-flex align-items-center justify-content-center"
+                                        style="float:left">
+                                        <img class="img img-responsive" style="width:117px;"
+                                            src="assets/icons/why4.png">
+                                    </div>
+                                    <div class="col-md-9" style="padding-left:0; float:left; width:70%">
+                                        <h3 class="mt16 mb0"
+                                            style="font-family:Roboto; font-weight:500; font-size:22px; color: #151413;">
+                                            Automates follow-ups with smart email
+                                            alerts</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 mt32">
+                                <div class="container shadow d-flex align-items-center justify-content-center"
+                                    style="border-radius: 5px;padding: 33px 0px;min-height: 180px; margin: 15px auto;">
+                                    <div class="col-md-3 d-flex align-items-center justify-content-center"
+                                        style="float:left">
+                                        <img class="img img-responsive" style="width:105px;"
+                                            src="assets/icons/why5.png">
+                                    </div>
+                                    <div class="col-md-9" style="padding-left:0; float:left; width:70%">
+                                        <h3 class="mt16 mb0"
+                                            style="font-family:Roboto; font-weight:500; font-size:22px; color: #151413;">
+                                            Integrates natively with Odoo Purchase
+                                            for quick RFQ generation</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- screenshot and other -->
+
+                    <div class="mb-4 bg-white"
+                        style="border-radius: 10px; border:15px rgb(237, 232, 232) ridge; box-shadow: 0px 8px 20px -4px rgba(0, 0, 0, 0.10);">
+                        <div>
+                            <ul class="nav nav-tabs justify-content-center bg-white py-2" id="myTab" role="tablist"
+                                style="border-radius: 6px 6px 0 0;">
+                                <li class="nav-item">
+                                    <a aria-controls="feature" aria-bs-selected="true" class="nav-link py-2 active"
+                                        data-bs-toggle="tab" href="#feature" id="feature-tab" role="tab"
+                                        style="color:#fa8c2b; font-weight:500; font-size:16px">Features</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a aria-controls="overview" aria-bs-selected="false" class="nav-link"
+                                        data-bs-toggle="tab" href="#overview" id="overview-tab" role="tab"
+                                        style="color:#fa8c2b; font-weight:500; font-size:16px">
+                                        How It Works</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a aria-controls="benefits" aria-bs-selected="false" class="nav-link"
+                                        data-bs-toggle="tab" href="#benefits" id="benefits-tab" role="tab"
+                                        style="color:#fa8c2b; font-weight:500; font-size:16px">
+                                        Benefits</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a aria-controls="about" aria-bs-selected="false" class="nav-link"
+                                        data-bs-toggle="tab" href="#about" id="about-tab" role="tab"
+                                        style="color:#fa8c2b; font-weight:500; font-size:16px">About Us</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content p-md-5 p-2 py-3" id="myTabContent">
+                            <div aria-labelledby="overview-tab" class="tab-pane fade show" id="overview"
+                                role="tabpanel">
+                                <div class="position-relative mb-4" style="border-radius:10px">
+                                    <img alt="acc_bg" class="w-100 h-100 position-absolute img-fluid left_0"
+                                        loading="lazy"
+                                        src="//apps.odoocdn.com/apps/assets/17.0/ks_dashboard_ninja/ai-img/o3.png?007008f"
+                                        style="">
+                                </div>
+                                <!-- screenshots section-->
+                                <div class="position-relative mb-4"
+                                    style="border-radius:10px; background-color:#f4f4f4">
+                                    <div class="p-md-5 p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h1 style="font-weight:bold; font-size:calc(1.1rem + 1vw); line-height:120%; text-align:center; text-transform:capitalize; font-size: 40px;
+                              font-weight: 700;">
+                                                    <span style="color:#fa8c2b; font-size:calc(1.1rem + 1vw)">Database
+                                                        Create Internal Requisition
+                                                    </span>
+                                                </h1>
+                                            </div>
+                                            <div class="col-md-12 mb-4">
+                                                <p
+                                                    style="font-weight:400; font-size:16px; line-height:150%; text-align:center;  color:#64728f">
+                                                    Employees easily select required products, specify quantities, and
+                                                    add detailed requirements through an
+                                                    intuitive interface.
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <div class="d-inline-block p-3 shadow-sm"
+                                                    style="background-color:#fff; border-radius:10px">
+                                                    <img alt="" class="img-fluid" loading="lazy"
+                                                        src="./assets/screenshots_with_logo/screenshot_1.png"
+                                                        style="min-height: 1px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="position-relative mb-4"
+                                    style="border-radius:10px; background-color:#f4f4f4">
+                                    <div class="p-md-5 p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h1 style="font-weight:bold; font-size:calc(1.1rem + 1vw); line-height:120%; text-align:center; text-transform:capitalize; font-size: 40px;
+                              font-weight: 700;">
+                                                    <span style="color:#fa8c2b; font-size:calc(1.1rem + 1vw)">Submit for
+                                                        Approval
+                                                    </span>
+                                                </h1>
+                                            </div>
+                                            <div class="col-md-12 mb-4">
+                                                <p
+                                                    style="font-weight:400; font-size:16px; line-height:150%; text-align:center;  color:#64728f">
+                                                    One-click submission sends the requisition to designated approvers.
+                                                    Status automatically updates to
+                                                    <strong>Submitted</strong> with email notifications sent to all
+                                                    stakeholders.
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <div class="d-inline-block p-3 shadow-sm"
+                                                    style="background-color:#fff; border-radius:10px">
+                                                    <img alt="" class="img-fluid" loading="lazy"
+                                                        src="./assets/screenshots_with_logo/screenshot_2.png"
+                                                        style="min-height: 1px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="position-relative mb-4"
+                                    style="border-radius:10px; background-color:#f4f4f4">
+                                    <div class="p-md-5 p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h1 style="font-weight:bold; font-size:calc(1.1rem + 1vw); line-height:120%; text-align:center; text-transform:capitalize; font-size: 40px;
+                  font-weight: 700;">
+                                                    <span style="color:#fa8c2b; font-size:calc(1.1rem + 1vw)">Review &
+                                                        Approve</span>
+                                                </h1>
+                                            </div>
+                                            <div class="col-md-12 mb-4">
+                                                <p
+                                                    style="font-weight:400; font-size:16px; line-height:150%; text-align:center; color:#64728f">
+                                                    Approvers receive instant notifications and can review, approve, or
+                                                    reject requests with detailed comments.
+                                                    Status updates to <strong>Approved</strong> upon approval.
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <div class="d-inline-block p-3 shadow-sm"
+                                                    style="background-color:#fff; border-radius:10px">
+                                                    <img alt="" class="img-fluid" loading="lazy"
+                                                        src="./assets/screenshots_with_logo/screenshot_3.png"
+                                                        style="min-height: 1px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="position-relative mb-4"
+                                    style="border-radius:10px; background-color:#f4f4f4">
+                                    <div class="p-md-5 p-3 position-relative">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h1 style="font-weight:bold; font-size:calc(1.1rem + 1vw); line-height:120%; text-align:center; text-transform:capitalize; font-size: 40px;
+                              font-weight: 700;">
+                                                    <span style="color:#fa8c2b; font-size:calc(1.1rem + 1vw)">Automatic
+                                                        Purchase Integration
+                                                    </span>
+                                                </h1>
+                                            </div>
+                                            <div class="col-md-12 mb-4">
+                                                <p
+                                                    style="font-weight:400; font-size:16px; line-height:150%; text-align:center;  color:#64728f">
+                                                    Approved requisitions seamlessly integrate with the Purchase module
+                                                    as <strong>Blanket Orders</strong>,
+                                                    ready
+                                                    for conversion to RFQs and purchase orders.
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <div class="d-inline-block p-3 shadow-sm"
+                                                    style="background-color:#fff; border-radius:10px">
+                                                    <img alt="" class="img-fluid" loading="lazy"
+                                                        src="./assets/screenshots_with_logo/screenshot_4.png"
+                                                        style="min-height: 1px; margin-bottom: 30px; border:1px solid #000">
+
+                                                    <img alt="" class="img-fluid" loading="lazy"
+                                                        src="./assets/screenshots_with_logo/screenshot_5.png"
+                                                        style="min-height: 1px; border:1px solid #000">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div aria-labelledby="feature-tab" class="tab-pane fade show active py-1" id="feature"
+                                role="tabpanel">
+                                <div class="row py-4">
+                                    <!-- Features Section -->
+                                    <div class="col-md-6 col-sm-12 p-3">
+                                        <div class="d-flex flex-column align-items-start h-100"
+                                            style="padding:30px; border-radius:12px; background-color:#faf8ff">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex align-items-center justify-content-center "
+                                                    style="width:36px; height:36px; border-radius:50%; background-color:#7847D9 ; margin-right:10px">
+                                                    <i class="fa fa-star  " style="color:#fff; font-size:14px"></i>
+                                                </div>
+                                                <p
+                                                    style="color:#1A202C; font-weight:600; font-size:1.2rem; margin-bottom:2px">
+                                                    Raise internal requisitions directly from the system</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 p-3">
+                                        <div class="d-flex flex-column align-items-start h-100"
+                                            style="padding:30px; border-radius:12px; background-color:#faf8ff">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex align-items-center justify-content-center "
+                                                    style="width:36px; height:36px; border-radius:50%; background-color:#7847D9 ; margin-right:10px">
+                                                    <i class="fa fa-star  " style="color:#fff; font-size:14px"></i>
+                                                </div>
+                                                <p
+                                                    style="color:#1A202C; font-weight:600; font-size:1.2rem; margin-bottom:2px">
+                                                    Submit requisitions for approval with clear status transitions.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 p-3">
+                                        <div class="d-flex flex-column align-items-start h-100"
+                                            style="padding:30px; border-radius:12px; background-color:#faf8ff">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex align-items-center justify-content-center "
+                                                    style="width:36px; height:36px; border-radius:50%; background-color:#7847D9 ; margin-right:10px">
+                                                    <i class="fa fa-star  " style="color:#fff; font-size:14px"></i>
+                                                </div>
+                                                <p
+                                                    style="color:#1A202C; font-weight:600; font-size:1.2rem; margin-bottom:2px">
+                                                    Approvers can review and respond to requests with a single click</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 p-3">
+                                        <div class="d-flex flex-column align-items-start h-100"
+                                            style="padding:30px; border-radius:12px; background-color:#faf8ff">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex align-items-center justify-content-center "
+                                                    style="width:36px; height:36px; border-radius:50%; background-color:#7847D9 ; margin-right:10px">
+                                                    <i class="fa fa-star  " style="color:#fff; font-size:14px"></i>
+                                                </div>
+                                                <p
+                                                    style="color:#1A202C; font-weight:600; font-size:1.2rem; margin-bottom:2px">
+                                                    Approved requests are automatically forwarded to Blanket Orders</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 p-3">
+                                        <div class="d-flex flex-column align-items-start h-100"
+                                            style="padding:30px; border-radius:12px; background-color:#faf8ff">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="d-flex align-items-center justify-content-center "
+                                                    style="width:36px; height:36px; border-radius:50%; background-color:#7847D9 ; margin-right:10px">
+                                                    <i class="fa fa-star  " style="color:#fff; font-size:14px"></i>
+                                                </div>
+                                                <p
+                                                    style="color:#1A202C; font-weight:600; font-size:1.2rem; margin-bottom:2px">
+                                                    Real-time email notifications keep key stakeholders informed</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div aria-labelledby="benefits-tab" class="tab-pane fade show" id="benefits" role="tabpanel">
+                                <div class="row" style=" background-color:#fff !important">
+                                    <div class="col-md-12" aria-labelledby="benefits-tab" id="benefits" role="tabpanel">
+                                        <div class="accordion mb-4" id="accordion6">
+                                            <div style="background-color:#fff">
+                                                <div class="accordion" id="accordion_benefits">
+                                                    <div class="" style="margin:1rem 0rem">
+                                                        <div aria-expanded="true"
+                                                            style="cursor: pointer; background-color:#f8f8f8; border:none; border-top-right-radius:10px; border-top-left-radius:10px; padding: 12px 24px;">
+                                                            <a class="card-title text-decoration-none"
+                                                                style=" font-size:18px; line-height:30px; font-weight:500; color:#040f3a">
+                                                                Streamlined Workflow
+                                                                <img alt="" class="float-end"
+                                                                    src="//apps.odoocdn.com/apps/assets/16.0/index_test_odoo/assets/icons/down.svg?6ef7fd7"
+                                                                    width="25px">
+                                                            </a>
+                                                        </div>
+                                                        <div
+                                                            style=" box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                            <p
+                                                                style=" padding:0.75rem 1.25rem; font-size:16px; line-height:27px;  color:#888; font-weight:normal; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                                Automated approval processes reduce manual work and
+                                                                speed up requisitions
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin:1rem 0rem">
+                                                        <div aria-expanded="true"
+                                                            style="cursor: pointer; background-color:#f8f8f8; border:1px solid #f8f8f8; border-top-right-radius:10px; border-top-left-radius:10px; padding: 12px 24px">
+                                                            <a class="card-title text-decoration-none"
+                                                                style=" font-size:18px; line-height:30px; font-weight:500; color:#040f3a">
+                                                                Audit Trail
+                                                                <img alt="" class="float-end"
+                                                                    src="//apps.odoocdn.com/apps/assets/16.0/index_test_odoo/assets/icons/down.svg?6ef7fd7"
+                                                                    width="25px">
+                                                            </a>
+                                                        </div>
+                                                        <div
+                                                            style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                            <p
+                                                                style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;  color:#888; font-weight:normal; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                                Complete visibility and traceability of all requisition
+                                                                activities
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin:1rem 0rem">
+                                                        <div aria-expanded="true"
+                                                            style="cursor: pointer; background-color:#f8f8f8; border:1px solid #f8f8f8; border-top-right-radius:10px; border-top-left-radius:10px; padding: 12px 24px">
+                                                            <a class="card-title text-decoration-none"
+                                                                style=" font-size:18px; line-height:30px; font-weight:500; color:#040f3a">
+                                                                Team Collaboration
+                                                                <img alt="" class="float-end"
+                                                                    src="//apps.odoocdn.com/apps/assets/16.0/index_test_odoo/assets/icons/down.svg?6ef7fd7"
+                                                                    width="25px">
+                                                            </a>
+                                                        </div>
+                                                        <div
+                                                            style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                            <p
+                                                                style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;  color:#888; font-weight:normal; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                                Enhanced cooperation between departments with clear
+                                                                communication.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin:1rem 0rem">
+                                                        <div aria-expanded="true"
+                                                            style="cursor: pointer; background-color:#f8f8f8; border:1px solid #f8f8f8; border-top-right-radius:10px; border-top-left-radius:10px; padding: 12px 24px">
+                                                            <a class="card-title text-decoration-none"
+                                                                style=" font-size:18px; line-height:30px; font-weight:500; color:#040f3a">
+                                                                Smart Notifications
+                                                                <img alt="" class="float-end"
+                                                                    src="//apps.odoocdn.com/apps/assets/16.0/index_test_odoo/assets/icons/down.svg?6ef7fd7"
+                                                                    width="25px">
+                                                            </a>
+                                                        </div>
+                                                        <div
+                                                            style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                            <p
+                                                                style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;  color:#888; font-weight:normal; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                                Automated email alerts keep everyone informed of status
+                                                                changes
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin:1rem 0rem">
+                                                        <div aria-expanded="true"
+                                                            style="cursor: pointer; background-color:#f8f8f8; border:1px solid #f8f8f8; border-top-right-radius:10px; border-top-left-radius:10px; padding: 12px 24px">
+                                                            <a class="card-title text-decoration-none"
+                                                                style=" font-size:18px; line-height:30px; font-weight:500; color:#040f3a">
+                                                                Seamless Integration
+                                                                <img alt="" class="float-end"
+                                                                    src="//apps.odoocdn.com/apps/assets/16.0/index_test_odoo/assets/icons/down.svg?6ef7fd7"
+                                                                    width="25px">
+                                                            </a>
+                                                        </div>
+                                                        <div
+                                                            style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                            <p
+                                                                style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;  color:#888; font-weight:normal; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                                Native integration with Odoo Purchase module for
+                                                                complete workflow
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin:1rem 0rem">
+                                                        <div aria-expanded="true"
+                                                            style="cursor: pointer; background-color:#f8f8f8; border:1px solid #f8f8f8; border-top-right-radius:10px; border-top-left-radius:10px; padding: 12px 24px">
+                                                            <a class="card-title text-decoration-none"
+                                                                style=" font-size:18px; line-height:30px; font-weight:500; color:#040f3a">
+                                                                Improved Efficiency
+                                                                <img alt="" class="float-end"
+                                                                    src="//apps.odoocdn.com/apps/assets/16.0/index_test_odoo/assets/icons/down.svg?6ef7fd7"
+                                                                    width="25px">
+                                                            </a>
+                                                        </div>
+                                                        <div
+                                                            style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                            <p
+                                                                style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;  color:#888; font-weight:normal; border-bottom-right-radius:10px; border-bottom-left-radius:10px">
+                                                                Reduce processing time and eliminate bottlenecks in
+                                                                procurement
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div aria-labelledby="about-tab" class="tab-pane fade show" id="about"
+                                role="tabpanel">
+                                <!-- Release Notes -->
+                                <h3
+                                    style="color: #ff7f00; font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
+                                    <i class="fas fa-users" style="font-size: 1.5rem;"></i>
+                                    Our Company
+                                </h3>
+                                <div class="row pt-5 m-0">
+                                    <div class="col-md-6">
+                                        <h4
+                                            style="font-size:16px; font-weight:600; color:#514F4F; margin:0; line-height:26px;">
+                                            Matt O'Bell Ltd is a software development and consulting services company
+                                            registered in Nigeria
+                                            (RC1066470).
+                                            Our expertise in integrated business applications helps the effectiveness of
+                                            both public and private
+                                            sector
+                                            organizations. We currently maintain fully trained implementation
+                                            consultants within our organization.
+                                        </h4>
+                                        <div
+                                            style="background: rgba(255, 127, 0, 0.1); padding: 20px; border-radius: 10px; border-left: 3px solid #ff7f00; margin-top: 20px;">
+                                            <p style="margin: 0; color: #333; font-weight: 500; font-style: italic;">For
+                                                More Info Visit: <a href="https://www.mattobellonline.com"
+                                                    style="color:black">Matt O'Bell
+                                                    Ltd</a></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="company-logo">
+                                            <img src="assets/icons/mob2.svg" style="max-width: 80%; max-height: auto;"
+                                                alt="About Logo" class="about-logo">
+                                        </div>
+                                        <div style="padding:0 0 0; border-bottom:1px solid #E3E3E3">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- service-section -->
+
+
+                    <section id="services" class="mt-5" style="border-radius: 16px;
+                                                            border: 1px solid #EBEEF2;
+                                                            background: var(--Neutral-N0, #FFF);
+                                                            padding: 60px 40px;
+                                                            box-shadow: 0px 5px 20px -11px rgba(0, 0, 0, 0.25);">
+                        <div class="text-center mt-4">
+                            <h3 class="mb-0" style="color: #fa8c2b;
+                                                                  text-align: center;
+                                                                  font-family: Montserrat;
+                                                                  font-size: 40px;
+                                                                  font-style: normal;
+                                                                  font-weight: 700;
+                                                                  line-height: normal;
+                                                                  text-transform: uppercase;
+                                                                  padding-bottom: 50px;">
+                                Our Services</h3>
+                        </div>
+                        <div class="row mt-3 p-4" style="border-radius: 10px; border:15px rgb(237, 232, 232) ridge">
+                            <div class="col-lg-4 col-sm-12 mb-3">
+                                <a href="https://mattobellonline.com/our-services"
+                                    style="text-decoration:none">
+                                    <div class="btn-lg btn-block p-4 mb-2 d-flex flex-column justify-content-center align-items-center"
+                                        style="font-size:25px; font-weight:bold;background-color:#ffe0c4; margin:auto; gap: 16px; border-radius: 8px;">
+                                        <div class="d-flex justify-content-center align-items-center"
+                                            style="background-color:#ffe0c4; border-radius:50%; height:56px; width:56px">
+                                            <img src="./assets/icons/service1.jpg" class="img-responsive" height="28px"
+                                                width="28px">
+                                        </div>
+                                        <span style="font-size: 18px; text-align: center;
+                                  color: var(--text-color);
+                                  font-weight: 600;"> 24/7 Support Services</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 mb-3">
+                                <a href="https://mattobellonline.com/our-services" style="text-decoration:none">
+                                    <div class="btn-lg btn-block p-4 mb-2 d-flex flex-column justify-content-center align-items-center"
+                                        style="font-size:25px; font-weight:bold;background-color:#ffe0c4; margin:auto; gap: 16px; border-radius: 8px;">
+                                        <div class="d-flex justify-content-center align-items-center"
+                                            style="background-color:#ffe0c4; border-radius:50%; height:56px; width:56px">
+                                            <img src="./assets/icons/service2.png" class="img-responsive" height="28px"
+                                                width="28px">
+                                        </div>
+                                        <span style="font-size: 18px;
+                    color: var(--text-color);
+                    font-weight: 600;"> Odoo Training</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 mb-3">
+                                <a href="https://mattobellonline.com/our-services" style="text-decoration:none">
+                                    <div class="btn-lg btn-block p-4 mb-2 d-flex flex-column justify-content-center align-items-center"
+                                        style="font-size:25px; font-weight:bold;background-color:#ffe0c4; margin:auto; gap: 16px; border-radius: 8px;">
+                                        <div class="d-flex justify-content-center align-items-center"
+                                            style="background-color:#ffe0c4; border-radius:50%; height:56px; width:56px">
+                                            <img src="./assets/icons/service3.png" class="img-responsive" height="28px"
+                                                width="28px">
+                                        </div>
+                                        <span style="font-size: 18px; text-align: center;
+                  color: var(--text-color);
+                  font-weight: 600;">Odoo Implementation</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 mb-3">
+                                <a href="https://mattobellonline.com/our-services" style="text-decoration:none">
+                                    <div class="btn-lg btn-block p-4 mb-2 d-flex flex-column justify-content-center align-items-center"
+                                        style="font-size:25px; font-weight:bold;background-color:#ffe0c4; margin:auto; gap: 16px; border-radius: 8px;">
+                                        <div class="d-flex justify-content-center align-items-center"
+                                            style="background-color:#ffe0c4; border-radius:50%; height:56px; width:56px">
+                                            <img src="./assets/icons/service4.png" class="img-responsive" height="28px"
+                                                width="28px">
+                                        </div>
+                                        <span style="font-size: 18px;
+                color: var(--text-color);
+                font-weight: 600;">Business Analysis</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 mb-3">
+                                <a href="https://mattobellonline.com/our-services" style="text-decoration:none">
+                                    <div class="btn-lg btn-block p-4 mb-2 d-flex flex-column justify-content-center align-items-center"
+                                        style="font-size:25px; font-weight:bold;background-color:#ffe0c4; margin:auto; gap: 16px; border-radius: 8px;">
+
+                                        <div class="d-flex justify-content-center align-items-center"
+                                            style="background-color:#ffe0c4; border-radius:50%; height:56px; width:56px">
+                                            <img src="./assets/icons/service5.png" class="img-responsive" height="28px"
+                                                width="28px">
+                                        </div>
+                                        <span style="font-size: 18px; text-align: center;
+            color: var(--text-color);
+            font-weight: 600;">Data Migration</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 col-sm-12 mb-3">
+                                <a href="https://mattobellonline.com/our-services"
+                                    style="text-decoration:none">
+                                    <div class="btn-lg btn-block p-4 mb-2 d-flex flex-column justify-content-center align-items-center"
+                                        style="font-size:25px; font-weight:bold;background-color:#ffe0c4; margin:auto; gap: 16px; border-radius: 8px;">
+
+                                        <div class="d-flex justify-content-center align-items-center"
+                                            style="background-color:#ffe0c4; border-radius:50%; height:56px; width:56px">
+                                            <img src="./assets/icons/service6.png" class="img-responsive" height="28px"
+                                                width="28px">
+                                        </div>
+                                        <span style="font-size: 18px;
+          color: var(--text-color);
+          font-weight: 600;">Hosting</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Ayanfe -->
+                </div>
+            </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    $('.owl-carousel').owlCarousel({
+        rtl: true,
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 3
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Chatter Screen Recorder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
+    <style>
+        :root {
+          --primary-color: #DC3545;
+          --primary-dark: #A71D2A;
+          --bg-white: #fff;
+          --text-color: #121212;
+          --text-color-light: #64728f;
+        }
+
+        body {
+          font-family: "Montserrat", sans-serif;
+        }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active {
+          color: var(--text-color);
+          font-family: Montserrat;
+          font-size: 16px !important;
+          font-weight: 500 !important;
+          border-radius: 30px;
+          line-height: normal;
+          text-transform: capitalize;
+          background-color: #F5F5F5;
+          border: none;
+          margin-bottom: 0;
+          padding: 12px 24px;
+        }
+
+        .nav-tabs .nav-link:focus,
+        .nav-tabs .nav-link:hover {
+          border-color: transparent;
+          isolation: isolate;
+        }
+
+        .nav-tabs .nav-link:focus-visible {
+          border-color: transparent;
+          box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<!-- Hero Banner -->
+<div class="container">
+    <div class="my-5">
+        <div class="tab-content" id="myTabContent1">
+            <div class="text-center d-flex justify-content-end gap-2 my-3">
+                <span class="px-3 py-1"
+                      style="background-color:#017E84;color: #fff; font-size: 0.8rem;font-weight:600;border: 1px solid #017E84;border-radius: 30px;">Community</span>
+            </div>
+            <div class="tab-pane fade show active" id="home" role="tabpanel"
+                 aria-labelledby="home-tab">
+                <div class="position-relative"
+                     style="border-radius: 16px; background: linear-gradient(135deg, #2D1B3D 0%, #DC3545 50%, #A71D2A 100%); padding: 20px 0;">
+                    <div class="row" style="padding: 3rem 0rem 3rem !important;">
+                        <div class="col-lg-8 mx-auto gap-4 d-flex flex-column align-items-center">
+                            <h1 class="text-center text-uppercase my-0" style="
+                              color: #fff;
+                              font-size: 46px;
+                              font-weight: 700;
+                              line-height: normal;">
+                                <span>Chatter Screen Recorder</span>
+                            </h1>
+                            <p class="my-1 text-center text-uppercase" style="
+                                letter-spacing: 4px !important;
+                                color: rgba(255,255,255,0.8);
+                                font-weight: bold;
+                                text-align: center;
+                                font-size: 14px;
+                                font-weight: 600;
+                                line-height: 15.96px;
+                                text-transform: uppercase;">
+                                Record Your Screen Directly From Any Odoo Chatter
+                            </p>
+                        </div>
+                        <div class="col-lg-12 d-flex justify-content-center gap-4 align-items-center"
+                             style="margin: 2rem 0;">
+                            <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 16px 32px; backdrop-filter: blur(10px);">
+                                <span style="color: #fff; font-size: 18px; font-weight: 500;">
+                                    <i class="fa fa-video-camera" style="margin-right: 8px; font-size: 22px;"></i>
+                                    One-Click Recording
+                                </span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 16px 32px; backdrop-filter: blur(10px);">
+                                <span style="color: #fff; font-size: 18px; font-weight: 500;">
+                                    <i class="fa fa-globe" style="margin-right: 8px; font-size: 22px;"></i>
+                                    Persists Across Navigation
+                                </span>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.15); border-radius: 16px; padding: 16px 32px; backdrop-filter: blur(10px);">
+                                <span style="color: #fff; font-size: 18px; font-weight: 500;">
+                                    <i class="fa fa-pause-circle" style="margin-right: 8px; font-size: 22px;"></i>
+                                    Pause &amp; Resume
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <a href="mailto:abdallah@wakeal.com" target="_blank"
+                               style="
+                              background-color: transparent;
+                              border-radius: 35px;
+                              font-family: Montserrat;
+                              display: inline-block;
+                              padding: 7px 33px;
+                              border: 1px solid rgba(255,255,255,0.5);
+                              color: #fff;
+                              text-decoration: none;" class="mx-1 mb-2">
+                                <i class="fa fa-envelope" style="margin-right: 8px;"></i>
+                                <span style="font-size: 16px; vertical-align: middle">Contact Author</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Highlights -->
+                <div class="my-5" style="border-radius: 16px;
+                     padding: 60px 40px;
+                     border: 1px solid #EBEEF2;
+                     background-color: #FFF8F8;
+                     box-shadow: 0px 5px 20px -11px rgba(0, 0, 0, 0.25);">
+                    <div class="row position-relative overflow-hidden">
+                        <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center">
+                            <h2 style="color: var(--text-color);
+                            text-align: center;
+                            font-size: 40px;
+                            font-weight: 700;
+                            text-transform: uppercase; padding-bottom: 50px;">Key Highlights</h2>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-4 position-relative d-flex flex-column justify-content-center gap-3"
+                                 style="border-radius: 12px; background: #FFF; padding: 32px; z-index: 2;">
+                                <div class="d-flex justify-content-center align-items-center"
+                                     style="background-color: var(--primary-color) !important; border-radius: 8px !important; height: 42px; width: 42px">
+                                    <i class="fa fa-video-camera" style="color: #fff; font-size: 18px;"></i>
+                                </div>
+                                <h5 class="m-0" style="color: #000 !important; font-weight: bold">
+                                    One-Click Recording
+                                </h5>
+                                <p class="m-0" style="font-size: 0.9rem; color: var(--text-color-light); font-size: 16px; font-weight: 400;">
+                                    Start screen recording from any form view chatter with a single click on the "Record" button.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-4 position-relative d-flex flex-column justify-content-center gap-3"
+                                 style="border-radius: 12px; background: #FFF; padding: 32px; z-index: 2;">
+                                <div class="d-flex justify-content-center align-items-center"
+                                     style="background-color: var(--primary-color) !important; border-radius: 8px !important; height: 42px; width: 42px">
+                                    <i class="fa fa-globe" style="color: #fff; font-size: 18px;"></i>
+                                </div>
+                                <h5 class="m-0" style="color: #000 !important; font-weight: bold">
+                                    Navigation Persistent
+                                </h5>
+                                <p class="m-0" style="font-size: 0.9rem; color: var(--text-color-light); font-size: 16px; font-weight: 400;">
+                                    Recording continues even when you navigate to other pages or records within Odoo.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-4 position-relative d-flex flex-column justify-content-center gap-3"
+                                 style="border-radius: 12px; background: #FFF; padding: 32px; z-index: 2;">
+                                <div class="d-flex justify-content-center align-items-center"
+                                     style="background-color: var(--primary-color) !important; border-radius: 8px !important; height: 42px; width: 42px">
+                                    <i class="fa fa-desktop" style="color: #fff; font-size: 18px;"></i>
+                                </div>
+                                <h5 class="m-0" style="color: #000 !important; font-weight: bold">
+                                    Systray Controls
+                                </h5>
+                                <p class="m-0" style="font-size: 0.9rem; color: var(--text-color-light); font-size: 16px; font-weight: 400;">
+                                    Save, Pause, Resume, or Discard your recording from the systray dropdown in the navbar.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="mb-4 position-relative d-flex flex-column justify-content-center gap-3"
+                                 style="border-radius: 12px; background: #FFF; padding: 32px; z-index: 2;">
+                                <div class="d-flex justify-content-center align-items-center"
+                                     style="background-color: var(--primary-color) !important; border-radius: 8px !important; height: 42px; width: 42px">
+                                    <i class="fa fa-paperclip" style="color: #fff; font-size: 18px;"></i>
+                                </div>
+                                <h5 class="m-0" style="color: #000 !important; font-weight: bold">
+                                    Auto-Upload Attachment
+                                </h5>
+                                <p class="m-0" style="font-size: 0.9rem; color: var(--text-color-light); font-size: 16px; font-weight: 400;">
+                                    Recordings are automatically saved as WebM attachments to the original source record.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="my-5">
+                    <div style="padding: 4rem; background-color: var(--primary-color); border-radius: 12px; position: relative; overflow: hidden;">
+                        <div style="display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 2;">
+                            <span style="font-size: 36px; font-weight: 700; color: #fff; line-height: 50px; text-transform: capitalize; max-width: 500px;">
+                                Chatter Screen Recorder
+                            </span>
+                            <h3 style="font-size: 18px; font-weight: 400; color: rgba(255,255,255,0.85); line-height: 28px;">
+                                Capture screen recordings, attach them to any Odoo record,
+                                <br> and share with your team effortlessly.
+                            </h3>
+                            <div class="d-flex gap-3">
+                                <a href="mailto:abdallah@wakeal.com"
+                                   style="cursor: pointer; border-radius: 16px; display: flex; justify-content: center; align-items: center; gap: 10px;
+                                    border: 1px solid rgba(255, 255, 255, 0.30);
+                                    background: linear-gradient(93deg, rgba(255, 255, 255, 0.08) 6.01%, rgba(255, 255, 255, 0.17) 90.83%);
+                                    backdrop-filter: blur(10px); color: #fff; padding: 14px 20px; text-decoration: none;">
+                                    <span style="border-radius: 12px; background: rgba(255, 255, 255, 0.10); backdrop-filter: blur(6px); padding: 10px;">
+                                        <i class="fa fa-envelope" style="font-size: 16px;"></i>
+                                    </span>
+                                    <span style="font-weight: 500;">abdallah@wakeal.com</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="position: absolute; bottom: -20px; right: -20px; opacity: 0.1;">
+                            <i class="fa fa-video-camera" style="font-size: 280px; color: #fff;"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screenshots, Features, FAQs, Releases Tabs -->
+                <div class="mb-4 bg-white"
+                     style="border: 1px solid #EBEEF2; border-radius: 6px; box-shadow: 0px 8px 20px -4px rgba(0, 0, 0, 0.10);">
+                    <div>
+                        <ul class="nav nav-tabs justify-content-center bg-white py-2"
+                            id="myTab" role="tablist" style="border-radius: 6px 6px 0 0;">
+                            <li class="nav-item">
+                                <a aria-controls="overview"
+                                   class="nav-link active" data-bs-toggle="tab"
+                                   href="#overview" id="overview-tab" role="tab"
+                                   style="color:#121212; font-weight:500; font-size:16px">
+                                    Screenshots</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-controls="feature" class="nav-link py-2"
+                                   data-bs-toggle="tab"
+                                   href="#feature" id="feature-tab" role="tab"
+                                   style="color:#121212; font-weight:500; font-size:16px">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-controls="faq" class="nav-link"
+                                   data-bs-toggle="tab" href="#faq"
+                                   id="faq-tab" role="tab"
+                                   style="color:#121212; font-weight:500; font-size:16px">
+                                    FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-controls="releases" class="nav-link"
+                                   data-bs-toggle="tab"
+                                   href="#releases" id="releases-tab" role="tab"
+                                   style="color:#121212; font-weight:500; font-size:16px">Releases</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content p-md-5 p-2 py-3" id="myTabContent">
+                        <!-- Screenshots Tab -->
+                        <div aria-labelledby="overview-tab"
+                             class="tab-pane fade show active" id="overview"
+                             role="tabpanel">
+
+                            <!-- Screenshot 1: Record Button in Chatter -->
+                            <div class="position-relative mb-4"
+                                 style="border-radius: 10px; background-color: #f4f4f4">
+                                <div class="p-md-5 p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1 style="font-weight: bold; font-size: calc(1.1rem + 1vw); line-height: 120%; text-align: center; text-transform: capitalize; font-size: 40px; font-weight: 700;">
+                                                <span style="color: #121212; font-size: calc(1.1rem + 1vw)">Record Button in Chatter</span>
+                                            </h1>
+                                        </div>
+                                        <div class="col-md-12 mb-4">
+                                            <p style="font-weight: 400; font-size: 16px; line-height: 150%; text-align: center; color: var(--text-color-light)">
+                                                Click the "Record" button in the chatter topbar to start screen recording. The button appears next to "Log Note" on any form view with a chatter.
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <div class="d-inline-block p-3 shadow-sm"
+                                                 style="background-color: #fff; border-radius: 10px">
+                                                <img alt="Record Button in Chatter" class="img-fluid"
+                                                     loading="lazy"
+                                                     src="./assets/screenshots/4.jpeg"
+                                                     style="min-height: 1px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 2: Systray Recording Indicator -->
+                            <div class="position-relative mb-4"
+                                 style="border-radius: 10px; background-color: #f4f4f4">
+                                <div class="p-md-5 p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1 style="font-weight: bold; font-size: calc(1.1rem + 1vw); line-height: 120%; text-align: center; text-transform: capitalize; font-size: 40px; font-weight: 700;">
+                                                <span style="color: #121212; font-size: calc(1.1rem + 1vw)">Systray Recording Indicator</span>
+                                            </h1>
+                                        </div>
+                                        <div class="col-md-12 mb-4">
+                                            <p style="font-weight: 400; font-size: 16px; line-height: 150%; text-align: center; color: var(--text-color-light)">
+                                                Once recording starts, a red blinking indicator with a live timer appears in the systray (top-right navbar). It remains visible even when you navigate away from the original record.
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <div class="d-inline-block p-3 shadow-sm"
+                                                 style="background-color: #fff; border-radius: 10px">
+                                                <img alt="Systray Recording Indicator" class="img-fluid"
+                                                     loading="lazy"
+                                                     src="./assets/screenshots/3.jpeg"
+                                                     style="min-height: 1px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 3: Systray Dropdown Controls (on form view) -->
+                            <div class="position-relative mb-4"
+                                 style="border-radius: 10px; background-color: #f4f4f4">
+                                <div class="p-md-5 p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1 style="font-weight: bold; font-size: calc(1.1rem + 1vw); line-height: 120%; text-align: center; text-transform: capitalize; font-size: 40px; font-weight: 700;">
+                                                <span style="color: #121212; font-size: calc(1.1rem + 1vw)">Systray Recording Controls</span>
+                                            </h1>
+                                        </div>
+                                        <div class="col-md-12 mb-4">
+                                            <p style="font-weight: 400; font-size: 16px; line-height: 150%; text-align: center; color: var(--text-color-light)">
+                                                Click the systray indicator to open the dropdown with full recording controls: Save, Pause/Resume, and Discard. The record name and live timer are displayed.
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <div class="d-inline-block p-3 shadow-sm"
+                                                 style="background-color: #fff; border-radius: 10px">
+                                                <img alt="Systray Recording Controls" class="img-fluid"
+                                                     loading="lazy"
+                                                     src="./assets/screenshots/2.jpeg"
+                                                     style="min-height: 1px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Screenshot 4: Persistent Recording Across Navigation -->
+                            <div class="position-relative mb-4"
+                                 style="border-radius: 10px; background-color: #f4f4f4">
+                                <div class="p-md-5 p-3 position-relative">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1 style="font-weight: bold; font-size: calc(1.1rem + 1vw); line-height: 120%; text-align: center; text-transform: capitalize; font-size: 40px; font-weight: 700;">
+                                                <span style="color: #121212; font-size: calc(1.1rem + 1vw)">Persistent Recording Across Navigation</span>
+                                            </h1>
+                                        </div>
+                                        <div class="col-md-12 mb-4">
+                                            <p style="font-weight: 400; font-size: 16px; line-height: 150%; text-align: center; color: var(--text-color-light)">
+                                                Navigate to any page in Odoo while recording continues. The systray controls persist, and the recording is saved to the original record when you click Save.
+                                            </p>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <div class="d-inline-block p-3 shadow-sm"
+                                                 style="background-color: #fff; border-radius: 10px">
+                                                <img alt="Persistent Recording" class="img-fluid"
+                                                     loading="lazy"
+                                                     src="./assets/screenshots/1.jpeg"
+                                                     style="min-height: 1px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Features Tab -->
+                        <div aria-labelledby="feature-tab"
+                             class="tab-pane fade show py-1" id="feature"
+                             role="tabpanel">
+                            <div class="row py-4">
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                One-click screen recording from any form view that has a chatter (mail.thread) component.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                Recording persists across page navigation using a global OWL service architecture.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                Systray dropdown with live timer, record name, and full controls (Save, Pause, Resume, Discard).
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                Captures screen video, system audio, and microphone audio combined into a single WebM recording.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                Pause and resume recording at any time without losing your progress or restarting.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                Recordings are automatically uploaded as attachments to the original record with timestamped filenames.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                No server-side dependencies. Pure frontend JavaScript using browser MediaRecorder and Web Audio APIs.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-12 p-3">
+                                    <div class="d-flex flex-column align-items-start h-100"
+                                         style="padding: 30px; border-radius: 12px; background-color: #dc354517">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-flex align-items-center justify-content-center"
+                                                 style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--primary-color); margin-right: 10px; flex-shrink: 0;">
+                                                <i class="fa fa-star" style="color: #fff; font-size: 14px"></i>
+                                            </div>
+                                            <p style="color: #1A202C; font-weight: 600; font-size: 1.1rem; margin-bottom: 2px">
+                                                Works on any model with chatter: Tasks, Invoices, Sales Orders, CRM Leads, and more.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQs Tab -->
+                        <div aria-labelledby="faq-tab"
+                             class="tab-pane fade show" id="faq"
+                             role="tabpanel">
+                            <div class="row" style="background-color: #fff !important">
+                                <div class="col-lg-12 d-flex flex-column align-items-center">
+                                    <h1 class="text-center text-uppercase"
+                                        style="font-family: Montserrat, 'sans-serif' !important; font-size: 40px !important; font-weight: 900 !important">
+                                        <span style="color: var(--primary-color)">FAQ</span>
+                                    </h1>
+                                </div>
+                                <div class="col-md-12" aria-labelledby="faq-tab"
+                                     id="faq1" role="tabpanel">
+                                    <div class="accordion mb-4" id="accordion6">
+                                        <div style="background-color: #fff">
+                                            <div class="accordion" id="accordion_faq">
+                                                <!-- Question 1 -->
+                                                <div style="margin: 1rem 0rem">
+                                                    <div aria-expanded="false"
+                                                         class="card-header collapsed"
+                                                         data-bs-toggle="collapse"
+                                                         data-bs-target="#collapseFAQOne"
+                                                         aria-controls="collapseFAQOne"
+                                                         style="cursor: pointer; background-color: #f8f8f8; border: none; border-top-right-radius: 10px; border-top-left-radius: 10px; padding: 12px 24px;">
+                                                        <a class="card-title text-decoration-none"
+                                                           style="font-size: 18px; line-height: 30px; font-weight: 500; color: #040f3a">
+                                                            What browsers support screen recording?
+                                                            <i class="fa fa-chevron-down float-end" style="margin-top: 6px;"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="accordion-collapse collapse"
+                                                         aria-labelledby="collapseFAQOne"
+                                                         data-bs-parent="#accordion_faq"
+                                                         id="collapseFAQOne"
+                                                         style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px">
+                                                        <p style="padding: 0.75rem 1.25rem; font-size: 16px; line-height: 27px; color: #888; font-weight: normal;">
+                                                            Screen recording uses the browser's getDisplayMedia API, which is supported in all modern browsers including Chrome, Edge, Firefox, and Opera. Safari has limited support.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Question 2 -->
+                                                <div style="margin: 1rem 0rem">
+                                                    <div aria-expanded="false"
+                                                         class="cursor-pointer card-header collapsed"
+                                                         data-bs-toggle="collapse"
+                                                         aria-controls="collapseFAQTwo"
+                                                         data-bs-target="#collapseFAQTwo"
+                                                         style="cursor: pointer; background-color: #f8f8f8; border: 1px solid #f8f8f8; border-top-right-radius: 10px; border-top-left-radius: 10px; padding: 12px 24px">
+                                                        <a class="card-title text-decoration-none"
+                                                           style="font-size: 18px; line-height: 30px; font-weight: 500; color: #040f3a">
+                                                            Does the recording stop if I navigate to another page?
+                                                            <i class="fa fa-chevron-down float-end" style="margin-top: 6px;"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="accordion-collapse collapse"
+                                                         aria-labelledby="collapseFAQTwo"
+                                                         data-bs-parent="#accordion_faq"
+                                                         id="collapseFAQTwo"
+                                                         style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px">
+                                                        <p style="padding: 0.75rem 1.25rem; font-size: 16px; line-height: 27px; color: #888; font-weight: normal;">
+                                                            No! The recording persists across page navigation. The recording logic runs in a global service, so navigating to other records, menus, or pages will not interrupt the recording. The systray indicator stays visible throughout.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Question 3 -->
+                                                <div style="margin: 1rem 0rem">
+                                                    <div aria-expanded="false"
+                                                         class="cursor-pointer card-header collapsed"
+                                                         data-bs-toggle="collapse"
+                                                         aria-controls="collapseFAQThree"
+                                                         data-bs-target="#collapseFAQThree"
+                                                         style="cursor: pointer; background-color: #f8f8f8; border: 1px solid #f8f8f8; border-top-right-radius: 10px; border-top-left-radius: 10px; padding: 12px 24px">
+                                                        <a class="card-title text-decoration-none"
+                                                           style="font-size: 18px; line-height: 30px; font-weight: 500; color: #040f3a">
+                                                            Where is the recording saved?
+                                                            <i class="fa fa-chevron-down float-end" style="margin-top: 6px;"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="accordion-collapse collapse"
+                                                         aria-labelledby="collapseFAQThree"
+                                                         data-bs-parent="#accordion_faq"
+                                                         id="collapseFAQThree"
+                                                         style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px">
+                                                        <p style="padding: 0.75rem 1.25rem; font-size: 16px; line-height: 27px; color: #888; font-weight: normal;">
+                                                            The recording is saved as a WebM video attachment on the record where you started the recording. It appears in the chatter attachments section with a timestamped filename like "screen_recording_2026-02-11T14-30-00.webm".
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Question 4 -->
+                                                <div style="margin: 1rem 0rem">
+                                                    <div aria-expanded="false"
+                                                         class="cursor-pointer card-header collapsed"
+                                                         data-bs-toggle="collapse"
+                                                         aria-controls="collapseFAQFour"
+                                                         data-bs-target="#collapseFAQFour"
+                                                         style="cursor: pointer; background-color: #f8f8f8; border: 1px solid #f8f8f8; border-top-right-radius: 10px; border-top-left-radius: 10px; padding: 12px 24px">
+                                                        <a class="card-title text-decoration-none"
+                                                           style="font-size: 18px; line-height: 30px; font-weight: 500; color: #040f3a">
+                                                            Does it capture microphone audio as well?
+                                                            <i class="fa fa-chevron-down float-end" style="margin-top: 6px;"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="accordion-collapse collapse"
+                                                         aria-labelledby="collapseFAQFour"
+                                                         data-bs-parent="#accordion_faq"
+                                                         id="collapseFAQFour"
+                                                         style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px">
+                                                        <p style="padding: 0.75rem 1.25rem; font-size: 16px; line-height: 27px; color: #888; font-weight: normal;">
+                                                            Yes! The module captures both system audio (from the shared screen) and microphone audio. Both are mixed together using the Web Audio API into a single recording. If microphone access is denied, the recording continues with screen audio only.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!-- Question 5 -->
+                                                <div style="margin: 1rem 0rem">
+                                                    <div aria-expanded="false"
+                                                         class="cursor-pointer card-header collapsed"
+                                                         data-bs-toggle="collapse"
+                                                         aria-controls="collapseFAQFive"
+                                                         data-bs-target="#collapseFAQFive"
+                                                         style="cursor: pointer; background-color: #f8f8f8; border: 1px solid #f8f8f8; border-top-right-radius: 10px; border-top-left-radius: 10px; padding: 12px 24px">
+                                                        <a class="card-title text-decoration-none"
+                                                           style="font-size: 18px; line-height: 30px; font-weight: 500; color: #040f3a">
+                                                            Does this module require any additional Python dependencies?
+                                                            <i class="fa fa-chevron-down float-end" style="margin-top: 6px;"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="accordion-collapse collapse"
+                                                         aria-labelledby="collapseFAQFive"
+                                                         data-bs-parent="#accordion_faq"
+                                                         id="collapseFAQFive"
+                                                         style="box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px; border: 1px solid #f8f8f8; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px">
+                                                        <p style="padding: 0.75rem 1.25rem; font-size: 16px; line-height: 27px; color: #888; font-weight: normal;">
+                                                            No. This module is 100% frontend JavaScript. It only depends on the "mail" module that comes standard with Odoo. No extra Python packages, system libraries, or external services are required.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Releases Tab -->
+                        <div aria-labelledby="releases-tab"
+                             class="tab-pane fade show" id="releases"
+                             role="tabpanel">
+                            <div class="row pt-5 m-0">
+                                <div class="col-md-3">
+                                    <h4 style="font-size: 16px; font-weight: 600; color: #514F4F; margin: 0; line-height: 26px;">
+                                        Release 18.0.2.0.0
+                                    </h4>
+                                    <span style="font-size: 14px; color: #7A7979; display: block; margin-bottom: 20px;">
+                                        11th February, 2026
+                                    </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div style="padding: 0 0 40px">
+                                        <div style="margin: 0 0 10px">
+                                            <div style="display: inline-block; padding: 0px 8px; color: #514F4F; background-color: #b5d9ff; border-radius: 20px">
+                                                Improvement
+                                            </div>
+                                        </div>
+                                        <div class="d-flex m-0" style="color: #7A7979;">
+                                            <ul class="pl-3 mb-0">
+                                                <li>Migrated recording logic to a global OWL service for persistence across navigation</li>
+                                                <li>Added systray indicator with dropdown controls (Save, Pause, Resume, Discard)</li>
+                                                <li>Added pause and resume recording functionality</li>
+                                                <li>Simplified chatter patch to delegate to service</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="padding: 0 0 0; border-bottom: 1px solid #E3E3E3"></div>
+                                </div>
+                            </div>
+                            <div class="row pt-4 m-0">
+                                <div class="col-md-3">
+                                    <h4 style="font-size: 16px; font-weight: 600; color: #514F4F; margin: 0; line-height: 26px;">
+                                        Release 18.0.1.0.0
+                                    </h4>
+                                    <span style="font-size: 14px; color: #7A7979; display: block; margin-bottom: 20px;">
+                                        January, 2026
+                                    </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div style="padding: 0 0 40px">
+                                        <div style="margin: 0 0 10px">
+                                            <div style="display: inline-block; padding: 0px 8px; color: #514F4F; background-color: #c3f7c3; border-radius: 20px">
+                                                Add
+                                            </div>
+                                        </div>
+                                        <div class="d-flex m-0" style="color: #7A7979;">
+                                            <ul class="pl-3 mb-0">
+                                                <li>Initial release</li>
+                                                <li>Screen recording from chatter with screen + mic capture</li>
+                                                <li>Auto-upload as attachment to current record</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="padding: 0 0 0; border-bottom: 1px solid #E3E3E3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</html>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_erp_health" model="ir.module.category">
+        <field name="name">ERP Health Monitor</field>
+        <field name="description">Manage ERP health monitoring access</field>
+        <field name="sequence">100</field>
+    </record>
+
+    <record id="group_erp_health_manager" model="res.groups">
+        <field name="name">ERP Health Manager</field>
+        <field name="category_id" ref="module_category_erp_health"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+</odoo>

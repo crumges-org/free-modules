@@ -1,0 +1,109 @@
+<section style="max-width: 896px; margin: 0 auto;">
+    <div style="text-align: center;">
+        <h1 style="color:#875A7B;">CRM Stage History</h1>
+    </div>
+    <div style="text-align: center;">
+        <p>
+            <a href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html">
+                <img alt="License: LGPL-3"
+                     src="https://img.shields.io/badge/license-LGPL--3-blue.png"/></a>
+            <a href="https://kitworks.systems/">
+                <img alt="Kitworks Systems"
+                     src="https://img.shields.io/badge/maintainer-Kitworks-purple.png"/></a>
+        </p>
+        <p><br></p>
+    </div>
+</section>
+
+<section style="margin: 0 auto; max-width: 896px;">
+    <div>
+        <p>This module automatically tracks CRM lead and opportunity stage transitions. Every time a lead moves from one stage to another, a history record is created with timestamps and the user who made the change.</p>
+
+        <p>Key features include:</p>
+        <ul>
+            <li>Automatic Stage Tracking: Records every stage change with "from" and "to" stages</li>
+            <li>Time in Stage: Calculates days and hours spent in each stage</li>
+            <li>Full Audit Trail: Tracks which user moved the lead and when</li>
+            <li>Pivot Analysis: Built-in pivot view for analyzing time spent per stage</li>
+            <li>Access Control: Dedicated "CRM Stage History Viewer" group to control tab visibility</li>
+        </ul>
+    </div>
+</section>
+
+<section style="max-width: 896px; margin: 0 auto;">
+    <div>
+        <h3>Usage Guide</h3>
+
+        <h4>Viewing Stage History on a Lead</h4>
+        <ol>
+            <li>Open any CRM lead or opportunity</li>
+            <li>Navigate to the "Stage Change History" tab</li>
+            <li>View the complete history of stage transitions with timestamps and responsible users</li>
+        </ol>
+
+        <h4>Stage Change Analysis</h4>
+        <ol>
+            <li>Go to CRM > Stage Change Analysis</li>
+            <li>Use the tree view to browse all stage transitions across leads</li>
+            <li>Switch to pivot view to analyze average time spent in each stage</li>
+            <li>Use filters and group-by options to narrow down the analysis</li>
+        </ol>
+
+        <h4>Access Configuration</h4>
+        <ol>
+            <li>Go to Settings > Users & Companies > Users</li>
+            <li>Add the "CRM Stage History Viewer" group to users who need to see the history tab on leads</li>
+            <li>Sales Managers have full read/write/create/delete access to history records</li>
+        </ol>
+    </div>
+</section>
+
+<section style="max-width: 896px; margin: 0 auto;">
+    <div>
+        <h3>Technical Details</h3>
+        <p>The module uses the <code>generic.mixin.track.changes</code> mixin from <code>generic_mixin</code> to track stage changes via <code>@post_create</code> and <code>@post_write</code> decorators, replacing manual <code>create()</code>/<code>write()</code> overrides.</p>
+
+        <h4>Models</h4>
+        <ul>
+            <li><b>kw.crm.stage.history</b>: Stores stage transition records with from/to stages, timestamps, and time calculations</li>
+            <li><b>crm.lead</b>: Extended with stage history tracking and a One2many relation to history records</li>
+        </ul>
+
+        <h4>History Record Fields</h4>
+        <ul>
+            <li><b>Stage From / Stage To:</b> The source and destination CRM stages</li>
+            <li><b>Date In / Date Out:</b> When the lead entered and left the stage</li>
+            <li><b>Date In By / Date Out By:</b> Users responsible for the transitions</li>
+            <li><b>Day Diff / Time Diff / Total Time Diff:</b> Computed time spent in the stage</li>
+        </ul>
+    </div>
+</section>
+
+<section style="max-width: 896px; margin: 0 auto;">
+    <div>
+        <h3>Bug Tracker</h3>
+        <p>
+            Bugs are tracked on <a href="https://kitworks.systems/requests">https://kitworks.systems/requests</a>.
+            In case of trouble, please check there if your issue has already
+            been reported.
+        </p>
+    </div>
+</section>
+
+<section style="max-width: 896px; margin: 0 auto; text-align: center;">
+    <div>
+        <h2 style="color: #138c33">Maintainer</h2>
+        <p>KitWorks Systems. Our web site: <a href="https://kitworks.systems">https://kitworks.systems</a></p>
+
+        <p>
+            We can provide you further Odoo Support, Odoo implementation,
+            Odoo customization, Odoo 3rd Party development and integration
+            software, consulting services. Our main goal is to provide the best
+            quality product for you.
+        </p>
+        <p>
+            For any questions
+            <a href="mailto:info@kitworks.systems">contact us</a>.
+        </p>
+    </div>
+</section>

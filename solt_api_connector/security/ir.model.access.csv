@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_solt_api_connector_user,solt.api.connector user,model_solt_api_connector,base.group_user,1,0,0,0
+access_solt_api_connector_manager,solt.api.connector manager,model_solt_api_connector,group_api_integration_manager,1,1,1,1
+access_solt_api_endpoint_user,solt.api.endpoint user,model_solt_api_endpoint,base.group_user,1,0,0,0
+access_solt_api_endpoint_manager,solt.api.endpoint manager,model_solt_api_endpoint,group_api_integration_manager,1,1,1,1
+access_solt_api_call_log_user,solt.api.call.log user,model_solt_api_call_log,base.group_user,1,0,0,0
+access_solt_api_call_log_manager,solt.api.call.log manager,model_solt_api_call_log,group_api_integration_manager,1,1,1,1
+access_base_automation_config,base.automation config,model_base_automation,group_api_integration_manager,1,1,1,1
+access_solt_api_meta_fields,solt.api.meta.fields manager,model_solt_api_meta_fields,group_api_integration_manager,1,1,1,1
+access_solt_api_meta_fields_user,solt.api.meta.fields user,model_solt_api_meta_fields,base.group_user,1,0,0,0
+
+access_ir_actions_server_api_integration_manager,ir.actions.server manager,base.model_ir_actions_server,group_api_integration_manager,1,1,1,1
+access_base_automation,base.automation manager,base_automation.model_base_automation,group_api_integration_manager,1,1,1,1
+access_ir_model_fields_group_api_integration_manager,ir.model.fields manager,base.model_ir_model_fields,group_api_integration_manager,1,1,1,1
+access_ir_cron_group_api_integration_manager,ir_cron manager,base.model_ir_cron,group_api_integration_manager,1,1,1,1

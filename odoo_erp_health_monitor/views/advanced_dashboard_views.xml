@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dashboard Form View with Actions -->
+    <record id="view_erp_health_dashboard_form" model="ir.ui.view">
+        <field name="name">erp.health.dashboard.form</field>
+        <field name="model">erp.health.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="ERP Health Dashboard">
+                <header>
+                    <button name="action_collect_metrics" string="Collect Metrics Now" 
+                            type="object" class="btn-primary"/>
+                    <button name="action_refresh_slow_queries" string="Refresh Slow Queries" 
+                            type="object" class="btn-secondary"/>
+                    <button name="action_view_logs" string="View Odoo Logs" 
+                            type="object" class="btn-info"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>ERP Health Monitor Dashboard</h1>
+                    </div>
+                    
+                    <group string="Server Status">
+                        <group>
+                            <field name="id" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Quick Stats">
+                            <group>
+                                <group string="Server Metrics">
+                                    <button name="%(action_server_metrics)d" string="View All Metrics" 
+                                            type="action" class="oe_link"/>
+                                </group>
+                                <group string="Cron Jobs">
+                                    <button name="%(action_cron_log)d" string="View All Cron Logs" 
+                                            type="action" class="oe_link"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Slow Queries">
+                                    <button name="%(action_slow_query)d" string="View All Slow Queries" 
+                                            type="action" class="oe_link"/>
+                                </group>
+                                <group string="Database Locks">
+                                    <button name="%(action_database_lock)d" string="View Database Locks" 
+                                            type="action" class="oe_link"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Metrics Trends">
+                            <field name="id" invisible="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Dashboard Action -->
+    <record id="action_erp_health_dashboard_new" model="ir.actions.act_window">
+        <field name="name">Health Dashboard</field>
+        <field name="res_model">erp.health.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+</odoo>

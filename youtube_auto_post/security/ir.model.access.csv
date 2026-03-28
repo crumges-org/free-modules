@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_youtube_video_upload,access.youtube.video.upload,model_youtube_video_upload,base.group_user,1,1,1,1
+access_youtube_api_settings,access.youtube.api.settings,model_youtube_api_settings,base.group_system,1,1,1,1

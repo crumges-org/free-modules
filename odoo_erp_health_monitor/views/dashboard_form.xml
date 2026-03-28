@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Modern Dashboard Form View - Improved UI -->
+    <record id="view_erp_health_dashboard_form" model="ir.ui.view">
+        <field name="name">erp.health.dashboard.form</field>
+        <field name="model">erp.health.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="ERP Health Dashboard" create="false" edit="false">
+                <header>
+                    <button name="action_collect_metrics" string="Collect Metrics" type="object" class="btn-primary" icon="fa-refresh"/>
+                    <button name="action_refresh_slow_queries" string="Refresh Queries" type="object" class="btn-secondary" icon="fa-search"/>
+                    <button name="action_refresh_locks" string="Check Locks" type="object" class="btn-warning" icon="fa-lock"/>
+                    <button name="action_refresh_logs" string="Refresh Logs" type="object" class="btn-info" icon="fa-file-text-o"/>
+                </header>
+
+                <sheet>
+                    <!-- Dashboard Title -->
+                    <div class="oe_title mb-4">
+                        <h1 class="d-flex align-items-center">
+                            <i class="fa fa-dashboard text-primary me-3" style="font-size: 48px;"/>
+                            <div>
+                                <span>ERP Health Monitor</span>
+                                <p class="text-muted mb-0" style="font-size: 14px; font-weight: normal;">
+                                    Real-time system monitoring and performance insights
+                                </p>
+                            </div>
+                        </h1>
+                    </div>
+
+                    <!-- Last Update Info -->
+                    <div class="alert alert-info mb-3" style="background-color: #d1ecf1; border-color: #bee5eb;">
+                        <i class="fa fa-clock-o" style="font-size: 18px;"/>
+                        <strong>Last Updated:</strong>
+                        <field name="last_update" widget="datetime" style="display: inline;"/>
+                    </div>
+
+                    <!-- Server Status Cards -->
+                    <div class="row mb-4">
+                        <!-- CPU Card -->
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <div class="card shadow-sm border-0" style="border-left: 5px solid #007bff !important; border-radius: 10px; min-height: 220px;">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div style="flex: 1;">
+                                            <h6 class="text-muted mb-1" style="font-size: 14px;">
+                                                <i class="fa fa-microchip text-primary" style="font-size: 20px;"/> CPU Usage
+                                            </h6>
+                                            <h2 class="mb-0 fw-bold text-primary" style="font-size: 36px;">
+                                                <field name="cpu_percent" widget="float"/>%
+                                            </h2>
+                                        </div>
+                                        <div class="text-end">
+                                            <i class="fa fa-microchip" style="font-size: 56px; opacity: 0.2; color: #007bff;"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Progress Bar for CPU -->
+                                    <div class="mb-2">
+                                        <div class="progress" style="height: 12px; border-radius: 6px;">
+                                            <field name="cpu_percent" widget="progressbar" options="{'current_value': 'cpu_percent', 'max_value': 100, 'editable': false}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="badge" invisible="cpu_status != 'good'" style="background-color:#28a745;color:white;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-check-circle" style="font-size:10px;"/> GOOD
+                                        </span>
+                                        <span class="badge" invisible="cpu_status != 'warning'" style="background-color:#ffc107;color:#000;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-exclamation-triangle" style="font-size:10px;"/> WARNING
+                                        </span>
+                                        <span class="badge" invisible="cpu_status != 'critical'" style="background-color:#dc3545;color:white;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-times-circle" style="font-size:10px;"/> CRITICAL
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RAM Card -->
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <div class="card shadow-sm border-0" style="border-left: 5px solid #17a2b8 !important; border-radius: 10px; min-height: 220px;">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div style="flex: 1;">
+                                            <h6 class="text-muted mb-1" style="font-size: 14px;">
+                                                <i class="fa fa-server text-info" style="font-size: 20px;"/> RAM Usage
+                                            </h6>
+                                            <h2 class="mb-0 fw-bold text-info" style="font-size: 36px;">
+                                                <field name="ram_percent" widget="float"/>%
+                                            </h2>
+                                        </div>
+                                        <div class="text-end">
+                                            <i class="fa fa-server" style="font-size: 56px; opacity: 0.2; color: #17a2b8;"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Progress Bar for RAM -->
+                                    <div class="mb-2">
+                                        <div class="progress" style="height: 12px; border-radius: 6px;">
+                                            <field name="ram_percent" widget="progressbar" options="{'current_value': 'ram_percent', 'max_value': 100, 'editable': false}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="badge" invisible="ram_status != 'good'" style="background-color:#28a745;color:white;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-check-circle" style="font-size:10px;"/> GOOD
+                                        </span>
+                                        <span class="badge" invisible="ram_status != 'warning'" style="background-color:#ffc107;color:#000;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-exclamation-triangle" style="font-size:10px;"/> WARNING
+                                        </span>
+                                        <span class="badge" invisible="ram_status != 'critical'" style="background-color:#dc3545;color:white;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-times-circle" style="font-size:10px;"/> CRITICAL
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Disk Card -->
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <div class="card shadow-sm border-0" style="border-left: 5px solid #ffc107 !important; border-radius: 10px; min-height: 220px;">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div style="flex: 1;">
+                                            <h6 class="text-muted mb-1" style="font-size: 14px;">
+                                                <i class="fa fa-hdd-o text-warning" style="font-size: 20px;"/> Disk Usage
+                                            </h6>
+                                            <h2 class="mb-0 fw-bold text-warning" style="font-size: 36px;">
+                                                <field name="disk_percent" widget="float"/>%
+                                            </h2>
+                                        </div>
+                                        <div class="text-end">
+                                            <i class="fa fa-hdd-o" style="font-size: 56px; opacity: 0.2; color: #ffc107;"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Progress Bar for Disk -->
+                                    <div class="mb-2">
+                                        <div class="progress" style="height: 12px; border-radius: 6px;">
+                                            <field name="disk_percent" widget="progressbar" options="{'current_value': 'disk_percent', 'max_value': 100, 'editable': false}"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-2">
+                                        <span class="badge" invisible="disk_status != 'good'" style="background-color:#28a745;color:white;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-check-circle" style="font-size:10px;"/> GOOD
+                                        </span>
+                                        <span class="badge" invisible="disk_status != 'warning'" style="background-color:#ffc107;color:#000;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-exclamation-triangle" style="font-size:10px;"/> WARNING
+                                        </span>
+                                        <span class="badge" invisible="disk_status != 'critical'" style="background-color:#dc3545;color:white;padding:5px 12px;font-size:11px;border-radius:12px;">
+                                            <i class="fa fa-times-circle" style="font-size:10px;"/> CRITICAL
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Server Metrics Graph Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card shadow-sm border-0" style="border-radius: 10px;">
+                                <div class="card-header text-white border-bottom-0" style="border-radius: 10px 10px 0 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <h5 class="mb-0">
+                                        <i class="fa fa-line-chart"/> Server Performance Trends
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <button name="action_view_server_metrics" string="View Detailed Metrics &amp; Graphs" type="object" class="btn btn-primary btn-lg w-100 mb-3" style="border-radius: 8px; font-size: 16px;">
+                                        <i class="fa fa-area-chart"/> Open Server Metrics Dashboard
+                                    </button>
+
+                                    <div class="row text-center">
+                                        <div class="col-4">
+                                            <div class="border rounded p-3" style="background: #f8f9fa; border-radius: 10px !important;">
+                                                <i class="fa fa-microchip text-primary" style="font-size: 32px;"/>
+                                                <h4 class="mt-2 mb-0" style="font-size: 28px; font-weight: 700;">
+                                                    <field name="cpu_percent"/>%
+                                                </h4>
+                                                <small class="text-muted" style="font-size: 12px; text-transform: uppercase; font-weight: 600;">CPU</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="border rounded p-3" style="background: #f8f9fa; border-radius: 10px !important;">
+                                                <i class="fa fa-server text-info" style="font-size: 32px;"/>
+                                                <h4 class="mt-2 mb-0" style="font-size: 28px; font-weight: 700;">
+                                                    <field name="ram_percent"/>%
+                                                </h4>
+                                                <small class="text-muted" style="font-size: 12px; text-transform: uppercase; font-weight: 600;">RAM</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="border rounded p-3" style="background: #f8f9fa; border-radius: 10px !important;">
+                                                <i class="fa fa-hdd-o text-warning" style="font-size: 32px;"/>
+                                                <h4 class="mt-2 mb-0" style="font-size: 28px; font-weight: 700;">
+                                                    <field name="disk_percent"/>%
+                                                </h4>
+                                                <small class="text-muted" style="font-size: 12px; text-transform: uppercase; font-weight: 600;">DISK</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Metrics Grid - AFTER Performance Trends -->
+                    <div class="row mb-4">
+                        <!-- Cron Jobs -->
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card shadow-sm border-0 h-100" style="border-radius: 10px; border-top: 4px solid #007bff !important;">
+                                <div class="card-body text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="mb-3">
+                                            <i class="fa fa-clock-o" style="font-size: 48px; color: #007bff;"/>
+                                        </div>
+                                        <h3 class="mb-2 fw-bold text-dark" style="font-size: 32px;">
+                                            <field name="total_crons"/>
+                                        </h3>
+                                        <p class="text-muted mb-3" style="font-size: 14px; font-weight: 500;">Cron Jobs</p>
+                                        <div class="mb-3">
+                                            <span class="badge me-1" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; font-size: 11px; padding: 6px 12px; border-radius: 8px;">
+                                                <i class="fa fa-times-circle"/> <field name="failed_crons"/> Failed
+                                            </span>
+                                            <span class="badge" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); color: #333; font-size: 11px; padding: 6px 12px; border-radius: 8px;">
+                                                <i class="fa fa-hourglass-half"/> <field name="slow_crons"/> Slow
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button name="action_view_cron_logs" type="object" class="btn btn-sm btn-outline-primary w-100" style="border-radius: 6px; border-width: 2px; font-weight: 600;">
+                                        <i class="fa fa-eye"/> View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slow Queries -->
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card shadow-sm border-0 h-100" style="border-radius: 10px; border-top: 4px solid #ffc107 !important;">
+                                <div class="card-body text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="mb-3">
+                                            <i class="fa fa-database" style="font-size: 48px; color: #ffc107;"/>
+                                        </div>
+                                        <h3 class="mb-2 fw-bold text-dark" style="font-size: 32px;">
+                                            <field name="queries_today"/>
+                                        </h3>
+                                        <p class="text-muted mb-3" style="font-size: 14px; font-weight: 500;">Queries Today</p>
+                                        <div class="mb-3">
+                                            <span class="badge" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; font-size: 11px; padding: 6px 12px; border-radius: 8px;">
+                                                <i class="fa fa-list"/> Total: <field name="total_queries"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button name="action_view_slow_queries" type="object" class="btn btn-sm btn-outline-warning w-100" style="border-radius: 6px; border-width: 2px; font-weight: 600;">
+                                        <i class="fa fa-eye"/> View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Database Locks -->
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card shadow-sm border-0 h-100" style="border-radius: 10px; border-top: 4px solid #dc3545 !important;">
+                                <div class="card-body text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="mb-3">
+                                            <i class="fa fa-lock" style="font-size: 48px; color: #dc3545;"/>
+                                        </div>
+                                        <h3 class="mb-2 fw-bold text-dark" style="font-size: 32px;">
+                                            <field name="total_locks"/>
+                                        </h3>
+                                        <p class="text-muted mb-3" style="font-size: 14px; font-weight: 500;">Database Locks</p>
+                                        <div class="mb-3">
+                                            <span class="badge" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333; font-size: 11px; padding: 6px 12px; border-radius: 8px;">
+                                                <i class="fa fa-calendar"/> Today
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button name="action_view_database_locks" type="object" class="btn btn-sm btn-outline-danger w-100" style="border-radius: 6px; border-width: 2px; font-weight: 600;">
+                                        <i class="fa fa-eye"/> View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Error Logs -->
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <div class="card shadow-sm border-0 h-100" style="border-radius: 10px; border-top: 4px solid #28a745 !important;">
+                                <div class="card-body text-center d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="mb-3">
+                                            <i class="fa fa-exclamation-triangle" style="font-size: 48px; color: #28a745;"/>
+                                        </div>
+                                        <h3 class="mb-2 fw-bold text-dark" style="font-size: 32px;">
+                                            <field name="error_logs"/>
+                                        </h3>
+                                        <p class="text-muted mb-3" style="font-size: 14px; font-weight: 500;">Error Logs</p>
+                                        <div class="mb-3">
+                                            <span class="badge" style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); color: #333; font-size: 11px; padding: 6px 12px; border-radius: 8px;">
+                                                <i class="fa fa-calendar"/> Today
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <button name="action_view_odoo_logs" type="object" class="btn btn-sm btn-outline-success w-100" style="border-radius: 6px; border-width: 2px; font-weight: 600;">
+                                        <i class="fa fa-eye"/> View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Panel -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card shadow-sm border-0" style="border-radius: 10px;">
+                                <div class="card-header bg-white border-bottom">
+                                    <h5 class="mb-0">
+                                        <i class="fa fa-bolt text-warning" style="font-size: 20px;"/> Quick Actions
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <button name="action_view_cron_logs" type="object" class="btn btn-outline-primary btn-lg w-100" style="border-radius: 8px; border-width: 2px;">
+                                                <i class="fa fa-clock-o" style="font-size: 18px;"/> View Cron Job Logs
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <button name="action_view_slow_queries" type="object" class="btn btn-outline-warning btn-lg w-100" style="border-radius: 8px; border-width: 2px;">
+                                                <i class="fa fa-database" style="font-size: 18px;"/> View Slow Queries
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <button name="action_view_database_locks" type="object" class="btn btn-outline-danger btn-lg w-100" style="border-radius: 8px; border-width: 2px;">
+                                                <i class="fa fa-lock" style="font-size: 18px;"/> View Database Locks
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <button name="action_view_odoo_logs" type="object" class="btn btn-outline-success btn-lg w-100" style="border-radius: 8px; border-width: 2px;">
+                                                <i class="fa fa-file-text-o" style="font-size: 18px;"/> View System Logs
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Info -->
+                    <div class="alert alert-light border" style="border-radius: 10px; background: #f8f9fa;">
+                        <div class="d-flex align-items-center">
+                            <i class="fa fa-info-circle text-primary me-2" style="font-size: 28px;"/>
+                            <div>
+                                <strong style="font-size: 14px;">Auto-Refresh:</strong>
+                                <span style="font-size: 13px;">Dashboard data refreshes automatically on page reload.</span>
+                                <br/>
+                                <small class="text-muted" style="font-size: 12px;">
+                                    Use the action buttons above to manually trigger data collection.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_crm_stage_history_viewer"
+            model="res.groups">
+        <field name="name">CRM Stage History Viewer</field>
+        <field name="category_id"
+               ref="base.module_category_sales_sales"/>
+    </record>
+
+</odoo>

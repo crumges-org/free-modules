@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_api_res_company_form_inherit" model="ir.ui.view">
+        <field name="name">api.integration.res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <page name="branches" position="after">
+                <page name="Integration" string="Integration">
+                    <group>
+                        <field name="connector_id" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="external_id" readonly="True"/>
+                        <field name="bearer_token" readonly="True"/>
+                        <field name="state_initial_load"
+                               groups="base.group_no_one"
+                               readonly="True"
+                               force_save="True" invisible="True"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <!-- Social media -->
+    <record id="view_company_form_inherit_social_media" model="ir.ui.view">
+        <field name="name">api.conector.company.form.inherit.social.media</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="social_media.view_company_form_inherit_social_media"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='social_media']" position="inside">
+                <field name="social_pinterest"/>
+                <field name="social_blog"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

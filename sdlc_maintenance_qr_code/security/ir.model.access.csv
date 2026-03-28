@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_maintenance_qr_print_wizard,maintenance.qr.print.wizard,model_maintenance_qr_print_wizard,maintenance.group_equipment_manager,1,1,1,1
+access_maintenance_qr_print_wizard_user,maintenance.qr.print.wizard.user,model_maintenance_qr_print_wizard,base.group_user,1,1,1,0

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cron_youtube_upload" model="ir.cron">
+        <field name="name">YouTube Video Upload</field>
+        <field name="model_id" ref="model_youtube_video_upload"/>
+        <field name="state">code</field>
+        <field name="code">model._run_scheduled_uploads()</field>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field name="doall">False</field>-->
+        <field name="active">True</field>
+    </record>
+</odoo>

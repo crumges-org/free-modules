@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record  model="ir.ui.view" id="view_country_form_inherit_l10n_mx_edi">
+        <field name="name">res.country.form.inherit.l10n_mx_edi</field>
+        <field name="model">res.country</field>
+        <field name="inherit_id" ref="base.view_country_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="l10n_mx_code"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_res_country_city_extended_form">
+        <field name="name">view_res_country_extended_form</field>
+        <field name="model">res.country</field>
+        <field name="inherit_id" ref="base_address_extended.view_res_country_city_extended_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='enforce_cities']" position="after">
+                <field name="enforce_districts" invisible="not enforce_cities"/>
+                <field name="district_label" invisible="not enforce_districts"/>
+                <field name="enforce_localities" invisible="not enforce_cities"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

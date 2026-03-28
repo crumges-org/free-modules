@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- this demo file is for testing purpose -->
+    <!-- Form view for res.partner with checklist integration -->
+    <record id="view_res_partner_form_with_checklist" model="ir.ui.view">
+        <field name="name">res.partner.form.with.checklist</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="email"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Another form view for res.partner without checklist integration -->
+    <record id="view_res_partner_form_without_checklist" model="ir.ui.view">
+        <field name="name">res.partner.form.without.checklist</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="phone"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Define a list view for res.partner with checklist -->
+    <record id="view_res_partner_list_with_checklist" model="ir.ui.view">
+        <field name="name">res.partner.list.with.checklist</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="email"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Define another list view for res.partner without checklist -->
+    <record id="view_res_partner_list_without_checklist" model="ir.ui.view">
+        <field name="name">res.partner.list.without.checklist</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="phone"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Define action windows (menus) for the views -->
+    <record id="action_res_partner_with_checklist" model="ir.actions.act_window">
+        <field name="name">Partner With Checklist</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_res_partner_list_with_checklist')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_form_with_checklist')})]"/>
+    </record>
+
+
+    <record id="action_res_partner_without_checklist" model="ir.actions.act_window">
+        <field name="name">Partner Without Checklist</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'list', 'view_id': ref('view_res_partner_list_without_checklist')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_res_partner_form_without_checklist')})]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="nube_sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">nube.sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="integration_page" string="Tiendanube Integration">
+                        <group>
+                            <field name="order_number" readonly="1" force_save="1"/>
+                            <field name="payment_method_id" readonly="1" force_save="1"/>
+                        </group>
+                    </page>
+                </notebook>
+                <field name="origin" position="after">
+                    <field name="new_version_id" force_save="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

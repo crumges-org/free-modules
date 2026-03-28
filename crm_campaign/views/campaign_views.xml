@@ -1,0 +1,9 @@
+<odoo>
+  <data>
+    <record id="crm_campaign_action" model="ir.actions.act_window">
+      <field name="name">Campaigns</field>
+      <field name="res_model">utm.campaign</field>
+      <field name="view_mode">list,form</field>
+  </record>
+  </data>
+</odoo>
