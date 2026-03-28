@@ -1,6 +1,6 @@
 {
     "name": "Chatter Voice Note",
-    "version": "19.0.1.0.0",
+    "version": "18.0.1.0.0",
     "summary": "Record voice note from chatter",
     "author": "Niraj Mamtora",
     "maintainer": "Niraj Mamtora",
