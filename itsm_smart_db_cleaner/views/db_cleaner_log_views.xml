@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_log_view_tree" model="ir.ui.view">
+    <field name="name">db.cleaner.log.tree</field>
+    <field name="model">db.cleaner.log</field>
+    <field name="arch" type="xml">
+      <list default_order="occurrences desc" string="Error Logs">
+        <field name="log_type" widget="badge"/>
+        <field name="level" widget="badge"
+               decoration-danger="level in ('ERROR','CRITICAL')"
+               decoration-warning="level == 'WARNING'"/>
+        <field name="name"/>
+        <field name="occurrences" sum="Total"/>
+        <field name="last_occurrence"/>
+        <field name="scan_id" optional="hide"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="db_cleaner_log_view_form" model="ir.ui.view">
+    <field name="name">db.cleaner.log.form</field>
+    <field name="model">db.cleaner.log</field>
+    <field name="arch" type="xml">
+      <form string="Error Log">
+        <sheet>
+          <group>
+            <group>
+              <field name="log_type"/>
+              <field name="level"/>
+              <field name="name"/>
+            </group>
+            <group>
+              <field name="occurrences"/>
+              <field name="last_occurrence"/>
+              <field name="scan_id"/>
+            </group>
+          </group>
+          <group string="Sample Message">
+            <field name="message" nolabel="1"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="db_cleaner_log_action" model="ir.actions.act_window">
+    <field name="name">Error Logs</field>
+    <field name="res_model">db.cleaner.log</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+</odoo>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_scan_view_form" model="ir.ui.view">
+    <field name="name">db.cleaner.scan.form</field>
+    <field name="model">db.cleaner.scan</field>
+    <field name="arch" type="xml">
+      <form string="Database Scan">
+        <header>
+          <button name="action_run_scan" type="object" string="Run Scan"
+                  class="oe_highlight"
+                  invisible="state == 'running'"/>
+          <button name="action_open_cleanup_wizard" type="object"
+                  string="Safe Cleanup..." class="btn-warning"
+                  invisible="state != 'done'"/>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="draft,running,done"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="action_view_tables" type="object"
+                    class="oe_stat_button" icon="fa-database">
+              <field name="table_count" widget="statinfo" string="Heavy Tables"/>
+            </button>
+            <button name="action_view_orphans" type="object"
+                    class="oe_stat_button" icon="fa-files-o">
+              <field name="orphan_count" widget="statinfo" string="Orphans"/>
+            </button>
+            <button name="action_view_cron_failures" type="object"
+                    class="oe_stat_button" icon="fa-clock-o">
+              <field name="cron_failure_count" widget="statinfo" string="Cron Issues"/>
+            </button>
+            <button name="action_view_logs" type="object"
+                    class="oe_stat_button" icon="fa-bug">
+              <field name="log_count" widget="statinfo" string="Errors"/>
+            </button>
+            <button name="action_view_indexes" type="object"
+                    class="oe_stat_button" icon="fa-bolt">
+              <field name="index_count" widget="statinfo" string="Indexes"/>
+            </button>
+            <button name="action_view_modules" type="object"
+                    class="oe_stat_button" icon="fa-cubes">
+              <field name="module_size_count" widget="statinfo" string="Modules"/>
+            </button>
+          </div>
+          <div class="oe_title">
+            <h1><field name="name" readonly="1"/></h1>
+          </div>
+          <group>
+            <group string="Scan">
+              <field name="scan_date" readonly="1"/>
+              <field name="duration" readonly="1"/>
+            </group>
+            <group string="Health">
+              <field name="health_score" readonly="1"
+                     widget="progressbar"/>
+              <field name="health_status" readonly="1"
+                     decoration-success="health_status == 'excellent'"
+                     decoration-info="health_status == 'good'"
+                     decoration-warning="health_status == 'warning'"
+                     decoration-danger="health_status == 'critical'"
+                     widget="badge"/>
+            </group>
+          </group>
+          <group string="Storage">
+            <group>
+              <field name="db_size_mb" readonly="1"/>
+              <field name="filestore_size_mb" readonly="1"/>
+            </group>
+            <group>
+              <field name="orphan_size_mb" readonly="1"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Heavy Tables" name="tables">
+              <field name="table_ids" readonly="1">
+                <list>
+                  <field name="schema_name"/>
+                  <field name="table_name"/>
+                  <field name="row_count"/>
+                  <field name="table_bytes"/>
+                  <field name="indexes_bytes"/>
+                  <field name="total_bytes"/>
+                  <field name="bloat_ratio"/>
+                  <field name="is_critical" widget="boolean_toggle"/>
+                </list>
+              </field>
+            </page>
+            <page string="Orphan Files" name="orphans">
+              <field name="orphan_ids" readonly="1">
+                <list>
+                  <field name="name"/>
+                  <field name="res_model"/>
+                  <field name="res_id"/>
+                  <field name="reason"/>
+                  <field name="size_bytes"/>
+                  <field name="create_date_attachment"/>
+                </list>
+              </field>
+            </page>
+            <page string="Cron Failures" name="crons">
+              <field name="cron_failure_ids" readonly="1">
+                <list>
+                  <field name="cron_name"/>
+                  <field name="model_name"/>
+                  <field name="issue"/>
+                  <field name="severity" widget="badge"
+                         decoration-info="severity == 'info'"
+                         decoration-warning="severity == 'warning'"
+                         decoration-danger="severity == 'error'"/>
+                  <field name="last_call"/>
+                  <field name="next_call"/>
+                  <field name="is_active" widget="boolean_toggle"/>
+                </list>
+              </field>
+            </page>
+            <page string="Error Logs" name="logs">
+              <field name="log_ids" readonly="1">
+                <list>
+                  <field name="log_type"/>
+                  <field name="level"/>
+                  <field name="name"/>
+                  <field name="occurrences"/>
+                  <field name="last_occurrence"/>
+                </list>
+              </field>
+            </page>
+            <page string="Missing Indexes" name="indexes">
+              <field name="index_ids" readonly="1">
+                <list>
+                  <field name="table_name"/>
+                  <field name="column_name"/>
+                  <field name="suggestion"/>
+                  <field name="row_count"/>
+                  <field name="sql_command"/>
+                  <field name="applied" widget="boolean_toggle"/>
+                </list>
+              </field>
+            </page>
+            <page string="Module Sizes" name="modules">
+              <field name="module_size_ids" readonly="1">
+                <list>
+                  <field name="module_name"/>
+                  <field name="shortdesc"/>
+                  <field name="table_count"/>
+                  <field name="record_count"/>
+                  <field name="total_bytes"/>
+                </list>
+              </field>
+            </page>
+            <page string="Notes" name="notes">
+              <field name="note"/>
+            </page>
+          </notebook>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <record id="db_cleaner_scan_view_tree" model="ir.ui.view">
+    <field name="name">db.cleaner.scan.tree</field>
+    <field name="model">db.cleaner.scan</field>
+    <field name="arch" type="xml">
+      <list default_order="scan_date desc" string="Scans">
+        <field name="name"/>
+        <field name="scan_date"/>
+        <field name="duration"/>
+        <field name="db_size_mb"/>
+        <field name="orphan_size_mb"/>
+        <field name="health_score" widget="progressbar"/>
+        <field name="health_status" widget="badge"
+               decoration-success="health_status == 'excellent'"
+               decoration-info="health_status == 'good'"
+               decoration-warning="health_status == 'warning'"
+               decoration-danger="health_status == 'critical'"/>
+        <field name="state" widget="badge"
+               decoration-success="state == 'done'"
+               decoration-info="state == 'running'"
+               decoration-danger="state == 'failed'"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="db_cleaner_scan_view_search" model="ir.ui.view">
+    <field name="name">db.cleaner.scan.search</field>
+    <field name="model">db.cleaner.scan</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <filter name="filter_done" string="Done"
+                domain="[('state', '=', 'done')]"/>
+        <filter name="filter_failed" string="Failed"
+                domain="[('state', '=', 'failed')]"/>
+        <filter name="filter_critical" string="Critical Health"
+                domain="[('health_status', '=', 'critical')]"/>
+        <group>
+          <filter name="groupby_status" string="Status"
+                  context="{'group_by': 'health_status'}"/>
+          <filter name="groupby_state" string="State"
+                  context="{'group_by': 'state'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="db_cleaner_scan_action" model="ir.actions.act_window">
+    <field name="name">Database Scans</field>
+    <field name="res_model">db.cleaner.scan</field>
+    <field name="view_mode">list,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Run your first database scan
+      </p>
+      <p>
+        Click 'New' to create a scan, then run it to analyse heavy tables,
+        orphan attachments, cron failures, missing indexes and more.
+      </p>
+    </field>
+  </record>
+
+</odoo>

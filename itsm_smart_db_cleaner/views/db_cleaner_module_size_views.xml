@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_module_size_view_tree" model="ir.ui.view">
+    <field name="name">db.cleaner.module.size.tree</field>
+    <field name="model">db.cleaner.module.size</field>
+    <field name="arch" type="xml">
+      <list default_order="total_bytes desc" string="Module Sizes">
+        <field name="module_name"/>
+        <field name="shortdesc"/>
+        <field name="state"/>
+        <field name="table_count" sum="Total"/>
+        <field name="record_count" sum="Total"/>
+        <field name="total_bytes" sum="Total"/>
+        <field name="scan_id" optional="hide"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="db_cleaner_module_size_view_search" model="ir.ui.view">
+    <field name="name">db.cleaner.module.size.search</field>
+    <field name="model">db.cleaner.module.size</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="module_name"/>
+        <field name="shortdesc"/>
+        <group>
+          <filter name="groupby_state" string="State"
+                  context="{'group_by': 'state'}"/>
+          <filter name="groupby_scan" string="Scan"
+                  context="{'group_by': 'scan_id'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="db_cleaner_module_size_action" model="ir.actions.act_window">
+    <field name="name">Module Sizes</field>
+    <field name="res_model">db.cleaner.module.size</field>
+    <field name="view_mode">list</field>
+  </record>
+
+</odoo>

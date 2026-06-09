@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <menuitem
+      id="menu_db_cleaner_root"
+      name="DB Cleaner"
+      web_icon="itsm_smart_db_cleaner,static/src/img/menu_icon.png"
+      sequence="100"/>
+
+  <menuitem
+      id="menu_db_cleaner_dashboard"
+      name="Dashboard"
+      parent="menu_db_cleaner_root"
+      action="db_cleaner_dashboard_action"
+      sequence="10"/>
+
+  <menuitem
+      id="menu_db_cleaner_scans"
+      name="Scans"
+      parent="menu_db_cleaner_root"
+      action="db_cleaner_scan_action"
+      sequence="20"/>
+
+  <menuitem
+      id="menu_db_cleaner_analysis"
+      name="Analysis"
+      parent="menu_db_cleaner_root"
+      sequence="30"/>
+
+  <menuitem
+      id="menu_db_cleaner_tables"
+      name="Heavy Tables"
+      parent="menu_db_cleaner_analysis"
+      action="db_cleaner_table_action"
+      sequence="10"/>
+
+  <menuitem
+      id="menu_db_cleaner_orphans"
+      name="Orphan Files"
+      parent="menu_db_cleaner_analysis"
+      action="db_cleaner_orphan_action"
+      sequence="20"/>
+
+  <menuitem
+      id="menu_db_cleaner_crons"
+      name="Cron Failures"
+      parent="menu_db_cleaner_analysis"
+      action="db_cleaner_cron_failure_action"
+      sequence="30"/>
+
+  <menuitem
+      id="menu_db_cleaner_logs"
+      name="Error Logs"
+      parent="menu_db_cleaner_analysis"
+      action="db_cleaner_log_action"
+      sequence="40"/>
+
+  <menuitem
+      id="menu_db_cleaner_indexes"
+      name="Missing Indexes"
+      parent="menu_db_cleaner_analysis"
+      action="db_cleaner_index_action"
+      sequence="50"/>
+
+  <menuitem
+      id="menu_db_cleaner_modules"
+      name="Module Sizes"
+      parent="menu_db_cleaner_analysis"
+      action="db_cleaner_module_size_action"
+      sequence="60"/>
+
+  <menuitem
+      id="menu_db_cleaner_config"
+      name="Configuration"
+      parent="menu_db_cleaner_root"
+      sequence="90"
+      groups="group_db_cleaner_manager"/>
+
+  <menuitem
+      id="menu_db_cleaner_backup"
+      name="Backup Reminders"
+      parent="menu_db_cleaner_config"
+      action="db_cleaner_backup_reminder_action"
+      sequence="10"/>
+
+</odoo>

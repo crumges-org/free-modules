@@ -1,0 +1,1109 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* itsm_smart_db_cleaner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20260107\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-07 04:20+0000\n"
+"PO-Revision-Date: 2026-05-07 04:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/wizard/db_cleaner_cleanup_wizard.py:0
+msgid "<h4>Cleanup report</h4>"
+msgstr "<h4>Bereinigungsbericht</h4>"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/wizard/db_cleaner_cleanup_wizard.py:0
+msgid "<h4>Simulation report</h4>"
+msgstr "<h4>Simulationsbericht</h4>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid ""
+"<i class=\"fa fa-bolt\" title=\"Missing indexes\" role=\"img\" aria-"
+"label=\"Missing indexes\"/>"
+msgstr "<i class=\"fa fa-bolt\" title=\"Fehlende Indizes\" role=\"img\" aria-label=\"Fehlende Indizes\"/>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "<i class=\"fa fa-bug\" title=\"Errors\" role=\"img\" aria-label=\"Errors\"/>"
+msgstr "<i class=\"fa fa-bug\" title=\"Fehler\" role=\"img\" aria-label=\"Fehler\"/>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid ""
+"<i class=\"fa fa-clock-o me-1\" title=\"Scan date\" role=\"img\" aria-"
+"label=\"Scan date\"/>"
+msgstr "<i class=\"fa fa-clock-o me-1\" title=\"Scan-Datum\" role=\"img\" aria-label=\"Scan-Datum\"/>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid ""
+"<i class=\"fa fa-clock-o\" title=\"Cron issues\" role=\"img\" aria-"
+"label=\"Cron issues\"/>"
+msgstr "<i class=\"fa fa-clock-o\" title=\"Cron-Probleme\" role=\"img\" aria-label=\"Cron-Probleme\"/>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid ""
+"<i class=\"fa fa-database\" title=\"Heavy tables\" role=\"img\" aria-"
+"label=\"Heavy tables\"/>"
+msgstr "<i class=\"fa fa-database\" title=\"Schwere Tabellen\" role=\"img\" aria-label=\"Schwere Tabellen\"/>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "<i class=\"fa fa-files-o\" title=\"Orphans\" role=\"img\" aria-label=\"Orphans\"/>"
+msgstr "<i class=\"fa fa-files-o\" title=\"Waisen\" role=\"img\" aria-label=\"Waisen\"/>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid ""
+"<i class=\"fa fa-stethoscope me-1\" title=\"Findings\" role=\"img\" aria-label=\"Findings\"/>\n"
+"                Findings"
+msgstr "<i class=\"fa fa-stethoscope me-1\" title=\"Befunde\" role=\"img\" aria-label=\"Befunde\"/>\n                Befunde"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/wizard/db_cleaner_cleanup_wizard.py:0
+msgid ""
+"<p class='text-muted'><em>No record was actually deleted. Uncheck "
+"'Simulation Mode' to perform the cleanup.</em></p>"
+msgstr "<p class='text-muted'><em>Es wurde kein Datensatz gelöscht. Deaktivieren Sie „Simulationsmodus“, um die Bereinigung durchzuführen.</em></p>"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_backup_reminder.py:0
+msgid ""
+"<p>The database backup is <strong>overdue</strong>.</p><p>Last backup: "
+"%s</p><p>Frequency: %s</p>"
+msgstr "<p>Das Datenbank-Backup ist <strong>überfällig</strong>.</p><p>Letztes Backup: %s</p><p>Häufigkeit: %s</p>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "<span class=\"mx-1\">·</span>"
+msgstr "<span class=\"mx-1\">·</span>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "<span class=\"o_db_cleaner_score_unit\">/100</span>"
+msgstr "<span class=\"o_db_cleaner_score_unit\">/100</span>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid ""
+"<span class=\"text-muted small text-uppercase fw-bold\">\n"
+"                  <i class=\"fa fa-hdd-o me-1\" title=\"Storage\" role=\"img\" aria-label=\"Storage\"/>\n"
+"                  Storage\n"
+"                </span>"
+msgstr "<span class=\"text-muted small text-uppercase fw-bold\">\n                  <i class=\"fa fa-hdd-o me-1\" title=\"Speicher\" role=\"img\" aria-label=\"Speicher\"/>\n                  Speicher\n                </span>"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid ""
+"<strong>Simulation mode is OFF.</strong> Records will be\n"
+"              permanently deleted. Make sure you have a recent backup before\n"
+"              proceeding."
+msgstr "<strong>Simulationsmodus ist AUS.</strong> Datensätze werden dauerhaft\n              gelöscht. Stellen Sie vor dem Fortfahren sicher, dass Sie ein aktuelles\n              Backup haben."
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid ""
+"<strong>Simulation mode</strong> is enabled. No record will be\n"
+"              removed; the wizard will only report what would be deleted."
+msgstr "Der <strong>Simulationsmodus</strong> ist aktiviert. Es wird kein Datensatz\n              entfernt; der Assistent meldet nur, was gelöscht würde."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_needaction
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_needaction
+msgid "Action Needed"
+msgstr "Aktion erforderlich"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__active
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__is_active
+msgid "Active"
+msgstr "Aktiv"
+#. module: itsm_smart_db_cleaner
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_analysis
+msgid "Analysis"
+msgstr "Analyse"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_table_view_tree
+msgid "Analyze"
+msgstr "Analysieren"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__applied
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_index_view_search
+msgid "Applied"
+msgstr "Angewendet"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_index_view_tree
+msgid "Apply"
+msgstr "Anwenden"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_table__bloat_ratio
+msgid "Approximate ratio of dead tuples vs live tuples."
+msgstr "Ungefähres Verhältnis toter zu lebenden Tupeln."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__attachment_id
+msgid "Attachment"
+msgstr "Anhang"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_attachment_count
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_attachment_count
+msgid "Attachment Count"
+msgstr "Anzahl Anhänge"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+msgid "Automated periodic scan"
+msgstr "Automatisierter periodischer Scan"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__notes
+msgid "Backup Notes"
+msgstr "Backup-Notizen"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_backup_reminder_view_form
+msgid "Backup Reminder"
+msgstr "Backup-Erinnerung"
+#. module: itsm_smart_db_cleaner
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_backup_reminder_action
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_backup
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_backup_reminder_view_tree
+msgid "Backup Reminders"
+msgstr "Backup-Erinnerungen"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_backup_reminder.py:0
+msgid "Backup marked as performed by %s."
+msgstr "Backup als ausgeführt markiert von %s."
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_backup_reminder.py:0
+msgid "Backup reminder: action required"
+msgstr "Backup-Erinnerung: Aktion erforderlich"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__bloat_ratio
+msgid "Bloat Ratio"
+msgstr "Fragmentierungsrate"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_table_view_search
+msgid "Bloated"
+msgstr "Fragmentiert"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/wizard/db_cleaner_cleanup_wizard.py:0
+msgid ""
+"Cleanup executed: %d orphans (%.2f MB), %d logs, %d sent mails, %d failed "
+"mails removed."
+msgstr "Bereinigung ausgeführt: %d Waisen (%.2f MB), %d Logs, %d gesendete Mails, %d fehlgeschlagene Mails entfernt."
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.actions.act_window,help:itsm_smart_db_cleaner.db_cleaner_scan_action
+msgid ""
+"Click 'New' to create a scan, then run it to analyse heavy tables,\n"
+"        orphan attachments, cron failures, missing indexes and more."
+msgstr "Klicken Sie auf „Neu“, um einen Scan zu erstellen, und führen Sie ihn aus, um schwere Tabellen,\n        verwaiste Anhänge, Cron-Fehler, fehlende Indizes und mehr zu analysieren."
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid "Close"
+msgstr "Schließen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__column_name
+msgid "Column"
+msgstr "Spalte"
+#. module: itsm_smart_db_cleaner
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_config
+msgid "Configuration"
+msgstr "Konfiguration"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.actions.act_window,help:itsm_smart_db_cleaner.db_cleaner_backup_reminder_action
+msgid "Configure your backup reminder"
+msgstr "Backup-Erinnerung konfigurieren"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__create_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__create_uid
+msgid "Created by"
+msgstr "Erstellt von"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__create_date_attachment
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__create_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__create_date
+msgid "Created on"
+msgstr "Erstellt am"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__is_critical
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__health_status__critical
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_table_view_search
+msgid "Critical"
+msgstr "Kritisch"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_search
+msgid "Critical Health"
+msgstr "Kritischer Zustand"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__cron_id
+msgid "Cron"
+msgstr "Cron"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_cron_failure_action
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__cron_failure_count
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__cron_failure_ids
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_crons
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Cron Failures"
+msgstr "Cron-Fehler"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Cron Issues"
+msgstr "Cron-Probleme"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_cron_failure
+msgid "Cron Job Failure / Issue"
+msgstr "Cron-Job-Fehler / -Problem"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Crons"
+msgstr "Crons"
+#. module: itsm_smart_db_cleaner
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_root
+msgid "DB Cleaner"
+msgstr "DB Cleaner"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_log__log_type__constraint
+msgid "DB constraint"
+msgstr "DB-Beschränkung"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "DB · MB"
+msgstr "DB · MB"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_backup_reminder__frequency__daily
+msgid "Daily"
+msgstr "Täglich"
+#. module: itsm_smart_db_cleaner
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_dashboard
+msgid "Dashboard"
+msgstr "Übersicht"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_backup_reminder
+msgid "Database Backup Reminder"
+msgstr "Datenbank-Backup-Erinnerung"
+#. module: itsm_smart_db_cleaner
+#: model:res.groups.privilege,name:itsm_smart_db_cleaner.res_groups_privilege_db_cleaner
+msgid "Database Cleaner"
+msgstr "Datenbankbereiniger"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_log
+msgid "Database Cleaner Log Entry"
+msgstr "Log-Eintrag des Bereinigers"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_scan
+msgid "Database Cleaner Scan"
+msgstr "Datenbankbereiniger-Scan"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Database Scan"
+msgstr "Datenbank-Scan"
+#. module: itsm_smart_db_cleaner
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_scan_action
+msgid "Database Scans"
+msgstr "Datenbank-Scans"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__db_size_mb
+msgid "Database Size (MB)"
+msgstr "Datenbankgröße (MB)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__description
+msgid "Details"
+msgstr "Details"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__shortdesc
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cleanup_wizard__state__done
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__state__done
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_search
+msgid "Done"
+msgstr "Erledigt"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cleanup_wizard__state__draft
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__state__draft
+msgid "Draft"
+msgstr "Entwurf"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__duration
+msgid "Duration (s)"
+msgstr "Dauer (s)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cron_failure__severity__error
+msgid "Error"
+msgstr "Fehler"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_log_view_form
+msgid "Error Log"
+msgstr "Fehlerprotokoll"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_log_action
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__log_count
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__log_ids
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_logs
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_log_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Error Logs"
+msgstr "Fehlerprotokolle"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_search
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Errors"
+msgstr "Fehler"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_backup_reminder__frequency__biweekly
+msgid "Every 2 weeks"
+msgstr "Alle 2 Wochen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__health_status__excellent
+msgid "Excellent"
+msgstr "Ausgezeichnet"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid "Execute"
+msgstr "Ausführen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__state__failed
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_search
+msgid "Failed"
+msgstr "Fehlgeschlagen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__clean_failed_mails
+msgid "Failed Mail Queue"
+msgstr "Fehlgeschlagene Mail-Warteschlange"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__failed_mail_count
+msgid "Failed Mails"
+msgstr "Fehlgeschlagene Mails"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__field_type
+msgid "Field Type"
+msgstr "Feldtyp"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_orphan__reason__file_missing
+msgid "File missing on disk"
+msgstr "Datei auf Datenträger fehlt"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Files · MB"
+msgstr "Dateien · MB"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__filestore_size_mb
+msgid "Filestore Size (MB)"
+msgstr "Filestore-Größe (MB)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_follower_ids
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_follower_ids
+msgid "Followers"
+msgstr "Abonnenten"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_partner_ids
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Abonnenten (Partner)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_index__suggestion__foreign_key
+msgid "Foreign key without index"
+msgstr "Fremdschlüssel ohne Index"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__frequency
+msgid "Frequency"
+msgstr "Häufigkeit"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_index__suggestion__seq_scan
+msgid "Frequent sequential scan"
+msgstr "Häufige sequentielle Scans"
+#. module: itsm_smart_db_cleaner
+#: model:res.groups,comment:itsm_smart_db_cleaner.group_db_cleaner_manager
+msgid "Full control: run scans, perform cleanup, manage backups."
+msgstr "Vollzugriff: Scans starten, Bereinigung durchführen, Backups verwalten."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__health_status__good
+msgid "Good"
+msgstr "Gut"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__has_message
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__has_message
+msgid "Has Message"
+msgstr "Hat Nachricht"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Health"
+msgstr "Zustand"
+#. module: itsm_smart_db_cleaner
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_dashboard_action
+msgid "Health Dashboard"
+msgstr "Zustands-Übersicht"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__health_score
+msgid "Health Score (/100)"
+msgstr "Zustandswert (/100)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__health_status
+msgid "Health Status"
+msgstr "Zustandsstatus"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_table
+msgid "Heavy Database Table"
+msgstr "Schwere Datenbanktabelle"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_table_action
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__table_count
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__table_ids
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_tables
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_table_view_tree
+msgid "Heavy Tables"
+msgstr "Schwere Tabellen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__id
+msgid "ID"
+msgstr "ID"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_needaction
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_scan__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Falls aktiviert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_has_error
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_has_sms_error
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_scan__message_has_error
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_scan__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Falls aktiviert, weisen einige Nachrichten einen Zustellfehler auf."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cron_failure__issue__inactive
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_search
+msgid "Inactive"
+msgstr "Inaktiv"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Indexes"
+msgstr "Indizes"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__indexes_bytes
+msgid "Indexes Size (MB)"
+msgstr "Indexgröße (MB)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cron_failure__severity__info
+msgid "Info"
+msgstr "Info"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_is_follower
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_is_follower
+msgid "Is Follower"
+msgstr "Ist Abonnent"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__issue
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_search
+msgid "Issue"
+msgstr "Problem"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__cron_name
+msgid "Job Name"
+msgstr "Job-Name"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__log_retention_days
+msgid "Keep logs for (days)"
+msgstr "Logs aufbewahren (Tage)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__mail_retention_days
+msgid "Keep mails for (days)"
+msgstr "Mails aufbewahren (Tage)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__last_backup_date
+msgid "Last Backup"
+msgstr "Letztes Backup"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__last_call
+msgid "Last Call"
+msgstr "Letzter Aufruf"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__last_occurrence
+msgid "Last Seen"
+msgstr "Zuletzt gesehen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__write_uid
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert von"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__write_date
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cron_failure__issue__error
+msgid "Last run failed"
+msgstr "Letzte Ausführung fehlgeschlagen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__level
+msgid "Level"
+msgstr "Stufe"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__res_model
+msgid "Linked Model"
+msgstr "Verknüpftes Modell"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__res_id
+msgid "Linked Record ID"
+msgstr "ID des verknüpften Datensatzes"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_orphan__reason__missing_record
+msgid "Linked record missing"
+msgstr "Verknüpfter Datensatz fehlt"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_log__log_type__mail_failure
+msgid "Mail failure"
+msgstr "Mail-Fehler"
+#. module: itsm_smart_db_cleaner
+#: model:ir.module.category,description:itsm_smart_db_cleaner.module_category_db_cleaner
+msgid "Manage access to the database cleaner."
+msgstr "Zugriff auf den Datenbankbereiniger verwalten."
+#. module: itsm_smart_db_cleaner
+#: model:res.groups,name:itsm_smart_db_cleaner.group_db_cleaner_manager
+msgid "Manager"
+msgstr "Manager"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_backup_reminder_view_form
+msgid "Mark Backup as Done"
+msgstr "Backup als erledigt markieren"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__message
+msgid "Message"
+msgstr "Nachricht"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_has_error
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_has_error
+msgid "Message Delivery error"
+msgstr "Nachrichten-Zustellfehler"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_ids
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_ids
+msgid "Messages"
+msgstr "Nachrichten"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_index_action
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__index_count
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__index_ids
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_indexes
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_index_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Missing Indexes"
+msgstr "Fehlende Indizes"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_index
+msgid "Missing PostgreSQL Index Suggestion"
+msgstr "Vorschlag für fehlenden PostgreSQL-Index"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_orphan_view_search
+msgid "Missing Record"
+msgstr "Fehlender Datensatz"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__model_name
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_orphan_view_search
+msgid "Model"
+msgstr "Modell"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__module_id
+msgid "Module"
+msgstr "Modul"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_module_size_action
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__module_size_ids
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_modules
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_module_size_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Module Sizes"
+msgstr "Modulgrößen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_module_size
+msgid "Module Storage Footprint"
+msgstr "Speicherbedarf des Moduls"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Modules"
+msgstr "Module"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__module_size_count
+msgid "Modules Analyzed"
+msgstr "Analysierte Module"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_backup_reminder__frequency__monthly
+msgid "Monthly"
+msgstr "Monatlich"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__display_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__name
+msgid "Name"
+msgstr "Name"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cron_failure__issue__never_run
+msgid "Never executed"
+msgstr "Noch nie ausgeführt"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+msgid "New"
+msgstr "Neu"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__next_call
+msgid "Next Call"
+msgstr "Nächster Aufruf"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__next_reminder
+msgid "Next Reminder"
+msgstr "Nächste Erinnerung"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_orphan__reason__no_model
+msgid "No linked model"
+msgstr "Kein verknüpftes Modell"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__note
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_backup_reminder_view_form
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Notes"
+msgstr "Notizen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_needaction_counter
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Anzahl Aktionen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_has_error_counter
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_has_error_counter
+msgid "Number of errors"
+msgstr "Fehleranzahl"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_needaction_counter
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_scan__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Anzahl Nachrichten, die Handlung erfordern"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_has_error_counter
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_scan__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Anzahl Nachrichten mit Zustellfehler"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__occurrences
+msgid "Occurrences"
+msgstr "Vorkommen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__log_count
+msgid "Old Logs"
+msgstr "Alte Logs"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__mail_count
+msgid "Old Mails"
+msgstr "Alte Mails"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__clean_old_logs
+msgid "Old ir.logging Entries"
+msgstr "Alte ir.logging-Einträge"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_orphan_view_tree
+msgid "Open"
+msgstr "Öffnen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__clean_orphan_attachments
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__orphan_count
+msgid "Orphan Attachments"
+msgstr "Verwaiste Anhänge"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+#: model:ir.actions.act_window,name:itsm_smart_db_cleaner.db_cleaner_orphan_action
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__orphan_count
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__orphan_ids
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_orphans
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_orphan_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Orphan Files"
+msgstr "Verwaiste Dateien"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_orphan
+msgid "Orphan Filestore Entry"
+msgstr "Verwaister Filestore-Eintrag"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__orphan_size_mb
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__orphan_size_mb
+msgid "Orphan Size (MB)"
+msgstr "Größe der Waisen (MB)"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Orphans"
+msgstr "Waisen"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Orphans · MB"
+msgstr "Waisen · MB"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__is_overdue
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cron_failure__issue__overdue
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_backup_reminder_view_form
+msgid "Overdue"
+msgstr "Überfällig"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_index_view_search
+msgid "Pending"
+msgstr "Ausstehend"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid "Preview (Simulation)"
+msgstr "Vorschau (Simulation)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__rating_ids
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__rating_ids
+msgid "Ratings"
+msgstr "Bewertungen"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_tree
+msgid "Reactivate"
+msgstr "Reaktivieren"
+#. module: itsm_smart_db_cleaner
+#: model:res.groups,comment:itsm_smart_db_cleaner.group_db_cleaner_user
+msgid "Read access to scans and dashboard."
+msgstr "Lesezugriff auf Scans und Übersicht."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__reason
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_orphan_view_search
+msgid "Reason"
+msgstr "Grund"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__user_ids
+msgid "Recipients"
+msgstr "Empfänger"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__record_count
+msgid "Records"
+msgstr "Datensätze"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__name
+msgid "Reference"
+msgstr "Referenz"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__row_count
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__row_count
+msgid "Rows"
+msgstr "Zeilen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__vacuum_analyze
+msgid "Run ANALYZE"
+msgstr "ANALYZE ausführen"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_tree
+msgid "Run Now"
+msgstr "Jetzt ausführen"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Run Scan"
+msgstr "Scan starten"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.actions.act_window,help:itsm_smart_db_cleaner.db_cleaner_dashboard_action
+msgid "Run a scan from the 'Scans' menu to populate this dashboard."
+msgstr "Starten Sie einen Scan aus dem Menü „Scans“, um diese Übersicht zu füllen."
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_index_view_tree
+msgid ""
+"Run the suggested CREATE INDEX command? This may take a moment on large "
+"tables."
+msgstr "Vorgeschlagenen CREATE-INDEX-Befehl ausführen? Bei großen Tabellen kann dies einige Zeit dauern."
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.actions.act_window,help:itsm_smart_db_cleaner.db_cleaner_scan_action
+msgid "Run your first database scan"
+msgstr "Führen Sie Ihren ersten Datenbank-Scan aus"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__state__running
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Running"
+msgstr "Läuft"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__message_has_sms_error
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "SMS-Zustellfehler"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_index__sql_command
+msgid "SQL command to create the suggested index."
+msgstr "SQL-Befehl zum Erstellen des vorgeschlagenen Index."
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid "Safe Cleanup"
+msgstr "Sichere Bereinigung"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model,name:itsm_smart_db_cleaner.model_db_cleaner_cleanup_wizard
+msgid "Safe Cleanup Wizard"
+msgstr "Assistent für sichere Bereinigung"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Safe Cleanup..."
+msgstr "Sichere Bereinigung..."
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_log_view_form
+msgid "Sample Message"
+msgstr "Beispielnachricht"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__scan_id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__scan_id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__scan_id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__scan_id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__scan_id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__scan_id
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__scan_id
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_module_size_view_search
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_table_view_search
+msgid "Scan"
+msgstr "Scan"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__scan_date
+msgid "Scan Date"
+msgstr "Scan-Datum"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_scan.py:0
+msgid "Scan completed in %.2fs. Health score: %s/100. %d step(s) failed."
+msgstr "Scan abgeschlossen in %.2fs. Zustandswert: %s/100. %d Schritt(e) fehlgeschlagen."
+#. module: itsm_smart_db_cleaner
+#: model:ir.ui.menu,name:itsm_smart_db_cleaner.menu_db_cleaner_scans
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_tree
+msgid "Scans"
+msgstr "Scans"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__schema_name
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_table_view_search
+msgid "Schema"
+msgstr "Schema"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__clean_old_mail
+msgid "Sent Mail Older Than"
+msgstr "Gesendete Mails älter als"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.actions.act_window,help:itsm_smart_db_cleaner.db_cleaner_backup_reminder_action
+msgid ""
+"Set how often you should back up your database and who should be\n"
+"        notified when a backup is overdue."
+msgstr "Legen Sie fest, wie oft Sie sichern sollen und wer benachrichtigt wird,\n        wenn ein Backup überfällig ist."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cron_failure__severity
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_search
+msgid "Severity"
+msgstr "Schweregrad"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__simulation
+msgid "Simulation Mode"
+msgstr "Simulationsmodus"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_orphan__size_bytes
+msgid "Size (MB)"
+msgstr "Größe (MB)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.actions.server,name:itsm_smart_db_cleaner.ir_cron_db_cleaner_backup_reminder_ir_actions_server
+msgid "Smart DB Cleaner: Backup Reminder"
+msgstr "Smart DB Cleaner: Backup-Erinnerung"
+#. module: itsm_smart_db_cleaner
+#: model:ir.actions.server,name:itsm_smart_db_cleaner.ir_cron_db_cleaner_scan_ir_actions_server
+msgid "Smart DB Cleaner: Periodic Scan"
+msgstr "Smart DB Cleaner: periodischer Scan"
+#. module: itsm_smart_db_cleaner
+#: model:ir.module.category,name:itsm_smart_db_cleaner.module_category_db_cleaner
+msgid "Smart Database Cleaner"
+msgstr "Smart Database Cleaner"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__name
+msgid "Source"
+msgstr "Quelle"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__state
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__state
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_module_size_view_search
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_search
+msgid "State"
+msgstr "Status"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__state
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_search
+msgid "Status"
+msgstr "Status"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_form
+msgid "Storage"
+msgstr "Speicher"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__sql_command
+msgid "Suggested SQL"
+msgstr "Vorgeschlagenes SQL"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__suggestion
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_index_view_search
+msgid "Suggestion"
+msgstr "Vorschlag"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__summary
+msgid "Summary"
+msgstr "Zusammenfassung"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_index__table_name
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__table_name
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_index_view_search
+msgid "Table"
+msgstr "Tabelle"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__table_bytes
+msgid "Table Size (MB)"
+msgstr "Tabellengröße (MB)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__table_count
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_scan_view_kanban
+msgid "Tables"
+msgstr "Tabellen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__module_name
+msgid "Technical Name"
+msgstr "Technischer Name"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid ""
+"This action will permanently delete records if simulation mode is OFF. "
+"Continue?"
+msgstr "Diese Aktion löscht Datensätze dauerhaft, wenn der Simulationsmodus deaktiviert ist. Fortfahren?"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_log_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_module_size_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_orphan_view_tree
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_table_view_tree
+msgid "Total"
+msgstr "Gesamt"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_module_size__total_bytes
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_table__total_bytes
+msgid "Total Size (MB)"
+msgstr "Gesamtgröße (MB)"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_log__log_type
+msgid "Type"
+msgstr "Typ"
+#. module: itsm_smart_db_cleaner
+#: model:res.groups,name:itsm_smart_db_cleaner.group_db_cleaner_user
+msgid "User"
+msgstr "Benutzer"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__user_ids
+msgid "Users notified when a backup is due."
+msgstr "Benutzer, die bei fälligem Backup benachrichtigt werden."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_cron_failure__severity__warning
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_scan__health_status__warning
+msgid "Warning"
+msgstr "Warnung"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cron_failure_view_search
+msgid "Warnings"
+msgstr "Warnungen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__website_message_ids
+#: model:ir.model.fields,field_description:itsm_smart_db_cleaner.field_db_cleaner_scan__website_message_ids
+msgid "Website Messages"
+msgstr "Website-Nachrichten"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_backup_reminder__website_message_ids
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_scan__website_message_ids
+msgid "Website communication history"
+msgstr "Kommunikationsverlauf der Website"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_backup_reminder__frequency__weekly
+msgid "Weekly"
+msgstr "Wöchentlich"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.actions.act_window,help:itsm_smart_db_cleaner.db_cleaner_dashboard_action
+msgid "Welcome to your database health dashboard"
+msgstr "Willkommen in Ihrer Datenbank-Zustandsübersicht"
+#. module: itsm_smart_db_cleaner
+#: model_terms:ir.ui.view,arch_db:itsm_smart_db_cleaner.db_cleaner_cleanup_wizard_view_form
+msgid "What to clean"
+msgstr "Was bereinigen"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields,help:itsm_smart_db_cleaner.field_db_cleaner_cleanup_wizard__simulation
+msgid ""
+"When enabled, no record is actually deleted. The wizard only reports what "
+"would be removed."
+msgstr "Wenn aktiviert, wird kein Datensatz tatsächlich gelöscht. Der Assistent meldet nur, was entfernt würde."
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_index__suggestion__active
+msgid "active flag without index"
+msgstr "active-Flag ohne Index"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_index__suggestion__company
+msgid "company_id without index"
+msgstr "company_id ohne Index"
+#. module: itsm_smart_db_cleaner
+#: model:ir.model.fields.selection,name:itsm_smart_db_cleaner.selection__db_cleaner_log__log_type__ir_logging
+msgid "ir.logging"
+msgstr "ir.logging"
+#. module: itsm_smart_db_cleaner
+#. odoo-python
+#: code:addons/itsm_smart_db_cleaner/models/db_cleaner_backup_reminder.py:0
+msgid "never"
+msgstr "nie"

@@ -1,0 +1,189 @@
+.o_db_cleaner_kanban {
+
+    .o_kanban_record {
+        width: 400px;
+        max-width: 400px;
+        padding: 0 !important;
+        overflow: hidden;
+        border-radius: 12px;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+        }
+    }
+
+    /* === Header with health-status gradient =================== */
+
+    .o_db_cleaner_header {
+        color: #fff;
+        position: relative;
+
+        &.o_health_excellent {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        &.o_health_good {
+            background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+        }
+        &.o_health_warning {
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+        }
+        &.o_health_critical {
+            background: linear-gradient(135deg, #cb2d3e 0%, #ef473a 100%);
+        }
+        &.o_health_neutral {
+            background: linear-gradient(135deg, #485563 0%, #29323c 100%);
+        }
+    }
+
+    .o_db_cleaner_score_circle {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(4px);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .o_db_cleaner_score_value {
+        font-size: 1.35rem;
+        font-weight: 800;
+        line-height: 1;
+        color: #fff;
+    }
+
+    .o_db_cleaner_score_unit {
+        font-size: 0.65rem;
+        opacity: 0.85;
+        color: #fff;
+    }
+
+    .o_db_cleaner_titleblock {
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    .o_db_cleaner_title {
+        font-size: 1rem;
+        line-height: 1.2;
+        display: block;
+    }
+
+    .o_db_cleaner_status {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+        letter-spacing: 0.04em;
+    }
+
+    .o_db_cleaner_subtitle {
+        font-size: 0.78rem;
+        opacity: 0.92;
+        color: rgba(255, 255, 255, 0.92);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 2px;
+
+        i {
+            opacity: 0.85;
+        }
+    }
+
+    /* === Storage block ========================================= */
+
+    .o_db_cleaner_storage_grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .o_db_cleaner_storage_item {
+        text-align: center;
+        padding: 6px 4px;
+        border-radius: 8px;
+        background-color: var(--o-kanban-color-1, rgba(128, 128, 128, 0.06));
+    }
+
+    .o_db_cleaner_storage_value {
+        font-size: 1.15rem;
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .o_db_cleaner_storage_label {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        opacity: 0.7;
+        margin-top: 2px;
+    }
+
+    /* === Issue tiles =========================================== */
+
+    .o_db_cleaner_issues_grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+    }
+
+    .o_db_cleaner_issue_tile {
+        text-align: center;
+        padding: 8px 4px;
+        border-radius: 8px;
+        background-color: var(--o-kanban-color-1, rgba(128, 128, 128, 0.06));
+        border: 1px solid transparent;
+        opacity: 0.65;
+        transition: all 0.15s ease;
+
+        i {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+
+        .o_db_cleaner_issue_value {
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-top: 2px;
+        }
+
+        .o_db_cleaner_issue_label {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            opacity: 0.7;
+            margin-top: 1px;
+        }
+
+        &.o_active {
+            opacity: 1;
+
+            i {
+                opacity: 1;
+            }
+        }
+
+        &.o_active_primary {
+            background-color: rgba(13, 110, 253, 0.12);
+            border-color: rgba(13, 110, 253, 0.3);
+            i, .o_db_cleaner_issue_value { color: #0d6efd; }
+        }
+        &.o_active_warning {
+            background-color: rgba(255, 193, 7, 0.15);
+            border-color: rgba(255, 193, 7, 0.4);
+            i, .o_db_cleaner_issue_value { color: #f7971e; }
+        }
+        &.o_active_danger {
+            background-color: rgba(220, 53, 69, 0.12);
+            border-color: rgba(220, 53, 69, 0.35);
+            i, .o_db_cleaner_issue_value { color: #dc3545; }
+        }
+        &.o_active_info {
+            background-color: rgba(13, 202, 240, 0.12);
+            border-color: rgba(13, 202, 240, 0.35);
+            i, .o_db_cleaner_issue_value { color: #0dcaf0; }
+        }
+    }
+}

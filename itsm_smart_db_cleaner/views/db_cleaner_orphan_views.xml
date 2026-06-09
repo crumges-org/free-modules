@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_orphan_view_tree" model="ir.ui.view">
+    <field name="name">db.cleaner.orphan.tree</field>
+    <field name="model">db.cleaner.orphan</field>
+    <field name="arch" type="xml">
+      <list default_order="size_bytes desc" string="Orphan Files">
+        <field name="name"/>
+        <field name="res_model"/>
+        <field name="res_id"/>
+        <field name="reason" widget="badge"
+               decoration-warning="reason == 'missing_record'"
+               decoration-danger="reason == 'file_missing'"/>
+        <field name="size_bytes" sum="Total"/>
+        <field name="create_date_attachment"/>
+        <field name="scan_id" optional="hide"/>
+        <button name="action_open_attachment" type="object"
+                string="Open" icon="fa-external-link"
+                invisible="not attachment_id"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="db_cleaner_orphan_view_search" model="ir.ui.view">
+    <field name="name">db.cleaner.orphan.search</field>
+    <field name="model">db.cleaner.orphan</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="res_model"/>
+        <filter name="filter_missing_record" string="Missing Record"
+                domain="[('reason', '=', 'missing_record')]"/>
+        <group>
+          <filter name="groupby_model" string="Model"
+                  context="{'group_by': 'res_model'}"/>
+          <filter name="groupby_reason" string="Reason"
+                  context="{'group_by': 'reason'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="db_cleaner_orphan_action" model="ir.actions.act_window">
+    <field name="name">Orphan Files</field>
+    <field name="res_model">db.cleaner.orphan</field>
+    <field name="view_mode">list</field>
+  </record>
+
+</odoo>

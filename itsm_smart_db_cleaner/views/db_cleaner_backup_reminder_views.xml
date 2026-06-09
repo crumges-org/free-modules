@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_backup_reminder_view_form" model="ir.ui.view">
+    <field name="name">db.cleaner.backup.reminder.form</field>
+    <field name="model">db.cleaner.backup.reminder</field>
+    <field name="arch" type="xml">
+      <form string="Backup Reminder">
+        <header>
+          <button name="action_mark_done" type="object"
+                  string="Mark Backup as Done"
+                  class="oe_highlight"/>
+        </header>
+        <sheet>
+          <widget name="web_ribbon" title="Overdue" bg_color="bg-danger"
+                  invisible="not is_overdue"/>
+          <div class="oe_title">
+            <h1><field name="display_name" readonly="1"/></h1>
+          </div>
+          <group>
+            <group>
+              <field name="active"/>
+              <field name="frequency"/>
+              <field name="last_backup_date"/>
+              <field name="next_reminder" readonly="1"/>
+              <field name="is_overdue" readonly="1" invisible="1"/>
+            </group>
+            <group>
+              <field name="user_ids" widget="many2many_tags"/>
+            </group>
+          </group>
+          <group string="Notes">
+            <field name="notes" nolabel="1"/>
+          </group>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <record id="db_cleaner_backup_reminder_view_tree" model="ir.ui.view">
+    <field name="name">db.cleaner.backup.reminder.tree</field>
+    <field name="model">db.cleaner.backup.reminder</field>
+    <field name="arch" type="xml">
+      <list string="Backup Reminders">
+        <field name="display_name"/>
+        <field name="frequency"/>
+        <field name="last_backup_date"/>
+        <field name="next_reminder"/>
+        <field name="is_overdue" widget="boolean_toggle"
+               decoration-danger="is_overdue"/>
+        <field name="active" widget="boolean_toggle"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="db_cleaner_backup_reminder_action" model="ir.actions.act_window">
+    <field name="name">Backup Reminders</field>
+    <field name="res_model">db.cleaner.backup.reminder</field>
+    <field name="view_mode">list,form</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Configure your backup reminder
+      </p>
+      <p>
+        Set how often you should back up your database and who should be
+        notified when a backup is overdue.
+      </p>
+    </field>
+  </record>
+
+</odoo>

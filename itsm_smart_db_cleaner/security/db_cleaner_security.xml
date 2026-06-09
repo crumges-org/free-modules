@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="module_category_db_cleaner" model="ir.module.category">
+            <field name="name">Smart Database Cleaner</field>
+            <field name="description">Manage access to the database cleaner.</field>
+            <field name="sequence">25</field>
+        </record>
+
+        <record id="group_db_cleaner_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_db_cleaner"/>
+            <field name="comment">Read access to scans and dashboard.</field>
+        </record>
+
+        <record id="group_db_cleaner_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_db_cleaner"/>
+            <field name="implied_ids" eval="[(4, ref('group_db_cleaner_user'))]"/>
+            <field name="comment">Full control: run scans, perform cleanup, manage backups.</field>
+        </record>
+
+        <!-- Grant DB Cleaner Manager to system administrators -->
+        <record id="base.group_system" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('group_db_cleaner_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>

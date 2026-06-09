@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_index_view_tree" model="ir.ui.view">
+    <field name="name">db.cleaner.index.tree</field>
+    <field name="model">db.cleaner.index</field>
+    <field name="arch" type="xml">
+      <list default_order="row_count desc" string="Missing Indexes">
+        <field name="table_name"/>
+        <field name="column_name"/>
+        <field name="suggestion" widget="badge"/>
+        <field name="row_count"/>
+        <field name="sql_command"/>
+        <field name="applied" widget="boolean_toggle"
+               decoration-success="applied"/>
+        <field name="scan_id" optional="hide"/>
+        <button name="action_apply_index" type="object"
+                string="Apply" class="btn-link"
+                icon="fa-bolt"
+                invisible="applied"
+                confirm="Run the suggested CREATE INDEX command? This may take a moment on large tables."/>
+      </list>
+    </field>
+  </record>
+
+  <record id="db_cleaner_index_view_search" model="ir.ui.view">
+    <field name="name">db.cleaner.index.search</field>
+    <field name="model">db.cleaner.index</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="table_name"/>
+        <field name="column_name"/>
+        <filter name="filter_applied" string="Applied"
+                domain="[('applied', '=', True)]"/>
+        <filter name="filter_pending" string="Pending"
+                domain="[('applied', '=', False)]"/>
+        <group>
+          <filter name="groupby_table" string="Table"
+                  context="{'group_by': 'table_name'}"/>
+          <filter name="groupby_suggestion" string="Suggestion"
+                  context="{'group_by': 'suggestion'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="db_cleaner_index_action" model="ir.actions.act_window">
+    <field name="name">Missing Indexes</field>
+    <field name="res_model">db.cleaner.index</field>
+    <field name="view_mode">list</field>
+  </record>
+
+</odoo>

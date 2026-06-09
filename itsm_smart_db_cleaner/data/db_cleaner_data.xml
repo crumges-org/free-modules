@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_db_cleaner_scan" model="ir.sequence">
+            <field name="name">DB Cleaner Scan Sequence</field>
+            <field name="code">db.cleaner.scan</field>
+            <field name="prefix">SCAN/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <record id="default_backup_reminder" model="db.cleaner.backup.reminder">
+            <field name="frequency">weekly</field>
+            <field name="active">True</field>
+            <field name="notes">Default backup reminder configuration. Edit recipients and frequency to fit your needs.</field>
+        </record>
+
+    </data>
+</odoo>

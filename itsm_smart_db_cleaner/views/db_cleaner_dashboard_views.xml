@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_scan_view_kanban" model="ir.ui.view">
+    <field name="name">db.cleaner.scan.kanban</field>
+    <field name="model">db.cleaner.scan</field>
+    <field name="arch" type="xml">
+      <kanban sample="0" class="o_db_cleaner_kanban">
+        <field name="health_status"/>
+        <field name="health_score"/>
+        <field name="state"/>
+        <field name="orphan_count"/>
+        <field name="cron_failure_count"/>
+        <field name="log_count"/>
+        <field name="index_count"/>
+        <field name="table_count"/>
+        <field name="db_size_mb"/>
+        <field name="filestore_size_mb"/>
+        <field name="orphan_size_mb"/>
+        <field name="duration"/>
+        <templates>
+          <t t-name="card" class="p-0 overflow-hidden o_db_cleaner_card">
+
+            <widget name="web_ribbon" title="Failed" bg_color="text-bg-danger"
+                    invisible="state != 'failed'"/>
+            <widget name="web_ribbon" title="Running" bg_color="text-bg-info"
+                    invisible="state != 'running'"/>
+
+            <!-- Top header: gradient band based on health -->
+            <div t-attf-class="o_db_cleaner_header p-3 #{record.health_status.raw_value === 'excellent' ? 'o_health_excellent' : ''} #{record.health_status.raw_value === 'good' ? 'o_health_good' : ''} #{record.health_status.raw_value === 'warning' ? 'o_health_warning' : ''} #{record.health_status.raw_value === 'critical' ? 'o_health_critical' : 'o_health_neutral'}">
+              <div class="d-flex align-items-center gap-3">
+                <!-- Compact circular score -->
+                <div class="o_db_cleaner_score_circle d-flex flex-column align-items-center justify-content-center">
+                  <span class="o_db_cleaner_score_value">
+                    <field name="health_score"/>
+                  </span>
+                  <span class="o_db_cleaner_score_unit">/100</span>
+                </div>
+                <!-- Title block -->
+                <div class="o_db_cleaner_titleblock flex-grow-1 min-w-0">
+                  <div class="d-flex align-items-center justify-content-between gap-2">
+                    <field name="name" class="o_db_cleaner_title fw-bold text-white text-truncate"/>
+                    <span t-attf-class="o_db_cleaner_status badge text-uppercase fw-bold flex-shrink-0 #{record.health_status.raw_value === 'excellent' ? 'text-bg-light text-success' : ''} #{record.health_status.raw_value === 'good' ? 'text-bg-light text-info' : ''} #{record.health_status.raw_value === 'warning' ? 'text-bg-light text-warning' : ''} #{record.health_status.raw_value === 'critical' ? 'text-bg-light text-danger' : 'text-bg-light text-muted'}">
+                      <field name="health_status"/>
+                    </span>
+                  </div>
+                  <div class="o_db_cleaner_subtitle text-truncate">
+                    <i class="fa fa-clock-o me-1" title="Scan date" role="img" aria-label="Scan date"/>
+                    <field name="scan_date" widget="date"/>
+                    <span class="mx-1">·</span>
+                    <field name="duration"/>s
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Storage block -->
+            <div class="px-3 pt-3">
+              <div class="d-flex justify-content-between align-items-baseline mb-1">
+                <span class="text-muted small text-uppercase fw-bold">
+                  <i class="fa fa-hdd-o me-1" title="Storage" role="img" aria-label="Storage"/>
+                  Storage
+                </span>
+              </div>
+              <div class="o_db_cleaner_storage_grid">
+                <div class="o_db_cleaner_storage_item">
+                  <div class="o_db_cleaner_storage_value text-primary">
+                    <field name="db_size_mb"/>
+                  </div>
+                  <div class="o_db_cleaner_storage_label">DB · MB</div>
+                </div>
+                <div class="o_db_cleaner_storage_item">
+                  <div class="o_db_cleaner_storage_value text-info">
+                    <field name="filestore_size_mb"/>
+                  </div>
+                  <div class="o_db_cleaner_storage_label">Files · MB</div>
+                </div>
+                <div class="o_db_cleaner_storage_item">
+                  <div t-attf-class="o_db_cleaner_storage_value #{record.orphan_size_mb.raw_value > 0 ? 'text-warning' : 'text-muted'}">
+                    <field name="orphan_size_mb"/>
+                  </div>
+                  <div class="o_db_cleaner_storage_label">Orphans · MB</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Issues mini-tiles -->
+            <div class="p-3 pt-2">
+              <div class="text-muted small text-uppercase fw-bold mb-2">
+                <i class="fa fa-stethoscope me-1" title="Findings" role="img" aria-label="Findings"/>
+                Findings
+              </div>
+              <div class="o_db_cleaner_issues_grid">
+                <div t-attf-class="o_db_cleaner_issue_tile #{record.table_count.raw_value > 0 ? 'o_active o_active_primary' : ''}">
+                  <i class="fa fa-database" title="Heavy tables" role="img" aria-label="Heavy tables"/>
+                  <div class="o_db_cleaner_issue_value">
+                    <field name="table_count"/>
+                  </div>
+                  <div class="o_db_cleaner_issue_label">Tables</div>
+                </div>
+                <div t-attf-class="o_db_cleaner_issue_tile #{record.orphan_count.raw_value > 0 ? 'o_active o_active_warning' : ''}">
+                  <i class="fa fa-files-o" title="Orphans" role="img" aria-label="Orphans"/>
+                  <div class="o_db_cleaner_issue_value">
+                    <field name="orphan_count"/>
+                  </div>
+                  <div class="o_db_cleaner_issue_label">Orphans</div>
+                </div>
+                <div t-attf-class="o_db_cleaner_issue_tile #{record.cron_failure_count.raw_value > 0 ? 'o_active o_active_danger' : ''}">
+                  <i class="fa fa-clock-o" title="Cron issues" role="img" aria-label="Cron issues"/>
+                  <div class="o_db_cleaner_issue_value">
+                    <field name="cron_failure_count"/>
+                  </div>
+                  <div class="o_db_cleaner_issue_label">Crons</div>
+                </div>
+                <div t-attf-class="o_db_cleaner_issue_tile #{record.log_count.raw_value > 0 ? 'o_active o_active_danger' : ''}">
+                  <i class="fa fa-bug" title="Errors" role="img" aria-label="Errors"/>
+                  <div class="o_db_cleaner_issue_value">
+                    <field name="log_count"/>
+                  </div>
+                  <div class="o_db_cleaner_issue_label">Errors</div>
+                </div>
+                <div t-attf-class="o_db_cleaner_issue_tile #{record.index_count.raw_value > 0 ? 'o_active o_active_info' : ''}">
+                  <i class="fa fa-bolt" title="Missing indexes" role="img" aria-label="Missing indexes"/>
+                  <div class="o_db_cleaner_issue_value">
+                    <field name="index_count"/>
+                  </div>
+                  <div class="o_db_cleaner_issue_label">Indexes</div>
+                </div>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <record id="db_cleaner_dashboard_action" model="ir.actions.act_window">
+    <field name="name">Health Dashboard</field>
+    <field name="res_model">db.cleaner.scan</field>
+    <field name="view_mode">kanban,list,form</field>
+    <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('db_cleaner_scan_view_kanban')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('db_cleaner_scan_view_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('db_cleaner_scan_view_form')}),
+        ]"/>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+        Welcome to your database health dashboard
+      </p>
+      <p>
+        Run a scan from the 'Scans' menu to populate this dashboard.
+      </p>
+    </field>
+  </record>
+
+</odoo>

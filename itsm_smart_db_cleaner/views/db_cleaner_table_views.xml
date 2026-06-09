@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="db_cleaner_table_view_tree" model="ir.ui.view">
+    <field name="name">db.cleaner.table.tree</field>
+    <field name="model">db.cleaner.table</field>
+    <field name="arch" type="xml">
+      <list default_order="total_bytes desc" string="Heavy Tables">
+        <field name="schema_name"/>
+        <field name="table_name"/>
+        <field name="row_count" sum="Total"/>
+        <field name="table_bytes" sum="Total"/>
+        <field name="indexes_bytes" sum="Total"/>
+        <field name="total_bytes" sum="Total"/>
+        <field name="bloat_ratio" widget="percentage"/>
+        <field name="is_critical" widget="boolean_toggle"
+               decoration-danger="is_critical"/>
+        <field name="scan_id" optional="hide"/>
+        <button name="action_vacuum" type="object" string="Analyze"
+                icon="fa-magic"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="db_cleaner_table_view_search" model="ir.ui.view">
+    <field name="name">db.cleaner.table.search</field>
+    <field name="model">db.cleaner.table</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="table_name"/>
+        <filter name="filter_critical" string="Critical"
+                domain="[('is_critical', '=', True)]"/>
+        <filter name="filter_bloated" string="Bloated"
+                domain="[('bloat_ratio', '>', 0.3)]"/>
+        <group>
+          <filter name="groupby_scan" string="Scan"
+                  context="{'group_by': 'scan_id'}"/>
+          <filter name="groupby_schema" string="Schema"
+                  context="{'group_by': 'schema_name'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <record id="db_cleaner_table_action" model="ir.actions.act_window">
+    <field name="name">Heavy Tables</field>
+    <field name="res_model">db.cleaner.table</field>
+    <field name="view_mode">list</field>
+  </record>
+
+</odoo>
