@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="knowledge_article_combined_view_rule" model="ir.rule">
+            <field name="name">Knowledge - Combined View Rule</field>
+            <field name="model_id" ref="model_knowledge_article"/>
+            <field name="domain_force">
+                ['|',
+                    ('view_everyone', '=', True),
+                    '|',
+                        ('view_user_ids', 'in', user.id),
+                        '|',
+                            ('create_uid', '=', user.id),
+                            ('view_department_ids', 'in', user.employee_id.department_id.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,686 @@
+<odoo>
+    <t t-name="i8_knowledge_management.KnowledgeSplit" owl="1">
+        <div class="o_knowledge_split" t-ref="root-template">
+            <!-- Left Panel -->
+            <div class="o_knowledge_sidebar d-flex flex-column">
+                <!-- Toolbar  -->
+                <div class="o_knowledge_left_toolbar d-flex px-2 py-2 border-bottom align-items-center">
+                    <div t-attf-class="icon-button" class="flex-grow-1">
+                        <button class="btn p-0" t-on-click="createArticle">
+                            <i class="fa fa-plus me-1 o_action_icon" title="Create new article"/>
+                            New Article
+                        </button>
+                    </div>
+                    <div>
+                        <i class="fa fa-search o_action_icon"
+                           style="cursor: pointer;"
+                           t-on-click="openSearchPanel"
+                           title="Search"/>
+                    </div>
+
+                </div>
+                <!-- Scrollable tree -->
+                <div class="o_knowledge_tree flex-grow-1 overflow-auto px-2">
+                    <div class="text-center text-muted small py-2">
+                        Articles
+                    </div>
+                    <!-- Tree Toolbar -->
+                    <div class="tree-toolbar d-flex justify-content-between align-items-center mb-2 small text-muted">
+                        <div class="d-flex align-items-center gap-2">
+                            <!-- Expand -->
+                            <button class="btn btn-sm p-1 icon-button" title="Expand All" t-on-click="expandAll">
+                                <i class="fa fa-plus-square"></i>
+                            </button>
+                            <!-- Collapse -->
+                            <button class="btn btn-sm p-1 icon-button" title="Collapse All" t-on-click="collapseAll">
+                                <i class="fa fa-minus-square"></i>
+                            </button>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="fa fa-sort" title="Sort by"></i>
+                            <select class="form-select form-select-sm" style="width: auto;" t-on-change="onSortChange" t-att-value="state.sortOrder">
+                                <option value="name">A → Z</option>
+                                <option value="name_desc">Z → A</option>
+                                <option value="created">Oldest First</option>
+                                <option value="created_desc">Newest First</option>
+                                <option value="updated_desc">Last Updated</option>
+                                <option value="likes_desc">Most Liked</option>
+                                <option value="views_desc">Most Viewed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <ul class="o_article_list mt-2"></ul>
+                </div>
+                <!-- Filter Button (Bottom Left) -->
+                <div class="o_filter_header d-flex align-items-center flex-wrap gap-2 py-1 border-top">
+                    <a href="javascript:void(0);" class="text-decoration-none small text-muted"
+                       t-on-click="() => state.showFilterOverlay = true">
+                        <i class="fa fa-filter me-1"></i>
+                        Filter
+                    </a>
+
+                    <t t-if="state.onlyFavorites || state.selectedTags.length || state.showArchived">
+                        <div class="d-flex align-items-center gap-2">
+                            <t t-if="state.selectedTags.length">
+                                <span class="badge bg-primary text-white">Tags: <t t-esc="state.selectedTags.length"/></span>
+                            </t>
+                            <t t-if="state.onlyFavorites">
+                                <span class="badge bg-warning text-dark">★ Favorites</span>
+                            </t>
+                            <t t-if="state.showArchived">
+                                <span class="badge bg-danger text-dark">Archived</span>
+                            </t>
+                            <i class="fa fa-times-circle text-muted small"
+                               style="cursor: pointer;"
+                               title="Clear filters"
+                               t-on-click="clearAllFilters"/>
+                        </div>
+                    </t>
+                </div>
+
+                <t t-if="state.showFilterOverlay">
+                    <div class="o_filter_overlay show position-absolute end-0 p-3 shadow bg-white border">
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Filters</strong>
+                            <i class="fa fa-times" style="cursor: pointer;"
+                               t-on-click="() => state.showFilterOverlay = false"/>
+                        </div>
+
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox"
+                                   id="favFilter" t-att-checked="state.onlyFavorites"
+                                   t-on-click="toggleFavoritesFilter"/>
+                            <label class="form-check-label" for="favFilter">Show Favorites Only</label>
+                        </div>
+
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox"
+                                   id="archivedFilter" t-att-checked="state.showArchived"
+                                   t-on-click="toggleArchivedVisibility"/>
+                            <label class="form-check-label" for="archivedFilter">Show Archived Articles</label>
+                        </div>
+
+                        <div>
+                            <strong class="small">Tags</strong>
+                            <input type="text" t-model="state.tagSearch" class="form-control mb-2"
+                                   placeholder="Search tags..."/>
+                            <div class="d-flex flex-wrap gap-2 mb-3 flex-grow-1 o_filter_tags_scroller">
+                                <t t-foreach="filteredAvailableTags()" t-as="tag" t-key="tag.id">
+                                    <span
+                                        t-att-class="isTagSelected(tag.id) ? 'badge rounded-pill bg-primary text-white' : 'badge rounded-pill bg-light text-dark border'"
+                                        t-on-click="() => this.toggleTag(tag)"
+                                        style="cursor: pointer;">
+                                        <t t-esc="tag.name"/>
+                                    </span>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+            </div>
+
+            <!-- Splitter -->
+            <div class="o_splitter" t-ref="splitter">
+              <div class="o_sidebar_patch"
+                   t-on-click="toggleSidebar"
+                   t-att-title="state.sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'">
+                <i class="fa"
+                   t-att-class="state.sidebarCollapsed ? 'fa-chevron-right' : 'fa-chevron-left'"/>
+              </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="o_knowledge_content">
+                <!-- Toolbar -->
+                <div class="o_article_toolbar d-flex justify-content-between align-items-center gap-3 px-3 pt-2">
+                    <!-- Title + Breadcrumb  -->
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <h2 class="article-title mb-0">
+                            <t t-esc="state.currentArticleName" />
+                        </h2>
+                        <div class="article-tags d-flex flex-wrap gap-1">
+                            <t t-foreach="articles.find(a => a.id === state.currentArticleId)?.tag_ids || []" t-as="tag" t-key="tag">
+                                <span t-esc="tag" class="badge tag-pill"/>
+                            </t>
+                        </div>
+
+                        <div class="small text-muted breadcrumb-container"
+                             t-attf-innerHTML="state.breadcrumbHtml"/>
+                    </div>
+
+
+                    <!-- Actions -->
+                    <div class="d-flex align-items-center gap-3">
+
+                        <!-- 3-dot Card Toggle -->
+                        <i class="fa"
+                           t-att-class="(state.likedByIds?.includes(currentUid) ? 'fa fa-heart text-danger' : 'fa fa-heart-o') + ' o_action_icon icon-button'"
+                           t-att-title="state.likedByIds.includes(currentUid) ? 'Unlike' : 'Like'"
+                           t-on-click="toggleLike"/>
+
+                        <!-- Favorite Icon -->
+                        <i class="fa"
+                           t-att-class="(state.favoriteMap[state.currentArticleId] ? 'fa-star text-warning' : 'fa-star-o text-muted') + ' o_action_icon icon-button'"
+                           title="Toggle Favorite"
+                           t-on-click="toggleFavorite"/>
+
+                        <!-- Edit Icon -->
+                        <i t-attf-class="icon-button" class="fa fa-pencil o_action_icon" title="Edit"
+                           t-on-click="editArticle"></i>
+
+                        <i class="fa fa-ellipsis-v o_action_icon"
+                           t-ref="cardToggleIcon"
+                           title="More"
+                           t-attf-class="icon-button"
+                           t-on-click="toggleCardPanel"/>
+                    </div>
+                </div>
+
+                <!-- Card-style 3-dot Info Panel -->
+                <!-- Overlay Card Panel -->
+                <t t-if="state.showCardPanel">
+                    <div class="o_card_panel position-absolute end-0 mt-1 me-4 p-3 shadow rounded border bg-white"
+                         t-ref="cardPanel">
+
+                        <!-- 🔹 Article Management -->
+                        <div class="d-flex flex-column mb-2 pb-2 border-bottom">
+                            <div class="text-muted fw-normal text-uppercase small lh-sm mb-1 mt-2"
+                                 style="font-size: 10px; letter-spacing: 0.5px;">
+                                🧾 Article Management
+                            </div>
+                            <div class="o_card_action py-1" t-on-click="renameArticle">
+                                <i class="fa fa-i-cursor me-2"/>
+                                Rename
+                            </div>
+                            <div class="o_card_action py-1" t-on-click="moveToFolder">
+                                <i class="fa fa-folder-open me-2"/>
+                                Move To
+                            </div>
+                            <div class="o_card_action py-1" t-on-click="openTagModal">
+                                <i class="fa fa-tags me-2"/>
+                                Add Tags
+                            </div>
+                            <t t-if="state.isActive">
+                                <div class="o_card_action py-1" t-on-click="archiveArticle">
+                                    <i class="fa fa-archive me-2"/>
+                                    Archive
+                                </div>
+                            </t>
+                            <t t-if="!state.isActive">
+                                <div class="o_card_action py-1" t-on-click="unarchiveArticle">
+                                    <i class="fa fa-archive me-2"/>
+                                    Unarchive
+                                </div>
+                            </t>
+                        </div>
+
+                        <!-- 🔹 Collaboration -->
+                        <div class="d-flex flex-column mb-2 pb-2 border-bottom">
+                            <div class="text-muted fw-normal text-uppercase small lh-sm mb-1 mt-2"
+                                 style="font-size: 10px; letter-spacing: 0.5px;">
+                                👥 Collaboration
+                            </div>
+                            <div class="o_card_action py-1" t-on-click="shareArticle">
+                                <i class="fa fa-share-alt me-2"/>
+                                <t t-if="!state.showCopied">Share</t>
+                                <t t-if="state.showCopied">Copied!</t>
+                            </div>
+                            <div class="o_card_action py-1" t-on-click="createCopy">
+                                <i class="fa fa-copy me-2"/>
+                                Create a Copy
+                            </div>
+                        </div>
+
+                        <!-- 🔹 Utilities -->
+                        <div class="d-flex flex-column mb-2">
+                            <div class="text-muted fw-normal text-uppercase small lh-sm mb-1 mt-2"
+                                 style="font-size: 10px; letter-spacing: 0.5px;">
+                                🧰 Utilities
+                            </div>
+                            <div class="o_card_action py-1" t-on-click="exportArticle">
+                                <i class="fa fa-download me-2"/>
+                                Export
+                            </div>
+                            <div class="o_card_action py-1" t-on-click="openVersionHistory">
+                                <i class="fa fa-history me-2"/>
+                                Version History
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                        <!-- 🔹 Metadata Section -->
+                        <div class="o_card_meta">
+                            <div class="d-flex align-items-start mb-3">
+                                <img t-att-src="state.createdByAvatar" class="rounded-1 me-2"
+                                     style="width: 32px; height: 32px; object-fit: cover;"/>
+                                <div>
+                                    <div class="small">Created ·
+                                        <t t-esc="state.createdAgo"/>
+                                    </div>
+                                    <div class="text-dark fw-semibold">
+                                        <t t-esc="state.createdBy"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <img t-att-src="state.modifiedByAvatar" class="rounded-1 me-2"
+                                     style="width: 32px; height: 32px; object-fit: cover;"/>
+                                <div>
+                                    <div class="small">Last edited ·
+                                        <t t-esc="state.modifiedAgo"/>
+                                    </div>
+                                    <div class="text-dark fw-semibold">
+                                        <t t-esc="state.modifiedBy"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- Article Content -->
+                <div class="o_article_display"></div>
+
+                <div class="article-meta-footer text-muted small mt-2">
+                    👁️ <t t-esc="state.viewsCount || 0"/> views · ❤️ <t t-esc="state.likesCount || 0"/> likes
+                </div>
+
+                <!-- Comments -->
+                <div class="o_article_comments mt-4">
+                    <h5>Comments on:
+                        <span class="text-primary">
+                            <t t-esc="state.currentArticleName"/>
+                        </span>
+                    </h5>
+                    <div class="comment-list"></div>
+                </div>
+            </div>
+
+            <!-- Slide-in Search Panel -->
+            <t t-if="state.showSearchPanel">
+                <div class="o_search_panel show position-absolute end-0 p-3 shadow bg-white border"
+                     style="width: 640px; top: 0; height: 100%; z-index: 1050;">
+
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <strong>Search Articles</strong>
+                        <div class="d-flex align-items-center gap-2">
+                            <t t-if="state.onlyFavorites || state.selectedTags.length || state.showArchived">
+                                <span class="badge bg-info text-dark">Filtered</span>
+                            </t>
+                            <i class="fa fa-times" style="cursor: pointer;" title="Close"
+                               t-on-click="closeSearchPanel"/>
+                        </div>
+                    </div>
+
+                    <t t-if="state.onlyFavorites || state.selectedTags.length || state.showArchived">
+                        <div class="mb-2 small text-muted">
+                            Filters active:
+                            <t t-if="state.selectedTags.length">
+                                Tags:
+                                <t t-esc="state.selectedTags.length"/>
+                            </t>
+                            <t t-if="state.selectedTags.length and state.onlyFavorites">·</t>
+                            <t t-if="state.onlyFavorites">★ Favorites</t>
+                            <t t-if="(state.selectedTags.length || state.onlyFavorites) and state.showArchived">·</t>
+                            <t t-if="state.showArchived">Archived</t>
+                        </div>
+                    </t>
+
+                    <!-- Search Input -->
+                    <div class="o_slide_search_container mb-3 position-relative">
+                        <input type="text"
+                               t-ref="panelSearchInput"
+                               class="o_slide_search_input"
+                               placeholder="Type to search..."
+                               t-on-input="onSearchInput"
+                               t-att-value="state.query"/>
+                        <span class="o_clear_slide_search"
+                              t-att-class="{ 'd-none': !state.query }"
+                              t-on-click="clearSearch">×
+                        </span>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox"
+                               id="deepSearch"
+                               t-att-checked="state.searchInContent"
+                               t-on-click="toggleSearchInContent"/>
+                        <label class="form-check-label small" for="deepSearch">
+                            Search inside article content
+                        </label>
+                    </div>
+
+                    <!-- Search Results -->
+                    <div class="tree-search-results">
+                        <t t-set="results" t-value="state.searchResults || []"/>
+                        <t t-if="results.length > 0">
+                            <ul class="list-group">
+                                <t t-foreach="results" t-as="result" t-key="result.id">
+                                    <li class="list-group-item search-result"
+                                        t-on-click="() => this.renderArticle(result)">
+                                        <div class="fw-bold">
+                                            <t t-esc="result.name"/>
+                                        </div>
+                                        <div class="small text-muted" t-if="result.snippet">
+                                            <t t-esc="result.snippet"/>
+                                        </div>
+                                    </li>
+                                </t>
+                            </ul>
+                        </t>
+                        <t t-if="results.length === 0">
+                            <div class="text-muted small">No results found.</div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showRenameModal">
+                <div class="modal fade show d-block" tabindex="-1"
+                     style="background-color: rgba(0,0,0,0.3); z-index: 2000;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Rename Article</h5>
+                                <button type="button" class="btn-close" aria-label="Close"
+                                        t-on-click="cancelRename"/>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control"
+                                       t-model="state.renameTitle"
+                                       placeholder="Enter new article title"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" t-on-click="cancelRename">Cancel</button>
+                                <button class="btn btn-primary" t-on-click="confirmRename">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showMoveModal">
+                <div class="modal fade show d-block" tabindex="-1"
+                     style="background-color: rgba(0,0,0,0.3); z-index: 2000;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Move Article</h5>
+                                <button type="button" class="btn-close" aria-label="Close" t-on-click="cancelMove"/>
+                            </div>
+
+                            <div class="mb-2 ms-3">
+                                <span class="small mb-2">Selected location: </span>
+                                <t t-if="state.selectedMoveTarget">
+                                    <t t-set="trail" t-value="this.getBreadcrumbTrail(state.selectedMoveTarget) or []"/>
+                                    <span class="badge bg-light text-dark">
+                                        <t t-esc="trail.map(t => t.name).join(' / ')"/>
+                                    </span>
+                                </t>
+                                <t t-if="!state.selectedMoveTarget">
+                                    📁 Top-level
+                                </t>
+                            </div>
+                            <div class="modal-body" style="max-height: 300px; overflow-y: auto;">
+                                <p class="small">Select new parent for the article.</p>
+
+                                <div class="tree-node px-1 py-1 border rounded mb-2"
+                                     t-att-class="{'tree-node selected': state.selectedMoveTarget === null, 'tree-node': state.selectedMoveTarget !== null}"
+                                     style="cursor: pointer;"
+                                     t-on-click="() => this.selectMoveTarget(null)">
+                                    📁 No Parent (Top-level)
+                                </div>
+
+                                <div class="move-tree">
+                                    <t t-set="rootArticles" t-value="articles.filter(a => !a.parent_id)"/>
+                                    <t t-call="MoveTree">
+                                        <t t-set="nodes" t-value="rootArticles"/>
+                                        <t t-set="toggleCollapse" t-value="(id) => this.toggleCollapse(id)"/>
+                                        <t t-set="collapsedNodes" t-value="state.collapsedNodes"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" t-on-click="cancelMove">Cancel</button>
+                                <button class="btn btn-primary" t-on-click="confirmMove">Move</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showArchiveModal">
+                <div class="modal fade show d-block" tabindex="-1"
+                     style="background-color: rgba(0,0,0,0.3); z-index: 2000;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Archive Article</h5>
+                                <button type="button" class="btn-close" aria-label="Close" t-on-click="cancelArchive"/>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to archive this article?</p>
+                                <p class="small text-muted">You can still view it by enabling “Show Archived” in the
+                                    filters panel.
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" t-on-click="cancelArchive">Cancel</button>
+                                <button class="btn btn-danger" t-on-click="confirmArchive">Archive</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showUnarchiveModal">
+                <div class="modal fade show d-block" tabindex="-1"
+                     style="background-color: rgba(0,0,0,0.3); z-index: 2000;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Unarchive Article</h5>
+                                <button type="button" class="btn-close" aria-label="Close"
+                                        t-on-click="cancelUnarchive"/>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to unarchive this article?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" t-on-click="cancelUnarchive">Cancel</button>
+                                <button class="btn btn-success" t-on-click="confirmUnarchive">Unarchive</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <!-- Right Slide-In Panel for New Article -->
+            <t t-if="state.showNewArticlePanel">
+                <div class="o_new_article_panel border-start px-3 py-3"
+                     style="position: absolute; right: 0; top: 0; bottom: 0; width: 400px; background: #fff; z-index: 1100; box-shadow: -2px 0 8px rgba(0,0,0,0.1);">
+                    <h5 class="mb-3">Create New Article</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" t-model="state.newArticleTitle" class="new-article-title-input form-control"
+                               id="new_article_input" placeholder="Enter article title..."/>
+                    </div>
+
+                    <div class="mb-3">
+                        <div>
+                            <div class="form-label">Location</div>
+                            <span class="badge bg-light text-dark">📁
+                                <t t-esc="currentArticle?.display_name || 'Root'"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3 small">
+                        <ul class="mb-0 ps-3">
+                            <li>This article will inherit access rights from its parent.</li>
+                            <li>You can change the parent later from the article settings.</li>
+                            <li>To edit the content, use the <strong>Edit</strong> button after creating the article.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-secondary me-2" t-on-click="cancelNewArticle">Cancel</button>
+                        <button class="btn btn-primary" t-on-click="createQuickArticle">Create</button>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showCopyModal">
+                <div class="modal-backdrop fade show"></div>
+                <div class="modal d-block" tabindex="-1" role="dialog" style="z-index:1050">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Rename Copied Article</h5>
+                            </div>
+                            <div class="modal-body">
+                                <input t-model="state.copyTitle" type="text" class="form-control" placeholder="New article name" />
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" t-on-click="cancelCopy">Cancel</button>
+                                <button class="btn btn-primary" t-on-click="confirmCopy">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showTagModal">
+                <div class="modal d-block" style="background: rgba(0, 0, 0, 0.5); z-index: 1050;">
+                    <div class="modal-dialog">
+                        <div class="modal-content p-3">
+                            <h5 class="mb-2">Edit Tags</h5>
+                            <input type="text" t-model="state.tagSearch" class="form-control mb-2"
+                                   placeholder="Search tags..."/>
+                            <div class="d-flex flex-wrap gap-2 mb-3 flex-grow-1 o_filter_tags_scroller">
+                                <t t-foreach="filteredAvailableTags()" t-as="tag" t-key="tag.id">
+                                    <span
+                                        t-att-class="state.selectedTagIds.includes(tag.id) ? 'badge rounded-pill bg-primary text-white' : 'badge rounded-pill bg-light text-dark border'"
+                                        t-on-click="() => this.toggleTagSelection(tag.id)"
+                                        t-att-data-tag-index="tag.id"
+                                        style="cursor: pointer;">
+                                        <t t-esc="tag.name"/>
+                                    </span>
+                                </t>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-secondary me-2" t-on-click="cancelTagModal">Cancel</button>
+                                <button class="btn btn-primary" t-on-click="confirmTagsUpdate">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showVersionHistoryPanel">
+                <div class="o_version_panel show position-absolute end-0 p-3 shadow bg-white border"
+                     style="width: 500px; top: 0; height: 100%; z-index: 1050; overflow-y: auto;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <strong>Version History</strong>
+                        <i class="fa fa-times" style="cursor: pointer;" t-on-click="() => state.showVersionHistoryPanel = false"/>
+                    </div>
+                    <div t-if="state.versionHistory.length">
+                        <t t-foreach="state.versionHistory" t-as="ver" t-key="ver.id">
+                            <div class="border rounded p-2 mb-2 small">
+                                <div><strong>v<t t-esc="ver.version_number"/></strong> · <t t-esc="ver.create_date"/></div>
+                                <div>By: <t t-esc="ver.user_id[1]"/></div>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-primary dropdown-toggle"
+                                            data-bs-toggle="dropdown">
+                                        Compare
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <t t-foreach="state.versionHistory" t-as="target" t-key="target.id">
+                                            <t t-if="target.id !== ver.id">
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                       t-on-click="() => this.openDiffPanel(ver.id, target.id)">
+                                                        v
+                                                        <t t-esc="target.version_number"/>
+                                                    </a>
+                                                </li>
+                                            </t>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    <div t-if="!state.versionHistory.length" class="text-muted small">
+                        No version history found.
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="state.showDiffPanel">
+                <div class="o_diff_panel position-absolute end-0 p-3 bg-white border shadow"
+                     style="width: calc(100vw - 100px); height: 100%; top: 0; z-index: 1050;">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="mb-0">Version Comparison</h5>
+                        <i class="fa fa-times text-muted" style="cursor:pointer;" t-on-click="closeDiffPanel"/>
+                    </div>
+                    <div class="mb-2 small text-muted">
+                        <t t-set="oldVer" t-value="state.versionHistory.find(v => v.id === state.oldVersionId)"/>
+                        <t t-set="newVer" t-value="state.versionHistory.find(v => v.id === state.currentVersionId)"/>
+                        Comparing: <t t-esc="'v' + (oldVer?.version_number || state.oldVersionId)"/> ←
+                                   <t t-esc="'v' + (newVer?.version_number || state.currentVersionId)"/>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary" t-on-click="() => this.openDiffPanel(state.currentVersionId, state.oldVersionId)">
+                        Swap Comparison
+                    </button>
+
+                    <div class="overflow-auto" style="max-height: calc(100% - 40px);">
+                        <t t-if="state.diffHtml" t-out="this.markup(state.diffHtml)"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="MoveTree">
+        <t t-set="toggleCollapse" t-value="toggleCollapse or (() => {})"/>
+        <t t-set="collapsedNodes" t-value="collapsedNodes or new Set()"/>
+
+        <ul class="ms-3 ps-2 border-start">
+            <t t-foreach="nodes" t-as="node" t-key="node.id">
+                <li>
+                    <t t-set="children" t-value="articles.filter(a => a.parent_id === node.id)"/>
+
+                    <div class="tree-node px-1 py-1 rounded"
+                         style="cursor: pointer;"
+                         t-att-class="{'tree-node selected': state.selectedMoveTarget === node.id, 'tree-node': state.selectedMoveTarget !== node.id}"
+                         t-on-click="() => this.selectMoveTarget(node.id)">
+                        <i t-if="children.length"
+                           class="fa"
+                           t-att-class="collapsedNodes.has(node.id) ? 'fa-caret-right me-1' : 'fa-caret-down me-1'"
+                           style="cursor: pointer;"
+
+                           t-on-click.stop="() => toggleCollapse(node.id)"
+                        />
+                        📁
+                        <t t-esc="node.name"/>
+                    </div>
+
+                    <t t-if="children.length and !collapsedNodes.has(node.id)">
+                        <t t-call="MoveTree">
+                            <t t-set="nodes" t-value="children"/>
+                            <t t-set="toggleCollapse" t-value="toggleCollapse"/>
+                            <t t-set="collapsedNodes" t-value="collapsedNodes"/>
+                        </t>
+                    </t>
+                </li>
+            </t>
+        </ul>
+    </t>
+
+</odoo>
