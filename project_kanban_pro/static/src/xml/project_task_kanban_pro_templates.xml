@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="project_kanban_pro.ProjectKanbanProKanbanView" t-inherit="web.KanbanView" t-inherit-mode="primary" owl="1">
+        <xpath expr="//Layout" position="before">
+            <ProjectKanbanProQuickFilters/>
+        </xpath>
+    </t>
+
+    <t t-name="project_kanban_pro.ProjectKanbanProQuickFilters" owl="1">
+        <div class="o_pkp_quick_filters">
+            <t t-foreach="filters" t-as="filter" t-key="filter.key">
+                <button
+                    type="button"
+                    t-att-class="filter.active ? 'btn btn-sm o_pkp_filter_btn active' : 'btn btn-sm o_pkp_filter_btn'"
+                    t-on-click="() => this.toggleFilter(filter)"
+                >
+                    <t t-esc="filter.label"/>
+                </button>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="project_kanban_pro.ProjectKanbanProAvatarTagsList" t-inherit="mail.KanbanMany2ManyAvatarUserTagsList" t-inherit-mode="primary">
+        <img position="after">
+            <span
+                t-if="tag.workloadCount !== undefined"
+                t-attf-class="o_pkp_avatar_workload o_pkp_avatar_workload_#{tag.workloadClass}"
+                t-esc="tag.workloadCount"
+            />
+        </img>
+    </t>
+
+    <t t-name="project_kanban_pro.ProjectKanbanProAvatarField" t-inherit="mail.KanbanMany2ManyTagsAvatarUserField" t-inherit-mode="primary">
+        <TagsList position="attributes">
+            <attribute name="displayText">false</attribute>
+        </TagsList>
+    </t>
+</templates>

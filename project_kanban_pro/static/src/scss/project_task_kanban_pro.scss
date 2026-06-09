@@ -1,0 +1,138 @@
+.o_pkp_quick_filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 24px;
+    padding: 10px 0;
+}
+
+.o_pkp_filter_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d5d9e1;
+    border-radius: 999px;
+    background: #f7f8fa;
+    color: #293241;
+    min-height: 34px;
+    padding: 0 14px;
+}
+
+.o_pkp_filter_btn.active {
+    background: #293241;
+    border-color: #293241;
+    color: #fff;
+}
+
+.o_project_kanban_pro_headline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 10px;
+}
+
+.o_pkp_status,
+.o_pkp_priority,
+.o_pkp_flag,
+.o_pkp_metric {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 5px 8px;
+}
+
+.o_pkp_status_blocked,
+.o_pkp_flag_stale,
+.o_pkp_metric_alert,
+.o_pkp_metric_blocked {
+    background: #fff0f0;
+    color: #9f1c1c;
+}
+
+.o_pkp_status_overdue {
+    background: #ffe7d6;
+    color: #9a3412;
+}
+
+.o_pkp_status_at_risk {
+    background: #fff4cc;
+    color: #9a6700;
+}
+
+.o_pkp_status_on_track {
+    background: #e7f6ec;
+    color: #166534;
+}
+
+.o_pkp_priority_highest {
+    background: #3d0c11;
+    color: #fff;
+}
+
+.o_pkp_priority_high {
+    background: #c2410c;
+    color: #fff;
+}
+
+.o_pkp_priority_medium {
+    background: #1d4ed8;
+    color: #fff;
+}
+
+.o_pkp_priority_low {
+    background: #475569;
+    color: #fff;
+}
+
+.o_project_kanban_pro_metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.o_pkp_quick_action {
+    color: #52606d;
+    padding: 0 4px;
+}
+
+.o_pkp_avatar_field .o_tag.o_avatar {
+    overflow: visible;
+}
+
+.o_pkp_avatar_field .o_avatar {
+    position: relative;
+}
+
+.o_pkp_avatar_workload {
+    position: absolute;
+    right: -5px;
+    bottom: -4px;
+    min-width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    color: #fff;
+    box-shadow: 0 0 0 2px #fff;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 14px;
+    text-align: center;
+    padding: 0 3px;
+}
+
+.o_pkp_avatar_workload_low {
+    background: #15803d;
+}
+
+.o_pkp_avatar_workload_medium {
+    background: #d97706;
+}
+
+.o_pkp_avatar_workload_high {
+    background: #b91c1c;
+}

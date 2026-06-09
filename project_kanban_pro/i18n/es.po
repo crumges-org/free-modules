@@ -1,0 +1,127 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_kanban_pro
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-24 00:00+0000\n"
+"PO-Revision-Date: 2026-03-24 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Codex\n"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Blocked"
+msgstr "Bloqueado"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Overdue"
+msgstr "Vencido"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "At Risk"
+msgstr "En riesgo"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "On Track"
+msgstr "En curso"
+
+#. module: project_kanban_pro
+msgid "Highest"
+msgstr "Muy alta"
+
+#. module: project_kanban_pro
+msgid "High"
+msgstr "Alta"
+
+#. module: project_kanban_pro
+msgid "Medium"
+msgstr "Media"
+
+#. module: project_kanban_pro
+msgid "Low"
+msgstr "Baja"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "My Tasks"
+msgstr "Mis tareas"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "No Recent Activity"
+msgstr "Sin actividad reciente"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Priority Level"
+msgstr "Nivel de prioridad"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Aging"
+msgstr "Antigüedad"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Activity"
+msgstr "Actividad"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Stale"
+msgstr "Inactiva"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Assign Me"
+msgstr "Asignarme"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Next Stage"
+msgstr "Siguiente etapa"
+
+#. module: project_kanban_pro
+#. odoo-javascript
+msgid "Cycle Priority"
+msgstr "Cambiar prioridad"
+
+#. module: project_kanban_pro
+msgid "Why is this task blocked?"
+msgstr "¿Por qué está bloqueada esta tarea?"
+
+#. module: project_kanban_pro
+msgid "Blocked from Kanban"
+msgstr "Bloqueada desde el kanban"
+
+#. module: project_kanban_pro
+msgid "Kanban Rules"
+msgstr "Reglas de kanban"
+
+#. module: project_kanban_pro
+msgid "Kanban Pro"
+msgstr "Kanban Pro"
+
+#. module: project_kanban_pro
+msgid "Kanban Aging Alert Days"
+msgstr "Días para alerta de antigüedad"
+
+#. module: project_kanban_pro
+msgid "Kanban Stale Days"
+msgstr "Días para marcar inactividad"
+
+#. module: project_kanban_pro
+msgid "Kanban Risk Deadline Days"
+msgstr "Días de margen para riesgo por fecha límite"

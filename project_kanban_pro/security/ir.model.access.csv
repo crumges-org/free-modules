@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kanban_rule_project_user,kanban.rule.project.user,model_kanban_rule,project.group_project_user,1,0,0,0
+access_kanban_rule_project_manager,kanban.rule.project.manager,model_kanban_rule,project.group_project_manager,1,1,1,1

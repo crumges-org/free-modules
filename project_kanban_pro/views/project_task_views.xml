@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_task_kanban_pro_search" model="ir.ui.view">
+        <field name="name">project.task.search.kanban.pro</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <field name="user_ids" position="after">
+                <field name="is_blocked"/>
+                <field name="is_overdue"/>
+                <field name="is_at_risk"/>
+                <field name="is_stale"/>
+                <field name="last_activity_date"/>
+                <field name="priority_level"/>
+            </field>
+            <filter name="my_tasks" position="after">
+                <filter string="Blocked" name="kanban_pro_blocked" domain="[('is_blocked', '=', True)]"/>
+                <filter string="Overdue" name="kanban_pro_overdue" domain="[('is_overdue', '=', True)]"/>
+                <filter string="At Risk" name="kanban_pro_at_risk" domain="[('is_at_risk', '=', True)]"/>
+                <filter string="No Recent Activity" name="kanban_pro_stale" domain="[('is_stale', '=', True)]"/>
+            </filter>
+            <filter name="last_stage_update" position="after">
+                <filter string="Priority Level" name="group_by_priority_level" context="{'group_by': 'priority_level'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="project_task_kanban_pro_form" model="ir.ui.view">
+        <field name="name">project.task.form.kanban.pro</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="priority_level" widget="badge_selection"/>
+                <field name="state"/>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <field name="kanban_state_label" widget="badge" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="blocked_reason" placeholder="Why is this task blocked?" invisible="state != '05_blocked'"/>
+            </xpath>
+            <xpath expr="//field[@name='date_last_stage_update']" position="after">
+                <field name="last_stage_change_date"/>
+                <field name="aging_days"/>
+                <field name="last_activity_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_task_kanban_pro_tree" model="ir.ui.view">
+        <field name="name">project.task.list.kanban.pro</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.project_task_view_tree_main_base"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="priority_level" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='date_last_stage_update']" position="after">
+                <field name="aging_days" optional="hide"/>
+                <field name="last_activity_date" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_task_kanban_pro_kanban" model="ir.ui.view">
+        <field name="name">project.task.kanban.pro</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="js_class">project_kanban_pro_task_kanban</attribute>
+            </kanban>
+            <field name="stage_id" position="after">
+                <field name="priority_level"/>
+                <field name="blocked_reason"/>
+                <field name="last_stage_change_date"/>
+                <field name="aging_days"/>
+                <field name="last_activity_date"/>
+                <field name="stale_days"/>
+                <field name="kanban_state_color"/>
+                <field name="kanban_state_label"/>
+                <field name="user_task_count"/>
+                <field name="user_workload_data"/>
+                <field name="workload_state"/>
+                <field name="is_blocked"/>
+                <field name="is_overdue"/>
+                <field name="is_at_risk"/>
+                <field name="is_stale"/>
+                <field name="is_aging_alert"/>
+            </field>
+            <xpath expr="//main/field[@name='name']" position="after">
+                <div class="text-muted mt-1">
+                    <field name="partner_id"/>
+                </div>
+                <div class="o_project_kanban_pro_headline">
+                    <span t-attf-class="o_pkp_status o_pkp_status_#{record.kanban_state_color.raw_value}">
+                        <t t-esc="record.kanban_state_label.value"/>
+                    </span>
+                    <span t-attf-class="o_pkp_priority o_pkp_priority_#{record.priority_level.raw_value or 'medium'}">
+                        <t t-esc="record.priority_level.value"/>
+                    </span>
+                    <span t-if="record.is_stale.raw_value" class="o_pkp_flag o_pkp_flag_stale">
+                        Stale
+                    </span>
+                </div>
+            </xpath>
+            <xpath expr="//main/div[hasclass('text-muted')]/field[@name='partner_id']" position="replace"/>
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <div class="o_project_kanban_pro_metrics">
+                    <span t-att-class="record.is_aging_alert.raw_value ? 'o_pkp_metric o_pkp_metric_alert' : 'o_pkp_metric'">
+                        Aging:
+                        <t t-esc="record.aging_days.value"/>
+                        d
+                    </span>
+                    <span t-if="record.last_activity_date.raw_value" t-att-class="record.is_stale.raw_value ? 'o_pkp_metric o_pkp_metric_alert' : 'o_pkp_metric'">
+                        Activity:
+                        <t t-esc="record.stale_days.value"/>
+                        d
+                    </span>
+                    <span t-if="record.state.raw_value == '05_blocked' and record.blocked_reason.value" class="o_pkp_metric o_pkp_metric_blocked" t-att-title="record.blocked_reason.value">
+                        <i class="fa fa-ban me-1"/>
+                        Blocked
+                    </span>
+                </div>
+            </xpath>
+            <xpath expr="//footer/div[1]" position="inside">
+                <a href="#" role="button" class="btn btn-sm btn-link o_pkp_quick_action" title="Next Stage" data-quick-action="move_next_stage">
+                    <i class="fa fa-step-forward"/>
+                </a>
+                <a href="#" role="button" class="btn btn-sm btn-link o_pkp_quick_action" title="Assign Me" data-quick-action="assign_me">
+                    <i class="fa fa-user-plus"/>
+                </a>
+                <a href="#" role="button" class="btn btn-sm btn-link o_pkp_quick_action" title="Cycle Priority" data-quick-action="cycle_priority">
+                    <i class="fa fa-flag"/>
+                </a>
+            </xpath>
+            <xpath expr="//footer/div[2]/field[@name='user_ids']" position="replace">
+                <field name="user_ids" widget="project_kanban_pro_many2many_avatar_user"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_kanban_rule_tree" model="ir.ui.view">
+        <field name="name">kanban.rule.tree</field>
+        <field name="model">kanban.rule</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" default_order="priority asc">
+                <field name="priority"/>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="label"/>
+                <field name="color"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_kanban_rule_form" model="ir.ui.view">
+        <field name="name">kanban.rule.form</field>
+        <field name="model">kanban.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="model_id"/>
+                            <field name="priority"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="label"/>
+                            <field name="color"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="domain" widget="text" placeholder="[('date_deadline', '&lt;', fields.Datetime.now())]"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_kanban_rule" model="ir.actions.act_window">
+        <field name="name">Kanban Rules</field>
+        <field name="res_model">kanban.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_project_kanban_rule"
+        name="Kanban Rules"
+        parent="project.menu_project_config"
+        action="action_kanban_rule"
+        sequence="90"
+        groups="project.group_project_manager"
+    />
+</odoo>

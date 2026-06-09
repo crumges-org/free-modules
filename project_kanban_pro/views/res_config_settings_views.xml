@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_project_kanban_pro" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.project.kanban.pro</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="project.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='project']" position="inside">
+                <block title="Kanban Pro" name="project_kanban_pro_settings">
+                    <setting string="Aging alert threshold">
+                        <field name="project_kanban_pro_aging_days"/>
+                    </setting>
+                    <setting string="Stale activity threshold">
+                        <field name="project_kanban_pro_stale_days"/>
+                    </setting>
+                    <setting string="Risk deadline threshold">
+                        <field name="project_kanban_pro_risk_deadline_days"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
