@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_knowledge_guide_view_source_wizard_form" model="ir.ui.view">
+        <field name="name">knowledge.guide.view.source.wizard.form</field>
+        <field name="model">knowledge.guide.view.source.wizard</field>
+        <field name="arch" type="xml">
+            <form string="HTML source">
+                <field name="page_id" invisible="1"/>
+                <field name="source_code" readonly="1" nolabel="1"/>
+                <footer>
+                    <button string="Close" class="btn-primary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

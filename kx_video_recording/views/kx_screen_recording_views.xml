@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="kx_screen_recording_view_list" model="ir.ui.view">
+        <field name="name">kx.screen.recording.list</field>
+        <field name="model">kx.screen.recording</field>
+        <field name="arch" type="xml">
+            <list string="Screen recordings" decoration-muted="not active" create="false">
+                <button name="action_open_video" type="object" icon="fa-play" title="Play video" string="Play"/>
+                <button name="action_download_video" type="object" icon="fa-download" title="Download" string="Download"/>
+                <field name="name"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="recorded_at"/>
+                <field name="duration_seconds"/>
+                <field name="linked_record_name" string="Linked to"/>
+                <field name="auto_delete" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="kx_screen_recording_view_form" model="ir.ui.view">
+        <field name="name">kx.screen.recording.form</field>
+        <field name="model">kx.screen.recording</field>
+        <field name="arch" type="xml">
+            <form string="Screen recording" create="false">
+                <header>
+                    <button name="action_open_video" type="object" string="Play" class="btn-primary" icon="fa-play"/>
+                    <button name="action_download_video" type="object" string="Download" icon="fa-download"/>
+                    <button name="action_share_wizard" type="object" string="Share users" icon="fa-share-alt"
+                            invisible="not can_manage_shares"/>
+                    <button name="action_email_wizard" type="object" string="Email" icon="fa-envelope"
+                            invisible="not can_manage_shares"/>
+                    <button name="action_open_linked_record" type="object" string="Open document"
+                            invisible="not res_model or not res_id"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="linked_record_name" readonly="1" string="Linked to"
+                               invisible="not linked_record_name"/>
+                        <field name="recorded_at" readonly="1"/>
+                        <field name="duration_seconds" readonly="1"/>
+                        <field name="auto_delete" readonly="1"/>
+                        <field name="auto_delete_days" readonly="1" invisible="not auto_delete"/>
+                    </group>
+                    <group string="Shared with" invisible="not share_ids">
+                        <field name="share_ids" nolabel="1"
+                               readonly="not can_manage_shares">
+                            <list create="false" edit="false" delete="1">
+                                <field name="grantee_display" string="User"/>
+                                <field name="user_id" column_invisible="1"/>
+                                <field name="shared_by_id"/>
+                                <field name="permission"/>
+                            </list>
+                        </field>
+                    </group>
+                    <notebook>
+                        <page string="Activity log" name="activity_log">
+                            <field name="log_ids" nolabel="1" readonly="1">
+                                <list create="false" edit="false" delete="false">
+                                    <field name="create_date" string="When"/>
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                    <field name="operation"/>
+                                    <field name="description"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name="can_manage_shares" invisible="1"/>
+                    <field name="res_model" invisible="1"/>
+                    <field name="res_id" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="kx_screen_recording_view_search" model="ir.ui.view">
+        <field name="name">kx.screen.recording.search</field>
+        <field name="model">kx.screen.recording</field>
+        <field name="arch" type="xml">
+            <search string="Screen recordings">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="linked_record_name"/>
+                <filter string="My recordings" name="my" domain="[('user_id', '=', uid)]"/>
+                <filter string="Shared with me" name="shared"
+                        domain="[('share_ids.user_id', '=', uid), ('user_id', '!=', uid)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Recorded by" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'recorded_at:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_kx_screen_recording" model="ir.actions.act_window">
+        <field name="name">Screen recordings</field>
+        <field name="res_model">kx.screen.recording</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="kx_screen_recording_view_search"/>
+        <field name="context">{'search_default_my': 1, 'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No recordings yet.
+            </p>
+            <p>
+                Record from the <strong>video camera</strong> in the top bar or from a document's chatter.
+                Recordings linked to a document are visible to everyone who can open that document.
+            </p>
+        </field>
+    </record>
+
+</odoo>

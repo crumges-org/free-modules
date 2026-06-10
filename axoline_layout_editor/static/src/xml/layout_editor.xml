@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<!-- ================================================================== -->
+<!--  Main Editor Layout                                                 -->
+<!-- ================================================================== -->
+<t t-name="axoline_layout_editor.LayoutEditor">
+    <div class="axo-editor-root">
+
+        <!-- Loading state -->
+        <div t-if="state.loading" class="axo-loading">
+            <i class="fa fa-spinner fa-spin fa-3x"/> <span>Loading layout…</span>
+        </div>
+
+        <t t-if="!state.loading">
+            <!-- ======== TOOLBAR ======== -->
+            <div class="axo-toolbar">
+                <div class="axo-toolbar-left">
+                    <button class="btn btn-secondary btn-sm" t-on-click="goBack">
+                        <i class="fa fa-arrow-left"/> Back
+                    </button>
+                    <span class="axo-toolbar-title" t-esc="state.reportName"/>
+                    <span class="badge bg-secondary ms-2" t-esc="state.modelName"/>
+                </div>
+                <div class="axo-toolbar-right">
+                    <!-- Report mode only: Active toggle -->
+                    <t t-if="!state.isTemplateMode">
+                        <div class="form-check form-switch me-3 d-flex align-items-center">
+                            <input class="form-check-input" type="checkbox" id="axoActiveSwitch"
+                                   t-att-checked="state.active" t-on-change="toggleActive"/>
+                            <label class="form-check-label ms-1" for="axoActiveSwitch">Active</label>
+                        </div>
+                        <!-- Sample record picker -->
+                        <select class="form-select form-select-sm me-2 axo-sample-select"
+                                t-on-change="onSampleChange">
+                            <t t-foreach="state.sampleRecords" t-as="rec" t-key="rec.id">
+                                <option t-att-value="rec.id"
+                                        t-att-selected="rec.id === state.selectedRecordId"
+                                        t-esc="rec.name"/>
+                            </t>
+                        </select>
+                        <button class="btn btn-outline-secondary btn-sm me-2" t-on-click="openTemplateDialog"
+                                title="Apply template">
+                            <i class="fa fa-th-large"/> Templates
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm me-2" t-on-click="openSaveTemplateDialog"
+                                title="Save current layout as template">
+                            <i class="fa fa-bookmark-o"/> Save as Template
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm me-2" t-on-click="togglePreview">
+                            <i class="fa fa-eye"/> <t t-if="state.showPreview">Editor</t><t t-else="">Preview</t>
+                        </button>
+                        <button class="btn btn-outline-success btn-sm me-2" t-on-click="testPrint"
+                                t-att-disabled="!state.selectedRecordId">
+                            <i class="fa fa-print"/> Test Print
+                        </button>
+                    </t>
+                    <!-- Template mode indicator -->
+                    <t t-if="state.isTemplateMode">
+                        <span class="badge bg-info me-2"><i class="fa fa-bookmark"/> Template Editor</span>
+                    </t>
+                    <button class="btn btn-primary btn-sm" t-on-click="save"
+                            t-att-disabled="state.saving">
+                        <i t-attf-class="fa {{ state.saving ? 'fa-spinner fa-spin' : 'fa-save' }}"/>
+                        Save
+                    </button>
+                </div>
+            </div>
+
+            <!-- ======== MAIN AREA ======== -->
+            <div class="axo-main" t-att-class="state.showPreview ? 'axo-preview-mode' : ''">
+
+                <!-- PREVIEW IFRAME -->
+                <div t-if="state.showPreview" class="axo-preview-container">
+                    <div class="axo-preview-toolbar">
+                        <button class="btn btn-sm btn-outline-secondary" t-on-click="refreshPreview">
+                            <i class="fa fa-refresh"/> Refresh (saves)
+                        </button>
+                    </div>
+                    <iframe class="axo-preview-iframe" t-att-src="state.previewUrl"/>
+                </div>
+
+                <!-- EDITOR -->
+                <div t-if="!state.showPreview" class="axo-editor-body">
+
+                    <!-- SIDEBAR: Block Palette -->
+                    <div class="axo-sidebar">
+                        <div class="axo-sidebar-header">
+                            <i class="fa fa-th-large"/> Blocks
+                        </div>
+                        <t t-foreach="paletteCategories" t-as="cat" t-key="cat.key">
+                            <div class="axo-palette-category">
+                                <div class="axo-palette-category-title" t-esc="cat.label"/>
+                                <div class="axo-palette-blocks">
+                                    <t t-foreach="cat.blocks" t-as="pb" t-key="pb.type">
+                                        <div class="axo-palette-block"
+                                             draggable="true"
+                                             t-on-dragstart="(ev) => this.onPaletteDragStart(ev, pb.type)"
+                                             t-on-click="() => this.addBlock(pb.type)">
+                                            <i t-attf-class="fa {{ pb.icon }}"/>
+                                            <span t-esc="pb.label"/>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- CANVAS: Block arrangement -->
+                    <div class="axo-canvas"
+                         t-ref="canvas"
+                         t-on-dragover="onCanvasDragOver"
+                         t-on-dragleave="onCanvasDragLeave"
+                         t-on-drop="onCanvasDrop">
+
+                        <div t-if="!state.blocks.length" class="axo-canvas-empty">
+                            <i class="fa fa-plus-circle fa-3x"/>
+                            <p>Drag blocks here or click in the sidebar</p>
+                        </div>
+
+                        <t t-foreach="state.blocks" t-as="block" t-key="block.id">
+                            <!-- Drop indicator -->
+                            <div t-if="isDropTarget(block_index)"
+                                 class="axo-drop-indicator"/>
+
+                            <div t-attf-class="axo-canvas-block {{ state.selectedBlockId === block.id ? 'axo-selected' : '' }}"
+                                 draggable="true"
+                                 t-on-dragstart="(ev) => this.onBlockDragStart(ev, block.id)"
+                                 t-on-click.stop="() => this.selectBlock(block.id)">
+
+                                <!-- Block header -->
+                                <div class="axo-canvas-block-header">
+                                    <i t-attf-class="fa {{ getBlockMeta(block.type).icon }}"/>
+                                    <span class="axo-canvas-block-label"
+                                          t-esc="blockPreviewText(block)"/>
+                                    <div class="axo-canvas-block-actions">
+                                        <button class="btn btn-link btn-sm p-0"
+                                                title="Move up"
+                                                t-on-click.stop="() => this.moveBlock(block.id, -1)">
+                                            <i class="fa fa-chevron-up"/>
+                                        </button>
+                                        <button class="btn btn-link btn-sm p-0"
+                                                title="Move down"
+                                                t-on-click.stop="() => this.moveBlock(block.id, 1)">
+                                            <i class="fa fa-chevron-down"/>
+                                        </button>
+                                        <button class="btn btn-link btn-sm p-0"
+                                                title="Duplicate"
+                                                t-on-click.stop="() => this.duplicateBlock(block.id)">
+                                            <i class="fa fa-clone"/>
+                                        </button>
+                                        <button class="btn btn-link btn-sm p-0 text-danger"
+                                                title="Remove"
+                                                t-on-click.stop="() => this.removeBlock(block.id)">
+                                            <i class="fa fa-trash"/>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Block visual preview -->
+                                <div t-attf-class="axo-canvas-block-body {{ block.type === 'two_columns' ? 'axo-interactive' : '' }}">
+                                    <t t-call="axoline_layout_editor.BlockPreview"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- trailing drop indicator -->
+                        <div t-if="isDropTarget(state.blocks.length)"
+                             class="axo-drop-indicator"/>
+                    </div>
+
+                    <!-- PROPERTIES PANEL -->
+                    <div class="axo-properties">
+                        <div class="axo-properties-header">
+                            <i class="fa fa-cog"/> Properties
+                        </div>
+                        <t t-if="selectedBlock">
+                            <div class="axo-properties-block-type">
+                                <strong t-esc="getBlockMeta(selectedBlock.type).label"/>
+                            </div>
+                            <div class="axo-properties-fields">
+                                <t t-foreach="selectedBlockProps" t-as="prop" t-key="prop.key">
+                                    <div class="axo-prop-row">
+                                        <label class="axo-prop-label" t-esc="prop.label"/>
+
+                                        <!-- Boolean -->
+                                        <div t-if="prop.type === 'boolean'" class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox"
+                                                   t-att-checked="selectedBlock.settings[prop.key]"
+                                                   t-on-change="(ev) => this.onPropChange(prop.key, ev)"/>
+                                        </div>
+
+                                        <!-- Select -->
+                                        <select t-if="prop.type === 'select'"
+                                                class="form-select form-select-sm"
+                                                t-on-change="(ev) => this.onPropChange(prop.key, ev)">
+                                            <t t-foreach="prop.options" t-as="opt" t-key="opt.value">
+                                                <option t-att-value="opt.value"
+                                                        t-att-selected="selectedBlock.settings[prop.key] === opt.value"
+                                                        t-esc="opt.label"/>
+                                            </t>
+                                        </select>
+
+                                        <!-- Text -->
+                                        <input t-if="prop.type === 'text'"
+                                               class="form-control form-control-sm"
+                                               type="text"
+                                               t-att-value="selectedBlock.settings[prop.key] || ''"
+                                               t-on-input="(ev) => this.onPropChange(prop.key, ev)"/>
+
+                                        <!-- Textarea -->
+                                        <textarea t-if="prop.type === 'textarea'"
+                                                  class="form-control form-control-sm"
+                                                  rows="4"
+                                                  t-on-input="(ev) => this.onPropChange(prop.key, ev)"
+                                                  t-esc="selectedBlock.settings[prop.key] || ''"/>
+
+                                        <!-- Color -->
+                                        <input t-if="prop.type === 'color'"
+                                               class="form-control form-control-sm form-control-color"
+                                               type="color"
+                                               t-att-value="selectedBlock.settings[prop.key] || '#000000'"
+                                               t-on-input="(ev) => this.onPropChange(prop.key, ev)"/>
+                                    </div>
+                                </t>
+                            </div>
+
+                            <!-- Line items column ordering -->
+                            <div t-if="selectedBlock.type === 'line_items'" class="axo-column-order-section">
+                                <div class="axo-column-order-header">
+                                    <i class="fa fa-th-list"/> Columns (reorder)
+                                </div>
+                                <div class="axo-column-order-list">
+                                    <t t-foreach="orderedLineItemColumns" t-as="col" t-key="col.id">
+                                        <div t-attf-class="axo-column-item #{col.enabled ? '' : 'axo-column-disabled'}">
+                                            <div class="axo-column-item-left">
+                                                <div class="axo-column-arrows">
+                                                    <button class="btn btn-sm axo-arrow-btn"
+                                                            t-on-click="() => this.moveColumnUp(col.id)"
+                                                            t-att-disabled="col_first">
+                                                        <i class="fa fa-chevron-up"/>
+                                                    </button>
+                                                    <button class="btn btn-sm axo-arrow-btn"
+                                                            t-on-click="() => this.moveColumnDown(col.id)"
+                                                            t-att-disabled="col_last">
+                                                        <i class="fa fa-chevron-down"/>
+                                                    </button>
+                                                </div>
+                                                <div class="form-check form-switch axo-column-toggle">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           t-att-checked="col.enabled"
+                                                           t-on-change="() => this.toggleLineItemColumn(col.id)"/>
+                                                </div>
+                                                <span class="axo-column-name" t-esc="col.label"/>
+                                            </div>
+                                            <input class="form-control form-control-sm axo-column-label-input"
+                                                   type="text"
+                                                   t-att-value="col.displayLabel"
+                                                   t-on-change="(ev) => this.onColumnLabelChange(col.id, ev)"
+                                                   placeholder="Label"/>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <!-- Placeholder hints for document_title -->
+                            <div t-if="selectedBlock.type === 'document_title'" class="axo-prop-hint">
+                                <div class="axo-prop-hint-title"><i class="fa fa-lightbulb-o"/> Notes</div>
+                                <div class="axo-prop-hint-body">
+                                    The document type is detected automatically
+                                    (Quotation, Invoice, Credit Note, Purchase Order, etc.).<br/><br/>
+                                    In the <strong>Custom title</strong> field you can
+                                    override the automatic type.<br/><br/>
+                                    With <em>Custom text</em> you can also use
+                                    <code>{type}</code> and <code>{number}</code>
+                                    as placeholders.
+                                </div>
+                            </div>
+
+                            <!-- Placeholder hints for intro_text -->
+                            <div t-if="selectedBlock.type === 'intro_text'" class="axo-prop-hint">
+                                <div class="axo-prop-hint-title"><i class="fa fa-lightbulb-o"/> Available Placeholders</div>
+                                <div class="axo-prop-hint-body">
+                                    <code>{name}</code> – Full name<br/>
+                                    <code>{first_name}</code> – First name<br/>
+                                    <code>{last_name}</code> – Last name<br/>
+                                    <code>{company}</code> – Your company<br/>
+                                    <code>{doc_name}</code> – Document number
+                                </div>
+                                <div class="axo-prop-hint-examples">
+                                    <strong>Examples:</strong><br/>
+                                    <em>Dear Mr./Mrs. {last_name},</em><br/>
+                                    <em>Hello {first_name} {last_name},</em><br/>
+                                    <em>Dear Sir or Madam,</em>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="axo-properties-empty">
+                                Select a block to edit its properties
+                            </div>
+                        </t>
+
+                        <!-- Page Margins -->
+                        <div class="axo-margins-section">
+                            <div class="axo-margins-header">
+                                <i class="fa fa-crop"/> Page Margins (mm)
+                            </div>
+                            <div class="axo-margins-grid">
+                                <div class="axo-margin-field">
+                                    <label>Margin top</label>
+                                    <input type="number" class="form-control form-control-sm"
+                                           min="0" step="1"
+                                           t-att-value="state.margins.top"
+                                           t-on-change="(ev) => this.onMarginChange('top', ev)"/>
+                                </div>
+                                <div class="axo-margin-field">
+                                    <label>Margin bottom</label>
+                                    <input type="number" class="form-control form-control-sm"
+                                           min="0" step="1"
+                                           t-att-value="state.margins.bottom"
+                                           t-on-change="(ev) => this.onMarginChange('bottom', ev)"/>
+                                </div>
+                                <div class="axo-margin-field">
+                                    <label>Margin left</label>
+                                    <input type="number" class="form-control form-control-sm"
+                                           min="0" step="1"
+                                           t-att-value="state.margins.left"
+                                           t-on-change="(ev) => this.onMarginChange('left', ev)"/>
+                                </div>
+                                <div class="axo-margin-field">
+                                    <label>Margin right</label>
+                                    <input type="number" class="form-control form-control-sm"
+                                           min="0" step="1"
+                                           t-att-value="state.margins.right"
+                                           t-on-change="(ev) => this.onMarginChange('right', ev)"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <!-- ======== TEMPLATE SELECTION DIALOG ======== -->
+        <div t-if="state.showTemplateDialog" class="axo-modal-overlay" t-on-click.self="closeTemplateDialog">
+            <div class="axo-modal axo-template-modal">
+                <div class="axo-modal-header">
+                    <h5><i class="fa fa-th-large"/> Select Template</h5>
+                    <button class="btn-close" t-on-click="closeTemplateDialog"/>
+                </div>
+                <div class="axo-modal-body">
+                    <div t-if="state.templatesLoading" class="text-center py-4">
+                        <i class="fa fa-spinner fa-spin fa-2x"/>
+                        <p class="mt-2 text-muted">Loading templates...</p>
+                    </div>
+                    <div t-if="!state.templatesLoading and !state.templates.length" class="text-center py-4 text-muted">
+                        <i class="fa fa-inbox fa-2x"/>
+                        <p class="mt-2">No templates available.</p>
+                    </div>
+                    <div t-if="!state.templatesLoading and state.templates.length" class="axo-template-grid">
+                        <t t-foreach="state.templates" t-as="tpl" t-key="tpl.id">
+                            <div t-attf-class="axo-template-card {{ tpl.locked ? 'axo-template-card-locked' : '' }}"
+                                 t-on-click="() => this.onTemplateClick(tpl)">
+                                <div class="axo-template-card-icon">
+                                    <i t-if="tpl.locked" class="fa fa-lock"/>
+                                    <i t-else="" t-attf-class="fa {{ tpl.is_system ? 'fa-certificate' : 'fa-bookmark' }}"/>
+                                </div>
+                                <div class="axo-template-card-body">
+                                    <div class="axo-template-card-title" t-esc="tpl.name"/>
+                                    <div class="axo-template-card-desc" t-esc="tpl.description"/>
+                                </div>
+                                <span t-if="tpl.locked" class="axo-template-card-badge axo-template-card-badge-pro">PRO</span>
+                                <span t-else="" class="axo-template-card-badge" t-esc="getCategoryLabel(tpl.category)"/>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======== SAVE AS TEMPLATE DIALOG ======== -->
+        <div t-if="state.showSaveTemplateDialog" class="axo-modal-overlay" t-on-click.self="closeSaveTemplateDialog">
+            <div class="axo-modal axo-save-template-modal">
+                <div class="axo-modal-header">
+                    <h5><i class="fa fa-bookmark-o"/> Save as Template</h5>
+                    <button class="btn-close" t-on-click="closeSaveTemplateDialog"/>
+                </div>
+                <div class="axo-modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Name *</label>
+                        <input type="text" class="form-control"
+                               placeholder="e.g. My Standard Quotation"
+                               t-att-value="state.saveTemplateName"
+                               t-on-input="onTemplateNameInput"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Description</label>
+                        <textarea class="form-control" rows="3"
+                                  placeholder="Optional description of the template..."
+                                  t-on-input="onTemplateDescriptionInput"
+                                  t-esc="state.saveTemplateDescription"/>
+                    </div>
+                </div>
+                <div class="axo-modal-footer">
+                    <button class="btn btn-secondary btn-sm" t-on-click="closeSaveTemplateDialog">Cancel</button>
+                    <button class="btn btn-primary btn-sm" t-on-click="confirmSaveTemplate">
+                        <i class="fa fa-save"/> Save
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</t>
+
+<!-- ================================================================== -->
+<!--  Block Preview (mini visual in the canvas)                          -->
+<!-- ================================================================== -->
+<t t-name="axoline_layout_editor.BlockPreview">
+    <!-- Company Header -->
+    <t t-if="block.type === 'company_header'">
+        <!-- Logo top -->
+        <div t-if="block.settings.logo_position === 'top'" class="axo-bp-header-top">
+            <div t-if="block.settings.show_logo" class="axo-bp-logo-placeholder" style="margin-bottom:6px;">
+                <i class="fa fa-image"/>
+            </div>
+            <div t-if="block.settings.show_company_name" class="fw-bold">Sample Company Inc.</div>
+            <div t-if="block.settings.show_company_address" class="small text-muted">
+                123 Main Street · Anytown 12345
+            </div>
+        </div>
+        <!-- Logo left / right -->
+        <div t-if="block.settings.logo_position !== 'top'" class="axo-bp-header"
+             t-attf-style="flex-direction: {{ block.settings.logo_position === 'right' ? 'row-reverse' : 'row' }};">
+            <div t-if="block.settings.show_logo" class="axo-bp-logo-placeholder">
+                <i class="fa fa-image"/>
+            </div>
+            <div>
+                <div t-if="block.settings.show_company_name" class="fw-bold">Sample Company Inc.</div>
+                <div t-if="block.settings.show_company_address" class="small text-muted">
+                    123 Main Street · Anytown 12345
+                </div>
+            </div>
+        </div>
+    </t>
+    <!-- Sender Line -->
+    <t t-if="block.type === 'sender_line'">
+        <div class="axo-bp-sender-line">
+            <span t-if="block.settings.show_name">Company Inc.</span>
+            <span t-if="block.settings.show_name and block.settings.show_street" class="axo-bp-sep" t-esc="block.settings.separator || ' · '"/>
+            <span t-if="block.settings.show_street">123 Main Street</span>
+            <span t-if="block.settings.show_street and block.settings.show_city" class="axo-bp-sep" t-esc="block.settings.separator || ' · '"/>
+            <span t-if="block.settings.show_city">12345 Anytown</span>
+            <span t-if="block.settings.show_phone" class="axo-bp-sep" t-esc="block.settings.separator || ' · '"/>
+            <span t-if="block.settings.show_phone">Phone: 0123 456789</span>
+            <span t-if="block.settings.show_email" class="axo-bp-sep" t-esc="block.settings.separator || ' · '"/>
+            <span t-if="block.settings.show_email">info@company.com</span>
+        </div>
+    </t>
+    <!-- Company Details -->
+    <t t-if="block.type === 'company_details'">
+        <div class="axo-bp-company-details" t-attf-style="font-size:{{ block.settings.font_size || 9 }}px;">
+            <div t-if="block.settings.show_name"><strong>Company Inc.</strong></div>
+            <div t-if="block.settings.show_address">123 Main Street<br/>12345 Anytown</div>
+            <div t-if="block.settings.show_phone">Phone: 0123 456789</div>
+            <div t-if="block.settings.show_fax" class="text-muted">Fax: 0123 456780</div>
+            <div t-if="block.settings.show_email">info@company.com</div>
+            <div t-if="block.settings.show_website">www.company.com</div>
+            <div t-if="block.settings.show_vat">VAT ID: DE123456789</div>
+            <div t-if="block.settings.show_company_registry" class="text-muted">Reg. No.: HRB 12345</div>
+            <div t-if="block.settings.show_bank">IBAN: DE89 3704 … · BIC: COBADEFFXXX</div>
+        </div>
+    </t>
+    <!-- Document Title -->
+    <t t-if="block.type === 'document_title'">
+        <div t-attf-style="font-size:{{ block.settings.font_size || 20 }}px; font-weight:{{ block.settings.bold ? 'bold' : 'normal' }}; text-align:{{ block.settings.alignment || 'left' }};">
+            INV-2024/0001
+        </div>
+    </t>
+    <!-- Partner Address -->
+    <t t-if="block.type === 'partner_address'">
+        <div class="axo-bp-address" t-attf-style="font-size:{{ block.settings.font_size || 10 }}px; line-height:{{ block.settings.line_height || 1.4 }};">
+            <strong>Sample Customer Ltd.</strong><br/>
+            42 Customer Road<br/>
+            54321 Customer City
+            <span t-if="block.settings.show_vat" class="small text-muted"><br/>VAT ID: DE123456789</span>
+        </div>
+    </t>
+    <!-- Info Table -->
+    <t t-if="block.type === 'info_table'">
+        <table class="axo-bp-info-table">
+            <tr>
+                <td t-if="block.settings.show_number"><strong>Number:</strong> INV-2024/0001</td>
+                <td t-if="block.settings.show_date"><strong>Date:</strong> 03/26/2026</td>
+            </tr>
+            <tr>
+                <td t-if="block.settings.show_reference"><strong>Reference:</strong> PO-4711</td>
+                <td t-if="block.settings.show_payment_term"><strong>Payment:</strong> 30 Days Net</td>
+            </tr>
+            <tr>
+                <td t-if="block.settings.show_salesperson"><strong>Salesperson:</strong> John Doe</td>
+                <td t-if="block.settings.show_customer_number"><strong>Cust. No.:</strong> K-10042</td>
+            </tr>
+        </table>
+    </t>
+    <!-- Line Items -->
+    <t t-if="block.type === 'line_items'">
+        <t t-set="visCols" t-value="getVisibleColumns(block)"/>
+        <table class="axo-bp-line-items">
+            <thead><tr>
+                <t t-foreach="visCols" t-as="vc" t-key="vc.id">
+                    <th t-esc="vc.label"/>
+                </t>
+            </tr></thead>
+            <tbody>
+                <tr>
+                    <t t-foreach="visCols" t-as="vc" t-key="vc.id">
+                        <td t-esc="getSampleData(vc.id, 0)"/>
+                    </t>
+                </tr>
+                <tr class="text-muted">
+                    <t t-foreach="visCols" t-as="vc" t-key="vc.id">
+                        <td t-esc="getSampleData(vc.id, 1)"/>
+                    </t>
+                </tr>
+            </tbody>
+        </table>
+    </t>
+    <!-- Subtotals -->
+    <t t-if="block.type === 'subtotals'">
+        <t t-set="ss" t-value="block.settings"/>
+        <t t-set="subStyle" t-value="ss.table_style || 'minimal'"/>
+        <t t-set="subBorder" t-value="subStyle === 'bordered' ? '1px solid #dee2e6' : 'none'"/>
+        <t t-set="labelAlign" t-value="ss.full_width ? 'text-align:left;' : ''"/>
+        <t t-set="totalLine" t-value="(ss.total_line_style || 'double') === 'double' ? 'border-top:3px double #000;' : (ss.total_line_style === 'bold' ? 'border-top:2px solid #000;' : (ss.total_line_style === 'thin' ? 'border-top:1px solid #000;' : ''))"/>
+        <div t-attf-class="axo-bp-subtotals text-{{ ss.alignment || 'right' }}"
+             t-attf-style="font-size:{{ ss.font_size || '10' }}px;">
+            <table t-attf-style="border-collapse:collapse;border:{{ subBorder }};{{ ss.full_width ? 'width:100%;' : ((ss.alignment || 'right') === 'right' ? 'margin-left:auto;' : '') }}">
+                <tr t-attf-style="{{ subStyle === 'striped' ? 'background:' + (ss.stripe_color || '#f8f9fa') + ';' : '' }}">
+                    <td t-attf-style="padding:3px 12px;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};{{ labelAlign }}"
+                        t-esc="(ss.label_subtotal || 'Subtotal')"/>
+                    <td t-attf-style="padding:3px 12px;text-align:right;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};">1,000.00 €</td>
+                </tr>
+                <tr t-if="ss.show_tax_details !== false">
+                    <td t-attf-style="padding:3px 12px;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};{{ labelAlign }}"
+                        t-esc="(ss.label_tax || 'Taxes')"/>
+                    <td t-attf-style="padding:3px 12px;text-align:right;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};">190.00 €</td>
+                </tr>
+                <tr t-attf-style="font-weight:bold;{{ ss.header_bg ? 'background:' + ss.header_bg + ';' : '' }}{{ ss.header_fg ? 'color:' + ss.header_fg + ';' : '' }}">
+                    <td t-attf-style="padding:3px 12px;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};{{ labelAlign }}{{ totalLine }}{{ ss.header_bg ? 'background:' + ss.header_bg + ';' : '' }}"
+                        t-esc="(ss.label_total || 'Total')"/>
+                    <td t-attf-style="padding:3px 12px;text-align:right;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};{{ totalLine }}{{ ss.header_bg ? 'background:' + ss.header_bg + ';' : '' }}">1,190.00 €</td>
+                </tr>
+                <tr t-if="ss.show_residual">
+                    <td t-attf-style="padding:3px 12px;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};{{ labelAlign }}"
+                        t-esc="(ss.label_residual || 'Amount Due')"/>
+                    <td t-attf-style="padding:3px 12px;text-align:right;border:{{ subBorder }};line-height:{{ ss.line_height || '1.2' }};">1,190.00 €</td>
+                </tr>
+            </table>
+        </div>
+    </t>
+    <!-- Notes / Payment / Shipping -->
+    <t t-if="block.type === 'notes'">
+        <div class="axo-bp-notes" t-attf-style="font-size:{{ block.settings.font_size || '10' }}px;line-height:{{ block.settings.line_height || '1.4' }};">
+            <div t-if="block.settings.shipping_text" style="margin-bottom:4px;">
+                <t t-esc="block.settings.shipping_text"/>
+            </div>
+            <div t-if="block.settings.show_payment_terms" style="margin-bottom:4px;">
+                <strong><t t-esc="block.settings.label_payment_terms || 'Payment Terms'"/>:</strong> 30 Days Net
+            </div>
+            <div t-if="block.settings.show_payment_method" style="margin-bottom:4px;">
+                <strong><t t-esc="block.settings.label_payment_method || 'Payment Method'"/>:</strong> Manual Payment
+            </div>
+            <div t-if="block.settings.payment_text" style="margin-bottom:4px;">
+                <t t-esc="block.settings.payment_text"/>
+            </div>
+            <div t-if="block.settings.show_payment_ref" style="margin-bottom:4px;">
+                <strong><t t-esc="block.settings.label_payment_ref || 'Payment Reference'"/>:</strong> INV-2026-001
+            </div>
+            <div t-if="block.settings.show_notes" class="text-muted" style="margin-bottom:4px;">Notes / Remarks…</div>
+            <div t-if="block.settings.custom_text" style="margin-bottom:4px;">
+                <t t-esc="block.settings.custom_text"/>
+            </div>
+        </div>
+    </t>
+    <!-- Footer -->
+    <t t-if="block.type === 'footer'">
+        <t t-set="fs" t-value="block.settings"/>
+        <t t-set="footerAlign" t-value="fs.alignment || 'left'"/>
+        <div class="axo-bp-footer" t-attf-style="font-size:{{ fs.font_size || '8' }}px;line-height:{{ fs.line_height || '1.2' }};color:{{ fs.text_color || '#666' }};">
+            <hr t-if="(fs.separator_style || 'solid') !== 'none'"
+                t-attf-style="border:none;border-top:1px {{ fs.separator_style || 'solid' }} {{ fs.separator_color || '#ccc' }};margin:0 0 4px 0;"/>
+            <t t-if="(fs.layout || 'columns') === 'columns'">
+                <table style="width:100%;table-layout:fixed;border-collapse:collapse;">
+                    <tr>
+                        <td t-attf-style="vertical-align:top;width:33.33%;text-align:{{ footerAlign }};border:none;padding:0 4px 0 0;">
+                            <strong t-if="fs.show_company_name !== false">Sample Company Inc.</strong>
+                            <span t-if="fs.show_address !== false"><br/>123 Main St. · Anytown 12345</span>
+                        </td>
+                        <td t-attf-style="vertical-align:top;width:33.33%;text-align:{{ footerAlign }};border:none;padding:0 4px;">
+                            <span t-if="fs.show_phone !== false">Phone: +1 234 567890</span>
+                            <span t-if="fs.show_email !== false"><br/>info@sample.com</span>
+                            <span t-if="fs.show_website"><br/>www.sample.com</span>
+                        </td>
+                        <td t-attf-style="vertical-align:top;width:33.33%;text-align:{{ footerAlign }};border:none;padding:0 0 0 4px;">
+                            <span t-if="fs.show_vat !== false">VAT ID: DE123456789</span>
+                            <span t-if="fs.show_company_registry"><br/>Reg.: HRB 12345</span>
+                            <span t-if="fs.show_bank !== false"><br/>IBAN: DE89 3704 0044 0532 0130 00</span>
+                            <span t-if="fs.show_ceo"><br/><t t-esc="fs.ceo_label || 'CEO'"/>: <t t-esc="fs.ceo_name || 'John Doe'"/></span>
+                        </td>
+                    </tr>
+                </table>
+            </t>
+            <t t-if="(fs.layout || 'columns') === 'centered'">
+                <div t-attf-style="text-align:{{ footerAlign }};">
+                    Sample Company Inc. · 123 Main St. · Anytown 12345 · Phone: +1 234 567890
+                </div>
+            </t>
+            <t t-if="(fs.layout || 'columns') === 'single'">
+                <div t-attf-style="text-align:{{ footerAlign }};">Sample Company Inc. · 123 Main St. · Anytown 12345 · Phone: +1 234 567890</div>
+            </t>
+            <div t-if="fs.show_page_numbers !== false" t-attf-style="text-align:{{ footerAlign }};margin-top:2px;">
+                Page 1 of 1
+            </div>
+        </div>
+    </t>
+    <!-- Intro Text -->
+    <t t-if="block.type === 'intro_text'">
+        <div class="axo-bp-intro" t-attf-style="font-size:{{ block.settings.font_size || '10' }}px;line-height:{{ block.settings.line_height || '1.4' }};">
+            <div t-if="block.settings.salutation" style="margin-bottom:4px;" t-esc="block.settings.salutation"/>
+            <div t-if="block.settings.body" class="text-muted" t-esc="block.settings.body"/>
+        </div>
+    </t>
+    <!-- Free Text -->
+    <t t-if="block.type === 'free_text'">
+        <div class="axo-bp-freetext"
+             t-attf-style="text-align:{{ block.settings.alignment || 'left' }}; font-size:{{ block.settings.font_size || 12 }}px;">
+            <t t-if="block.settings.content" t-out="block.settings.content"/>
+            <span t-else="" class="text-muted fst-italic">Enter free text…</span>
+        </div>
+    </t>
+    <!-- Two Columns (interactive drop zones) -->
+    <t t-if="block.type === 'two_columns'">
+        <div class="axo-bp-twocol">
+            <!-- Left column -->
+            <div t-attf-class="axo-twocol-col {{ isColumnDropTarget(block.id, 'left') ? 'axo-col-drop-active' : '' }}"
+                 t-att-data-col-block="block.id"
+                 data-col-side="left"
+                 t-attf-style="width:{{ block.settings.left_ratio || 50 }}%;"
+                 t-on-dragover.stop="(ev) => this.onColumnDragOver(ev, block.id, 'left')"
+                 t-on-dragleave.stop="(ev) => this.onColumnDragLeave(ev)"
+                 t-on-drop.stop="(ev) => this.onColumnDrop(ev, block.id, 'left')">
+                <div class="axo-twocol-col-label">Left (<t t-esc="block.settings.left_ratio || 50"/>%)</div>
+                <t t-foreach="block.settings.left_blocks || []" t-as="subBlock" t-key="subBlock.id">
+                    <div t-attf-class="axo-column-subblock {{ state.selectedBlockId === subBlock.id ? 'axo-selected' : '' }}"
+                         draggable="true"
+                         t-on-dragstart.stop="(ev) => this.onColumnBlockDragStart(ev, block.id, 'left', subBlock.id)"
+                         t-on-click.stop="() => this.selectBlock(subBlock.id)">
+                        <div class="axo-column-subblock-header">
+                            <i t-attf-class="fa {{ getBlockMeta(subBlock.type).icon }}"/>
+                            <span class="axo-column-subblock-label" t-esc="getBlockMeta(subBlock.type).label"/>
+                            <div class="axo-column-subblock-actions">
+                                <button class="btn btn-link btn-sm p-0" title="Move up"
+                                        t-on-click.stop="() => this.moveColumnBlock(block.id, 'left', subBlock.id, -1)">
+                                    <i class="fa fa-chevron-up"/>
+                                </button>
+                                <button class="btn btn-link btn-sm p-0" title="Move down"
+                                        t-on-click.stop="() => this.moveColumnBlock(block.id, 'left', subBlock.id, 1)">
+                                    <i class="fa fa-chevron-down"/>
+                                </button>
+                                <button class="btn btn-link btn-sm p-0" title="Duplicate"
+                                        t-on-click.stop="() => this.duplicateBlock(subBlock.id)">
+                                    <i class="fa fa-clone"/>
+                                </button>
+                                <button class="btn btn-link btn-sm p-0 text-danger" title="Remove"
+                                        t-on-click.stop="() => this.removeBlock(subBlock.id)">
+                                    <i class="fa fa-times"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <div t-if="!(block.settings.left_blocks || []).length" class="axo-twocol-col-empty">
+                    <i class="fa fa-plus"/> Drag blocks here
+                </div>
+            </div>
+            <!-- Right column -->
+            <div t-attf-class="axo-twocol-col {{ isColumnDropTarget(block.id, 'right') ? 'axo-col-drop-active' : '' }}"
+                 t-att-data-col-block="block.id"
+                 data-col-side="right"
+                 t-attf-style="width:{{ 100 - (block.settings.left_ratio || 50) }}%;"
+                 t-on-dragover.stop="(ev) => this.onColumnDragOver(ev, block.id, 'right')"
+                 t-on-dragleave.stop="(ev) => this.onColumnDragLeave(ev)"
+                 t-on-drop.stop="(ev) => this.onColumnDrop(ev, block.id, 'right')">
+                <div class="axo-twocol-col-label">Right (<t t-esc="100 - (block.settings.left_ratio || 50)"/>%)</div>
+                <t t-foreach="block.settings.right_blocks || []" t-as="subBlock" t-key="subBlock.id">
+                    <div t-attf-class="axo-column-subblock {{ state.selectedBlockId === subBlock.id ? 'axo-selected' : '' }}"
+                         draggable="true"
+                         t-on-dragstart.stop="(ev) => this.onColumnBlockDragStart(ev, block.id, 'right', subBlock.id)"
+                         t-on-click.stop="() => this.selectBlock(subBlock.id)">
+                        <div class="axo-column-subblock-header">
+                            <i t-attf-class="fa {{ getBlockMeta(subBlock.type).icon }}"/>
+                            <span class="axo-column-subblock-label" t-esc="getBlockMeta(subBlock.type).label"/>
+                            <div class="axo-column-subblock-actions">
+                                <button class="btn btn-link btn-sm p-0" title="Move up"
+                                        t-on-click.stop="() => this.moveColumnBlock(block.id, 'right', subBlock.id, -1)">
+                                    <i class="fa fa-chevron-up"/>
+                                </button>
+                                <button class="btn btn-link btn-sm p-0" title="Move down"
+                                        t-on-click.stop="() => this.moveColumnBlock(block.id, 'right', subBlock.id, 1)">
+                                    <i class="fa fa-chevron-down"/>
+                                </button>
+                                <button class="btn btn-link btn-sm p-0" title="Duplicate"
+                                        t-on-click.stop="() => this.duplicateBlock(subBlock.id)">
+                                    <i class="fa fa-clone"/>
+                                </button>
+                                <button class="btn btn-link btn-sm p-0 text-danger" title="Remove"
+                                        t-on-click.stop="() => this.removeBlock(subBlock.id)">
+                                    <i class="fa fa-times"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <div t-if="!(block.settings.right_blocks || []).length" class="axo-twocol-col-empty">
+                    <i class="fa fa-plus"/> Drag blocks here
+                </div>
+            </div>
+        </div>
+    </t>
+    <!-- Separator -->
+    <t t-if="block.type === 'separator'">
+        <hr t-attf-style="border-top: 1px {{ block.settings.style || 'solid' }} {{ block.settings.color || '#000' }}; margin: {{ block.settings.margin || 10 }}px 0;"/>
+    </t>
+    <!-- Spacer -->
+    <t t-if="block.type === 'spacer'">
+        <div class="axo-bp-spacer" t-attf-style="height:{{ block.settings.height || 20 }}px;">
+            <span class="small text-muted"><t t-esc="block.settings.height || 20"/>px</span>
+        </div>
+    </t>
+    <!-- Page Break -->
+    <t t-if="block.type === 'page_break'">
+        <div class="axo-bp-pagebreak">
+            <i class="fa fa-scissors"/> Page Break
+        </div>
+    </t>
+</t>
+
+</templates>

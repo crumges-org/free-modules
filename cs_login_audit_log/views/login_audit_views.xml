@@ -1,0 +1,56 @@
+<odoo>
+    <record id="view_login_detail_list" model="ir.ui.view">
+        <field name="name">cs.login.audit.list</field>
+        <field name="model">cs.login.audit</field>
+        <field name="arch" type="xml">
+            <list string="Login Details">
+                <field name="login_time"/>
+                <field name="login_email"/>
+                <field name="ip_address"/>
+                <field name="device_type"/>
+                <field name="browser"/>
+                <field name="os"/>
+                <field name="session_id"/>
+                <field name="is_admin"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_login_detail_form" model="ir.ui.view">
+        <field name="name">cs.login.audit.form</field>
+        <field name="model">cs.login.audit</field>
+        <field name="arch" type="xml">
+            <form string="Login Detail">
+                <sheet>
+                    <group>
+                        <field name="login_time"/>
+                        <field name="user_id"/>
+                        <field name="login_email"/>
+                        <field name="ip_address"/>
+                        <field name="device_type"/>
+                        <field name="browser"/>
+                        <field name="os"/>
+                        <field name="session_id"/>
+                        <field name="company_name"/>
+                        <field name="db_name"/>
+                        <field name="lang"/>
+                        <field name="tz"/>
+                        <field name="is_admin"/>
+                        <field name="user_agent"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_login_detail" model="ir.actions.act_window">
+        <field name="name">Login Audit Logs</field>
+        <field name="res_model">cs.login.audit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_login_detail_root" name="Audit" sequence="10" web_icon="cs_login_audit_log,static/description/icon.png"/>
+    <menuitem id="menu_login_detail" name="Login Audit Logs"
+              parent="menu_login_detail_root"
+              action="action_login_detail"/>
+</odoo>

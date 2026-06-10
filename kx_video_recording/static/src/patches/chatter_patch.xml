@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-inherit="mail.Chatter.attachFiles" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o-mail-Chatter-attachFiles')]" position="after">
+            <button t-if="kxShowScreenRecording"
+                    type="button"
+                    class="o-mail-Chatter-recordScreen btn btn-link text-action px-1 d-flex align-items-center"
+                    t-att-class="{ 'my-2': !props.compactHeight }"
+                    title="Record screen"
+                    aria-label="Record screen"
+                    t-on-click="onClickRecordScreen">
+                <i class="fa fa-desktop fa-lg me-1"/>
+                <span class="d-none d-md-inline">Record screen</span>
+            </button>
+        </xpath>
+    </t>
+
+    <t t-inherit="mail.Chatter" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o-mail-AttachmentBox')]" position="before">
+            <div t-if="kxShowRecordingsList" class="o-kx-mail-Recordings position-relative mb-2">
+                <div class="d-flex align-items-center">
+                    <hr class="flex-grow-1"/>
+                    <span class="p-3 fw-bold">Screen recordings</span>
+                    <hr class="flex-grow-1"/>
+                </div>
+                <div class="d-flex flex-column gap-1 px-3 pb-2">
+                    <div t-if="kxRecordings.loading" class="text-muted small">Loading recordings…</div>
+                    <t t-foreach="kxRecordings.list" t-as="rec" t-key="rec.id">
+                        <div class="d-flex align-items-center justify-content-between gap-2 border rounded px-2 py-1">
+                            <div class="d-flex flex-column text-truncate me-2" style="min-width: 0;">
+                                <span class="text-truncate small fw-medium" t-esc="rec.name"/>
+                                <span class="text-muted small" t-esc="rec.recorded_at_display or rec.recorded_at"/>
+                                <span t-if="rec.shared_with" class="text-muted small">
+                                    Shared with: <t t-esc="rec.shared_with"/>
+                                </span>
+                            </div>
+                            <span class="text-muted small flex-shrink-0" t-esc="kxFormatDuration(rec.duration_seconds)"/>
+                            <div class="d-flex flex-shrink-0 gap-1">
+                                <button type="button" class="btn btn-sm btn-link"
+                                        t-on-click="() => this.onClickPlayKxRecording(rec.id)">
+                                    <i class="fa fa-play me-1"/>Play
+                                </button>
+                                <button type="button" class="btn btn-sm btn-link"
+                                        t-on-click="() => this.onClickDownloadKxRecording(rec)">
+                                    <i class="fa fa-download me-1"/>Download
+                                </button>
+                                <button t-if="rec.can_email" type="button" class="btn btn-sm btn-link"
+                                        t-on-click="() => this.onClickEmailKxRecording(rec.id)">
+                                    <i class="fa fa-envelope me-1"/>Email
+                                </button>
+                                <button t-if="rec.can_share" type="button" class="btn btn-sm btn-link"
+                                        t-on-click="() => this.onClickShareKxRecording(rec.id)">
+                                    <i class="fa fa-share-alt me-1"/>Share
+                                </button>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

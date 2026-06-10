@@ -1,0 +1,166 @@
+.o_ispg_dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px;
+    background-color: var(--bs-body-bg, #fff);
+    border-bottom: 1px solid var(--bs-border-color, #dee2e6);
+
+    // Each <rowcard> becomes one group: an optional heading above its row.
+    .o_ispg_dashboard_row_group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    // Row heading (from <rowcard string="...">), left-aligned above the cards.
+    .o_ispg_row_title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--bs-secondary-color, #6c757d);
+        padding-left: 2px;
+    }
+
+    // One horizontal row of cards.
+    .o_ispg_dashboard_row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .o_ispg_kpi_card {
+        position: relative;
+        flex: 1 1 180px;
+        min-width: 170px;
+        display: flex;
+        overflow: hidden;
+        background-color: var(--bs-body-bg, #fff);
+        border: 1px solid var(--bs-border-color, #dee2e6);
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        cursor: pointer;
+        transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+
+        // Soft tint of the card colour across the whole card. Using a pseudo
+        // element with opacity keeps it working for ANY CSS colour (hex / name
+        // / rgb) without needing colour maths.
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: var(--ispg-card-color, var(--bs-secondary, #6c757d));
+            opacity: 0.16;
+            pointer-events: none;
+            transition: opacity 0.18s ease;
+        }
+
+        // Coloured accent bar on the left edge (full-strength colour).
+        .o_ispg_kpi_accent {
+            position: relative;
+            z-index: 1;
+            flex: 0 0 5px;
+            background-color: var(--ispg-card-color, var(--bs-secondary, #6c757d));
+        }
+
+        .o_ispg_kpi_body {
+            position: relative;
+            z-index: 1;
+            flex: 1 1 auto;
+            padding: 10px 14px;
+            min-width: 0;
+        }
+
+        .o_ispg_kpi_head {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+            min-width: 0;
+        }
+
+        // Icon slot: a fixed square box shared by FontAwesome icons and images,
+        // so the layout never shifts regardless of what the user supplies.
+        .o_ispg_kpi_icon {
+            flex: 0 0 auto;
+            width: 1.25rem;
+            height: 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            line-height: 1;
+            color: var(--ispg-card-color, var(--bs-secondary-color, #6c757d));
+        }
+
+        // Images (png / svg / jpg): scale ANY size down to fit the fixed box
+        // while keeping aspect ratio - a huge upload looks the same as a small.
+        .o_ispg_kpi_icon_img {
+            object-fit: contain;
+            border-radius: 3px;
+        }
+
+        .o_ispg_kpi_title {
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--bs-secondary-color, #6c757d);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        // The single KPI value (count or aggregated measure).
+        .o_ispg_kpi_value {
+            position: relative;
+            z-index: 1;
+            font-size: 1.7rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--ispg-card-color, var(--bs-primary, #0d6efd));
+        }
+
+        // Hover lift for the whole card.
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+            border-color: var(--ispg-card-color, rgba(var(--bs-primary-rgb, 13, 110, 253), 0.45));
+
+            &::before {
+                opacity: 0.24;
+            }
+        }
+
+        // Currently-applied card: outlined in its colour and a touch stronger.
+        &.o_ispg_active {
+            border-color: var(--ispg-card-color, var(--bs-primary, #0d6efd));
+            box-shadow: 0 0 0 1.5px var(--ispg-card-color, var(--bs-primary, #0d6efd));
+
+            &::before {
+                opacity: 0.22;
+            }
+        }
+    }
+
+    // Subtle pulse on the values while the counts are still being fetched.
+    &.o_ispg_loading .o_ispg_kpi_value {
+        color: transparent;
+        border-radius: 4px;
+        background: linear-gradient(
+            90deg,
+            rgba(var(--bs-emphasis-color-rgb, 33, 37, 41), 0.08) 25%,
+            rgba(var(--bs-emphasis-color-rgb, 33, 37, 41), 0.16) 37%,
+            rgba(var(--bs-emphasis-color-rgb, 33, 37, 41), 0.08) 63%
+        );
+        background-size: 400% 100%;
+        animation: o_ispg_shimmer 1.2s ease-in-out infinite;
+    }
+}
+
+@keyframes o_ispg_shimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}

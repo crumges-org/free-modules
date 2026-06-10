@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Background Processor Views -->
+        <record id="view_connector_background_processor_tree" model="ir.ui.view">
+            <field name="name">connector.background.processor.list</field>
+            <field name="model">connector.background.processor</field>
+            <field name="arch" type="xml">
+                <list string="Background Jobs" decoration-info="state == 'pending'" decoration-warning="state == 'retry'" decoration-danger="state == 'failed'" decoration-success="state == 'done'">
+                    <field name="name"/>
+                    <field name="job_type"/>
+                    <field name="instance_id"/>
+                    <field name="priority" widget="badge" decoration-info="priority == 'low'" decoration-warning="priority == 'normal'" decoration-danger="priority == 'high'" decoration-muted="priority == 'urgent'"/>
+                    <field name="state" widget="badge" decoration-info="state == 'pending'" decoration-warning="state == 'running'" decoration-danger="state == 'failed'" decoration-success="state == 'done'"/>
+                    <field name="progress" widget="progressbar"/>
+                    <field name="scheduled_date"/>
+                    <field name="start_time"/>
+                    <field name="execution_time"/>
+                    <field name="retry_count"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_connector_background_processor_form" model="ir.ui.view">
+            <field name="name">connector.background.processor.form</field>
+            <field name="model">connector.background.processor</field>
+            <field name="arch" type="xml">
+                <form string="Background Job">
+                    <header>
+                        <button name="action_process" string="Process" type="object" class="oe_highlight" 
+                                invisible="state != 'pending'"/>
+                        <button name="action_retry" string="Retry" type="object" 
+                                invisible="not can_retry"/>
+                        <button name="action_cancel" string="Cancel" type="object" 
+                                invisible="state not in ['pending', 'retry']"/>
+                        <field name="state" widget="statusbar" statusbar_visible="pending,running,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Job Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Job Information">
+                                <field name="job_type"/>
+                                <field name="instance_id"/>
+                                <field name="platform_type"/>
+                                <field name="method_name"/>
+                                <field name="priority"/>
+                                <field name="scheduled_date"/>
+                            </group>
+                            <group string="Execution Details">
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="execution_time"/>
+                                <field name="processed_by"/>
+                                <field name="progress"/>
+                                <field name="current_step"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Retry Management">
+                                <field name="retry_count"/>
+                                <field name="max_retries"/>
+                                <field name="retry_delay"/>
+                                <field name="last_retry"/>
+                                <field name="can_retry"/>
+                            </group>
+                            <group string="Results">
+                                <field name="records_processed"/>
+                                <field name="records_success"/>
+                                <field name="records_failed"/>
+                                <field name="success_rate"/>
+                                <field name="is_overdue"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Job Data" name="job_data">
+                                <group>
+                                    <field name="job_data" widget="ace" options="{'mode': 'json'}"/>
+                                    <field name="args" widget="ace" options="{'mode': 'json'}"/>
+                                    <field name="kwargs" widget="ace" options="{'mode': 'json'}"/>
+                                </group>
+                            </page>
+                            <page string="Results" name="results">
+                                <field name="result_data" widget="ace" options="{'mode': 'json'}"/>
+                            </page>
+                            <page string="Error Details" name="error_details" invisible="state != 'failed'">
+                                <field name="error_message"/>
+                                <field name="error_traceback"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_connector_background_processor_search" model="ir.ui.view">
+            <field name="name">connector.background.processor.search</field>
+            <field name="model">connector.background.processor</field>
+            <field name="arch" type="xml">
+                <search string="Background Jobs">
+                    <field name="name"/>
+                    <field name="job_type"/>
+                    <field name="instance_id"/>
+                    <field name="state"/>
+                    <field name="priority"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Running" name="running" domain="[('state', '=', 'running')]"/>
+                    <filter string="Failed" name="failed" domain="[('state', '=', 'failed')]"/>
+                    <filter string="Retry" name="retry" domain="[('state', '=', 'retry')]"/>
+                    <filter string="Overdue" name="overdue" domain="[('is_overdue', '=', True)]"/>
+                    <group>
+                        <filter string="Job Type" name="group_job_type" context="{'group_by': 'job_type'}"/>
+                        <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Priority" name="group_priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Instance" name="group_instance" context="{'group_by': 'instance_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Background Processor Action -->
+        <record id="action_connector_background_processor" model="ir.actions.act_window">
+            <field name="name">Background Jobs</field>
+            <field name="res_model">connector.background.processor</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_pending': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No background jobs found
+                </p>
+                <p>
+                    Background jobs are automatically created when you schedule operations
+                    like data synchronization, webhook processing, or bulk operations.
+                </p>
+            </field>
+        </record>
+
+        <!-- Job Scheduler Views -->
+        <record id="view_connector_job_scheduler_form" model="ir.ui.view">
+            <field name="name">connector.job.scheduler.form</field>
+            <field name="model">connector.job.scheduler</field>
+            <field name="arch" type="xml">
+                <form string="Job Scheduler">
+                    <header>
+                        <button name="start_scheduler" string="Start Scheduler" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="interval_minutes"/>
+                            <field name="last_run"/>
+                            <field name="next_run"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Job Scheduler Action -->
+        <record id="action_connector_job_scheduler" model="ir.actions.act_window">
+            <field name="name">Job Scheduler</field>
+            <field name="res_model">connector.job.scheduler</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- Connector Queue Views (Updated) -->
+        <record id="view_connector_queue_tree" model="ir.ui.view">
+            <field name="name">connector.queue.list</field>
+            <field name="model">connector.queue</field>
+            <field name="arch" type="xml">
+                <list string="Connector Queue" decoration-info="state == 'pending'" decoration-warning="state == 'retry'" decoration-danger="state == 'failed'" decoration-success="state == 'done'">
+                    <field name="operation"/>
+                    <field name="instance_id"/>
+                    <field name="priority" widget="badge" decoration-info="priority == 'low'" decoration-warning="priority == 'normal'" decoration-danger="priority == 'high'" decoration-muted="priority == 'urgent'"/>
+                    <field name="state" widget="badge" decoration-info="state == 'pending'" decoration-warning="state == 'running'" decoration-danger="state == 'failed'" decoration-success="state == 'done'"/>
+                    <field name="progress" widget="progressbar"/>
+                    <field name="scheduled_date"/>
+                    <field name="retry_count"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_connector_queue_form" model="ir.ui.view">
+            <field name="name">connector.queue.form</field>
+            <field name="model">connector.queue</field>
+            <field name="arch" type="xml">
+                <form string="Queue Item">
+                    <header>
+                        <button name="action_process" string="Process" type="object" class="oe_highlight" 
+                                invisible="state != 'pending'"/>
+                        <button name="action_retry" string="Retry" type="object" 
+                                invisible="state != 'retry'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="pending,running,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Queue Information">
+                                <field name="operation"/>
+                                <field name="instance_id"/>
+                                <field name="priority"/>
+                                <field name="scheduled_date"/>
+                            </group>
+                            <group string="Execution Details">
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="execution_time"/>
+                                <field name="progress"/>
+                                <field name="current_step"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Retry Management">
+                                <field name="retry_count"/>
+                                <field name="max_retries"/>
+                                <field name="retry_delay"/>
+                                <field name="last_retry_date"/>
+                                <field name="can_retry"/>
+                            </group>
+                            <group string="Results">
+                                <field name="records_processed"/>
+                                <field name="records_success"/>
+                                <field name="records_failed"/>
+                                <field name="success_rate"/>
+                                <field name="is_overdue"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Queue Data" name="queue_data">
+                                <field name="data" widget="ace" options="{'mode': 'json'}"/>
+                            </page>
+                            <page string="Error Details" name="error_details" invisible="state != 'failed'">
+                                <field name="error_message"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Connector Queue Action -->
+        <record id="action_connector_queue" model="ir.actions.act_window">
+            <field name="name">Connector Queue</field>
+            <field name="res_model">connector.queue</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_pending': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No queue items found
+                </p>
+                <p>
+                    Queue items are created when operations are scheduled for background processing.
+                </p>
+            </field>
+        </record>
+    </odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kx_screen_recording_user,kx.screen.recording user,model_kx_screen_recording,group_recording_user,1,1,1,0
+access_kx_screen_recording_manager,kx.screen.recording manager,model_kx_screen_recording,group_recording_manager,1,1,1,1
+access_kx_screen_recording_share_user,kx.screen.recording.share user,model_kx_screen_recording_share,group_recording_user,1,0,1,1
+access_kx_screen_recording_share_manager,kx.screen.recording.share manager,model_kx_screen_recording_share,group_recording_manager,1,1,1,1
+access_kx_screen_recording_share_wizard,kx.screen.recording.share.wizard,model_kx_screen_recording_share_wizard,group_recording_user,1,1,1,1
+access_kx_screen_recording_email_wizard,kx.screen.recording.email.wizard,model_kx_screen_recording_email_wizard,group_recording_user,1,1,1,1
+access_kx_screen_recording_log_user,kx.screen.recording.log user,model_kx_screen_recording_log,group_recording_user,1,0,0,0
+access_kx_screen_recording_log_manager,kx.screen.recording.log manager,model_kx_screen_recording_log,group_recording_manager,1,0,0,0
+access_kx_screen_recording_portal,kx.screen.recording portal,model_kx_screen_recording,base.group_portal,1,0,0,0
+access_kx_screen_recording_share_portal,kx.screen.recording.share portal,model_kx_screen_recording_share,base.group_portal,1,0,0,0

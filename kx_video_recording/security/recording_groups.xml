@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_recording" model="ir.module.category">
+        <field name="name">Screen recordings</field>
+        <field name="description">Screen capture recordings and sharing</field>
+        <field name="sequence">26</field>
+    </record>
+
+    <record id="group_recording_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_recording"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Create recordings and view own recordings plus those shared with them.</field>
+    </record>
+
+    <record id="group_recording_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_recording"/>
+        <field name="implied_ids" eval="[(4, ref('group_recording_user'))]"/>
+        <field name="comment">View and manage all screen recordings in their company.</field>
+    </record>
+
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_recording_user'))]"/>
+    </record>
+
+</odoo>

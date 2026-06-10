@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_kx_screen_recording_root"
+              name="Screen recordings"
+              sequence="46"
+              groups="kx_video_recording.group_recording_user"/>
+
+    <menuitem id="menu_kx_screen_recording"
+              name="Recordings"
+              parent="menu_kx_screen_recording_root"
+              action="action_kx_screen_recording"
+              sequence="10"/>
+
+</odoo>

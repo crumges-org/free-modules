@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Client action (user-facing) -->
+    <record id="action_knowledge_guide_client" model="ir.actions.client">
+        <field name="name">User Guide</field>
+        <field name="tag">knowledge_guide.main</field>
+        <field name="target">current</field>
+    </record>
+
+    <!-- Main menu (visible to all users) -->
+    <menuitem
+        id="menu_knowledge_guide_main"
+        name="User Guide"
+        action="action_knowledge_guide_client"
+        sequence="100"
+        web_icon="knowledge_guide,static/description/icon.png"
+    />
+
+    <!-- Admin menu (Settings > Technical) -->
+    <menuitem
+        id="menu_knowledge_guide_admin"
+        name="Knowledge Guide"
+        parent="base.menu_administration"
+        sequence="50"
+        groups="base.group_system"
+    />
+
+    <menuitem
+        id="menu_knowledge_guide_books"
+        name="Books"
+        parent="menu_knowledge_guide_admin"
+        action="action_knowledge_guide_book"
+        sequence="5"
+    />
+
+    <menuitem
+        id="menu_knowledge_guide_pages"
+        name="Pages"
+        parent="menu_knowledge_guide_admin"
+        action="action_knowledge_guide_page"
+        sequence="10"
+    />
+
+</odoo>

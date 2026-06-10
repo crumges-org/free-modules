@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- List view                                                     -->
+    <!-- ============================================================ -->
+    <record id="view_knowledge_guide_book_list" model="ir.ui.view">
+        <field name="name">knowledge.guide.book.list</field>
+        <field name="model">knowledge.guide.book</field>
+        <field name="arch" type="xml">
+            <list string="Knowledge Books">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="slug"/>
+                <field name="page_count"/>
+                <field name="is_published" widget="boolean_toggle"/>
+                <field name="public_url" widget="url"/>
+                <field name="module_source" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Form view                                                     -->
+    <!-- ============================================================ -->
+    <record id="view_knowledge_guide_book_form" model="ir.ui.view">
+        <field name="name">knowledge.guide.book.form</field>
+        <field name="model">knowledge.guide.book</field>
+        <field name="arch" type="xml">
+            <form string="Knowledge Book">
+                <header>
+                    <button name="action_publish"
+                            string="Publish"
+                            type="object"
+                            class="btn-primary"
+                            invisible="is_published"/>
+                    <button name="action_unpublish"
+                            string="Unpublish"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="not is_published"/>
+                    <button name="action_send_guide_email"
+                            string="Send by email"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-envelope"
+                            invisible="not is_published or not link_tracker_id"/>
+                    <button name="action_regenerate_token"
+                            string="Regenerate token"
+                            type="object"
+                            class="btn-secondary"
+                            confirm="Regenerating the token will invalidate the previous link. Continue?"/>
+                    <button name="action_open_public_url"
+                            string="Open public link"
+                            type="object"
+                            class="btn-link"
+                            icon="fa-external-link"
+                            invisible="not is_published"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <button name="action_open_public_url"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-globe"
+                                invisible="not is_published">
+                            <field name="page_count" widget="statinfo" string="Pages"/>
+                        </button>
+                        <button name="action_view_link_tracker_clicks"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-bar-chart"
+                                invisible="not link_tracker_id">
+                            <field name="click_count" widget="statinfo" string="Visits"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Guide name..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="slug" placeholder="my-guide"/>
+                            <field name="module_source"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                            <field name="click_count" invisible="1"/>
+                            <field name="tracked_url" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Introduction">
+                        <field name="description_html" nolabel="1" colspan="2"/>
+                    </group>
+                    <notebook>
+                        <page string="Pages" name="pages">
+                            <field name="page_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="category"/>
+                                    <field name="icon"/>
+                                    <field name="active" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Sharing" name="sharing">
+                            <group>
+                                <group>
+                                    <field name="is_published"/>
+                                    <field name="public_url" widget="CopyClipboardChar"
+                                           invisible="not is_published"/>
+                                </group>
+                                <group>
+                                    <field name="access_token" readonly="1"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert" invisible="not is_published">
+                                <strong>Public link:</strong> Share the URL above to grant access
+                                to the guide without authentication. The token secures access.
+                                Regenerate it to invalidate previous links.
+                            </div>
+                            <div class="alert alert-warning" role="alert" invisible="is_published">
+                                <strong>Not published:</strong> This guide is not publicly
+                                reachable yet. Click "Publish" in the action bar to enable web access.
+                            </div>
+                            <separator string="Visit tracking"/>
+                            <group>
+                                <group>
+                                    <field name="link_tracker_id" readonly="1"/>
+                                    <field name="tracked_url" widget="CopyClipboardChar"
+                                           invisible="not link_tracker_id"/>
+                                </group>
+                                <group>
+                                    <button name="action_create_tracked_link"
+                                            string="Generate tracked link"
+                                            type="object"
+                                            class="btn-primary"
+                                            icon="fa-link"
+                                            invisible="not is_published"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-success" role="alert" invisible="not link_tracker_id">
+                                <strong><i class="fa fa-bar-chart"></i> Tracking enabled:</strong>
+                                Use the tracked link above instead of the direct public link
+                                to measure visits. Statistics are available via the "Visits"
+                                stat button at the top of the form.
+                            </div>
+                            <div class="alert alert-info" role="alert" invisible="link_tracker_id or not is_published">
+                                <strong><i class="fa fa-info-circle"></i> Enable tracking:</strong>
+                                Click "Generate tracked link" to create a shortened link that
+                                records each visit of the guide. You will then be able to track
+                                how many times your readers opened the guide.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Search view                                                   -->
+    <!-- ============================================================ -->
+    <record id="view_knowledge_guide_book_search" model="ir.ui.view">
+        <field name="name">knowledge.guide.book.search</field>
+        <field name="model">knowledge.guide.book</field>
+        <field name="arch" type="xml">
+            <search string="Search Books">
+                <field name="name"/>
+                <field name="slug"/>
+                <field name="module_source"/>
+                <filter name="published" string="Published" domain="[('is_published', '=', True)]"/>
+                <filter name="unpublished" string="Unpublished" domain="[('is_published', '=', False)]"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_by_module" string="Source Module" context="{'group_by': 'module_source'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Custom list view for link.tracker.click                       -->
+    <!-- ============================================================ -->
+    <record id="view_link_tracker_click_knowledge_guide_list" model="ir.ui.view">
+        <field name="name">link.tracker.click.knowledge.guide.list</field>
+        <field name="model">link.tracker.click</field>
+        <field name="arch" type="xml">
+            <list string="Guide Visits" create="0" edit="0" delete="0">
+                <field name="create_date" string="Visit date"/>
+                <field name="ip" string="IP address"/>
+                <field name="country_id" string="Country"/>
+                <field name="campaign_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Action                                                        -->
+    <!-- ============================================================ -->
+    <record id="action_knowledge_guide_book" model="ir.actions.act_window">
+        <field name="name">Knowledge Books</field>
+        <field name="res_model">knowledge.guide.book</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_published': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new knowledge book
+            </p>
+            <p>
+                Books group documentation pages together and can be published
+                through a secure link for unauthenticated read-only access.
+            </p>
+        </field>
+    </record>
+
+</odoo>

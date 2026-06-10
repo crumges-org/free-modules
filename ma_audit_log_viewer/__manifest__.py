@@ -1,0 +1,23 @@
+{
+    'name': 'Audit Log Viewer & Export',
+    'version': '18.0.1.0.0',
+    'category': 'Extra Tools',
+    'summary': 'Wizard-driven audit trail with diff viewer, Excel/PDF export, and email alerts for Odoo admins',
+    'author': 'Muneeb Ahmad',
+    'license': 'LGPL-3',
+    'images': ['static/description/banner.png'],
+    'depends': ['base', 'mail'],
+    'external_dependencies': {'python': ['xlsxwriter']},
+    'data': [
+        'security/ir.model.access.csv',
+        'data/cron_retention.xml',
+        'views/audit_config_views.xml',
+        'views/audit_log_views.xml',
+        'wizard/audit_export_wizard_views.xml',
+        'views/audit_menu.xml',
+        'report/audit_log_report.xml',
+    ],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}

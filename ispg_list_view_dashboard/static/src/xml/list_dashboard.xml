@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ispg_list_view_dashboard.ListDashboard">
+        <div t-attf-class="o_ispg_dashboard #{state.loading ? 'o_ispg_loading' : ''}">
+            <t t-foreach="state.rows" t-as="row" t-key="row_index">
+                <div class="o_ispg_dashboard_row_group">
+                    <div t-if="row.title" class="o_ispg_row_title" t-out="row.title"/>
+                    <div class="o_ispg_dashboard_row">
+                    <t t-foreach="row.cards" t-as="card" t-key="card.key">
+                        <div t-attf-class="o_ispg_kpi_card #{isActive(card) ? 'o_ispg_active' : ''}"
+                             t-attf-style="--ispg-card-color: {{card.color}};"
+                             t-on-click="() => this.applyCardFilter(card)"
+                             t-att-title="card.title">
+                            <div class="o_ispg_kpi_accent"/>
+                            <div class="o_ispg_kpi_body">
+                                <div class="o_ispg_kpi_head">
+                                    <img t-if="card.iconType === 'image'"
+                                         class="o_ispg_kpi_icon o_ispg_kpi_icon_img"
+                                         t-att-src="card.iconSrc" alt=""/>
+                                    <i t-elif="card.iconType === 'fa'"
+                                       t-attf-class="o_ispg_kpi_icon fa #{card.iconClass}"/>
+                                    <span class="o_ispg_kpi_title" t-out="card.title"/>
+                                </div>
+                                <div class="o_ispg_kpi_value" t-out="card.display"/>
+                            </div>
+                        </div>
+                    </t>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

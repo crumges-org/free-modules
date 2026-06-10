@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List view -->
+    <record id="view_audit_log_line_list" model="ir.ui.view">
+        <field name="name">audit.log.line.list</field>
+        <field name="model">audit.log.line</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0" default_order="date desc">
+                <field name="date" string="Date"/>
+                <field name="model_name" string="Model"/>
+                <field name="res_name" string="Record"/>
+                <field name="field_label" string="Field"/>
+                <field name="operation"
+                       widget="badge"
+                       decoration-success="operation == 'create'"
+                       decoration-warning="operation == 'write'"
+                       decoration-danger="operation == 'unlink'"/>
+                <field name="user_id" string="Changed By"/>
+                <button name="action_view_diff"
+                        type="object"
+                        string="View Diff"
+                        class="btn btn-link btn-sm"
+                        icon="fa-eye"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view — opens as diff dialog via target='new' -->
+    <record id="view_audit_log_line_form" model="ir.ui.view">
+        <field name="name">audit.log.line.form</field>
+        <field name="model">audit.log.line</field>
+        <field name="arch" type="xml">
+            <form string="Change Details" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <field name="date" readonly="1"/>
+                        <field name="model_name" string="Model" readonly="1"/>
+                        <field name="res_name" string="Record" readonly="1"/>
+                        <field name="field_label" string="Field" readonly="1"/>
+                        <field name="operation" readonly="1"/>
+                        <field name="user_id" string="Changed By" readonly="1"/>
+                    </group>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <div style="background-color:#ffeef0;padding:12px;border-radius:4px;min-height:80px;">
+                                <strong style="display:block;margin-bottom:6px;">Old Value</strong>
+                                <field name="old_value" readonly="1" widget="char"
+                                       style="white-space:pre-wrap;word-break:break-all;"/>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div style="background-color:#e6ffed;padding:12px;border-radius:4px;min-height:80px;">
+                                <strong style="display:block;margin-bottom:6px;">New Value</strong>
+                                <field name="new_value" readonly="1" widget="char"
+                                       style="white-space:pre-wrap;word-break:break-all;"/>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search view -->
+    <record id="view_audit_log_line_search" model="ir.ui.view">
+        <field name="name">audit.log.line.search</field>
+        <field name="model">audit.log.line</field>
+        <field name="arch" type="xml">
+            <search string="Audit Logs">
+                <field name="model_name" string="Model"/>
+                <field name="res_name" string="Record"/>
+                <field name="user_id" string="User"/>
+                <field name="field_label" string="Field"/>
+                <filter name="op_create" string="Create"
+                        domain="[('operation', '=', 'create')]"/>
+                <filter name="op_write" string="Write"
+                        domain="[('operation', '=', 'write')]"/>
+                <filter name="op_unlink" string="Delete"
+                        domain="[('operation', '=', 'unlink')]"/>
+                <separator/>
+                <filter name="today" string="Today"
+                        domain="[('date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_user" string="User"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter name="group_model" string="Model"
+                            context="{'group_by': 'model_name'}"/>
+                    <filter name="group_operation" string="Operation"
+                            context="{'group_by': 'operation'}"/>
+                    <filter name="group_date_day" string="Date (Day)"
+                            context="{'group_by': 'date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph view -->
+    <record id="view_audit_log_line_graph" model="ir.ui.view">
+        <field name="name">audit.log.line.graph</field>
+        <field name="model">audit.log.line</field>
+        <field name="arch" type="xml">
+            <graph type="bar" string="Audit Activity">
+                <field name="date" interval="day" type="row"/>
+                <field name="operation" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot view -->
+    <record id="view_audit_log_line_pivot" model="ir.ui.view">
+        <field name="name">audit.log.line.pivot</field>
+        <field name="model">audit.log.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Audit Summary">
+                <field name="model_name" type="row"/>
+                <field name="operation" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_audit_log_line" model="ir.actions.act_window">
+        <field name="name">Audit Logs</field>
+        <field name="res_model">audit.log.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="action_audit_summary" model="ir.actions.act_window">
+        <field name="name">Audit Summary</field>
+        <field name="res_model">audit.log.line</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+</odoo>

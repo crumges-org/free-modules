@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_kx_screen_recording_auto_delete" model="ir.cron">
+        <field name="name">Screen recording: auto delete expired</field>
+        <field name="model_id" ref="model_kx_screen_recording"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_auto_delete_recordings()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

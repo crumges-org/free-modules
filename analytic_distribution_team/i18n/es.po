@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* analytic_distribution_team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Lune Makers SL <info@lunemakers.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: analytic_distribution_team
+#: model:ir.model,name:analytic_distribution_team.model_account_analytic_distribution_model
+msgid "Analytic Distribution Model"
+msgstr "Modelo de Distribución Analítica"
+
+#. module: analytic_distribution_team
+#: model:ir.model,name:analytic_distribution_team.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: analytic_distribution_team
+#: model:ir.model,name:analytic_distribution_team.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: analytic_distribution_team
+#: model:ir.model.fields,field_description:analytic_distribution_team.field_account_analytic_distribution_model__team_id
+msgid "Sales Team"
+msgstr "Equipo de Ventas"
+
+#. module: analytic_distribution_team
+#: model:ir.model.fields,help:analytic_distribution_team.field_account_analytic_distribution_model__team_id
+msgid ""
+"If set, this rule only applies when the document (sale order or customer "
+"invoice) belongs to this sales team."
+msgstr ""
+"Si se establece, esta regla solo se aplica cuando el documento (pedido de "
+"venta o factura de cliente) pertenece a este equipo de ventas."

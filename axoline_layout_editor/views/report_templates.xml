@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Extend web.report_layout to support additional margin attributes -->
+    <template id="report_layout_axoline_margins"
+              inherit_id="web.report_layout">
+        <xpath expr="//html" position="attributes">
+            <attribute name="t-att-data-report-margin-bottom">data_report_margin_bottom</attribute>
+            <attribute name="t-att-data-report-margin-left">data_report_margin_left</attribute>
+            <attribute name="t-att-data-report-margin-right">data_report_margin_right</attribute>
+        </xpath>
+    </template>
+
+    <template id="report_axoline_master">
+        <t t-call="web.report_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="axo_company" t-value="axoline_company_map.get(doc.id, axoline_fallback_company)"/>
+                <div class="article axoline-article"
+                     t-att-data-oe-model="doc_model"
+                     t-att-data-oe-id="doc.id">
+                    <div class="page">
+                        <t t-foreach="axoline_blocks" t-as="block">
+                            <t t-if="block.get('type') != 'footer'"
+                               t-out="axoline_layout._render_block_html(block, doc, axo_company)"/>
+                        </t>
+                    </div>
+                </div>
+            </t>
+            <div class="footer" t-if="axoline_footer_html">
+                <t t-out="axoline_footer_html"/>
+            </div>
+        </t>
+    </template>
+
+</odoo>

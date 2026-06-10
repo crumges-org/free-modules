@@ -1,0 +1,2179 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * axoline_layout_editor
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-26 00:00+0000\n"
+"PO-Revision-Date: 2026-03-26 00:00+0000\n"
+"Last-Translator: Axoline\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: axoline_layout_editor
+#: model:ir.model,name:axoline_layout_editor.model_axoline_layout_custom
+msgid "Axoline PDF Layout (Editor Data)"
+msgstr "Axoline PDF-Layout (Editor-Daten)"
+
+#. module: axoline_layout_editor
+#: model:ir.model,name:axoline_layout_editor.model_axoline_layout_template
+msgid "Axoline Layout Template"
+msgstr "Axoline Layout-Vorlage"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_custom__model_name
+msgid "Model"
+msgstr "Modell"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_custom__notes
+msgid "Internal Notes"
+msgstr "Interne Notizen"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_template__description
+msgid "Description"
+msgstr "Beschreibung"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_template__thumbnail
+msgid "Thumbnail"
+msgstr "Vorschaubild"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_template__is_system
+msgid "System Template"
+msgstr "System-Vorlage"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_template__category
+msgid "Category"
+msgstr "Kategorie"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields.selection,name:axoline_layout_editor.selection__axoline_layout_template__category__classic
+msgid "Classic"
+msgstr "Klassisch"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields.selection,name:axoline_layout_editor.selection__axoline_layout_template__category__modern
+msgid "Modern"
+msgstr "Modern"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields.selection,name:axoline_layout_editor.selection__axoline_layout_template__category__compact
+msgid "Compact"
+msgstr "Kompakt"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields.selection,name:axoline_layout_editor.selection__axoline_layout_template__category__custom
+msgid "Custom"
+msgstr "Benutzerdefiniert"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_custom__name
+msgid "Name"
+msgstr "Name"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_custom__layout_json
+msgid "Layout (JSON)"
+msgstr "Layout (JSON)"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_custom__report_id
+msgid "Report"
+msgstr "Report"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_custom__report_name
+msgid "Report Technical Name"
+msgstr "Technischer Report-Name"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_custom__active
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_template__sequence
+msgid "Sequence"
+msgstr "Reihenfolge"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Only one layout record per report is allowed."
+msgstr "Pro Report gibt es nur einen Layout-Datensatz."
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#: code:addons/axoline_layout_editor/models/layout_template.py:0
+#, python-format
+msgid "Layout (JSON) is invalid: %s"
+msgstr "Layout (JSON) ist ungültig: %s"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Phone"
+msgstr "Tel"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "VAT ID"
+msgstr "USt-IdNr"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Fax"
+msgstr "Fax"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Reg. No."
+msgstr "HR"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Sales Order"
+msgstr "Auftragsbestätigung"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Quotation"
+msgstr "Angebot"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Invoice"
+msgstr "Rechnung"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Credit Note"
+msgstr "Gutschrift"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Vendor Bill"
+msgstr "Eingangsrechnung"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Vendor Credit Note"
+msgstr "Eingangsgutschrift"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Purchase Order"
+msgstr "Bestellung"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Request for Quotation"
+msgstr "Angebotsanfrage"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Delivery Slip"
+msgstr "Lieferschein"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Dear Sir or Madam,"
+msgstr "Sehr geehrte Damen und Herren,"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Number"
+msgstr "Nummer"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Date"
+msgstr "Datum"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Reference"
+msgstr "Referenz"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Payment Terms"
+msgstr "Zahlungsbedingungen"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Salesperson"
+msgstr "Sachbearbeiter"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Email"
+msgstr "E-Mail"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Customer No."
+msgstr "Kundennummer"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Pos."
+msgstr "Pos."
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "SKU"
+msgstr "Art.-Nr."
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Product"
+msgstr "Produkt"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Quantity"
+msgstr "Menge"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Unit"
+msgstr "Einheit"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Unit Price"
+msgstr "Einzelpreis"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Discount %"
+msgstr "Rabatt %"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Taxes"
+msgstr "Steuern"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Subtotal"
+msgstr "Zwischensumme"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Total"
+msgstr "Gesamt"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Amount Due"
+msgstr "Fällig"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Payment Method"
+msgstr "Zahlungsart"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Payment Reference"
+msgstr "Verwendungszweck"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "CEO"
+msgstr "Geschäftsführer"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Web"
+msgstr "Web"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "Page"
+msgstr "Seite"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#, python-format
+msgid "of"
+msgstr "von"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_custom.py:0
+#: code:addons/axoline_layout_editor/models/ir_actions_report.py:0
+#, python-format
+msgid "Layout: %s"
+msgstr "Layout: %s"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_template.py:0
+#, python-format
+msgid "System templates cannot be edited in the editor."
+msgstr "System-Vorlagen können nicht im Editor bearbeitet werden."
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_template.py:0
+#, python-format
+msgid "Template: %s"
+msgstr "Vorlage: %s"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_template.py:0
+#, python-format
+msgid "System templates cannot be modified."
+msgstr "System-Vorlagen können nicht bearbeitet werden."
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/layout_template.py:0
+#, python-format
+msgid "System templates cannot be deleted."
+msgstr "System-Vorlagen können nicht gelöscht werden."
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/ir_actions_report.py:0
+#, python-format
+msgid "Only reports of type \"PDF (QWeb)\" can be edited."
+msgstr "Nur Reports vom Typ 'PDF (QWeb)' können bearbeitet werden."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Company Header"
+msgstr "Firmenkopf"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Sender Line"
+msgstr "Briefkopfzeile"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Company Details"
+msgstr "Firmendetails"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Document Title"
+msgstr "Dokumententitel"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Recipient Address"
+msgstr "Empfänger-Adresse"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Introduction Text"
+msgstr "Einleitungstext"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Info Table"
+msgstr "Info-Tabelle"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Line Items"
+msgstr "Positionstabelle"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Totals / Taxes"
+msgstr "Summen / Steuern"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Payment & Shipping Info"
+msgstr "Zahlungs- & Versandinfo"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Free Text"
+msgstr "Freitext"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Footer"
+msgstr "Fußzeile"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Two Columns"
+msgstr "Zwei Spalten"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Separator"
+msgstr "Trennlinie"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Spacer"
+msgstr "Abstand"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Page Break"
+msgstr "Seitenumbruch"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Header"
+msgstr "Kopfbereich"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Content"
+msgstr "Inhalt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.act_report_xml_view_tree_axoline
+#, python-format
+msgid "Layout"
+msgstr "Layout"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Position No."
+msgstr "Pos.-Nr."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show logo"
+msgstr "Logo anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show company name"
+msgstr "Firmenname anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show address"
+msgstr "Adresse anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Logo position"
+msgstr "Logo-Position"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Align left"
+msgstr "Links"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Align center"
+msgstr "Zentriert"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Align right"
+msgstr "Rechts"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Logo left"
+msgstr "Links"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Logo right"
+msgstr "Rechts"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Logo top"
+msgstr "Oben"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Line height"
+msgstr "Zeilenabstand"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "1.0 – Tight"
+msgstr "1.0 – Eng"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "1.2 – Compact"
+msgstr "1.2 – Kompakt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "1.4 – Normal"
+msgstr "1.4 – Normal"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "1.6 – Wide"
+msgstr "1.6 – Weit"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "1.8 – Very wide"
+msgstr "1.8 – Sehr weit"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "2.0 – Double"
+msgstr "2.0 – Doppelt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Display"
+msgstr "Anzeige"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Document type + number"
+msgstr "Dokumenttyp + Nummer"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Type only"
+msgstr "Nur Dokumenttyp"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Number only"
+msgstr "Nur Nummer"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Custom text"
+msgstr "Eigener Text"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Custom title / document type"
+msgstr "Eigener Titel / Dokumenttyp"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Font size (px)"
+msgstr "Schriftgröße (px)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Bold"
+msgstr "Fett"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Alignment"
+msgstr "Ausrichtung"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Company name"
+msgstr "Firmenname"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Street"
+msgstr "Straße"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "ZIP / City"
+msgstr "PLZ / Ort"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Address"
+msgstr "Adresse"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Website"
+msgstr "Webseite"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Company registry"
+msgstr "Handelsregister"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Bank details"
+msgstr "Bankverbindung"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Use shipping address"
+msgstr "Lieferadresse verwenden"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show VAT ID"
+msgstr "USt-IdNr anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Salutation"
+msgstr "Anrede"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Introduction text"
+msgstr "Einleitungstext"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Columns (1-4)"
+msgstr "Spalten (1-4)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Payment terms"
+msgstr "Zahlungsbedingung"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Salesperson email"
+msgstr "Sachbearbeiter E-Mail"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Customer number"
+msgstr "Kundennummer"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Table design"
+msgstr "Tabellen-Design"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Minimal (header/separator lines only)"
+msgstr "Minimal (nur Kopf-/Trennlinien)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Bordered"
+msgstr "Mit Rahmen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Striped rows"
+msgstr "Zebrastreifen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Striped rows + borders"
+msgstr "Zebrastreifen + Rahmen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "No lines"
+msgstr "Ohne Linien"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Header background"
+msgstr "Kopfzeile Hintergrund"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Header text color"
+msgstr "Kopfzeile Textfarbe"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Stripe color"
+msgstr "Zebrastreifen Farbe"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Tax details"
+msgstr "Steuer-Details"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show amount due"
+msgstr "Fälligen Betrag anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Full width"
+msgstr "Gesamte Breite"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Minimal (total line only)"
+msgstr "Minimal (nur Gesamtlinie)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Alternating rows"
+msgstr "Abwechselnde Zeilen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Total separator"
+msgstr "Gesamt-Trennlinie"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Double"
+msgstr "Doppelt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Thin"
+msgstr "Dünn"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "None"
+msgstr "Keine"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Total background color"
+msgstr "Hintergrundfarbe Gesamt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Total text color"
+msgstr "Textfarbe Gesamt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Alternating row color"
+msgstr "Abwechselnde Zeilenfarbe"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: Subtotal"
+msgstr "Bezeichner: Zwischensumme"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: Taxes"
+msgstr "Bezeichner: Steuern"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: Total"
+msgstr "Bezeichner: Gesamt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: Amount Due"
+msgstr "Bezeichner: Fällig"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show payment terms"
+msgstr "Zahlungsbedingungen anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: Payment terms"
+msgstr "Bezeichner: Zahlungsbedingungen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show payment method"
+msgstr "Zahlungsart anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: Payment method"
+msgstr "Bezeichner: Zahlungsart"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Show payment reference"
+msgstr "Verwendungszweck anzeigen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: Payment reference"
+msgstr "Bezeichner: Verwendungszweck"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Notes (from document)"
+msgstr "Notizen (vom Beleg)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Shipping notice"
+msgstr "Versandhinweis"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Payment notice"
+msgstr "Zahlungshinweis"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Additional text"
+msgstr "Zusätzlicher Text"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Content (HTML)"
+msgstr "Inhalt (HTML)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Columns (side by side)"
+msgstr "Spalten (nebeneinander)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Centered"
+msgstr "Zentriert"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Single line"
+msgstr "Einzeilig"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Top separator"
+msgstr "Trennlinie oben"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Solid"
+msgstr "Durchgezogen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Dashed"
+msgstr "Gestrichelt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Dotted"
+msgstr "Gepunktet"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Line color"
+msgstr "Linienfarbe"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Label: CEO"
+msgstr "Bezeichner: GF"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "CEO name"
+msgstr "Name Geschäftsführer"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Custom text (left)"
+msgstr "Eigener Text (links)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Custom text (center)"
+msgstr "Eigener Text (mitte)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Custom text (right)"
+msgstr "Eigener Text (rechts)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Page numbers"
+msgstr "Seitenzahl"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Text color"
+msgstr "Textfarbe"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Left column (%)"
+msgstr "Linke Spalte (%)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Line style"
+msgstr "Linienstil"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Color"
+msgstr "Farbe"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Margin (px)"
+msgstr "Abstand (px)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Height (px)"
+msgstr "Höhe (px)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "please find the requested quotation attached:"
+msgstr "anbei erhalten Sie das gewünschte Angebot:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Error loading: "
+msgstr "Fehler beim Laden: "
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Layout saved!"
+msgstr "Layout gespeichert!"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Error saving: "
+msgstr "Fehler beim Speichern: "
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Layout Templates"
+msgstr "Layout-Vorlagen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "PDF Reports"
+msgstr "PDF-Reports"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Error loading templates: "
+msgstr "Fehler beim Laden der Vorlagen: "
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "The current layout will be replaced by the template. Continue?"
+msgstr "Das aktuelle Layout wird durch die Vorlage ersetzt. Fortfahren?"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Template applied!"
+msgstr "Vorlage angewendet!"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Error: "
+msgstr "Fehler: "
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Please enter a name."
+msgstr "Bitte einen Namen eingeben."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Template '%s' saved!"
+msgstr "Vorlage '%s' gespeichert!"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Product A"
+msgstr "Produkt A"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Product B"
+msgstr "Produkt B"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Another item"
+msgstr "Weitere Position"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "pcs"
+msgstr "Stk"
+
+#. module: axoline_layout_editor
+#: model:ir.ui.menu,name:axoline_layout_editor.menu_axoline_layout_root
+msgid "Layout Editor"
+msgstr "Layout-Editor"
+
+#. module: axoline_layout_editor
+#: model:ir.actions.act_window,name:axoline_layout_editor.action_axoline_pdf_reports
+msgid "PDF Reports"
+msgstr "PDF-Reports"
+
+#. module: axoline_layout_editor
+#: model:ir.ui.menu,name:axoline_layout_editor.menu_axoline_pdf_reports
+msgid "PDF Reports"
+msgstr "PDF-Reports"
+
+#. module: axoline_layout_editor
+#: model:ir.actions.act_window,name:axoline_layout_editor.action_axoline_layout_custom
+msgid "Saved Layouts"
+msgstr "Gespeicherte Layouts"
+
+#. module: axoline_layout_editor
+#: model:ir.ui.menu,name:axoline_layout_editor.menu_axoline_layout_saved
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_custom_tree
+msgid "Saved Layouts"
+msgstr "Gespeicherte Layouts"
+
+#. module: axoline_layout_editor
+#: model:ir.ui.menu,name:axoline_layout_editor.menu_axoline_layout_templates
+msgid "Templates"
+msgstr "Vorlagen"
+
+#. module: axoline_layout_editor
+#: model:ir.actions.act_window,name:axoline_layout_editor.action_axoline_layout_template
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_tree
+msgid "Layout Templates"
+msgstr "Layout-Vorlagen"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_custom_form
+msgid "Open Visual Editor"
+msgstr "Visuellen Editor öffnen"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+msgid "Edit in Editor"
+msgstr "Im Editor bearbeiten"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+msgid "System Template (read-only)"
+msgstr "System-Vorlage (schreibgeschützt)"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.act_report_xml_view_form_axoline
+msgid "Layout Editor"
+msgstr "Layout-Editor"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:12
+msgid "Loading layout…"
+msgstr "Layout wird geladen…"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:20
+msgid "Back"
+msgstr "Zurück"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:31
+msgid "Active"
+msgstr "Aktiv"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:43
+msgid "Apply template"
+msgstr "Vorlage anwenden"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:44
+msgid "Templates"
+msgstr "Vorlagen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:47
+msgid "Save current layout as template"
+msgstr "Aktuelles Layout als Vorlage speichern"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:48
+msgid "Save as Template"
+msgstr "Als Vorlage speichern"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:51
+msgid "Editor"
+msgstr "Editor"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:51
+msgid "Preview"
+msgstr "Vorschau"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:56
+msgid "Template Editor"
+msgstr "Vorlagen-Editor"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:60
+msgid "Save"
+msgstr "Speichern"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:73
+msgid "Refresh (saves)"
+msgstr "Aktualisieren (speichert)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:85
+msgid "Blocks"
+msgstr "Blöcke"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:114
+msgid "Drag blocks here or click in the sidebar"
+msgstr "Blöcke hierher ziehen oder in der Seitenleiste klicken"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:135
+msgid "Move up"
+msgstr "Nach oben"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:140
+msgid "Move down"
+msgstr "Nach unten"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:145
+msgid "Duplicate"
+msgstr "Duplizieren"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:150
+msgid "Remove"
+msgstr "Entfernen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:171
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:227
+msgid "Columns (reorder)"
+msgstr "Spalten (Reihenfolge ändern)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:256
+msgid "Label"
+msgstr "Bezeichner"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:264
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_custom_form
+msgid "Notes"
+msgstr "Hinweise"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:265
+msgid ""
+"The document type is detected automatically\n"
+"                                    (Quotation, Invoice, Credit Note, Purchase Order, etc.)."
+msgstr ""
+"Der Dokumenttyp wird automatisch erkannt\n"
+"                                    (Angebot, Rechnung, Gutschrift, Bestellung, usw.)."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:267
+msgid "In the"
+msgstr "Im Feld"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:268
+msgid "Custom title"
+msgstr "Eigener Titel"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:268
+msgid ""
+"field you can\n"
+"                                    override the automatic type."
+msgstr ""
+"können Sie den\n"
+"                                    automatischen Typ überschreiben."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:269
+msgid "With"
+msgstr "Mit"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:270
+msgid "Custom text"
+msgstr "Eigener Text"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:270
+msgid "you can also use"
+msgstr "können Sie auch"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:271
+msgid "{type}"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:271
+msgid "and"
+msgstr "und"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:271
+msgid "{number}"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:271
+msgid "as placeholders."
+msgstr "als Platzhalter verwenden."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:278
+msgid "Available Placeholders"
+msgstr "Verfügbare Platzhalter"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:280
+msgid "{name}"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:280
+msgid "– Full name"
+msgstr "– Vollständiger Name"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:281
+msgid "{first_name}"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:281
+msgid "– First name"
+msgstr "– Vorname"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:282
+msgid "{last_name}"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:282
+msgid "– Last name"
+msgstr "– Nachname"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:283
+msgid "{company}"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:283
+msgid "– Your company"
+msgstr "– Ihre Firma"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:284
+msgid "{doc_name}"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:284
+msgid "– Document number"
+msgstr "– Belegnummer"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:287
+msgid "Examples:"
+msgstr "Beispiele:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:288
+msgid "Dear Mr./Mrs. {last_name},"
+msgstr "Sehr geehrte/r Frau/Herr {last_name},"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:289
+msgid "Hello {first_name} {last_name},"
+msgstr "Hallo {first_name} {last_name},"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:290
+msgid "Dear Sir or Madam,"
+msgstr "Sehr geehrte Damen und Herren,"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:295
+msgid "Select a block to edit its properties"
+msgstr "Wählen Sie einen Block, um seine Eigenschaften zu bearbeiten"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:303
+msgid "Page Margins (mm)"
+msgstr "Seitenränder (mm)"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:307
+msgid "Margin top"
+msgstr "Oben"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:314
+msgid "Margin bottom"
+msgstr "Unten"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:321
+msgid "Margin left"
+msgstr "Links"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:328
+msgid "Margin right"
+msgstr "Rechts"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:345
+msgid "Select Template"
+msgstr "Vorlage auswählen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:351
+msgid "Loading templates..."
+msgstr "Vorlagen werden geladen..."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:355
+msgid "No templates available."
+msgstr "Keine Vorlagen verfügbar."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:384
+msgid "Name *"
+msgstr "Name *"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:388
+msgid "e.g. My Standard Quotation"
+msgstr "z.B. Mein Standard-Angebot"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:391
+msgid "Description"
+msgstr "Beschreibung"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:395
+msgid "Optional description of the template..."
+msgstr "Optionale Beschreibung der Vorlage..."
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:399
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:421
+msgid "Sample Company Inc."
+msgstr "Muster GmbH"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:422
+msgid "123 Main Street · Anytown 12345"
+msgstr "Musterstraße 123 · 12345 Musterstadt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:443
+msgid "Company Inc."
+msgstr "Muster GmbH"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:445
+msgid "123 Main Street"
+msgstr "Musterstraße 123"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:447
+msgid "12345 Anytown"
+msgstr "12345 Musterstadt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:449
+msgid "Phone: 0123 456789"
+msgstr "Tel: 0123 456789"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:451
+msgid "info@company.com"
+msgstr "info@firma.de"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:460
+msgid "Fax: 0123 456780"
+msgstr "Fax: 0123 456780"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:462
+msgid "www.company.com"
+msgstr "www.firma.de"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:463
+msgid "VAT ID: DE123456789"
+msgstr "USt-IdNr: DE123456789"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:464
+msgid "Reg. No.: HRB 12345"
+msgstr "HR: HRB 12345"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:465
+msgid "IBAN: DE89 3704 … · BIC: COBADEFFXXX"
+msgstr "IBAN: DE89 3704 … · BIC: COBADEFFXXX"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:470
+msgid "INV-2024/0001"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:477
+msgid "Sample Customer Ltd."
+msgstr "Musterkunde GmbH"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:477
+msgid "42 Customer Road"
+msgstr "Kundenweg 42"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:478
+msgid "54321 Customer City"
+msgstr "54321 Kundenstadt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:487
+msgid "Number:"
+msgstr "Nummer:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:488
+msgid "Date:"
+msgstr "Datum:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:488
+msgid "03/26/2026"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:491
+msgid "Reference:"
+msgstr "Referenz:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:491
+msgid "PO-4711"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:492
+msgid "Payment:"
+msgstr "Zahlung:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:492
+msgid "30 Days Net"
+msgstr "30 Tage netto"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:495
+msgid "Salesperson:"
+msgstr "Sachbearbeiter:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:495
+msgid "John Doe"
+msgstr "Max Mustermann"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:496
+msgid "Cust. No.:"
+msgstr "Kd.-Nr.:"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:496
+msgid "K-10042"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:536
+msgid "1,000.00 €"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:546
+msgid "1,190.00 €"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:566
+msgid "Manual Payment"
+msgstr "Manuelle Zahlung"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:572
+msgid "INV-2026-001"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:574
+msgid "Notes / Remarks…"
+msgstr "Notizen / Anmerkungen…"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:591
+msgid "123 Main St. · Anytown 12345"
+msgstr "Musterstr. 123 · 12345 Musterstadt"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:594
+msgid "Phone: +1 234 567890"
+msgstr "Tel: +49 123 456789"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:595
+msgid "info@sample.com"
+msgstr "info@muster.de"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:596
+msgid "www.sample.com"
+msgstr "www.muster.de"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:600
+msgid "Reg.: HRB 12345"
+msgstr "HR: HRB 12345"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:601
+msgid "IBAN: DE89 3704 0044 0532 0130 00"
+msgstr "IBAN: DE89 3704 0044 0532 0130 00"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:608
+msgid ""
+"Sample Company Inc. · 123 Main St. · Anytown 12345 · Phone: +1 234 567890"
+msgstr ""
+"Muster GmbH · Musterstr. 123 · 12345 Musterstadt · Tel: +49 123 456789"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:615
+msgid "Page 1 of 1"
+msgstr "Seite 1 von 1"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:632
+msgid "Enter free text…"
+msgstr "Freitext eingeben…"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:646
+msgid "Left ("
+msgstr "Links ("
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:677
+msgid "Drag blocks here"
+msgstr "Blöcke hierher ziehen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:688
+msgid "Right ("
+msgstr "Rechts ("
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:731
+msgid "px"
+msgstr ""
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/xml/layout_editor.xml:737
+msgid "Page Break"
+msgstr "Seitenumbruch"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.act_report_xml_view_tree_axoline
+msgid "Edit layout in Axoline Editor"
+msgstr "Layout im Axoline-Editor bearbeiten"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_custom_form
+msgid "PDF Layout"
+msgstr "PDF-Layout"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_custom_form
+msgid "Editor Data (JSON)"
+msgstr "Editor-Daten (JSON)"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+msgid "Layout Template"
+msgstr "Layout-Vorlage"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+msgid "Template name"
+msgstr "Vorlagenname"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Test Print"
+msgstr "Testdruck"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "Please select a sample record first."
+msgstr "Bitte zuerst einen Beispiel-Datensatz auswaehlen."
+
+#. module: axoline_layout_editor
+#: model:axoline.layout.template,name:axoline_layout_editor.template_letterhead
+msgid "Letterhead"
+msgstr "Briefpapier"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_ir_actions_report__axoline_is_locked
+msgid "Axoline PRO Required"
+msgstr "Axoline PRO erforderlich"
+
+#. module: axoline_layout_editor
+#: model:ir.model.fields,field_description:axoline_layout_editor.field_axoline_layout_template__axoline_is_locked
+msgid "PRO Required"
+msgstr "PRO erforderlich"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#: code:addons/axoline_layout_editor/models/ir_actions_report.py:0
+#, python-format
+msgid "PRO feature"
+msgstr "PRO-Funktion"
+
+#. module: axoline_layout_editor
+#. odoo-python
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/models/ir_actions_report.py:0
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+#, python-format
+msgid "Get the PRO add-on"
+msgstr "PRO-Add-on holen"
+
+#. module: axoline_layout_editor
+#. odoo-javascript
+#: code:addons/axoline_layout_editor/static/src/js/layout_editor.js:0
+#, python-format
+msgid "The “%s” template is available in the PRO add-on."
+msgstr "Die Vorlage „%s“ ist im PRO-Add-on verfügbar."
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.act_report_xml_view_tree_axoline
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_tree
+msgid "🔒 PRO"
+msgstr "🔒 PRO"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.act_report_xml_view_form_axoline
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+msgid "Unlock with PRO"
+msgstr "Mit PRO freischalten"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+msgid "PRO Template"
+msgstr "PRO-Vorlage"
+
+#. module: axoline_layout_editor
+#: model_terms:ir.ui.view,arch_db:axoline_layout_editor.view_axoline_layout_template_form
+msgid "This template's design is part of the Axoline Layout Editor PRO add-on."
+msgstr "Das Design dieser Vorlage ist Teil des Axoline Layout Editor PRO-Add-ons."

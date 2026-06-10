@@ -1,0 +1,945 @@
+/* ================================================================
+   Axoline Layout Editor – Complete Styles
+   ================================================================ */
+
+/* ---- Root ---- */
+.axo-editor-root {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 46px);
+    background: #f4f5f7;
+    overflow: hidden;
+}
+
+/* ---- Loading ---- */
+.axo-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 16px;
+    color: #666;
+}
+
+/* ================================================================
+   TOOLBAR
+   ================================================================ */
+.axo-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+    min-height: 48px;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.axo-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.axo-toolbar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.axo-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.axo-sample-select {
+    max-width: 260px;
+}
+
+/* ================================================================
+   MAIN AREA
+   ================================================================ */
+.axo-main {
+    flex: 1;
+    overflow: hidden;
+}
+
+.axo-editor-body {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ================================================================
+   SIDEBAR (Block Palette)
+   ================================================================ */
+.axo-sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: #fff;
+    border-right: 1px solid #dee2e6;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.axo-sidebar-header {
+    padding: 12px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #495057;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.axo-palette-category {
+    padding: 0;
+}
+
+.axo-palette-category-title {
+    padding: 8px 14px 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #868e96;
+}
+
+.axo-palette-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 8px 8px;
+}
+
+.axo-palette-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: grab;
+    font-size: 12px;
+    color: #495057;
+    transition: background 0.15s;
+    user-select: none;
+}
+
+.axo-palette-block:hover {
+    background: #e9ecef;
+}
+
+.axo-palette-block:active {
+    cursor: grabbing;
+    background: #dee2e6;
+}
+
+.axo-palette-block .fa {
+    width: 18px;
+    text-align: center;
+    color: #7950f2;
+    font-size: 13px;
+}
+
+/* ================================================================
+   CANVAS
+   ================================================================ */
+.axo-canvas {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    background: #f4f5f7;
+    position: relative;
+}
+
+.axo-canvas-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #adb5bd;
+    gap: 12px;
+    text-align: center;
+}
+
+/* ---- Canvas Block ---- */
+.axo-canvas-block {
+    background: #fff;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    cursor: grab;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    overflow: hidden;
+}
+
+.axo-canvas-block:hover {
+    border-color: #ced4da;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.axo-canvas-block.axo-selected {
+    border-color: #7950f2;
+    box-shadow: 0 0 0 3px rgba(121, 80, 242, 0.15);
+}
+
+.axo-canvas-block:active {
+    cursor: grabbing;
+}
+
+/* ---- Block Header ---- */
+.axo-canvas-block-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 12px;
+    color: #495057;
+}
+
+.axo-canvas-block-header .fa {
+    color: #7950f2;
+    font-size: 12px;
+}
+
+.axo-canvas-block-label {
+    flex: 1;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.axo-canvas-block-actions {
+    display: flex;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.axo-canvas-block:hover .axo-canvas-block-actions {
+    opacity: 1;
+}
+
+.axo-canvas-block-actions .btn {
+    font-size: 11px;
+    line-height: 1;
+    padding: 2px 4px !important;
+}
+
+/* ---- Block Body (preview) ---- */
+.axo-canvas-block-body {
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #495057;
+    min-height: 28px;
+    pointer-events: none;
+}
+
+.axo-canvas-block-body.axo-interactive {
+    pointer-events: auto;
+}
+
+/* ---- Drop indicator ---- */
+.axo-drop-indicator {
+    height: 4px;
+    background: #7950f2;
+    border-radius: 2px;
+    margin: 4px 0;
+    animation: axo-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes axo-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* ================================================================
+   PROPERTIES PANEL
+   ================================================================ */
+.axo-properties {
+    width: 280px;
+    min-width: 280px;
+    background: #fff;
+    border-left: 1px solid #dee2e6;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.axo-properties-header {
+    padding: 12px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #495057;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.axo-properties-block-type {
+    padding: 10px 14px 4px;
+    font-size: 13px;
+    color: #7950f2;
+}
+
+.axo-properties-fields {
+    padding: 4px 14px 14px;
+}
+
+.axo-prop-row {
+    margin-bottom: 10px;
+}
+
+.axo-prop-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: #868e96;
+    margin-bottom: 3px;
+}
+
+.axo-properties-empty {
+    padding: 24px 14px;
+    text-align: center;
+    color: #adb5bd;
+    font-size: 12px;
+}
+
+/* ---- Column Order Section ---- */
+.axo-column-order-section {
+    border-top: 1px solid #e9ecef;
+    margin-top: 4px;
+}
+
+.axo-column-order-header {
+    padding: 10px 14px 6px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.axo-column-order-header .fa {
+    color: #7950f2;
+}
+
+.axo-column-order-list {
+    padding: 0 8px 8px;
+}
+
+.axo-column-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    background: #f8f9fa;
+    transition: background 0.15s;
+}
+
+.axo-column-item:hover {
+    background: #e9ecef;
+}
+
+.axo-column-item.axo-column-disabled {
+    opacity: 0.5;
+}
+
+.axo-column-item-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.axo-column-arrows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.axo-arrow-btn {
+    padding: 0 3px;
+    line-height: 1;
+    font-size: 9px;
+    color: #868e96;
+    border: none;
+    background: transparent;
+}
+
+.axo-arrow-btn:hover:not(:disabled) {
+    color: #364fc7;
+}
+
+.axo-arrow-btn:disabled {
+    opacity: 0.25;
+}
+
+.axo-column-toggle {
+    margin: 0;
+    min-height: auto;
+}
+
+.axo-column-toggle .form-check-input {
+    margin-top: 0;
+}
+
+.axo-column-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: #495057;
+    white-space: nowrap;
+}
+
+.axo-column-label-input {
+    width: 90px !important;
+    min-width: 90px;
+    font-size: 11px !important;
+    padding: 2px 6px !important;
+    height: 24px !important;
+}
+
+/* ---- Property Hints ---- */
+.axo-prop-hint {
+    margin: 8px 14px 4px;
+    padding: 8px 10px;
+    background: #f0f4ff;
+    border-radius: 6px;
+    border: 1px solid #d0d9f0;
+    font-size: 11px;
+    color: #495057;
+}
+
+.axo-prop-hint-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #364fc7;
+}
+
+.axo-prop-hint-title .fa {
+    margin-right: 4px;
+}
+
+.axo-prop-hint-body code {
+    background: #dee2e6;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    color: #364fc7;
+}
+
+.axo-prop-hint-body em {
+    color: #868e96;
+}
+
+.axo-prop-hint-examples {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed #d0d9f0;
+    color: #495057;
+}
+
+.axo-prop-hint-examples em {
+    color: #868e96;
+    display: block;
+    margin-top: 2px;
+}
+
+/* ---- Page Margins Section ---- */
+.axo-margins-section {
+    border-top: 1px solid #e9ecef;
+    margin-top: 8px;
+}
+
+.axo-margins-header {
+    padding: 10px 14px 6px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.axo-margins-header .fa {
+    color: #7950f2;
+}
+
+.axo-margins-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 4px 14px 14px;
+}
+
+.axo-margin-field label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    color: #868e96;
+    margin-bottom: 2px;
+}
+
+.axo-margin-field input {
+    text-align: center;
+}
+
+/* ================================================================
+   PREVIEW
+   ================================================================ */
+.axo-preview-mode {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.axo-preview-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.axo-preview-toolbar {
+    padding: 8px 16px;
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.axo-preview-iframe {
+    flex: 1;
+    border: none;
+    background: #fff;
+}
+
+/* ================================================================
+   Block Preview Styles (inside canvas)
+   ================================================================ */
+.axo-bp-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.axo-bp-logo-placeholder {
+    width: 48px;
+    height: 48px;
+    background: #e9ecef;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* ---- Sender line preview ---- */
+.axo-bp-sender-line {
+    font-size: 9px;
+    color: #666;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 3px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.axo-bp-sep {
+    color: #adb5bd;
+}
+
+/* ---- Company details preview ---- */
+.axo-bp-company-details {
+    line-height: 1.6;
+    color: #495057;
+}
+
+.axo-bp-address {
+    line-height: 1.5;
+}
+
+.axo-bp-info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.axo-bp-info-table td {
+    padding: 2px 8px 2px 0;
+}
+
+.axo-bp-line-items {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+}
+
+.axo-bp-line-items th {
+    border-bottom: 1px solid #dee2e6;
+    padding: 3px 6px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 10px;
+    color: #666;
+}
+
+.axo-bp-line-items td {
+    padding: 3px 6px;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.axo-bp-subtotals {
+    line-height: 1.6;
+}
+
+.axo-bp-notes {
+    line-height: 1.5;
+}
+
+.axo-bp-freetext {
+    min-height: 16px;
+}
+
+/* ---- Two Columns interactive layout ---- */
+.axo-bp-twocol {
+    display: flex;
+    gap: 8px;
+}
+
+.axo-twocol-col {
+    border: 2px dashed #ced4da;
+    border-radius: 6px;
+    padding: 6px;
+    min-height: 60px;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.axo-twocol-col.axo-col-drop-active {
+    border-color: #7950f2;
+    background: rgba(121, 80, 242, 0.06);
+}
+
+.axo-twocol-col-label {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #adb5bd;
+    padding: 0 2px 4px;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 2px;
+}
+
+.axo-twocol-col-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #adb5bd;
+    font-size: 10px;
+    padding: 12px 4px;
+}
+
+.axo-twocol-col-empty .fa {
+    font-size: 12px;
+}
+
+/* ---- Sub-blocks inside columns ---- */
+.axo-column-subblock {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    cursor: grab;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    overflow: hidden;
+}
+
+.axo-column-subblock:hover {
+    border-color: #ced4da;
+}
+
+.axo-column-subblock.axo-selected {
+    border-color: #7950f2;
+    box-shadow: 0 0 0 2px rgba(121, 80, 242, 0.15);
+}
+
+.axo-column-subblock:active {
+    cursor: grabbing;
+}
+
+.axo-column-subblock-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 6px;
+    font-size: 10px;
+    color: #495057;
+}
+
+.axo-column-subblock-header .fa {
+    color: #7950f2;
+    font-size: 10px;
+    width: 14px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.axo-column-subblock-label {
+    flex: 1;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.axo-column-subblock-actions {
+    display: flex;
+    gap: 1px;
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.axo-column-subblock:hover .axo-column-subblock-actions {
+    opacity: 1;
+}
+
+.axo-column-subblock-actions .btn {
+    font-size: 9px;
+    line-height: 1;
+    padding: 1px 3px !important;
+}
+
+.axo-bp-spacer {
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 4px,
+        #f1f3f5 4px,
+        #f1f3f5 8px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.axo-bp-pagebreak {
+    text-align: center;
+    padding: 8px;
+    color: #e03131;
+    font-weight: 500;
+    border: 1px dashed #e03131;
+    border-radius: 4px;
+}
+
+/* ================================================================
+   MODAL OVERLAY & DIALOGS
+   ================================================================ */
+.axo-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1060;
+    animation: axo-fade-in 0.15s ease-out;
+}
+
+@keyframes axo-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.axo-modal {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    animation: axo-slide-up 0.2s ease-out;
+}
+
+@keyframes axo-slide-up {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.axo-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.axo-modal-header h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.axo-modal-header h5 .fa {
+    color: #7950f2;
+}
+
+.axo-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.axo-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+/* ---- Template selection modal ---- */
+.axo-template-modal {
+    width: 680px;
+    max-width: 90vw;
+}
+
+.axo-template-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.axo-template-card {
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.axo-template-card:hover {
+    border-color: #7950f2;
+    box-shadow: 0 4px 16px rgba(121, 80, 242, 0.12);
+    transform: translateY(-2px);
+}
+
+.axo-template-card-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #7950f2 0%, #9775fa 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.axo-template-card-body {
+    flex: 1;
+}
+
+.axo-template-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.axo-template-card-desc {
+    font-size: 11px;
+    color: #868e96;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.axo-template-card-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #f1f3f5;
+    color: #495057;
+    align-self: flex-start;
+}
+
+.axo-template-card:hover .axo-template-card-badge {
+    background: #e5dbff;
+    color: #7950f2;
+}
+
+.axo-template-card-locked {
+    opacity: 0.65;
+}
+
+.axo-template-card-locked .axo-template-card-icon {
+    background: linear-gradient(135deg, #adb5bd 0%, #ced4da 100%);
+}
+
+.axo-template-card-locked:hover {
+    border-color: #f59f00;
+    box-shadow: 0 4px 16px rgba(245, 159, 0, 0.12);
+}
+
+.axo-template-card-badge-pro {
+    background: #fff3bf !important;
+    color: #e67700 !important;
+}
+
+.axo-template-card-locked:hover .axo-template-card-badge-pro {
+    background: #ffe066 !important;
+    color: #b85c00 !important;
+}
+
+/* ---- Save template modal ---- */
+.axo-save-template-modal {
+    width: 440px;
+    max-width: 90vw;
+}
+
+/* ---- Footer preview ---- */
+.axo-bp-footer {
+    border-top: 1px dashed #dee2e6;
+    padding-top: 6px;
+}

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Standalone QWeb public template - full HTML page -->
+    <template id="guide_book_public" name="Public Guide - Book">
+        <t t-set="page_title" t-value="book.name"/>
+        <t t-set="base_url" t-value="'/guide/' + book.slug"/>
+
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <meta name="robots" content="noindex, nofollow"/>
+            <title><t t-out="page_title"/> - Guide</title>
+            <link rel="stylesheet"
+                  t-att-href="'/knowledge_guide/static/src/css/guide_public.css'"/>
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        </head>
+        <body>
+
+            <!-- ====== Mobile sidebar toggle ====== -->
+            <button class="gp-sidebar-toggle" id="sidebarToggle" onclick="document.body.classList.toggle('sidebar-open')">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- ====== Overlay for mobile ====== -->
+            <div class="gp-overlay" id="overlay" onclick="document.body.classList.remove('sidebar-open')"></div>
+
+            <div class="gp-layout">
+
+                <!-- ====== SIDEBAR ====== -->
+                <aside class="gp-sidebar">
+                    <div class="gp-sidebar-header">
+                        <h2 class="gp-sidebar-title">
+                            <i class="fa fa-book"></i>
+                            <t t-out="book.name"/>
+                        </h2>
+                    </div>
+                    <nav class="gp-sidebar-nav">
+                        <t t-foreach="categories" t-as="cat_name">
+                            <t t-set="has_active_page" t-value="selected_page and any(p.id == selected_page.id for p in categories[cat_name])"/>
+                            <div class="gp-nav-category">
+                                <div class="gp-nav-category-title"
+                                     t-att-data-category="cat_name"
+                                     onclick="togglePublicCategory(this)">
+                                    <i class="fa gp-chevron"
+                                       t-att-class="'fa-chevron-right' if not has_active_page else 'fa-chevron-down'"></i>
+                                    <i class="fa fa-folder-open"></i>
+                                    <t t-out="cat_name"/>
+                                </div>
+                                <ul class="gp-nav-pages"
+                                    t-att-class="'' if has_active_page else 'collapsed'">
+                                    <t t-foreach="categories[cat_name]" t-as="nav_page">
+                                        <li t-att-class="'gp-nav-page-item' + (' active' if selected_page and nav_page.id == selected_page.id else '')">
+                                            <a t-att-href="base_url + '/' + str(nav_page.id) + '?token=' + token">
+                                                <i t-att-class="'fa ' + (nav_page.icon or 'fa-file-text-o')"></i>
+                                                <t t-out="nav_page.name"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div>
+                        </t>
+                    </nav>
+                    <div class="gp-sidebar-footer">
+                        <span>Powered by <strong>Knowledge Guide</strong></span>
+                    </div>
+                </aside>
+
+                <!-- ====== MAIN CONTENT ====== -->
+                <main class="gp-main">
+                    <!-- Header -->
+                    <header class="gp-header">
+                        <div class="gp-header-inner">
+                            <h1 class="gp-header-title"><t t-out="book.name"/></h1>
+                            <t t-if="book.description_html">
+                                <div class="gp-header-desc">
+                                    <t t-out="book.description_html"/>
+                                </div>
+                            </t>
+                        </div>
+                    </header>
+
+                    <!-- Content -->
+                    <div class="gp-content-area">
+                        <t t-if="selected_page">
+                            <article class="gp-article">
+                                <div class="gp-article-header">
+                                    <span class="gp-article-category">
+                                        <i class="fa fa-tag"></i>
+                                        <t t-out="selected_page.category"/>
+                                    </span>
+                                    <h2 class="gp-article-title"><t t-out="selected_page.name"/></h2>
+                                </div>
+                                <div class="gp-article-body">
+                                    <t t-out="selected_page.display_content_html"/>
+                                </div>
+                            </article>
+
+                            <!-- Prev/next pagination -->
+                            <nav class="gp-pagination">
+                                <t t-if="prev_page">
+                                    <a class="gp-pagination-btn gp-pagination-prev"
+                                       t-att-href="base_url + '/' + str(prev_page.id) + '?token=' + token">
+                                        <i class="fa fa-arrow-left"></i>
+                                        <span class="gp-pagination-label">Previous</span>
+                                        <span class="gp-pagination-title"><t t-out="prev_page.name"/></span>
+                                    </a>
+                                </t>
+                                <t t-else="">
+                                    <div></div>
+                                </t>
+                                <t t-if="next_page">
+                                    <a class="gp-pagination-btn gp-pagination-next"
+                                       t-att-href="base_url + '/' + str(next_page.id) + '?token=' + token">
+                                        <span class="gp-pagination-label">Next</span>
+                                        <span class="gp-pagination-title"><t t-out="next_page.name"/></span>
+                                        <i class="fa fa-arrow-right"></i>
+                                    </a>
+                                </t>
+                            </nav>
+                        </t>
+                        <t t-else="">
+                            <div class="gp-empty-state">
+                                <i class="fa fa-book fa-3x"></i>
+                                <h3>This guide does not contain any pages yet</h3>
+                                <p>Documentation pages will be added soon.</p>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="gp-footer">
+                        <p>
+                            <t t-out="book.name"/>
+                            &#8212; Powered by <strong>Knowledge Guide</strong>
+                        </p>
+                    </footer>
+                </main>
+
+            </div>
+
+            <script>
+            // Toggle category collapse/expand in public view
+            function togglePublicCategory(titleElement) {
+                var pagesContainer = titleElement.nextElementSibling;
+                var chevron = titleElement.querySelector('.gp-chevron');
+
+                if (pagesContainer.classList.contains('collapsed')) {
+                    pagesContainer.classList.remove('collapsed');
+                    chevron.classList.remove('fa-chevron-right');
+                    chevron.classList.add('fa-chevron-down');
+                } else {
+                    pagesContainer.classList.add('collapsed');
+                    chevron.classList.remove('fa-chevron-down');
+                    chevron.classList.add('fa-chevron-right');
+                }
+            }
+            </script>
+
+        </body>
+        </html>
+
+    </template>
+
+</odoo>

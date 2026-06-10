@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="web.ListRenderer" t-inherit-mode="extension">
+        <xpath expr="//table[@t-ref='table']" position="before">
+            <t t-if="dashboardConfig">
+                <ListDashboard config="dashboardConfig" model="props.list"/>
+            </t>
+        </xpath>
+    </t>
+</templates>

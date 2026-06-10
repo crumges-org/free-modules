@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_axoline_layout_custom_editor,axoline.layout.custom editor,model_axoline_layout_custom,group_axoline_layout_editor,1,1,1,1
+access_axoline_layout_template_reader,axoline.layout.template reader,model_axoline_layout_template,base.group_user,1,0,0,0
+access_axoline_layout_template_editor,axoline.layout.template editor,model_axoline_layout_template,group_axoline_layout_editor,1,1,1,1
+access_ir_actions_report_axoline_reader,ir.actions.report axoline reader,base.model_ir_actions_report,group_axoline_layout_editor,1,0,0,0
