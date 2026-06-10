@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="mail.Message" t-inherit-mode="extension">
+
+        <!-- Find the o-mail-Message-author section, Show Carrier and Truck No -->
+        <xpath expr="//span[hasclass('o-mail-Message-author')]" position="replace">
+            <span t-if="(message.author or message.email_from) and shouldDisplayAuthorName" class="o-mail-Message-author">
+                <strong class="me-1">
+                    <t t-if="message.driver_name">
+                        <t t-esc="message.driver_name"/>
+                    </t>
+                    <t t-elif="message.author">
+                        <t t-esc="message.author.name"/>
+                    </t>
+                    <t t-else="">
+                        <t t-esc="message.email_from"/>
+                    </t>
+                </strong>
+            </span>
+        </xpath>
+    </t>
+
+</templates>

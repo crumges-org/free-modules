@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="bista_driver_fleet_res_users_tree_view" model="ir.ui.view">
+        <field name="name">res.users.list.view.fleet</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <list string="Users">
+                <field name="name"/>
+                <field name="login"/>
+            </list>
+        </field>
+    </record>
+
+    <!--T2493:custom fleet language field for driver users-->
+    <record id="fleet_view_users_form_inherit" model="ir.ui.view">
+        <field name="name">fleet.res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences']//field[@name='tz']" position="before">
+                    <field name="fleet_lang"/>
+            </xpath>
+<!--            <xpath expr="//field[@name='login']" position="after">-->
+<!--                <field name="user_type"/>-->
+<!--            </xpath>-->
+            <!-- T2997 : User > Default Company: Create and Edit -->
+            <xpath expr="//page[@name='access_rights']//field[@name='company_id']" position="attributes">
+                <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+            </xpath>
+
+            <!-- T2580 14 day Test: Fleet token in view for temporary debug -->
+            <xpath expr="//notebook/page" position="inside">
+                    <field name="fleet_token_ids" string="Fleet Tokens" groups='base.group_no_one'>
+                        <list create="false">
+                            <field name="refresh_token"/>
+                            <field name="refresh_token_expires"/>
+                            <field name="access_token"/>
+                            <field name="access_token_expires"/>
+                        </list>
+                    </field>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- Top Level Menu : Administration  -->
+    <menuitem id="group_shipment_administration_access" sequence="7" name="Administration"
+            parent="bista_driver_app.menu_driver_fleet_shipment_configuration_menu"
+            groups="bista_driver_app.group_shipment_dispatcher_access,base.group_system"/>
+
+    <!-- Submenu : Document Types -->
+    <menuitem id="menu_shipment_documents_type2"  parent="bista_driver_app.menu_driver_fleet_shipment_configuration_menu"
+        name="Document Types" action="bista_driver_app.driver_document_type_action_fleet"
+        groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+    <!-- Submenu : Shipment Stages -->
+    <menuitem id="menu_shipment_status" parent="bista_driver_app.group_shipment_administration_access"
+        name="Shipment Stages" action="bista_driver_app.action_shipment_status" sequence="10" groups="base.group_system"/>
+
+
+    <!-- Submenu : Settings -->
+    <menuitem id="menu_shipment_settings" parent="base.menu_custom"
+        name="Shipment Master Configuration" sequence="16" action="bista_driver_app.action_shipment_settings" groups="base.group_system"/>
+
+
+</odoo>

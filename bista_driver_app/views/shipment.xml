@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Tree View -->
+    <record id="shipment_tree_view" model="ir.ui.view">
+        <field name="name">shipment.shipment.list.view</field>
+        <field name="model">shipment.shipment</field>
+        <field name="arch" type="xml">
+            <list string="Shipments" multi_edit="1">
+                <field name="name" readonly="1"/>
+                <field name="status_id" string="Status" optional="show"
+                       decoration-muted="status_id in [1]" decoration-warning="status_id in [2]"
+                       decoration-primary="status_id in [3, 4, 5, 6]"
+                       decoration-success="status_id in [7]" decoration-danger="status_id in [8]"
+                       readonly="0" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+<!--                <field name="call_out_id" readonly="1"/>-->
+                <!--T2556 Tracking status color change-->
+                <field name="tracking_status" optional="show" widget="badge" decoration-muted="tracking_status == 'inactive'" decoration-success="tracking_status == 'active'" decoration-danger="tracking_status == 'paused'"/>
+
+                <field name="stop_pickup" string="Pickup Location"/>
+                <field name="pickup_street_1" optional="hide"/>
+                <field name="pickup_street_2" optional="hide"/>
+                <field name="pickup_city" optional="hide"/>
+                <field name="pickup_county_id" optional="hide"/>
+                <field name="pickup_state_id" optional="hide"/>
+                <field name="pickup_zip" optional="hide"/>
+                <field name="pickup_country_id" optional="hide"/>
+                <field name="display_pickup_address" optional="hide"/>
+                <field name="pickup_latitude" optional="hide"/>
+                <field name="pickup_longitude" optional="hide"/>
+                <field name="pickup_contact_name" optional="hide"/>
+                <field name="pickup_contact_email" optional="hide"/>
+                <field name="pickup_contact_phone" optional="hide"/>
+                <field name="pickup_directions" optional="hide"/>
+                <field name="pickup_notes" optional="hide"/>
+
+                <field name="planned_pickup" options="{'is_utc': True}"/>
+                <field name="pickup_timezone" invisible="planned_pickup == False"/>
+                <field name="actual_pickup" optional="hide" options="{'is_utc': True}"/>
+                <field name="pickup_departure_time" optional="hide" options="{'is_utc': True}"/>
+
+                <field name="stop_delivery" string="Delivery Location"/>
+                <field name="delivery_street_1" optional="hide"/>
+                <field name="delivery_street_2" optional="hide"/>
+                <field name="delivery_city" optional="hide"/>
+                <field name="delivery_county_id" optional="hide"/>
+                <field name="delivery_state_id" optional="hide"/>
+                <field name="delivery_zip" optional="hide"/>
+                <field name="delivery_country_id" optional="hide"/>
+                <field name="display_delivery_address" optional="hide"/>
+                <field name="delivery_latitude" optional="hide"/>
+                <field name="delivery_longitude" optional="hide"/>
+                <field name="delivery_contact_name" optional="hide"/>
+                <field name="delivery_contact_email" optional="hide"/>
+                <field name="delivery_contact_phone" optional="hide"/>
+                <field name="delivery_directions" optional="hide"/>
+                <field name="delivery_notes" optional="hide"/>
+
+                <field name="planned_delivery" options="{'is_utc': True}"/>
+                <field name="delivery_timezone" invisible="planned_delivery == False"/>
+                <field name="actual_delivery" optional="hide" options="{'is_utc': True}"/>
+                <field name="delivery_departure_time" optional="hide" options="{'is_utc': True}"/>
+
+                <field name="customer_id"/>
+                <field name="carrier_id" optional="hide"/>
+<!--                <field name="samsara_eld_asset_id"/>-->
+                <field name="truck_number" optional="hide"/>
+                <field name="driver_id" string="Carrier" readonly="1" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                    context="{'is_from_call_out_mst': True, 'tree_view_ref': 'bista_driver_app.bista_fleet_driver_optional_tree_view', 'search_view_ref': 'bista_driver_app.bista_fleet_driver_optional_search_view'}"/>
+
+                <field name="forklift_shipment" optional="hide"/>
+
+                <field name="create_uid" optional="hide"/>
+                <field name="create_date" optional="hide"/>
+                <field name="write_uid" string="Updated By" optional="hide"/>
+                <field name="write_date" string="Updated On" optional="hide"/>
+
+                <field name="latest_latitude" optional="hide"/>
+                <field name="latest_longitude" optional="hide"/>
+                <field name="remaining_distance" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="shipment_form_view" model="ir.ui.view">
+        <field name="name">shipment.shipment.form.view</field>
+        <field name="model">shipment.shipment</field>
+        <field name="arch" type="xml">
+            <form string="Shipment">
+                <header>
+                    <field name="is_dispatcher" invisible="1"/>
+                    <field name="status_id" widget="statusbar" options="{'clickable': '1'}"
+                           invisible="not is_dispatcher"/>
+                    <field name="status_id" widget="statusbar" invisible="is_dispatcher"/>
+
+                    <!-- <button name="action_set_assigned" confirm="Are you sure you want to mark as Assigned?" string="Assigned" type="object" class="btn btn-secondary" invisible="status_id != 1" groups="bista_driver_app.group_shipment_dispatcher_access"/> -->
+
+                    <!-- <button name="action_set_pending" confirm="Are you sure you want to mark as Pending?" string="Pending" type="object" class="btn btn-secondary" invisible="status_id in [1, 7]"  groups="bista_driver_app.group_shipment_dispatcher_access"/>
+                    <button name="action_set_accepted" confirm="Are you sure you want to mark as Dispatched?" string="Dispatched" type="object" class="btn btn-secondary" invisible="status_id != 2" groups="bista_driver_app.group_shipment_dispatcher_access"/>
+                    <button name="action_set_at_pickup" confirm="Are you sure you want to mark as At Pickup?" string="At Pickup" type="object" class="btn btn-secondary" invisible="status_id != 3" groups="bista_driver_app.group_shipment_dispatcher_access"/>
+                    <button name="action_set_in_transit" confirm="Are you sure you want to mark as In Transit?" string="In Transit" type="object" class="btn btn-secondary" invisible="status_id != 4" groups="bista_driver_app.group_shipment_dispatcher_access"/>
+                    <button name="action_set_at_delivery" confirm="Are you sure you want to mark as At Delivery?" string="At Delivery" type="object" class="btn btn-secondary" invisible="status_id != 5" groups="bista_driver_app.group_shipment_dispatcher_access"/>
+                    <button name="action_set_delivered" confirm="Are you sure you want to mark as Delivered?" string="Delivered" type="object" class="btn btn-secondary" invisible="status_id != 6" groups="bista_driver_app.group_shipment_dispatcher_access"/> -->
+
+                    <!-- <button name="action_set_cancelled" confirm="Are you sure you want to mark as Cancelled?" string="Cancelled" type="object" class="btn btn-secondary" invisible="status_id in [7, 8]" groups="bista_driver_app.group_shipment_dispatcher_access"/> -->
+                    <!-- <button name="action_set_pending" confirm="Are you sure you want to mark as Pending?" string="Pending" type="object" class="btn btn-secondary" invisible="status_id != 8" groups="bista_driver_app.group_shipment_dispatcher_access"/> -->
+
+                    <!-- <button name="action_assign_driver" string="Assign a Driver" type="object" class="btn btn-primary"
+                            invisible="status_id in [7,8]"
+                            groups="bista_driver_app.group_shipment_dispatcher_access"/> -->
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+<!--                        &lt;!&ndash; Call Out Button &ndash;&gt;-->
+<!--                        <button name="action_call_out" type="object" class="oe_stat_button" string="Call Out"-->
+<!--                                invisible="call_out_id == False">-->
+<!--                            <img src="bista_call_out_request/static/description/Icons_final_Callout_processed.png"-->
+<!--                                 class="img img-fluid" style="height:100%; margin-right: 5px;"/>-->
+<!--                            Call Out-->
+<!--                        </button>-->
+                        <field name="is_display" invisible="1"/>
+                        <!-- Remaining Milage Button-->
+                        <button name="action_view_remaining_milage" invisible="is_display == False" type="object" class="oe_stat_button">
+                            <img src="bista_driver_app/static/description/shipping_process_9_01.png"
+                                 style="height:100%;margin-right:5px;"/>
+                            <div class="o_field_widget o_stat_info">
+                                <field name="remaining_distance" class="text-center" widget="statinfo"
+                                       style="font-weight: 500;" string="Remaining Milage"/>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div style="float: right; margin-left: -18%;">
+                        <b invisible="forklift_shipment == False" class="badge rounded-pill text-bg-warning"
+                                style="font-weight: bold; font-size: 12px !important; color: white !important; margin-right: 3px;">
+                            Forklift Shipment
+                        </b>
+                        <!--T2556 Tracking status color change-->
+                        <b invisible="tracking_status != 'inactive' or location_tracking == 'disabled' " class="badge rounded-pill text-bg-secondary" style="font-weight: bold;font-size: 12px !important;color: black !important;">
+                            Inactive
+                        </b>
+                        <b invisible="tracking_status != 'active' or location_tracking == 'disabled' " class="badge rounded-pill text-bg-success" style="font-weight: bold;font-size: 12px !important;color: white !important;">
+                            Active
+                        </b>
+                        <b invisible="tracking_status != 'paused' or location_tracking == 'disabled'" class="badge rounded-pill text-bg-danger" style="font-weight: bold;font-size: 12px !important;color: white !important;">
+                            Paused
+                        </b>
+                    </div>
+
+                    <!-- <div style="float: right; margin-left: -13%;" invisible="forklift_shipment == False">
+                        <b class="badge rounded-pill text-bg-warning" style="font-weight: bold;font-size: 12px !important;color: white !important;">
+                            Forklift Shipment
+                        </b>
+                    </div> -->
+
+                    <group string="Reference">
+                        <group>
+                            <field name="driver_id" string="Carrier" readonly="status_id not in [1]" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                                context="{'is_from_call_out_mst': True, 'tree_view_ref': 'bista_driver_app.bista_fleet_driver_optional_tree_view', 'search_view_ref': 'bista_driver_app.bista_fleet_driver_optional_search_view'}"/>
+<!--                            <field name="samsara_eld_asset_id"/>-->
+                        </group>
+                        <group>
+                            <field name="sale_order_no"/>
+<!--                            <field name="call_out_id" readonly="1"/>-->
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Pickup">
+                            <label for="stop_pickup" string="Pickup Location" style="font-weight: 500;"/>
+                            <div class="d-flex">
+                                <field name="stop_pickup" class="field_delivery_datetime_utc w-100" style="width: 75% !important;"
+                                    options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" readonly="1"/>
+                                <button type="object" name="action_open_location" context="{'pickup_location': stop_pickup}"
+                                    class="btn btn-link text-action oi o_external_button oi-launch" invisible="not stop_pickup"/>
+                            </div>
+
+                            <label for="display_pickup_address" string="Address" style="font-weight: 500;"/>
+                            <div class="o_address_format">
+                                <field name="display_pickup_address" readonly="1"/>
+                                <!--                                <field name="pickup_street_1" placeholder="Street..." class="o_address_street" readoly="1"/>-->
+                                <!--                                <field name="pickup_street_2" placeholder="Street 2..." class="o_address_street" readoly="1"/>-->
+                                <!--                                <field name="pickup_city" placeholder="City" class="o_address_city" readoly="1"/>-->
+                                <!--                                <field name="pickup_state_id" class="o_address_state" placeholder="State" readoly="1" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>-->
+                                <!--                                <field name="pickup_zip" placeholder="ZIP" class="o_address_zip" readoly="1"/>-->
+                                <!--                                <div name="partner_address_country" class="d-flex justify-content-between">-->
+                                <!--                                    <field name="pickup_county_id" readoly="1" placeholder="County" class="o_address_country" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>-->
+                                <!--                                </div>-->
+                                <!--                                <div name="partner_address_country" class="d-flex justify-content-between">-->
+                                <!--                                    <field name="pickup_country_id" readoly="1" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>-->
+                                <!--                                </div>-->
+                            </div>
+                            <label for="planned_pickup" string="Planned" class="o_form_label_readonly"
+                                   style="font-weight: 500;"/>
+                            <div class="d-flex">
+                                <field name="planned_pickup" class="readonly field_delivery_datetime_utc w-100"
+                                       options="{'is_utc': True, 'timezone_field': 'pickup_timezone'}"
+                                       invisible="planned_pickup == False"/>
+                                <field name="pickup_timezone" class="field_timezone_utc"
+                                       invisible="planned_pickup == False" readonly="1"/>
+                            </div>
+                            <label for="actual_pickup" string="Actual" style="font-weight: 500;"/>
+                            <div class="d-flex">
+                                <field name="actual_pickup" class="field_delivery_datetime_utc w-100"
+                                       options="{'is_utc': True, 'timezone_field': 'pickup_timezone'}"
+                                       invisible="actual_pickup == False" readonly="1"/>
+                                <field name="pickup_timezone" class="field_timezone_utc"
+                                       invisible="actual_pickup == False" readonly="1"/>
+                            </div>
+                        </group>
+
+                        <group string="Delivery">
+                            <label for="stop_delivery" string="Delivery Location" style="font-weight: 500;"/>
+                            <div class="d-flex">
+                                <field name="stop_delivery" class="field_delivery_datetime_utc w-100" style="width: 75% !important;"
+                                    options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" readonly="1"/>
+                                <button type="object" name="action_open_location" context="{'delivery_location': stop_delivery}"
+                                    class="btn btn-link text-action oi o_external_button oi-launch" invisible="not stop_delivery"/>
+                            </div>
+
+                            <label for="display_delivery_address" string="Address" style="font-weight: 500;"/>
+                            <div class="o_address_format">
+                                <field name="display_delivery_address" readonly="1"/>
+                                <!--                                <field name="delivery_street_1" placeholder="Street..." class="o_address_street"/>-->
+                                <!--                                <field name="delivery_street_2" placeholder="Street 2..." class="o_address_street"/>-->
+                                <!--                                <field name="delivery_city" placeholder="City" class="o_address_city"/>-->
+                                <!--                                <field name="delivery_state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>-->
+                                <!--                                <field name="delivery_zip" placeholder="ZIP" class="o_address_zip"/>-->
+                                <!--                                <div name="partner_address_country" class="d-flex justify-content-between">-->
+                                <!--                                    <field name="delivery_county_id" placeholder="County" class="o_address_country" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>-->
+                                <!--                                </div>-->
+                                <!--                                <div name="partner_address_country" class="d-flex justify-content-between">-->
+                                <!--                                    <field name="delivery_country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>-->
+                                <!--                                </div>-->
+                            </div>
+                            <label for="planned_delivery" string="Planned" class="o_form_label_readonly"
+                                   style="font-weight: 500;"/>
+                            <div class="d-flex">
+                                <field name="planned_delivery" class="readonly field_delivery_datetime_utc w-100"
+                                       options="{'is_utc': True, 'timezone_field': 'delivery_timezone'}"
+                                       invisible="planned_delivery == False"/>
+                                <field name="delivery_timezone" class="field_timezone_utc"
+                                       invisible="planned_delivery == False" readonly="1"/>
+                            </div>
+                            <label for="actual_delivery" string="Actual" style="font-weight: 500;"/>
+                            <div class="d-flex">
+                                <field name="actual_delivery" class="field_delivery_datetime_utc w-100"
+                                       options="{'is_utc': True, 'timezone_field': 'delivery_timezone'}"
+                                       invisible="actual_delivery == False" readonly="1"/>
+                                <field name="delivery_timezone" class="field_timezone_utc"
+                                       invisible="actual_delivery == False" readonly="1"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <notebook class="shipment_notebook_cls">
+                        <page string="Tracking">
+                            <separator string="Real time location" invisible="not is_display"/>
+                            <group col="3" invisible="not is_display">
+                                <group>
+                                    <field name="remaining_distance" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="latest_latitude" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="latest_longitude" readonly="1"/>
+                                </group>
+                            </group>
+
+                            <!-- <separator string="Real time location" invisible="not eta and not eta_last_updated and not remaining_distance and not remaining_time and not latest_latitude and not latest_longitude"/>
+                            <group col="3">
+                                <group invisible="not eta and not eta_last_updated">
+                                    <field name="eta" readonly="0" invisible="not eta"/>
+                                    <field name="eta_last_updated" readonly="0" invisible="not eta_last_updated"/>
+                                </group>
+                                <group invisible="not remaining_distance and not remaining_time">
+                                    <field name="remaining_distance" readonly="0" invisible="not remaining_distance"/>
+                                    <field name="remaining_time" readonly="0" invisible="not remaining_time"/>
+                                </group>
+                                <group>
+                                    <field name="latest_latitude" readonly="0" invisible="not latest_latitude"/>
+                                    <field name="latest_longitude" readonly="0" invisible="not latest_longitude"/>
+                                </group>
+                            </group> -->
+                            <!--  Map View Work   -->
+<!--                            <div class="shipment_map_widget_div">-->
+<!--                                <widget name="shipment_maps"/>-->
+<!--                            </div>-->
+                            <separator string="Location Tracking Map"/>
+                            <widget name="osm_tracking_map"/>
+                        </page>
+
+                        <page string="Details">
+                            <field name="stop_ids" mode="kanban" class="shipment_kanban_cls" context="{'is_from_shipment_mst': True}">
+                                <kanban class="shipment_stop_kanban" default_order="sequence asc">
+                                    <field name="name"/>
+                                    <field name="location_id"/>
+                                    <field name="contact_name"/>
+                                    <field name="contact_email"/>
+                                    <field name="contact_phone"/>
+                                    <field name="street_1"/>
+                                    <field name="street_2"/>
+                                    <field name="city"/>
+                                    <field name="state_id"/>
+                                    <field name="county_id"/>
+                                    <field name="country_id"/>
+                                    <field name="zip"/>
+                                    <field name="latitude"/>
+                                    <field name="longitude"/>
+                                    <field name="planned_arrival"/>
+                                    <field name="actual_arrival"/>
+                                    <field name="departure_time"/>
+                                    <field name="timezone"/>
+                                    <field name="directions"/>
+                                    <field name="notes"/>
+                                    <field name="sequence"/>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div class="stop-kanban-card oe_kanban_global_click" style="height: auto !important;">
+                                                <div class="stop-header">
+                                                    <strong>
+                                                        <h1>
+                                                            <t t-esc="record.name.value"/>
+                                                        </h1>
+                                                    </strong>
+                                                    <div class="divider-line"></div>
+                                                </div>
+
+                                                <div class="stop-section">
+                                                    <h3><field name="location_name"/></h3>
+                                                </div>
+
+                                                <!-- First row: Address + Contact -->
+                                                <div class="stop-section-row">
+                                                    <div class="stop-box">
+                                                        <div class="section-title">ADDRESS</div>
+                                                        <div class="section-line"></div>
+                                                        <div class="address-grid">
+                                                            <t t-if="record.street_1">
+                                                                <div>
+                                                                    <strong>Street: </strong>
+                                                                    <t t-esc="record.street_1.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.street_2">
+                                                                <div>
+                                                                    <strong>Street 2: </strong>
+                                                                    <t t-esc="record.street_2.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.city">
+                                                                <div>
+                                                                    <strong>City: </strong>
+                                                                    <t t-esc="record.city.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.county_id">
+                                                                <div>
+                                                                    <strong>County: </strong>
+                                                                    <field name="county_id"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.state_id">
+                                                                <div>
+                                                                    <strong>State: </strong>
+                                                                    <field name="state_id"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.zip">
+                                                                <div>
+                                                                    <strong>ZIP: </strong>
+                                                                    <t t-esc="record.zip.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <!-- <t t-if="record.country_id">
+                                                                <div>
+                                                                    <strong>Country: </strong>
+                                                                    <field name="country_id"/>
+                                                                </div>
+                                                            </t> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="stop-box">
+                                                        <div class="section-title">TIMES</div>
+                                                        <div class="section-line"></div>
+                                                        <div class="times-grid">
+                                                            <t t-if="record.planned_arrival.value">
+                                                                <div>
+                                                                    <strong>Planned: </strong>
+                                                                    <field name="planned_arrival" options="{'is_utc': True}"/>
+                                                                    <t t-if="record.timezone">
+                                                                        <span> </span>
+                                                                        <t t-esc="record.timezone.value"/>
+                                                                    </t>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.actual_arrival.value">
+                                                                <div>
+                                                                    <strong>Arrival: </strong>
+                                                                    <field name="actual_arrival" options="{'is_utc': True}"/>
+                                                                    <t t-if="record.timezone">
+                                                                        <span> </span>
+                                                                        <t t-esc="record.timezone.value"/>
+                                                                    </t>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.departure_time.value">
+                                                                <div>
+                                                                    <strong>Departure: </strong>
+                                                                    <field name="departure_time" options="{'is_utc': True}"/>
+                                                                    <t t-if="record.timezone">
+                                                                        <span> </span>
+                                                                        <t t-esc="record.timezone.value"/>
+                                                                    </t>
+                                                                </div>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div class="stop-box">
+                                                        <div class="section-title">CONTACT</div>
+                                                        <div class="section-line"></div>
+                                                        <div class="contact-grid">
+                                                            <t t-if="record.contact_name">
+                                                                <div>
+                                                                    <strong>Name:</strong>
+                                                                    <t t-esc="record.contact_name.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.contact_email">
+                                                                <div>
+                                                                    <strong>Email:</strong>
+                                                                    <t t-esc="record.contact_email.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.contact_phone">
+                                                                <div>
+                                                                    <strong>Phone:</strong>
+                                                                    <t t-esc="record.contact_phone.value"/>
+                                                                </div>
+                                                            </t>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+
+                                                <!-- Second row: Coordinates + Times -->
+                                                <!-- <div class="stop-section-row">
+                                                    <div class="stop-box">
+                                                        <div class="section-title">COORDINATES</div>
+                                                        <div class="section-line"></div>
+                                                        <div class="coordinates-grid">
+                                                            <t t-if="record.latitude">
+                                                                <div>
+                                                                    <strong>Latitude:</strong>
+                                                                    <t t-esc="record.latitude.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.longitude">
+                                                                <div>
+                                                                    <strong>Longitude:</strong>
+                                                                    <t t-esc="record.longitude.value"/>
+                                                                </div>
+                                                            </t>
+                                                            <div class="map-link">
+                                                                <widget name="google_map"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="stop-box">
+                                                        <div class="section-title">TIMES</div>
+                                                        <div class="section-line"></div>
+                                                        <div class="times-grid">
+                                                            <t t-if="record.planned_arrival.value">
+                                                                <div>
+                                                                    <strong>Planned:</strong>
+                                                                    <field name="planned_arrival"
+                                                                           options="{'is_utc': True}"/>
+                                                                    <t t-if="record.timezone">
+                                                                        <span></span>
+                                                                        <t t-esc="record.timezone.value"/>
+                                                                    </t>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.actual_arrival.value">
+                                                                <div>
+                                                                    <strong>Arrival:</strong>
+                                                                    <field name="actual_arrival"
+                                                                           options="{'is_utc': True}"/>
+                                                                    <t t-if="record.timezone">
+                                                                        <span></span>
+                                                                        <t t-esc="record.timezone.value"/>
+                                                                    </t>
+                                                                </div>
+                                                            </t>
+                                                            <t t-if="record.departure_time.value">
+                                                                <div>
+                                                                    <strong>Departure:</strong>
+                                                                    <field name="departure_time"
+                                                                           options="{'is_utc': True}"/>
+                                                                    <t t-if="record.timezone">
+                                                                        <span></span>
+                                                                        <t t-esc="record.timezone.value"/>
+                                                                    </t>
+                                                                </div>
+                                                            </t>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+
+
+                            <separator string="Items"/>
+                            <field name="item_ids" nolabel="1">
+                                <list create="1" edit="1" delete="1" editable="bottom">
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <!-- <page string="Details">
+                            <group col="2">
+                                <group string="Pickup">
+                                    <field name="pickup_name" string="Name"/>
+
+                                    <label for="pickup_city" string="Address" style="font-weight: 500;"/>
+                                    <div class="o_address_format">
+                                        <field name="pickup_street_1" placeholder="Street..." class="o_address_street"/>
+                                        <field name="pickup_street_2" placeholder="Street 2..." class="o_address_street"/>
+                                        <field name="pickup_city" placeholder="City" class="o_address_city"/>
+                                        <field name="pickup_state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="pickup_zip" placeholder="ZIP" class="o_address_zip"/>
+                                        <div name="partner_address_country" class="d-flex justify-content-between">
+                                            <field name="pickup_country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <label for="planned_pickup" string="Planned Time" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="planned_pickup" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'pickup_timezone'}"/>
+                                        <field name="pickup_timezone" class="field_timezone_utc"/>
+                                    </div>
+                                    <label for="actual_pickup" string="Actual Time" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="actual_pickup" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'pickup_timezone'}"/>
+                                        <field name="pickup_timezone" class="field_timezone_utc"/>
+                                    </div>
+                                </group>
+        
+                                <group string="Delivery">
+                                    <field name="delivery_name" string="Name"/>
+
+                                    <label for="delivery_city" string="Address" style="font-weight: 500;"/>
+                                    <div class="o_address_format">
+                                        <field name="delivery_street_1" placeholder="Street..." class="o_address_street"/>
+                                        <field name="delivery_street_2" placeholder="Street 2..." class="o_address_street"/>
+                                        <field name="delivery_city" placeholder="City" class="o_address_city" />
+                                        <field name="delivery_state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="delivery_zip" placeholder="ZIP" class="o_address_zip"/>
+                                        <div name="partner_address_country" class="d-flex justify-content-between">
+                                            <field name="delivery_country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                        </div>
+                                    </div>
+                                    <label for="planned_delivery" string="Planned Time" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="planned_delivery" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'delivery_timezone'}"/>
+                                        <field name="delivery_timezone" class="field_timezone_utc"/>
+                                    </div>
+                                    <label for="actual_delivery" string="Actual Time" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="actual_delivery" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'delivery_timezone'}"/>
+                                        <field name="delivery_timezone" class="field_timezone_utc"/>
+                                    </div>
+                                </group>
+                            </group>
+                        </page> -->
+
+                        <page string="Documents">
+                            <field name="document_ids" nolabel="0">
+                                <list delete="0">
+                                    <field name="document_type_id" string="Type"/>
+                                    <field name="file" widget="list_binary" filename="filename" string="Download"/>
+                                    <field name="filename" column_invisible="1"/>
+                                    <field name="is_signature" readonly="1"/>
+                                    <field name="description"/>
+                                    <field name="create_uid"/>
+                                    <field name="driver_id" string="Carrier"/>
+                                    <field name="create_date"/>
+                                    <field name="file" string="Size"/>
+                                    <!--T2858: new columns as write date instead of date-->
+                                    <field name="date" optional="hide" groups="base.group_no_one"/>
+                                    <field name="write_date" string="Updated On" optional="hide"/>
+                                    <field name="document_signature" widget="list_binary" optional="hide" groups="base.group_no_one"/>
+                                    <field name="original_file" widget="list_binary" filename="filename" optional="hide" groups="base.group_no_one"/>
+                                    <field name="signed_by" optional="hide" groups="base.group_no_one"/>
+                                    <field name="signature_time_data" string="Signature Time Data" optional="hide" groups="base.group_no_one"/>
+                                    <button name="unlink" confirm="Are you sure you want to Delete?" string=""
+                                        type="object" icon="fa-trash"
+                                        groups="bista_driver_app.group_shipment_dispatcher_access"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="document_type_id" string="Type" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                                <field name="file" filename="filename"/>
+                                                <field name="filename"/>
+                                                <field name="is_signature" readonly="1"/>
+                                                <field name="description"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Notes">
+                            <field name="notes" options="{'resizable': false}" placeholder='Add a note...'/>
+                        </page>
+
+                        <page string="Timeline">
+                            <field name="timeline_ids">
+                                <!-- <tree string="Timeline" default_order="datetime desc, id desc" create="0" delete="0" edit="0" editable="bottom"> -->
+                                 <!-- NOTE: for records created at datetime with milliseconds difference the sorting order was mismatched -->
+                                <list string="Timeline" default_order="id desc" create="0" delete="0" edit="0" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="datetime"/>
+                                    <field name="user_name" string="Name"/>
+                                    <field name="driver_id"/>
+                                    <field name="source_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Location History">
+<!--                            <a href="https://driver..com/web?#id=338&amp;cids=1&amp;menu_id=475&amp;action=714&amp;model=knowledge.article&amp;view_type=form" target="_blank">-->
+<!--                                <i class="fa fa-info-circle" title="Documentation"/> How Location History Works-->
+<!--                            </a>-->
+                            <field name="tracking_status" invisible="1"/>
+                            <field name="geolocation_history_ids" context="{ 'form_view_ref': 'bista_driver_app.geolocation_history_view_form' }" readonly="1">
+                                <list string="Geolocation History" edit="false" create="false" default_order="date_recorded desc" action="action_open_reference" type="object">
+                                    <field name="source_id"/>
+                                    <!-- <field name="reference" optional="hide" widget="many2onebutton"/> -->
+                                    <field name="date_recorded"/>
+                                    <field name="device_unique_id" optional="hide"/>
+                                    <field name="device_name" optional="hide"/>
+                                    <field name="asset_latitude"/>
+                                    <field name="asset_longitude"/>
+                                    <field name="carrier_id"/>
+                                    <field name="create_date"/>
+                                    <field name="create_uid"/>
+                                    <field name="connectivity_status" widget="badge" decoration-success="connectivity_status == 'online'" decoration-danger="connectivity_status == 'offline'"/>
+                                    <field name="approximate_location" string="Accuracy (ft)"/>
+                                    <field name="speed" optional="hide"/>
+                                    <field name="latest" optional="hide" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Other">
+                            <group>
+                                <group>
+                                    <field name="customer_id" readonly="1" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="forklift_shipment"/>
+                                    <field name="active" readonly="1"/>
+                                    <field name="tracking_status" readonly="1"/>
+                                    <field name="location_tracking" invisible="1"/>
+<!--                                    <field name="is_customer_user" invisible="1"/>-->
+                                    <field name="cancel_reason" invisible="status_id not in [8]" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="create_uid"/>
+                                    <field name="create_date" options="{'is_utc': True}"/>
+                                    <field name="write_uid"/>
+                                    <field name="write_date"/>
+                                </group>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="shipment_kanban_view" model="ir.ui.view">
+        <field name="name">shipment.shipment.kanban.view</field>
+        <field name="model">shipment.shipment</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status_id" class="oe_hide_setting" create="false" import="false" quick_create="false" group_create="false" records_draggable="1">
+                <field name="name"/>
+                <field name="status_id"/>
+<!--                <field name="call_out_id"/>-->
+                <field name="stop_pickup"/>
+                <field name="pickup_street_1"/>
+                <field name="pickup_street_2"/>
+                <field name="pickup_city"/>
+                <field name="pickup_county_id"/>
+                <field name="pickup_state_id"/>
+                <field name="pickup_zip"/>
+                <field name="pickup_country_id"/>
+                <field name="display_pickup_address"/>
+                <field name="pickup_latitude"/>
+                <field name="pickup_longitude"/>
+                <field name="pickup_contact_name"/>
+                <field name="pickup_contact_email"/>
+                <field name="pickup_contact_phone"/>
+                <field name="pickup_directions"/>
+                <field name="pickup_notes"/>
+                <field name="planned_pickup"/>
+                <field name="pickup_timezone"/>
+                <field name="actual_pickup"/>
+                <field name="pickup_departure_time"/>
+                <field name="stop_delivery"/>
+                <field name="delivery_street_1"/>
+                <field name="delivery_street_2"/>
+                <field name="delivery_city"/>
+                <field name="delivery_county_id"/>
+                <field name="delivery_state_id"/>
+                <field name="delivery_zip"/>
+                <field name="delivery_country_id"/>
+                <field name="display_delivery_address"/>
+                <field name="delivery_latitude"/>
+                <field name="delivery_longitude"/>
+                <field name="delivery_contact_name"/>
+                <field name="delivery_contact_email"/>
+                <field name="delivery_contact_phone"/>
+                <field name="delivery_directions"/>
+                <field name="delivery_notes"/>
+                <field name="planned_delivery"/>
+                <field name="delivery_timezone"/>
+                <field name="actual_delivery"/>
+                <field name="delivery_departure_time"/>
+                <field name="customer_id"/>
+                <field name="carrier_id"/>
+                <field name="sale_order_no"/>
+                <field name="truck_number"/>
+                <field name="driver_id"/>
+                <field name="forklift_shipment"/>
+                <field name="latest_latitude"/>
+                <field name="latest_longitude"/>
+                <field name="remaining_distance"/>
+                <field name="remaining_time"/>
+                <field name="eta"/>
+                <field name="eta_last_updated"/>
+                <field name="status_color"/>
+                <field name="fold"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="o_kanban_card_header">
+                                <div class="col-12" style="display:flex;">
+                                    <div class="col-6 text-left">
+                                        <span style="font-size: 16px;">
+                                            <field name="name"/>
+                                        </span>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <div style="float: right;margin-right: 5%;margin-top: 3%;"  invisible="forklift_shipment == False">
+                                            <b class="badge rounded-pill text-bg-warning" style="font-weight: bold;font-size: 12px !important;color: white !important;">
+                                                Forklift Shipment
+                                            </b>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 text-right">
+                                        <field name="status_id" string="Status" optional="show" widget="badge" style="margin-top: 4%; margin-left: -3%;"
+                                            decoration-muted="status_id in [1]" decoration-warning="status_id in [2]" decoration-primary="status_id in [3, 4, 5, 6]"
+                                            decoration-success="status_id in [7]" decoration-danger="status_id in [8]" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="o_kanban_details">
+                                <p>
+                                    <!-- <i class="fa fa-map-pin text-danger"/> -->
+                                    <i class="fa fa-map-pin"/>
+                                    <span style="margin-right: 8px; margin-left: 8px">
+                                        <field name="stop_pickup"/>
+                                    </span>
+
+                                    <br/>
+                                    <i class="fa fa-map-pin"/>
+                                    <span style="margin-left: 8px;">
+                                        <field name="stop_delivery"/>
+                                    </span>
+
+                                    <br/>
+                                    <i class="fa fa-clock-o"/>
+                                    <span style="margin-left: 8px;">
+                                        <field name="planned_pickup" options="{'is_utc': True}"/>
+                                    </span>
+                                    <span style="margin-left: 8px;">
+                                        <field name="pickup_timezone"/>
+                                    </span>
+
+                                    <br/>
+                                    <i class="fa fa-user"/>
+                                    <span style="margin-left: 8px;">
+                                        <field name="driver_id"/>
+                                    </span>
+
+                                    <br/>
+                                    <strong>Release/SO #</strong>
+                                    <span style="margin-left: 8px;">
+                                        <field name="sale_order_no"/>
+                                    </span>
+
+                                    <br/>
+<!--                                    <strong>Call Out No</strong>-->
+<!--                                    <span style="margin-left: 8px;">-->
+<!--                                        <field name="call_out_id" />-->
+<!--                                    </span>-->
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+<!--    <record id="shipment_shipment_view_google_map_new" model="ir.ui.view">-->
+<!--        <field name="name">shipment.shipment.view.google.map</field>-->
+<!--        <field name="model">shipment.shipment</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <google_map latitude="latest_latitude" longitude="latest_longitude" model="id" hide_name="1">-->
+<!--                <field name="display_name" string="Shipment number:"/>-->
+<!--&lt;!&ndash;                <field name="call_out_id" string="Call Out number:"/>&ndash;&gt;-->
+<!--                <field name="status_id" string="Status:"/>-->
+<!--                <field name="stop_pickup" string="Pickup:"/>-->
+<!--                <field name="stop_delivery" string="Delivery:"/>-->
+<!--                <field name="planned_pickup" string="Planned Pickup:" options="{'is_utc': True}"/>-->
+<!--                <field name="carrier_id" string="Carrier:"/>-->
+<!--            </google_map>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!-- Search View -->
+    <record id="bista_shipment_shipment_search_view" model="ir.ui.view">
+        <field name="name">shipment.shipment.search</field>
+        <field name="model">shipment.shipment</field>
+        <field name="arch" type="xml">
+            <search string="Search Shipments">
+                <field name="name"/>
+                <filter string="Status = Pending" name="Pending" domain="[('status_id', '=', 1)]"/>
+                <filter string="Status = Assigned" name="Assigned" domain="[('status_id', '=', 2)]"/>
+                <filter string="Status = Dispatched" name="Dispatched" domain="[('status_id', '=', 3)]"/>
+                <filter string="Status = At Pickup" name="At Pickup" domain="[('status_id', '=', 4)]"/>
+                <filter string="Status = In Transit" name="In Transit" domain="[('status_id', '=', 5)]"/>
+                <filter string="Status = At Delivery" name="At Delivery" domain="[('status_id', '=', 6)]"/>
+                <filter string="Status = Delivered" name="Delivered" domain="[('status_id', '=', 7)]"/>
+                <filter string="Status = Cancelled" name="Cancelled" domain="[('status_id', '=', 8)]"/>
+                <separator string="Mobile Tracking Status" colspan="4"/>
+                <filter string="Mobile Tracking Status = Active" name="tracking_status_active"
+                        domain="[('tracking_status', '=', 'active')]"/>
+                <filter string="Mobile Tracking Status = Paused" name="tracking_status_paused"
+                        domain="[('tracking_status', '=', 'paused')]"/>
+                <filter string="Mobile Tracking Status = Inactive" name="tracking_status_inactive"
+                        domain="[('tracking_status', '=', 'inactive')]"/>
+                <separator string="Planned Delivery Date" colspan="4"/>
+                <filter string="PDT = Yesterday"
+                        name="planned_delivery_date_yesterday"
+                        domain="[('planned_delivery', '&gt;=', (context_today() - relativedelta(days=1)).strftime('%Y-%m-%d 00:00:00')),
+                 ('planned_delivery', '&lt;', context_today().strftime('%Y-%m-%d 00:00:00'))]"/>
+
+                <filter string="PDT = Today"
+                        name="planned_delivery_date_today"
+                        domain="[('planned_delivery', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')),
+                 ('planned_delivery', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))]"/>
+
+                <filter string="PDT = Tomorrow"
+                        name="planned_delivery_date_tomorrow"
+                        domain="[('planned_delivery', '&gt;=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d 00:00:00')),
+                 ('planned_delivery', '&lt;', (context_today() + relativedelta(days=2)).strftime('%Y-%m-%d 00:00:00'))]"/>
+
+                <!-- <filter string="Tracking Enabled" name="tracking_status" domain="[('tracking_status', '=', 'active')]"/> -->
+                <group expand="0" string="Group By">
+                    <filter name="driver_id" string="Carrier" context="{'group_by': 'driver_id'}"/>
+                    <filter name="status_id" string="Status" context="{'group_by': 'status_id'}"/>
+                    <filter name="customer_id" string="Customer" context="{'group_by': 'customer_id'}"/>
+                    <filter name="delivery_id" string="Delivery Location" context="{'group_by': 'delivery_id'}"/>
+                    <filter name="pickup_id" string="Pickup Location" context="{'group_by': 'pickup_id'}"/>
+                    <filter name="tracking_status" string="Mobile Tracking Status" context="{'group_by': 'tracking_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="shipment_shipment_action" model="ir.actions.act_window">
+        <field name="name">Shipments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipment.shipment</field>
+        <field name="view_mode">list,kanban,form</field>
+<!--        <field name="view_mode">tree,kanban,form,google_map</field>-->
+        <field name="context"></field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No shipment found
+            </p>
+        </field>
+    </record>
+
+    <!-- Cancel button under Action Gear  -->
+    <record id="action_shipment_cancelled" model="ir.actions.server">
+        <field name="name">Cancel</field>
+        <field name="model_id" ref="bista_driver_app.model_shipment_shipment"/>
+        <field name="binding_model_id" ref="bista_driver_app.model_shipment_shipment"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_set_cancelled()</field>
+    </record>
+
+    <!-- Menu for Shipwell API -->
+    <menuitem id="menu_driver_fleet_shipment_main" name="Shipment" sequence="1"
+              web_icon="bista_driver_app,static/description/Shipping.png"
+              groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+    <menuitem id="menu_driver_fleet_shipment_reporting_menu" name="Reporting"
+        sequence="4" parent="bista_driver_app.menu_driver_fleet_shipment_main"
+        groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+    <menuitem id="menu_driver_fleet_shipment_configuration_menu" name="Configuration"
+              sequence="5" parent="bista_driver_app.menu_driver_fleet_shipment_main"
+              groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+    <menuitem id="shipment_shipment_main_menu" name="Shipments" action="shipment_shipment_action"
+              sequence="1" parent="bista_driver_app.menu_driver_fleet_shipment_main"
+              groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+
+    <!-- Action for My Shipments -->
+    <record id="action_my_shipments" model="ir.actions.act_window">
+        <field name="name">My Shipments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipment.shipment</field>
+        <field name="view_mode">list,kanban,form</field>
+<!--        <field name="view_mode">tree,kanban,form,google_map</field>-->
+        <field name="context"></field>
+        <field name="domain">[('create_uid', '=', uid)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No shipment found
+            </p>
+        </field>
+    </record>
+
+    <!-- Action for All Shipments -->
+    <record id="action_all_shipments" model="ir.actions.act_window">
+        <field name="name">All Shipments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipment.shipment</field>
+        <field name="view_mode">list,kanban,form</field>
+<!--        <field name="view_mode">tree,kanban,form,google_map</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No shipment found
+            </p>
+        </field>
+    </record>
+
+    <!-- My Shipments Submenu -->
+    <menuitem id="menu_my_shipments" name="My Shipments" parent="shipment_shipment_main_menu"
+              action="action_my_shipments"
+              groups="bista_driver_app.group_shipment_dispatcher_access" sequence="1"/>
+
+    <!-- All Shipments Submenu -->
+    <menuitem id="menu_all_shipments" name="All Shipments" parent="shipment_shipment_main_menu"
+              action="action_all_shipments"
+              groups="bista_driver_app.group_shipment_dispatcher_access" sequence="3"/>
+
+</odoo>

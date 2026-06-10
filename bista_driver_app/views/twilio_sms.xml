@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- NOTE: Driver app -->
+<odoo>
+<!--    <data>-->
+<!--        &lt;!&ndash;    Twilio SMS Tree view  &ndash;&gt;-->
+<!--        <record id="shipment_driver_twilio_sms_view_tree" model="ir.ui.view">-->
+<!--            <field name="name">twilio.sms.view.tree</field>-->
+<!--            <field name="model">twilio.sms</field>-->
+<!--            <field name="inherit_id" ref="odoo_twilio_sms.twilio_sms_view_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="account_id" position="after">-->
+<!--                    <field name="shipment_id" optional="hide"/>-->
+<!--                    <field name="receiver_partner_id" optional="hide"/>-->
+<!--                    <field name="driver_id" optional="hide"/>-->
+<!--                    <field name="create_date" optional="hide"/>-->
+<!--                </field>-->
+<!--                <xpath expr="//field[@name='partner_id']" position="attributes">-->
+<!--                    <attribute name="optional">hide</attribute>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Twilio SMS Form View&ndash;&gt;-->
+<!--        <record id="shipment_driver_twilio_sms_view_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">shipment.driver.twilio.sms.view.form.inherit</field>-->
+<!--            <field name="model">twilio.sms</field>-->
+<!--            <field name="inherit_id" ref="bista_driver_twilio_integration.driver_twilio_sms_view_form_inherit"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//sheet" position="inside">-->
+<!--                    <group>-->
+<!--                        <field name="shipment_id" readonly="1" invisible="1" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/>-->
+<!--                        <field name="driver_id" readonly="1" invisible="1" widget="many2many_tags"-->
+<!--                            options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"-->
+<!--                            context="{'is_from_call_out_mst': True, 'tree_view_ref': 'bista_driver_app.bista_fleet_driver_optional_tree_view'}"/>-->
+<!--                        <field name="response" readonly="1" invisible="1"/>-->
+<!--                    </group>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Twilio SMS Search View &ndash;&gt;-->
+<!--        <record id="bista_driver_twilio_search_view" model="ir.ui.view">-->
+<!--            <field name="name">twilio.sms.search</field>-->
+<!--            <field name="model">twilio.sms</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="Search SMS">-->
+<!--                    <filter string="Today"-->
+<!--                            name="create_date_today"-->
+<!--                            domain="[('create_date', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')),-->
+<!--                    ('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))]"/>-->
+
+<!--                    <group expand="0" string="Group By">-->
+<!--                        <filter name="group_by_driver_id" string="Driver" context="{'group_by': 'driver_id'}"/>-->
+<!--                        <filter name="group_by_receiver_partner_id" string="Receiver" context="{'group_by': 'receiver_partner_id'}"/>-->
+<!--                        <filter name="group_by_template_body_id" string="SMS Template" context="{'group_by': 'template_body_id'}"/>-->
+<!--                    </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash; Twilio SMS Template &ndash;&gt;-->
+<!--        <record id="shipment_driver_twilio_sms_template_view_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">shipment.driver.twilio.sms.template.view.form.inherit</field>-->
+<!--            <field name="model">twilio.sms.template</field>-->
+<!--            <field name="inherit_id" ref="odoo_twilio_sms.twilio_sms_template_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//group/group" position="after">-->
+<!--                    <group>-->
+<!--                        <field name="content_es"/>-->
+<!--                    </group>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--    </data>-->
+</odoo>

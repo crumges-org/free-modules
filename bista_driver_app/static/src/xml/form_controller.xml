@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- The required fields are indicated by a red asterisk. -->
+    <t t-name="bista_driver_app.asterisk" t-inherit="web.FormLabel" t-inherit-mode="extension">
+        <xpath expr="./label" position="inside" >
+<!--            <t t-if="props.record.resModel == 'call.out.request' ">-->
+<!--                <t t-set="highlightFields" t-value="['release', 'contact_dispatcher_id']"/>-->
+<!--                <t t-if="props.record.resModel === 'call.out.request' and highlightFields.includes(props.fieldName)">-->
+<!--                    <span style="color: red;"> * </span>-->
+<!--                </t>-->
+<!--            </t>-->
+        </xpath>
+    </t>
+</templates>

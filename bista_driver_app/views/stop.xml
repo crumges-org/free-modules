@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_shipment_stop_tree" model="ir.ui.view">
+        <field name="name">shipment.stop.list</field>
+        <field name="model">shipment.stop</field>
+        <field name="arch" type="xml">
+            <list string="Stops">
+                <field name="name"/>
+                <field name="shipment_id"/>
+                <field name="location_id"/>
+                <field name="stop_status_id"/>
+                <field name="planned_arrival" options="{'is_utc': True}"/>
+                <field name="actual_arrival" options="{'is_utc': True}"/>
+                <field name="departure_time" options="{'is_utc': True}"/>
+                <field name="timezone"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_shipment_stop_form" model="ir.ui.view">
+        <field name="name">shipment.stop.form</field>
+        <field name="model">shipment.stop</field>
+        <field name="arch" type="xml">
+            <form string="Stop" create="0">
+                <sheet>
+                    <header>
+                        <field name="stop_status_id" widget="statusbar" options="{'clickable': '1'}" readonly="is_dispatcher == False"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="location_name" invisible="1"/>
+                            <field name="location_id" string="Name" options="{'no_open': True, 'no_create': True, 'no_create_edit': True, 'many2one_char_field': 'location_name'}"
+                                context="{'tree_view_ref': 'bista_driver_app.shipment_location_more_optipnal_hide_tree_view'}" widget="many2one_char" />
+                            <!-- <field name="stop_status_id" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"/> -->
+                            <field name="location_type"/>
+                        </group>
+                        <group>
+                            <label for="name" />
+                            <div class="d-flex">
+                                <field name="name" readonly="0"/>
+                                <button type="object" name="action_open_stops" class="btn btn-link text-action oi o_external_button oi-launch"
+                                    invisible="is_show_stops_icon == False"/>
+                                <field name="is_show_stops_icon" invisible="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details" name="details">
+                            <group>
+                                <group string="Address">
+                                    <label for="city" string="Address" style="font-weight: 500;"/>
+                                    <div class="o_address_format">
+                                        <field name="address" class="o_address_street" widget="address_autocomplete_gmap_widget"
+                                        options="{
+                                            'street': 'street_1',
+                                            'street2': 'street_2',
+                                            'city': 'city',
+                                            'zip': 'zip',
+                                            'state': 'state_id',
+                                            'country': 'country_id',
+                                            'county': 'county_id',
+                                            'latitude': 'latitude',
+                                            'longitude': 'longitude'
+                                        }"/>
+                                        <field name="street_1" placeholder="Street..." force_save="1" class="o_address_street"  readonly="1" context="{'update_address': True}"/>
+                                        <field name="street_2" placeholder="Street 2..." force_save="1" class="o_address_street" readonly="1" context="{'update_address': True}"/>
+                                        <field name="city" placeholder="City" force_save="1" class="o_address_city" readonly="1" context="{'update_address': True}"/>
+                                        <field name="state_id" force_save="1" class="o_address_state" placeholder="State" readonly="1" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" context="{'update_address': True}"/>
+                                        <field name="county_id" context="{'is_from_location_mst': True}" placeholder="County" force_save="1" class="o_address_zip o_address_county"/>
+                                        <field name="zip" placeholder="ZIP" force_save="1" class="o_address_zip" readonly="1" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" context="{'update_address': True}"/>
+                                        <field name="country_id" placeholder="Country" readonly="1" force_save="1" class="o_address_country" options="{'no_open': True, 'no_create': True, 'no_create_edit': True}" context="{'update_address': True}"/>
+                                    </div>
+
+                                    <separator string="Contact"/>
+                                    <field name="contact_name"/>
+                                    <field name="contact_phone"/>
+                                    <field name="contact_email"/>
+
+                                    <separator string="Times"/>
+                                    <label for="planned_arrival" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="planned_arrival" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'timezone'}"/>
+                                        <field name="timezone" class="field_timezone_utc"/>
+                                    </div>
+                                    <label for="actual_arrival" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="actual_arrival" class="field_delivery_datetime_utc w-100"  readonly="1" options="{'is_utc': True, 'timezone_field': 'timezone'}"/>
+                                        <field name="timezone" invisible="actual_arrival == False" class="field_timezone_utc" readonly="1"/>
+                                    </div>
+                                    <label for="departure_time" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="departure_time" class="field_delivery_datetime_utc w-100" readonly="1" options="{'is_utc': True, 'timezone_field': 'timezone'}"/>
+                                        <field name="timezone" invisible="departure_time == False" class="field_timezone_utc" readonly="1"/>
+                                    </div>
+                                </group>
+
+                                <group>
+                                    <separator string="CORDINATES"/>
+                                    <group>
+                                        <field name="latitude" readonly="0" required="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="longitude" readonly="0" required="1"/>
+                                    </group>
+                                    <div class="col-lg-12">
+                                        <span class="text-muted">Click on anywhere on the map to set the exact location.</span>
+                                        <widget name="use_my_location"/>
+                                    </div>
+                                    <field name="shape_data" invisible="1"/>
+<!--                                    <field name="latitude_longitude" widget="location_maps" nolabel="1" readonly="1"/>-->
+                                    <div>
+                                        <field name="zoom_level" invisible="1"/>
+                                        <button name="action_open_stop_location_map" string="View on Map" type="object"/>
+                                    </div>
+                                </group>
+                            </group>
+                            <!-- <group string="Contact">
+                                <group>
+                                    <field name="contact_name"/>
+                                    <field name="contact_phone"/>
+                                    <field name="contact_email"/>
+                                </group>
+                            </group> -->
+                            <!-- <group string="Coordinates">
+                                <group>
+                                    <field name="latitude"/>
+                                    <field name="longitude"/>
+                                </group>
+                            </group> -->
+                            <!-- <group>
+                                <group string="Times">
+                                    <label for="planned_arrival" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="planned_arrival" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'timezone'}"/>
+                                        <field name="timezone" class="field_timezone_utc"/>
+                                    </div>
+                                </group>
+                                <group string="">
+                                    <label for="actual_arrival" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="actual_arrival" class="field_delivery_datetime_utc w-100"  readonly="1" options="{'is_utc': True, 'timezone_field': 'timezone'}"/>
+                                        <field name="timezone" invisible="actual_arrival == False" class="field_timezone_utc" readonly="1"/>
+                                    </div>
+                                    <label for="departure_time" style="font-weight: 500;"/>
+                                    <div class="d-flex">
+                                        <field name="departure_time" class="field_delivery_datetime_utc w-100" readonly="1" options="{'is_utc': True, 'timezone_field': 'timezone'}"/>
+                                        <field name="timezone" invisible="departure_time == False" class="field_timezone_utc" readonly="1"/>
+                                    </div>
+                                </group>
+                            </group> -->
+                        </page>
+                        <page string="Directions" name="directions">
+                            <field name="directions"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                    <field name="is_dispatcher" invisible="1"/>
+                    <field name="is_eta_status_chage" invisible="1"/>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_shipment_stop" model="ir.actions.act_window">
+        <field name="name">Stops</field>
+        <field name="res_model">shipment.stop</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- Driver, Document Types and Geolocation History Menu -->
+    <menuitem id="menu_shipment_driver" parent="bista_driver_app.menu_driver_fleet_shipment_configuration_menu"
+        name="Drivers" sequence="4" action="bista_driver_app.action_driver_fleet_view"
+        groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+    <!-- <menuitem id="menu_geo_location_history" parent="bista_driver_app.menu_driver_fleet_shipment_reporting_menu"
+            name="Geolocation History" sequence="12" action="bista_driver_geolocation_history.driver_geolocation_history_view_action"
+            groups="bista_driver_app.group_shipment_dispatcher_access"/> -->
+
+    <menuitem id="menu_geo_location_history_custom" parent="bista_driver_app.menu_driver_fleet_shipment_reporting_menu"
+            name="Geolocation History" sequence="13" action="bista_driver_app.driver_geolocation_history_view_action"
+            groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+    <menuitem id="menu_geolocation_source" parent="bista_driver_app.menu_driver_fleet_shipment_reporting_menu"
+              name="Geolocation Sources" sequence="14" action="bista_driver_app.action_driver_geolocation_source"
+              groups="base.group_system"/>
+
+</odoo>

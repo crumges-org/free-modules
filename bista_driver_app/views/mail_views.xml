@@ -1,0 +1,32 @@
+<odoo>
+
+    <!-- ========================= -->
+    <!-- ACTION (USE DEFAULT MAIL VIEWS) -->
+    <!-- ========================= -->
+    <record id="action_otp_mail_logs" model="ir.actions.act_window">
+        <field name="name">OTP Emails</field>
+        <field name="res_model">mail.mail</field>
+
+        <!-- Use standard Odoo list + form -->
+        <field name="view_mode">list,form</field>
+
+
+        <!-- Filter ONLY OTP emails by subject -->
+        <field name="domain">[('subject', 'ilike', 'Driver OTP Code')]</field>
+
+        <!-- Optional: context -->
+        <field name="context">{}</field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- MENU -->
+    <!-- ========================= -->
+    <menuitem id="menu_otp_mail_logs"
+              name="OTP Emails"
+              parent="bista_driver_app.menu_driver_fleet_shipment_configuration_menu"
+              sequence="100"
+              action="action_otp_mail_logs"
+              groups="bista_driver_app.group_shipment_dispatcher_access"/>
+
+</odoo>

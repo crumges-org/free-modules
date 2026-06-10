@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="shipment_cancellation_reason_wizard_form" model="ir.ui.view">
+        <field name="name">shipment.cancellation.wizard.wizard.form</field>
+        <field name="model">shipment.cancellation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Shipment Cancellation Reason">
+                <h2><label for="reason" string="Please Provide a Reason for cancelling the Shipment."/></h2>
+                    <br/>
+                    <field name="reason" required="1" nolabel="1"/>
+                <footer>
+                    <button name="cancel_shipment" string="Save &amp; Close" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="shipment_cancellation_reason_wizard_form_1" model="ir.ui.view">
+        <field name="name">shipment.cancellation.wizard.wizard.form</field>
+        <field name="model">shipment.cancellation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Shipment Cancellation Reason">
+                <h2><label for="reason" string="Please Provide a Reason for cancelling the Shipment."/></h2>
+                    <br/>
+                    <field name="reason" required="1" nolabel="1"/>
+<!--                <footer>-->
+<!--                    <button name="cancel_shipment" string="Confirm" type="object" class="oe_highlight"/>-->
+<!--                    <button string="Cancel" class="btn-secondary" special="cancel"/>-->
+<!--                </footer>-->
+            </form>
+        </field>
+    </record>
+
+</odoo>

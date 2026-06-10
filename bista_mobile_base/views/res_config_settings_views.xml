@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_res_config_settings_view_form_notification" model="ir.ui.view">
+        <field name="name">view.res.config.settings.view.form.inherit.firebase.setting</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="5"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Push Notification" string="Push Notification" data-key="bista_mobile_base"
+                     name="bista_mobile_base">
+                    <block title="Firebase Settings" name="firebase_settings">
+                        <setting string="Firebase Project Name" id="firebase_name" class="o_form_label">
+                            <field name="firebase_name"/>
+                        </setting>
+                        <setting string="Firebase Project Id" id="firebase_project_id" class="o_form_label">
+                            <field name="firebase_id"/>
+                        </setting>
+                        <setting string="Key File" id="firebase_key_file" class="o_form_label pr-2">
+                            <field name="firebase_key_file"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

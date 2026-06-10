@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- tree view -->
+    <record id="geolocation_history_view_tree" model="ir.ui.view">
+        <field name="name">geolocation.history.list</field>
+        <field name="model">geolocation.history</field>
+        <field name="arch" type="xml">
+            <list string="Geolocation History" edit="false" create="false">
+                <field name="date_recorded"/>
+                <field name="source_id"/>
+                <field name="reference" optional="show" widget="many2onebutton"/>
+                <field name="lot_id" optional="hide"/>
+<!--                <field name="samsara_eld_asset_id" optional="hide"/>-->
+                <field name="device_unique_id" optional="hide"/>
+                <field name="device_name" optional="hide"/>
+                <field name="asset_latitude"/>
+                <field name="asset_longitude"/>
+                <field name="carrier_id" widget="many2onebutton" optional="hide"/>
+                <field name="latest" optional="hide" readonly="1"/>
+                <field name="create_date" optional="hide"/>
+                <field name="create_uid"/>
+                <field name="connectivity_status" widget="badge" decoration-success="connectivity_status == 'online'" decoration-danger="connectivity_status == 'offline'" optional="hide"/>
+                <field name="company_id" optional="show" widget="many2one"/>
+                <field name="approximate_location"/>
+                <field name="speed"/>
+<!--                <field name="product_id" optional="hide"/>-->
+            </list>
+        </field>
+    </record>
+
+    <!-- form view -->
+    <record id="geolocation_history_view_form" model="ir.ui.view">
+        <field name="name">geolocation.history.form</field>
+        <field name="model">geolocation.history</field>
+        <field name="arch" type="xml">
+            <form string="Geolocation History" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="source_id"/>
+                            <field name="carrier_id"/>
+                            <field name="reference" widget="many2onebutton"/>
+                            <field name="date_recorded"/>
+                            <field name="asset_latitude" widget="location_map_link"/>
+                            <field name="asset_longitude" widget="location_map_link"/>
+                            <field name="approximate_location" string="Accuracy (ft)"/>
+                        </group>
+                        <group>
+                            <field name="create_date"/>
+                            <field name="create_uid"/>
+                            <field name="connectivity_status"/>
+                            <field name="company_id"/>
+                            <field name="speed"/>
+                            <field name="device_unique_id"/>
+                            <field name="device_name"/>
+                        </group>
+                    </group>
+<!--                T2564 Geolocation History List – Detail View with Map-->
+                    <div>
+                        <field name="latitude_longitude" readonly="1" widget="google_map_single_marker" nolabel="1" options="{'module': 'shipment'}"/>
+                    </div>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_geolocation_history_search" model="ir.ui.view">
+        <field name="name">geolocation.history.search</field>
+        <field name="model">geolocation.history</field>
+        <field name="arch" type="xml">
+            <search>
+<!--                <field name="source_id"/>-->
+                <filter name="manual_update" string="Manual Update" domain="[('source_name', '=','Manual Update')]" help="Manual Update"/>
+                <filter name="use_my_location_button" string="Use My Location Button" domain="[('source_name', '=', 'Use My Location Button')]" help="Use My Location Button"/>
+                <filter name="driver_phone" string="Driver Phone" domain="[('source_name', '=', 'Driver Phone'), ('source_id.source_type', '=', 'shipment')]" help="Driver Phone"/>
+
+                <separator/>
+                <!-- group by -->
+                <group expand="0" string="Group By">
+                    <filter name="source_id" string="Source" context="{'group_by': 'source_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Google map view -->
+<!--    <record id="geolocation_history_view_google_map" model="ir.ui.view">-->
+<!--        <field name="name">geolocation.history.view.google.map</field>-->
+<!--        <field name="model">geolocation.history</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <google_map latitude="asset_latitude" longitude="asset_longitude" model="id" hide_name="1">-->
+<!--                <field name="display_name" string="HistoryName"/>-->
+<!--                <field name="create_date" string="Created On"/>-->
+<!--                <field name="asset_latitude" string="Latitude"/>-->
+<!--                <field name="asset_longitude" string="Longitude"/>-->
+<!--                <field name="source_id" string="Source:"/>-->
+<!--                &lt;!&ndash; <field name="lot_id" string="Serial #:"/> &ndash;&gt;-->
+<!--            </google_map>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!-- view action -->
+    <record id="driver_geolocation_history_view_action" model="ir.actions.act_window">
+        <field name="name">Geolocation History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geolocation.history</field>
+        <field name="view_mode">list</field>
+        <field name="domain">['|', ('company_id', '=', False), ('company_id', 'in', context.get('allowed_company_ids'))]</field>
+        <field name="search_view_id" ref="view_geolocation_history_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No geolocation history found!
+            </p>
+        </field>
+    </record>
+
+<!--    &lt;!&ndash; Menu &ndash;&gt;-->
+<!--    <menuitem id="driver_geolocation_history" name="Geolocation History"-->
+<!--                  action="driver_geolocation_history_view_action"-->
+<!--                  parent="stock.menu_warehouse_report"-->
+<!--                  sequence="160"/>-->
+</odoo>
+
+    <!-- Action for New Menu -->
+<!--    <record id="action_geolocation_history_custom_view" model="ir.actions.act_window">-->
+<!--        <field name="name">Geolocation History</field>-->
+<!--        <field name="type">ir.actions.act_window</field>-->
+<!--        <field name="res_model">geolocation.history</field>-->
+<!--        <field name="view_mode">tree,google_map</field>-->
+<!--        <field name="domain" eval="[('source_id', 'in', [ref('bista_driver_geolocation_history.source_driver_phone')])]"/>-->
+<!--        <field name="view_id" ref="geolocation_history_custom_tree_view"/>-->
+<!--        <field name="search_view_id" ref="driver_fleet_geolocation_history_search"/>-->
+<!--        <field name="help" type="html">-->
+<!--            <p class="o_view_nocontent_smiling_face">-->
+<!--                No geolocation history found!-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->

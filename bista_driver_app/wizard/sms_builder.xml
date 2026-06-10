@@ -1,0 +1,22 @@
+<!-- NOTE: Driver app -->
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="driver_fleet_sms_builder_form_view_inherit" model="ir.ui.view">
+        <field name="name">fleet.sms.builder.view.form.inherit</field>
+        <field name="model">sms.builder</field>
+        <field name="inherit_id" ref="odoo_twilio_sms.sms_builder_view_form"/>
+        <field name="priority" eval="1" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='text_message']" position="after">
+                <field name="driver_ids" required="1" widget="many2many_tags"
+                    invisible="is_from_form_view"
+                    options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                    context="{'is_from_call_out_mst': True, 'tree_view_ref': 'bista_driver_app.bista_fleet_driver_optional_tree_view'}"/>
+                <field name="is_from_form_view" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='receiving_number']" position="attributes">
+                <attribute name="required">0</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo> -->

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_shipment_settings_tree" model="ir.ui.view">
+        <field name="name">shipment.settings.list</field>
+        <field name="model">shipment.settings</field>
+        <field name="arch" type="xml">
+            <list string="Settings">
+                <field name="name"/>
+                <field name="value"/>
+                <field name="unit"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_shipment_settings_form" model="ir.ui.view">
+        <field name="name">shipment.settings.form</field>
+        <field name="model">shipment.settings</field>
+        <field name="arch" type="xml">
+            <form string="Settings">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="value" invisible="is_fleet_system_url"/>
+                            <field name="is_fleet_system_url" invisible="1"/>
+                            <field name="url_value_en" invisible="not is_fleet_system_url"/>
+                            <field name="url_value_es" invisible="not is_fleet_system_url"/>
+                            <field name="unit" invisible="is_fleet_system_url"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="create_uid"/>
+                            <field name="create_date"/>
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_shipment_settings" model="ir.actions.act_window">
+        <field name="name">Shipment Master Configuration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipment.settings</field>
+        <field name="view_mode">list,form</field>
+        <field name="context"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Data found
+            </p>
+        </field>
+    </record>
+
+    <record id="action_shipment_setting_data_update" model="ir.actions.server">
+        <field name="name">Update settings data</field>
+        <field name="model_id" ref="bista_driver_app.model_shipment_settings"/>
+        <field name="groups_id" eval="[(4, ref('stock.group_stock_manager'))]"/>
+        <field name="binding_model_id" ref="bista_driver_app.model_shipment_settings"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_update_data()
+        </field>
+    </record>
+
+</odoo>

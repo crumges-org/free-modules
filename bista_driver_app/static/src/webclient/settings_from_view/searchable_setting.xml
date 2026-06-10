@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+     <!--T2787: setting view change-->
+    <t t-name="bista_driver_app.SearchableSettingInherit" t-inherit="web.SearchableSetting"
+       t-inherit-mode="extension">
+            <div class="mt16" position="replace">
+                <div t-att-class="fieldClass">
+                        <t t-if="props.fieldName and fieldType!=='boolean'">
+                            <t t-slot="fieldSlot"/>
+                        </t>
+                    <t t-slot="default"/>
+                </div>
+           </div>
+    </t>
+
+</templates>

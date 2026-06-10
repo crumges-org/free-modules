@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="action_report_shipment_instruction" model="ir.actions.report">
+            <field name="name">Shipment Instructions Report</field>
+            <field name="model">shipment.shipment</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bista_driver_app.report_shipment_instruction</field>
+            <field name="report_file">bista_driver_app.report_shipment_instruction</field>
+            <field name="binding_model_id" ref="model_shipment_shipment"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="bista_driver_app.paper_format_fleet_offline_pdf"/>
+        </record>
+
+        <!-- T2785:instruction report for stops-->
+        <template id="report_shipment_instruction">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page" style="margin-bottom:hidden;">
+                        <t t-foreach="docs" t-as="doc">
+                            <t t-if="type == 'notes'">
+                                <div t-field="doc.notes"/>
+                            </t>
+                            <t t-if="type == 'directions'">
+                                <div t-field="doc.directions"/>
+                            </t>
+                        </t>
+                    </div>
+                </t>
+            </t>
+
+        </template>
+
+        <!-- stops instruction report action -->
+        <record id="action_report_shipment_stop_instruction" model="ir.actions.report">
+            <field name="name">Shipment Stop Instructions Report</field>
+            <field name="model">shipment.stop</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bista_driver_app.report_shipment_instruction</field>
+            <field name="report_file">bista_driver_app.report_shipment_instruction</field>
+            <field name="binding_model_id" ref="model_shipment_stop"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="bista_driver_app.paper_format_fleet_offline_pdf"/>
+        </record>
+    </data>
+</odoo>

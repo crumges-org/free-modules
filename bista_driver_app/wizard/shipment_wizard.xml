@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shipment_wizard_tree" model="ir.ui.view">
+        <field name="name">shipment.wizard.list</field>
+        <field name="model">shipment.wizard</field>
+        <field name="arch" type="xml">
+            <list string="Shipment Wizards">
+                <field name="pickup_location_id"/>
+                <field name="planned_pickup_date"/>
+                <field name="pickup_timezone"/>
+                <field name="delivery_location_id"/>
+                <field name="planned_delivery_date"/>
+                <field name="delivery_timezone"/>
+                <field name="interval"/>
+                <field name="no_of_trucks"/>
+                <field name="add_forklift_shipment"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_shipment_wizard_form" model="ir.ui.view">
+        <field name="name">shipment.wizard.form</field>
+        <field name="model">shipment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Shipment">
+                <group>
+                    <group>
+                        <field name="pickup_location_id" options="{'no_create': True, 'no_create_edit': True}"
+                            context="{'tree_view_ref': 'bista_driver_app.shipment_location_more_optipnal_hide_tree_view'}"/>
+                        <label for="planned_pickup_date" style="font-weight: 500;"/>
+                        <div class="d-flex">
+                            <field name="planned_pickup_date" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'pickup_timezone'}"/>
+                            <field name="pickup_timezone" class="field_timezone_utc"/>
+                        </div>
+                        <field name="no_of_trucks"/>
+                        <field name="add_forklift_shipment"/>
+                    </group>
+                    <group>
+                        <field name="delivery_location_id" options="{'no_create': True, 'no_create_edit': True}"
+                            context="{'tree_view_ref': 'bista_driver_app.shipment_location_more_optipnal_hide_tree_view'}"/>
+                        <label for="planned_delivery_date" style="font-weight: 500;"/>
+                        <div class="d-flex">
+                            <field name="planned_delivery_date" class="field_delivery_datetime_utc w-100" options="{'is_utc': True, 'timezone_field': 'delivery_timezone'}"/>
+                            <field name="delivery_timezone" class="field_timezone_utc"/>
+                        </div>
+                        <label for="interval" style="font-weight: 500;"/>
+                        <div class="d-flex">
+                            <field name="interval"/>
+                            <span style="padding-left: 20px;">Minutes</span>
+                        </div>
+                        <field name="release"/>
+                    </group>
+                    <!-- <group>
+                        <group>
+                            <field name="no_of_trucks"/>
+                            <field name="add_forklift_shipment"/>
+                        </group>
+                    </group>
+                    <group>
+                    </group> -->
+                    <group>
+                        <field name="shipment_notes"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="create_shipments" string="Create Shipments" type="object" class="oe_highlight"/>
+                    <button name="cancel" string="Close" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_shipment_wizard" model="ir.actions.act_window">
+        <field name="name">Shipment Wizard</field>
+        <field name="res_model">shipment.wizard</field>
+        <field name="view_mode">list,form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

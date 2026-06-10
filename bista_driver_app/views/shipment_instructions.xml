@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="shipment_instruction_layout" name="Instructions Layout">&lt;!DOCTYPE html&gt;
+        <html t-att-lang="lang and lang.replace('_', '-')"
+              t-att-data-report-margin-top="data_report_margin_top"
+              t-att-data-report-header-spacing="data_report_header_spacing"
+              t-att-data-report-dpi="data_report_dpi"
+              t-att-data-report-landscape="data_report_landscape"
+              t-att-web-base-url="web_base_url">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="initial-scale=1"/>
+                <!-- driver app -->
+                <link rel="shortcut icon" href="/bista_driver_app/static/src/img/logo.png"/>
+
+                <link type="text/css" rel="stylesheet" href="/api/shipment/assets/web.assets_frontend.min.css"/>
+                <script type="text/javascript">
+                    document.addEventListener('DOMContentLoaded', () => {
+                        console.log("Shipment Instructions Loaded",document.querySelectorAll("img"));
+                            if (window.self !== window.top) {
+                                document.body.classList.add("o_in_iframe", "container-fluid");
+                                document.body.classList.remove("container");
+                            }
+<!--                        document.querySelectorAll("img").forEach(img => {-->
+<!--                                if (img.src.includes('/web/')) {-->
+<!--                                    img.src = img.src.replace('/web/', '/api/web/');-->
+<!--                                }-->
+<!--                        });-->
+                    });
+                </script>
+                <script type="text/javascript" src="/api/shipment/assets/web.assets_frontend.min.js"
+                        onerror="__odooAssetError=1"/>
+            </head>
+            <body t-att-class="'container' if not full_width else 'container-fluid'"
+                  t-att-dir="env['res.lang']._lang_get(lang or env.user.lang).direction or 'ltr'">
+                <div id="wrapwrap">
+                    <main style="background: white;">
+                        <t t-call="bista_driver_app.fleet_shipment_instructions"/>
+                    </main>
+                </div>
+            </body>
+        </html>
+    </template>
+
+
+    <template id="fleet_shipment_instructions" name="shipment_instructions_details">
+        <div class="row mt16">
+            <div id="shipment_content">
+                <div id="shipment_instructions_body">
+                    <t t-if="record and type">
+                        <div class="row" name="record_details">
+                            <div t-out="record[type]"/>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>

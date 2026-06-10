@@ -1,0 +1,178 @@
+.shipment_kanban_cls .o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
+    width: 100% !important;
+}
+
+.shipment_stop_kanban .stop-kanban-card {
+    border: 2px solid red;
+    padding: 15px;
+    margin: 10px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stop-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+
+.stop-section-row {
+    display: flex;
+    gap: 20px;
+    // margin-bottom: 20px;
+}
+
+.stop-box {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 12px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+.stop-section{
+    margin-left: 10px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.section-line {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 8px;
+}
+
+.address-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px 12px;
+    font-size: 13px;
+    flex-grow: 1;
+}
+.coordinates-grid,
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 12px;
+    font-size: 13px;
+    flex-grow: 1;
+}
+.times-grid{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 6px 12px;
+    font-size: 13px;
+    flex-grow: 1;
+}
+
+.coordinates-grid .map-link {
+    grid-column: span 2;
+    margin-top: 4px;
+}
+
+
+.map-link {
+    color: #007bff;
+    text-decoration: underline;
+    font-size: 13px;
+    margin-top: 4px;
+    display: inline-block;
+}
+.divider-line{
+    height: 2px;
+    background-color: #ccc;
+    margin: 5px 0 10px 0;
+    width: 44.5%;
+}
+.section-line {
+    height: 2px;
+    background-color: #ccc;
+    margin: 5px 0 10px 0;
+    width: 90%;
+}
+
+.oe_person {
+    input {
+        width: 500px !important;
+        border-bottom: 1px solid #017e84;
+    }
+
+}
+
+.o_dialog:not(.o_inactive_modal) {
+    .oe_person {
+        input {
+            width: 350px !important;
+            border-bottom: 1px solid #017e84;
+        }
+    }
+}
+.readonly{
+    input{
+            pointer-events: none;
+        }
+    }
+.oe_status_color{
+    border: 0;
+    font-size: 12px;
+    user-select: none;
+    background-color: #FFF;
+    font-weight: 500;
+    @include o-text-overflow;
+    transition: none; // remove transition to prevent badges from flickering at reload
+    color: $o-black;
+    &.o_field_empty {
+        display: none !important;
+    }
+}
+.o_list_renderer .o_list_table tbody > tr > td.oe_status_color{
+--fieldWidget-display: block !important;
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 90% !important;
+  margin-top: 5px !important;
+}
+.o_data_status{
+    background: #d1ecf1 !important;
+}
+.o_list_renderer .o_data_row:not(.o_selected_row):not(.o_data_row_selected):focus-within > * {
+  --table-accent-bg: none !important;
+}
+.o_list_renderer .o_data_row{
+    border-bottom-width: 1px;
+    background-color: #FFF;
+}
+
+.table-hover > tbody > tr.o_data_row:hover{
+    background-color: rgba(0, 0, 0, 0.035) !important;
+}
+
+.o_widget_use_my_location {
+    margin-bottom: 5px !important;
+    float: right !important;
+     .font-size-sm {
+        font-size: 10px !important;
+     }
+}
+.o_address_county {
+    display: inline-block !important;
+    width: 58% !important;
+}
+
+.description-width {
+    width: 100% !important;
+}
+
+/* Small screens */
+// @media (max-width: 768px) {
+//     .description-width {
+//         width: fit-content !important;
+//     }
+// }

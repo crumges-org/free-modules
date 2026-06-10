@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="web.AddressAutocompleteGmap">
+    <t t-if="props.readonly">
+      <span t-esc="formattedValue"/>
+    </t>
+      <t t-else="">
+      <input
+              t-ref="input"
+              class="o_input"
+              t-att-id="props.id"
+              t-att-type="'text'"
+              t-att-autocomplete="'off'"
+              placeholder="Enter an address..."
+      />
+    </t>
+  </t>
+</templates>
+
+

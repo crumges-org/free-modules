@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Driver App for Fleet & Delivery | Last Mile Management Solution</title>
+        <meta name="description" content="Last mile management for modern Fleet Driver App. Dispatcher dashboard, driver app, and recipient tracking optimized for iOS, Android, and web.">
+        <meta name="keywords" content="Fleet Driver App, Last Mile Management, Delivery Tracking">
+        <meta name="author" content="Bista Solutions">
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <link href="https://fonts.googleapis.com" rel="preconnect">
+        <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <section class="py-3" style="background-color: #fff;">
+            <div class="container">
+                <div class="text-center py-4">
+                    <img src="images/fleet-logo.png" alt="Fleet App Logo" style="width: 100px; height: 100px; margin-bottom: 16px;">
+                    <h1 style="font-size: 1.8rem; font-weight: 700; color: #4f46e5; margin: 0;">
+                        Driver App for Fleet &amp; Delivery
+                    </h1>
+                </div>
+                <div class="mb-4 bg-white shadow" style="border-radius: 20px; font-family: 'Inter', sans-serif;">
+                    <div class="pt-4">
+                        <ul class="nav nav-tabs justify-content-center bg-white pt-md-2" id="myTab" role="tablist" style="border-bottom:1px solid #CFCFCF;">
+                            <li class="nav-item">
+                                <a aria-controls="overview" aria-selected="true" class="nav-link active" data-bs-toggle="tab" href="#overview" id="overview-tab" role="tab" style="color: #4F4F4F;font-weight: 400; font-size: 14px;">Overview</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-controls="screenshots" aria-selected="false" class="nav-link" data-bs-toggle="tab" href="#screenshots" id="screenshots-tab" role="tab" style="color: #4F4F4F;font-weight: 400; font-size: 14px;">Screenshots</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-controls="faq" aria-selected="false" class="nav-link" data-bs-toggle="tab" href="#faq" id="faq-tab" role="tab" style="color: #4F4F4F;font-weight: 400; font-size: 14px;">FAQs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a aria-controls="releases" aria-selected="false" class="nav-link" data-bs-toggle="tab" href="#releases" id="releases-tab" role="tab" style="color: #4F4F4F;font-weight: 400; font-size: 14px;">Releases</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content p-md-5 p-2 py-3" id="myTabContent">
+                        <!-- ======================= OVERVIEW TAB ======================= -->
+                        <div aria-labelledby="overview-tab" class="tab-pane fade show active" id="overview" role="tabpanel">
+                            
+                            <!-- HERO SECTION -->
+                            <div class="position-relative mb-5" style="background-color: #f0f4ff; border-radius: 16px; padding: 60px 20px; text-align: center;">
+                                <div style="display: inline-block; background-color: #f97316; color: #ffffff; padding: 6px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 20px;">
+                                    NEW: OFFLINE TRACKING 2.0
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <img src="images/banner-image.png" alt="Fleet App Dashboard" style="max-width: 280px; border-radius: 8px;">
+                                </div>
+                                <h2 style="color: #1f2937; font-size: 2.5rem; font-weight: 700; margin-bottom: 12px; line-height: 1.2;">
+                                    Last mile management for<br>
+                                    <span style="color: #2563eb;">modern Fleet Driver App.</span>
+                                </h2>
+                                <p style="color: #6b7280; font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                                    Meet your new dispatcher dashboard, driver app, and recipient tracking. Optimized for iOS, Android, and web.
+                                </p>
+                            </div>
+
+                            <!-- EVERYTHING YOU NEED TO SCALE SECTION -->
+                            <div class="mb-5">
+                                <div class="text-center mb-4">
+                                    <h3 style="color: #1f2937; font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">Everything you need to <span style="color: #2563eb;">scale</span></h3>
+                                    <p style="color: #6b7280; font-size: 1rem;">A complete solution for drivers, dispatchers, and recipients.</p>
+                                </div>
+                                
+                                <div class="row">
+                                    <!-- Freight Management -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f0f9ff; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #dbeafe; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-list.png" alt="Freight Management" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Freight Management</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Access detailed freight lists with full stop history and shipment details at your fingertips.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Live Map View -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f0fdf4; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #dcfce7; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-map-pin.png" alt="Live Map View" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Live Map View</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Track drivers in real-time. Use the <strong>Pause/Resume</strong> toggle to manage driver privacy and safety.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- POD & Status -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #faf5ff; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #f3e8ff; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-document.png" alt="POD & Status" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">POD & Status</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Update shipment status instantly and upload Proof of Delivery (POD) documents directly from the field.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- SMS Notifications -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #fef2f2; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #fecaca; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-sms.png" alt="SMS Notifications" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">SMS Notifications</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Automated SMS and push notifications keep recipients updated on every shipment milestone.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Offline Tracking -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #1e293b; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #334155; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-wifi-off.png" alt="Offline Tracking" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #ffffff; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Offline Tracking</h4>
+                                            <p style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.5; margin: 0;">No signal? No problem. Location data is cached locally and synced automatically when back online.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Native Apps -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f0fdfa; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #ccfbf1; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-smartphone.png" alt="Native Apps" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Native Apps</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">A seamless experience across iOS and Android, designed for high-performance mobile usage.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MONITOR LIVE ACTIVITY SECTION -->
+                            <div class="mb-5" style="background-color: #1e293b; border-radius: 16px; padding: 40px;">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 mb-4 mb-md-0">
+                                        <h3 style="color: #ffffff; font-size: 1.8rem; font-weight: 700; margin-bottom: 16px; line-height: 1.3;">Monitor live activity and resolve issues.</h3>
+                                        <p style="color: #94a3b8; font-size: 1rem; line-height: 1.6; margin-bottom: 24px;">
+                                            Track your drivers in real-time and avoid surprises with dynamic ETAs. Manage stops, depots, and routes from a single source of truth.
+                                        </p>
+                                        <div style="margin-bottom: 12px; display: flex; align-items: center;">
+                                            <img src="images/icon-check.png" alt="Check" style="width: 20px; height: 20px; margin-right: 12px;">
+                                            <span style="color: #e2e8f0; font-size: 0.95rem;">Freight Stop List Optimization</span>
+                                        </div>
+                                        <div style="margin-bottom: 12px; display: flex; align-items: center;">
+                                            <img src="images/icon-check.png" alt="Check" style="width: 20px; height: 20px; margin-right: 12px;">
+                                            <span style="color: #e2e8f0; font-size: 0.95rem;">Update Shipment Status Instantly</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <img src="images/icon-check.png" alt="Check" style="width: 20px; height: 20px; margin-right: 12px;">
+                                            <span style="color: #e2e8f0; font-size: 0.95rem;">Document Upload & Storage</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div style="background-color: #ffffff; border-radius: 12px; padding: 24px;">
+                                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                                <div style="width: 8px; height: 8px; background-color: #22c55e; border-radius: 50%; margin-right: 8px;"></div>
+                                                <span style="color: #6b7280; font-size: 0.85rem;">Live: Driver #402</span>
+                                            </div>
+                                            <div style="border-radius: 8px; overflow: hidden; margin-bottom: 20px;">
+                                                <img src="images/map-route.png" alt="Live Map View" style="width: 100%; border-radius: 8px;">
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                                <div>
+                                                    <p style="color: #9ca3af; font-size: 0.75rem; margin: 0; text-transform: uppercase;">Current Freight</p>
+                                                    <p style="color: #1f2937; font-size: 1rem; font-weight: 600; margin: 0;">#FR-2024-X</p>
+                                                </div>
+                                                <button style="background-color: #ef4444; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 500;">Pause Tracking</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MORE FEATURES SECTION -->
+                            <div class="mb-4">
+                                <div class="text-center mb-4">
+                                    <h3 style="color: #1f2937; font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">More Features that <span style="color: #9333ea;">you need!</span></h3>
+                                    <p style="color: #6b7280; font-size: 1rem;">A complete solution for drivers, dispatchers, and recipients.</p>
+                                </div>
+                                
+                                <div class="row">
+                                    <!-- Login -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #eef2ff; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #e0e7ff; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-login.png" alt="Login" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Login</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Login with phone number and OTP.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Language -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #ecfdf5; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #d1fae5; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-globe.png" alt="Language" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Language</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Multi-language support.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Freight List -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #e2e8f0; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-document-slate.png" alt="Freight List" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Freight List</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Freight's Detail Information.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Notifications -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #fff7ed; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #fed7aa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-bell-orange.png" alt="Notifications" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Notifications</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Notification for Shipment.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Track Drivers -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #fdf4ff; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #f5d0fe; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-map-pin-fuchsia.png" alt="Track Drivers" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Track Drivers</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Pause/Resume Shipment Tracking.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Map View -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f0f9ff; border-radius: 12px; padding: 24px; height: 100%;">
+                                            <div style="width: 48px; height: 48px; background-color: #bae6fd; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                                <img src="images/icon-map.png" alt="Map View" style="width: 24px; height: 24px;">
+                                            </div>
+                                            <h4 style="color: #1f2937; font-size: 1rem; font-weight: 600; margin-bottom: 8px;">Map view</h4>
+                                            <p style="color: #4b5563; font-size: 0.9rem; line-height: 1.5; margin: 0;">Map view for multiple delivery location and routes.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- ======================= SCREENSHOTS TAB ======================= -->
+                        <div aria-labelledby="screenshots-tab" class="tab-pane fade show" id="screenshots" role="tabpanel">
+                            <div class="py-4">
+                                <div class="text-center mb-4">
+                                    <h2 style="color: #1f2937; font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;">Screenshots</h2>
+                                    <p style="color: #6b7280; font-size: 1rem;">Preview the app interface and features</p>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-1.png" alt="Screenshot 1" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-2.png" alt="Screenshot 2" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-3.png" alt="Screenshot 3" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-4.png" alt="Screenshot 4" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-5.png" alt="Screenshot 5" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-6.png" alt="Screenshot 6" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-7.png" alt="Screenshot 7" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-8.png" alt="Screenshot 8" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-9.png" alt="Screenshot 9" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-10.png" alt="Screenshot 10" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-11.png" alt="Screenshot 11" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-12.png" alt="Screenshot 12" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 mb-4">
+                                        <div class="shadow-sm" style="background-color: #f8fafc; border-radius: 12px; padding: 12px;">
+                                            <img src="images/Screenshot-13.png" alt="Screenshot 13" style="width: 100%; border-radius: 8px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================= FAQS TAB ======================= -->
+                        <div aria-labelledby="faq-tab" class="tab-pane fade show" id="faq" role="tabpanel">
+                            <div class="col-md-8 text-center mx-auto mb-5">
+                                <h2 class="my-3" style="font-weight: 700;">
+                                    <span style="color: #4f46e5;">Frequently</span> Asked Questions
+                                </h2>
+                                <p>Explore our frequently asked questions for quick solutions and insights into getting the best out of Fleet App.</p>
+                            </div>
+                            <div class="accordion" id="accordion6">
+                                <div style="background-color:#fff">
+                                    <!-- Question 1 -->
+                                    <div aria-expanded="true" class="card-header" data-bs-toggle="collapse" href="#collapseFAQOne" style="background-color:#F7F7F7; cursor: pointer; margin-bottom: 0.5rem; border:none; border-top:1px solid #E8E8E8; padding:1rem;">
+                                        <a class="d-flex justify-content-between card-title text-decoration-none" style="font-size:18px; line-height:30px; font-weight:500; color: #4F4F4F;">What is Driver App for Fleet &amp; Delivery? <img alt="" class="float-right pt-2" src="images/down-arrow.png"></a>
+                                    </div>
+                                    <div class="card-body collapse show" data-parent="#accordion6" id="collapseFAQOne">
+                                        <p style="font-size:16px; line-height:27px; color:#414141; font-weight:normal;"><b>Driver App for Fleet &amp; Delivery</b> is a mobile application designed to help drivers manage delivery and fleet-related tasks efficiently, while giving businesses real-time visibility and control over their logistics operations.</p>
+                                    </div>
+                                    <!-- Question 2 -->
+                                    <div aria-expanded="false" class="card-header collapsed" data-parent="#accordion6" data-bs-toggle="collapse" href="#collapseFAQTwo" style="background-color:#F7F7F7; cursor: pointer; margin-bottom: 0.5rem; border:none; border-top:1px solid #E8E8E8; padding:1rem;">
+                                        <a class="d-flex justify-content-between card-title text-decoration-none" style="font-size:18px; line-height:30px; font-weight:500; color: #4F4F4F;">How Driver App for Fleet &amp; Delivery work? <img alt="" class="float-right pt-2" src="images/down-arrow.png"></a>
+                                    </div>
+                                    <div class="card-body collapse" data-parent="#accordion6" id="collapseFAQTwo">
+                                        <div style="font-size:16px; line-height:27px; color:#414141; font-weight:normal;">
+                                            <p>How it works:</p>
+                                            <ol>
+                                                <li><b>Job Assignment:</b> Drivers receive assigned trips or delivery orders directly on the app.</li>
+                                                <li><b>Navigation &amp; Routing:</b> The app provides optimized routes with GPS navigation to ensure timely deliveries.</li>
+                                                <li><b>Task Execution:</b> Drivers can update delivery status (picked, in transit, delivered), scan barcodes/QR codes, and capture proof of delivery (signature, photo).</li>
+                                                <li><b>Real-Time Tracking:</b> The driver's location is tracked live, allowing fleet managers to monitor progress and vehicle movement.</li>
+                                                <li><b>Communication:</b> Drivers can communicate with dispatchers through in-app messaging or notifications.</li>
+                                                <li><b>Reporting &amp; Sync:</b> Delivery data, time logs, fuel usage, and exceptions are synced instantly with the central system/ERP for accurate reporting and billing.</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <!-- Question 3 -->
+                                    <div aria-expanded="false" class="card-header collapsed" data-parent="#accordion6" data-bs-toggle="collapse" href="#collapseFAQThree" style="background-color:#F7F7F7; cursor: pointer; margin-bottom: 0.5rem; border:none; border-top:1px solid #E8E8E8; padding:1rem;">
+                                        <a class="d-flex justify-content-between card-title text-decoration-none" style="font-size:18px; line-height:30px; font-weight:500; color: #4F4F4F;">How the Driver App for Fleet &amp; Delivery can improve your business operations? <img alt="" class="float-right pt-2" src="images/down-arrow.png"></a>
+                                    </div>
+                                    <div class="card-body collapse" data-parent="#accordion6" id="collapseFAQThree">
+                                        <div style="font-size:16px; line-height:27px; color:#414141; font-weight:normal;">
+                                            <p><b>Faster Deliveries:</b> Optimized routes and real-time navigation reduce delays and improve on-time delivery performance.</p>
+                                            <ol>
+                                                <li><b>Real-Time Visibility:</b> Live tracking of vehicles and drivers helps managers monitor operations and respond quickly to issues.</li>
+                                                <li><b>Higher Accuracy:</b> Barcode scanning, digital checklists, and proof of delivery (signature/photos) reduce manual errors and disputes.</li>
+                                                <li><b>Improved Productivity:</b> Automated job assignments and status updates reduce paperwork and manual coordination.</li>
+                                                <li><b>Better Customer Satisfaction:</b> Real-time delivery updates and accurate ETAs improve transparency and trust with customers.</li>
+                                                <li><b>Operational Cost Reduction:</b> Efficient routing, fuel monitoring, and driver performance insights help lower fuel and maintenance costs.</li>
+                                                <li><b>Data-Driven Decisions:</b> Integrated analytics and reports provide insights into delivery performance, driver behavior, and fleet utilization.</li>
+                                                <li><b>ERP Integration:</b> Seamless synchronization with ERP systems (like Odoo) ensures consistent data for billing, inventory, and accounting.</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ======================= RELEASES TAB ======================= -->
+                        <div aria-labelledby="releases-tab" class="tab-pane fade show" id="releases" role="tabpanel">
+                            <div class="col-md-8 text-center mx-auto mb-5">
+                                <h2 class="my-3" style="font-weight: 700;">
+                                    <span style="color: #4f46e5;">Fleet App</span> Releases
+                                </h2>
+                                <p>Every update brings new capabilities. Keep track of the latest features and enhancements.</p>
+                            </div>
+                            <div class="releases-container">
+                                <div class="col-md-12 mx-0 my-5 px-5 py-4" style="background: #f3f3f3; border-radius: 0.8rem; ">
+                                    <h4>Latest Release 1.0.0 </h4>
+                                    <!-- <h4>Latest Release 1.0.0 <span style="color: #4f46e5;">(29 January, 2026)</span></h4> -->
+                                    <li class="text-muted">Initial release of Driver App for Fleet &amp; Delivery.</li>
+                                    <li class="text-muted">Real-time GPS tracking and live map view.</li>
+                                    <li class="text-muted">Offline tracking with automatic sync.</li>
+                                    <li class="text-muted">Multi-language support and push notifications.</li>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- DOWNLOAD & CONTACT SECTION -->
+                <section>
+                    <div class="py-5" style="background-color: #ffffff; border-top: 1px solid #e5e7eb; margin-top: 40px;">
+                        <div class="row align-items-center">
+                            <!-- Google Play Store -->
+                            <div class="col-md-4 text-center mb-4 mb-md-0">
+                                <div style="background-color: #1f2937; border-radius: 12px; padding: 20px 28px;">
+                                    <div class="d-flex align-items-center" style="margin-bottom: 14px;">
+                                        <div style="margin-right: 14px;">
+                                            <img src="images/icon-google-play.png" alt="Google Play" style="width: 36px; height: 36px;">
+                                        </div>
+                                        <div style="text-align: left;">
+                                            <p style="color: #9ca3af; font-size: 0.7rem; margin: 0; text-transform: uppercase; font-weight: 500;">Get it on</p>
+                                            <p style="color: #ffffff; font-size: 1.4rem; font-weight: 700; margin: 0;">Google Play</p>
+                                        </div>
+                                    </div>
+                                    <div style="background-color: #374151; border-radius: 8px; padding: 10px 14px;">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <span style="color: #ffffff; font-size: 0.8rem; font-weight: 600; margin-right: 10px;">www.placeholdergoogle.com</span>
+                                            <img src="images/icon-clipboard-white.png" alt="Copy" style="width: 16px; height: 16px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Contact Info -->
+                            <div class="col-md-4 text-center mb-4 mb-md-0">
+                                <div style="background-color: #1f2937; border-radius: 12px; padding: 40px 28px;">
+                                    <div class="d-flex align-items-center justify-content-center mb-3">
+                                        <img src="images/icon-mail-white.png" alt="Email" style="width: 20px; height: 20px; margin-right: 10px;">
+                                        <span style="color: #ffffff; font-size: 1rem; font-weight: 600;">Sales@bistasolutions.com</span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <img src="images/icon-phone-white.png" alt="Phone" style="width: 20px; height: 20px; margin-right: 10px;">
+                                        <span style="color: #ffffff; font-size: 1rem; font-weight: 600;">+1 (858) 401 2332</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- App Store -->
+                            <div class="col-md-4 text-center">
+                                <div style="background-color: #1f2937; border-radius: 12px; padding: 20px 28px;">
+                                    <div class="d-flex align-items-center" style="margin-bottom: 14px;">
+                                        <div style="margin-right: 14px;">
+                                            <img src="images/icon-app-store.png" alt="App Store" style="width: 36px; height: 36px;">
+                                        </div>
+                                        <div style="text-align: left;">
+                                            <p style="color: #9ca3af; font-size: 0.7rem; margin: 0; text-transform: uppercase; font-weight: 500;">Download on the</p>
+                                            <p style="color: #ffffff; font-size: 1.4rem; font-weight: 700; margin: 0;">App Store</p>
+                                        </div>
+                                    </div>
+                                    <div style="background-color: #374151; border-radius: 8px; padding: 10px 14px;">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <span style="color: #ffffff; font-size: 0.8rem; font-weight: 600; margin-right: 10px;">www.placeholderapple.com</span>
+                                            <img src="images/icon-clipboard-white.png" alt="Copy" style="width: 16px; height: 16px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOOTER -->
+                <section>
+                    <div class="text-center py-4" style="background-color: #f8fafc; border-radius: 12px; margin-top: 20px;">
+                        <p style="color: #64748b; font-size: 0.9rem; margin: 0;">© 2026 Bista Solutions Inc. All rights reserved. Built for iOS & Android.</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+        <script src="js/jquery.slim.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
