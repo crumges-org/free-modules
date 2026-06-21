@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<odoo>
-  <record id="w15_light_main_menu" model="ir.ui.menu">
-    <field name="action" ref="w15_light_server_action"/>
-    <field name="name">Cleverence Inventory</field>
-    <field name="web_icon_data" type="base64" file="clv_api/static/description/icon.png"/>
-  </record>
-</odoo>

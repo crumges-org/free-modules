@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-wb_terms_and_conditions.access_wb_terms_condition,access_wb_terms_condition,wb_terms_and_conditions.model_wb_terms_condition,base.group_user,1,1,1,1
-
