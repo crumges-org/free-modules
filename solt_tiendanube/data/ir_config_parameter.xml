@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo noupdate="1">
-
-    <record id="enable_measure_in_cm" model="ir.config_parameter" forcecreate="1">
-        <field name="key">solt_tiendanube.measure_in_cm</field>
-        <field name="value">1</field>
-    </record>
-
-</odoo>

@@ -1,7 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_knowledge_category","access.knowledge.category","model_knowledge_category","base.group_user",1,1,1,1
-"access_knowledge_article","access.knowledge.article","model_knowledge_article","base.group_user",1,1,1,1
-"access_knowledge_tag","access.knowledge.tag","model_knowledge_tag","base.group_user",1,1,1,1
-access_knowledge_article_version_user,access_knowledge_article_version_user,model_knowledge_article_version,base.group_user,1,1,1,0
-access_version_compare_wizard_user,access.version.compare.wizard.user,model_knowledge_version_compare_wizard,base.group_user,1,0,1,0
-access_knowledge_article_extra_fields_user,access_knowledge_article_extra_fields_user,model_knowledge_article,base.group_user,1,1,1,1

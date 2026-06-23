@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<templates xml:space="preserve">
-    <t t-name="web.locationMapField" owl="1">
-        <div id="location_map" class="hts_map" style="width 500px !important; height:400px !important">
-
-        </div>
-    </t>
-</templates>
-

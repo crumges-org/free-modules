@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-cs_login_audit_log.access_cs_login_audit,access_cs_login_audit,cs_login_audit_log.model_cs_login_audit,,1,0,0,1

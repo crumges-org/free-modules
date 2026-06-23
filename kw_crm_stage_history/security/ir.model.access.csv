@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_kw_crm_stage_history_user,kw.crm.stage.history.user,model_kw_crm_stage_history,kw_crm_stage_history.group_crm_stage_history_viewer,1,0,0,0
-access_kw_crm_stage_history_manager,kw.crm.stage.history.manager,model_kw_crm_stage_history,sales_team.group_sale_manager,1,1,1,1

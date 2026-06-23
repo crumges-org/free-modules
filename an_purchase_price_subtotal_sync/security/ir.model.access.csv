@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_../sunaidi/an_purchase_price_subtotal_sync_../sunaidi/an_purchase_price_subtotal_sync,../sunaidi/an_purchase_price_subtotal_sync.../sunaidi/an_purchase_price_subtotal_sync,model_../sunaidi/an_purchase_price_subtotal_sync_../sunaidi/an_purchase_price_subtotal_sync,base.group_user,1,1,1,1

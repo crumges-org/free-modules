@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_audit_config_admin,audit.config admin,model_audit_config,base.group_system,1,1,1,1
-access_audit_log_line_admin,audit.log.line admin,model_audit_log_line,base.group_system,1,1,1,1
-access_audit_export_wizard_admin,audit.export.wizard admin,model_audit_export_wizard,base.group_system,1,1,1,1
