@@ -1,0 +1,725 @@
+// Part of the Codfy module suite for Odoo. See LICENSE file for full terms.
+// Copyright (C) 2026 Codfy (https://www.codfy.mx)
+// License: LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
+
+// ============================================================
+//  Escenario: capa de fondo que se dibuja detrás del formulario
+// ============================================================
+
+.c_login_stage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+
+    .c_login_bg {
+        position: absolute;
+        inset: 0;
+        background-color: var(--c-login-bg-end, #080B16);
+        background-image: linear-gradient(155deg, var(--c-login-bg-start, #132B6B) 0%, var(--c-login-bg-end, #080B16) 70%);
+    }
+
+    // Grano muy sutil: le quita el aspecto plano al degradado.
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: .045;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    & ~ .container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+}
+
+// ============================================================
+//  La tarjeta del formulario
+// ============================================================
+
+.c_login_stage ~ .container {
+
+    .card {
+        width: 100%;
+        max-width: 424px !important;
+        padding: .35rem;
+        border: 1px solid transparent !important;
+        border-radius: var(--c-login-radius, 20px) !important;
+        box-shadow: 0 34px 70px -34px rgba(4, 9, 26, .62), 0 2px 10px rgba(4, 9, 26, .07) !important;
+        transition: none;
+    }
+
+    .card-body {
+        padding: 2.1rem 1.9rem 1.7rem;
+        background-color: transparent !important;
+    }
+
+    // Cabecera original con el logo de la compañía.
+    .card-body > .border-bottom:first-child {
+        border-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+
+        img {
+            max-height: var(--c-login-logo-height, 48px) !important;
+            width: auto;
+            object-fit: contain;
+        }
+    }
+
+    .c_login_brand {
+        text-align: center;
+        margin: 1.15rem 0 1.6rem;
+    }
+
+    .c_login_brand_logo {
+        display: block;
+        height: var(--c-login-logo-height, 48px);
+        max-width: 80%;
+        margin: 0 auto .95rem;
+        object-fit: contain;
+    }
+
+    .c_login_headline {
+        margin: 0 0 .3rem;
+        font-size: 1.55rem;
+        font-weight: 700;
+        letter-spacing: -.021em;
+        line-height: 1.2;
+    }
+
+    .c_login_tagline {
+        margin: 0;
+        font-size: .9rem;
+        line-height: 1.45;
+        opacity: .66;
+    }
+
+    // ---- campos ----
+    .form-label,
+    .col-form-label {
+        font-size: .82rem;
+        font-weight: 600;
+        letter-spacing: .005em;
+        opacity: .78;
+        margin-bottom: .35rem;
+    }
+
+    .form-control {
+        padding: .68rem .85rem;
+        font-size: .95rem;
+        border-width: 1px;
+        border-radius: var(--c-login-radius-inner, 12px);
+        box-shadow: none;
+        transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+
+        &:focus {
+            border-color: var(--c-login-primary, #0B6EFF);
+            box-shadow: 0 0 0 4px rgba(var(--c-login-primary-rgb, 11, 110, 255), .17);
+        }
+    }
+
+    .input-group {
+        .form-control {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        > .btn,
+        > a.btn {
+            border-top-right-radius: var(--c-login-radius-inner, 12px);
+            border-bottom-right-radius: var(--c-login-radius-inner, 12px);
+        }
+    }
+
+    // ---- botón principal ----
+    .btn-primary {
+        padding: .74rem 1rem;
+        font-size: .97rem;
+        font-weight: 600;
+        border: 0 !important;
+        border-radius: var(--c-login-radius-inner, 12px);
+        color: var(--c-login-on-primary, #FFFFFF) !important;
+        background-color: var(--c-login-primary, #0B6EFF) !important;
+        background-image: linear-gradient(135deg, var(--c-login-primary, #0B6EFF) 0%, var(--c-login-primary-strong, #0959D9) 100%);
+        box-shadow: 0 12px 26px -12px rgba(var(--c-login-primary-rgb, 11, 110, 255), .85);
+        transition: transform .16s ease, box-shadow .2s ease, filter .2s ease;
+
+        &:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.07);
+            box-shadow: 0 16px 30px -12px rgba(var(--c-login-primary-rgb, 11, 110, 255), .95);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--c-login-on-primary, #FFFFFF);
+            outline-offset: 2px;
+        }
+    }
+
+    // ---- enlaces ----
+    .btn-link,
+    a:not(.btn-primary) {
+        color: var(--c-login-link, #0B6EFF);
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .btn-link.btn-sm {
+        font-size: .82rem;
+        font-weight: 500;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    // ---- accesos alternativos (passkey, usuarios recientes) ----
+    .list-group-item {
+        background-color: transparent;
+        border-radius: var(--c-login-radius-inner, 12px) !important;
+        transition: background-color .18s ease, border-color .18s ease;
+    }
+
+    .o_login_auth em {
+        font-size: .78rem;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        opacity: .5;
+    }
+
+    // ---- pie ----
+    .card-body > .border-top {
+        font-size: .78rem;
+        opacity: .62;
+    }
+
+    .c_login_footnote {
+        margin-top: .55rem;
+        line-height: 1.4;
+    }
+}
+
+// ============================================================
+//  Estilo del formulario: clara / oscura / vidrio
+// ============================================================
+
+.c_login_card_light ~ .container {
+    .card {
+        color: #0B1120;
+        background-color: #FFFFFF !important;
+        border-color: rgba(15, 23, 42, .07) !important;
+    }
+
+    .c_login_headline,
+    .c_login_tagline,
+    .form-label,
+    .col-form-label,
+    .card-body > .border-top {
+        color: #0B1120 !important;
+    }
+
+    .form-control {
+        color: #0B1120;
+        background-color: #F5F7FC;
+        border-color: rgba(15, 23, 42, .1);
+
+        &:focus {
+            background-color: #FFFFFF;
+        }
+    }
+
+    .input-group > .btn,
+    .input-group > a.btn {
+        color: #55607A;
+        background-color: #F5F7FC;
+        border-color: rgba(15, 23, 42, .1) !important;
+    }
+
+    .list-group-item {
+        color: #0B1120;
+        border-color: rgba(15, 23, 42, .1);
+
+        &:hover {
+            background-color: #F5F7FC;
+        }
+    }
+
+    .card-body > .border-top {
+        border-top-color: rgba(15, 23, 42, .08) !important;
+    }
+}
+
+.c_login_card_dark ~ .container,
+.c_login_card_glass ~ .container {
+    .card {
+        color: #E9EEFA;
+    }
+
+    .c_login_headline,
+    .c_login_tagline,
+    .form-label,
+    .col-form-label,
+    .card-body > .border-top,
+    .text-muted {
+        color: #E9EEFA !important;
+    }
+
+    .form-control {
+        color: #F2F5FC;
+        border-color: rgba(255, 255, 255, .13);
+
+        &::placeholder {
+            color: rgba(233, 238, 250, .38);
+        }
+    }
+
+    .input-group > .btn,
+    .input-group > a.btn {
+        color: rgba(233, 238, 250, .72);
+        border-color: rgba(255, 255, 255, .13) !important;
+    }
+
+    .list-group-item {
+        color: #E9EEFA;
+        border-color: rgba(255, 255, 255, .13);
+
+        &:hover {
+            background-color: rgba(255, 255, 255, .08);
+        }
+    }
+
+    .card-body > .border-top {
+        border-top-color: rgba(255, 255, 255, .12) !important;
+    }
+
+    .o_show_password i {
+        color: inherit;
+    }
+}
+
+.c_login_card_dark ~ .container {
+    .card {
+        background-color: #0E1424 !important;
+        border-color: rgba(255, 255, 255, .08) !important;
+    }
+
+    .form-control {
+        background-color: #161E30;
+
+        &:focus {
+            background-color: #1A2337;
+        }
+    }
+
+    .input-group > .btn,
+    .input-group > a.btn {
+        background-color: #161E30;
+    }
+}
+
+.c_login_card_glass ~ .container {
+    .card {
+        background-color: rgba(255, 255, 255, .09) !important;
+        border-color: rgba(255, 255, 255, .17) !important;
+        backdrop-filter: blur(24px) saturate(150%);
+        -webkit-backdrop-filter: blur(24px) saturate(150%);
+        box-shadow: 0 34px 80px -30px rgba(2, 6, 20, .7), inset 0 1px 0 rgba(255, 255, 255, .16) !important;
+    }
+
+    .form-control {
+        background-color: rgba(255, 255, 255, .1);
+
+        &:focus {
+            background-color: rgba(255, 255, 255, .16);
+        }
+    }
+
+    .input-group > .btn,
+    .input-group > a.btn {
+        background-color: rgba(255, 255, 255, .1);
+    }
+}
+
+// ============================================================
+//  Diseño 1 — Aurora
+// ============================================================
+
+.c_login_layout_aurora {
+    .c_login_orb {
+        position: absolute;
+        display: block;
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(90px);
+        mix-blend-mode: screen;
+        will-change: transform;
+    }
+
+    .c_login_orb_a {
+        width: 44vw;
+        height: 44vw;
+        min-width: 320px;
+        min-height: 320px;
+        top: -14vw;
+        left: -10vw;
+        opacity: .72;
+        background-image: radial-gradient(circle at 50% 50%, var(--c-login-primary, #0B6EFF) 0%, rgba(var(--c-login-primary-rgb, 11, 110, 255), 0) 68%);
+        animation: c-login-drift-a 24s ease-in-out infinite alternate;
+    }
+
+    .c_login_orb_b {
+        width: 38vw;
+        height: 38vw;
+        min-width: 280px;
+        min-height: 280px;
+        right: -8vw;
+        bottom: -12vw;
+        opacity: .62;
+        background-image: radial-gradient(circle at 50% 50%, var(--c-login-glow, #1E4FB8) 0%, rgba(var(--c-login-bg-start-rgb, 19, 43, 107), 0) 70%);
+        animation: c-login-drift-b 29s ease-in-out infinite alternate;
+    }
+
+    .c_login_orb_c {
+        width: 26vw;
+        height: 26vw;
+        min-width: 200px;
+        min-height: 200px;
+        top: 34%;
+        right: 26%;
+        opacity: .4;
+        background-image: radial-gradient(circle at 50% 50%, var(--c-login-primary, #0B6EFF) 0%, rgba(var(--c-login-primary-rgb, 11, 110, 255), 0) 65%);
+        animation: c-login-drift-c 34s ease-in-out infinite alternate;
+    }
+
+    &.c_login_has_image .c_login_bg {
+        background-image:
+            linear-gradient(155deg,
+                rgba(var(--c-login-bg-start-rgb, 19, 43, 107), var(--c-login-overlay, .6)) 0%,
+                rgba(var(--c-login-bg-end-rgb, 8, 11, 22), calc(var(--c-login-overlay, .6) + .12)) 75%),
+            var(--c-login-image, none);
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+@keyframes c-login-drift-a {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to   { transform: translate3d(6vw, 5vh, 0) scale(1.12); }
+}
+
+@keyframes c-login-drift-b {
+    from { transform: translate3d(0, 0, 0) scale(1.06); }
+    to   { transform: translate3d(-7vw, -4vh, 0) scale(1); }
+}
+
+@keyframes c-login-drift-c {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-5vw, 7vh, 0); }
+}
+
+// ============================================================
+//  Diseño 2 — Dividido
+// ============================================================
+
+.c_login_layout_split {
+
+    .c_login_bg {
+        background-image: none;
+        background-color: #F3F6FC;
+    }
+
+    .c_login_aside {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 46%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: clamp(2rem, 3.6vw, 3.75rem);
+        color: #FFFFFF;
+        overflow: hidden;
+        background-color: var(--c-login-bg-end, #080B16);
+        background-image: linear-gradient(150deg, var(--c-login-bg-start, #132B6B) 0%, var(--c-login-bg-end, #080B16) 78%);
+    }
+
+    // Rejilla de puntos que se desvanece en diagonal.
+    .c_login_aside::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: .75;
+        background-image: radial-gradient(rgba(255, 255, 255, .17) 1px, transparent 1px);
+        background-size: 24px 24px;
+        -webkit-mask-image: linear-gradient(150deg, #000 0%, transparent 62%);
+        mask-image: linear-gradient(150deg, #000 0%, transparent 62%);
+    }
+
+    // Halo del color de marca en la esquina inferior.
+    .c_login_aside::after {
+        content: "";
+        position: absolute;
+        width: 30vw;
+        height: 30vw;
+        right: -12vw;
+        bottom: -14vw;
+        pointer-events: none;
+        border-radius: 50%;
+        filter: blur(70px);
+        opacity: .5;
+        background-image: radial-gradient(circle at 50% 50%, var(--c-login-primary, #0B6EFF) 0%, rgba(var(--c-login-primary-rgb, 11, 110, 255), 0) 70%);
+    }
+
+    .c_login_aside_top,
+    .c_login_aside_main,
+    .c_login_aside_note {
+        position: relative;
+        z-index: 1;
+    }
+
+    .c_login_aside_logo {
+        display: block;
+        height: var(--c-login-logo-height, 48px);
+        max-width: 62%;
+        object-fit: contain;
+        object-position: left center;
+    }
+
+    .c_login_aside_headline {
+        margin: 0 0 .7rem;
+        font-size: clamp(1.9rem, 2.9vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -.028em;
+        line-height: 1.08;
+        max-width: 15ch;
+    }
+
+    .c_login_aside_tagline {
+        margin: 0;
+        font-size: clamp(.98rem, 1.15vw, 1.12rem);
+        line-height: 1.55;
+        max-width: 42ch;
+        color: rgba(255, 255, 255, .74);
+    }
+
+    .c_login_aside_note {
+        margin: 0;
+        font-size: .82rem;
+        color: rgba(255, 255, 255, .55);
+    }
+
+    &.c_login_has_image .c_login_aside {
+        background-image:
+            linear-gradient(150deg,
+                rgba(var(--c-login-bg-start-rgb, 19, 43, 107), var(--c-login-overlay, .6)) 0%,
+                rgba(var(--c-login-bg-end-rgb, 8, 11, 22), calc(var(--c-login-overlay, .6) + .18)) 100%),
+            var(--c-login-image, none);
+        background-size: cover;
+        background-position: center;
+    }
+
+    & ~ .container {
+        max-width: none !important;
+        margin-left: 46%;
+        margin-right: 0;
+        width: 54%;
+        padding-left: clamp(1.5rem, 3vw, 3rem);
+        padding-right: clamp(1.5rem, 3vw, 3rem);
+    }
+
+    & ~ .container .card {
+        max-width: 400px !important;
+        padding: 0;
+        background-color: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    & ~ .container .card-body {
+        padding: 0;
+    }
+
+    // El logo ya se muestra en el panel lateral.
+    & ~ .container .card-body > .border-bottom:first-child {
+        display: none !important;
+    }
+}
+
+.c_login_layout_split.c_login_card_dark .c_login_bg,
+.c_login_layout_split.c_login_card_glass .c_login_bg {
+    background-color: #090D18;
+}
+
+// ============================================================
+//  Diseño 3 — Reflector
+// ============================================================
+
+.c_login_layout_spotlight {
+
+    &.c_login_has_image .c_login_bg {
+        background-image: var(--c-login-image, none);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .c_login_bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(112deg,
+            rgba(var(--c-login-bg-end-rgb, 8, 11, 22), calc(var(--c-login-overlay, .6) + .22)) 0%,
+            rgba(var(--c-login-bg-start-rgb, 19, 43, 107), var(--c-login-overlay, .6)) 52%,
+            rgba(var(--c-login-bg-end-rgb, 8, 11, 22), calc(var(--c-login-overlay, .6) - .12)) 100%);
+    }
+
+    // Halo detrás de la tarjeta, para despegarla de la foto.
+    & ~ .container .card {
+        position: relative;
+    }
+
+    & ~ .container .card::before {
+        content: "";
+        position: absolute;
+        inset: -12% -8%;
+        z-index: -1;
+        pointer-events: none;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: .38;
+        background-image: radial-gradient(circle at 50% 50%, var(--c-login-primary, #0B6EFF) 0%, rgba(var(--c-login-primary-rgb, 11, 110, 255), 0) 70%);
+    }
+}
+
+// ============================================================
+//  Elementos que el administrador puede ocultar
+// ============================================================
+
+.c_login_hide_reset ~ .container a[href^="/web/reset_password"],
+.c_login_hide_signup ~ .container a[href^="/web/signup"],
+.c_login_hide_dbmanager ~ .container a[href^="/web/database/manager"] {
+    display: none !important;
+}
+
+.c_login_hide_dbmanager ~ .container .border-end {
+    border-right: 0 !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+}
+
+.c_login_hide_db ~ .container .oe_login_form > div:has(> .input-group > #db) {
+    display: none !important;
+}
+
+.c_login_own_logo ~ .container .card-body > .border-bottom:first-child {
+    display: none !important;
+}
+
+// ============================================================
+//  Responsivo
+// ============================================================
+
+@media (max-width: 991.98px) {
+
+    // El panel deja de estar al lado y pasa a ser una banda superior que
+    // empuja al formulario, en vez de quedar debajo de él.
+    .c_login_layout_split {
+        position: relative;
+        inset: auto;
+        overflow: visible;
+
+        .c_login_bg {
+            position: fixed;
+            inset: 0;
+        }
+
+        .c_login_aside {
+            position: relative;
+            inset: auto;
+            width: 100%;
+            min-height: 0;
+            padding: 2.25rem 1.5rem 2.5rem;
+        }
+
+        .c_login_aside_main {
+            margin-top: 1.75rem;
+        }
+
+        .c_login_aside_headline {
+            font-size: clamp(1.6rem, 6.4vw, 2.2rem);
+            max-width: 100%;
+        }
+
+        .c_login_aside_tagline {
+            font-size: .96rem;
+        }
+
+        .c_login_aside_note {
+            margin-top: 1.6rem;
+        }
+
+        & ~ .container {
+            width: 100%;
+            margin-left: 0;
+            align-items: flex-start;
+            min-height: 0;
+            padding-top: 1.5rem !important;
+            padding-bottom: 2.5rem !important;
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+
+    .c_login_stage ~ .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        .card {
+            max-width: 100% !important;
+        }
+
+        .card-body {
+            padding: 1.6rem 1.3rem 1.35rem;
+        }
+
+        .c_login_headline {
+            font-size: 1.35rem;
+        }
+    }
+
+    .c_login_layout_aurora .c_login_orb {
+        filter: blur(64px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .c_login_layout_aurora .c_login_orb {
+        animation: none !important;
+    }
+
+    .c_login_stage ~ .container .btn-primary {
+        transition: none;
+
+        &:hover {
+            transform: none;
+        }
+    }
+}

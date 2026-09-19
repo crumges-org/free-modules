@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 330" width="470" height="330" role="img" aria-label="Tres disenos de pantalla de acceso">
+  <defs>
+    <linearGradient id="auroraBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#16327A"/>
+      <stop offset="100%" stop-color="#0A0F1F"/>
+    </linearGradient>
+    <linearGradient id="panelBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1B3A8C"/>
+      <stop offset="100%" stop-color="#0B1226"/>
+    </linearGradient>
+    <linearGradient id="shotBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0E2A6B"/>
+      <stop offset="55%" stop-color="#2A1B6B"/>
+      <stop offset="100%" stop-color="#080B16"/>
+    </linearGradient>
+    <linearGradient id="btn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2C86FF"/>
+      <stop offset="100%" stop-color="#0B6EFF"/>
+    </linearGradient>
+    <radialGradient id="orb" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3D8BFF" stop-opacity=".95"/>
+      <stop offset="100%" stop-color="#3D8BFF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse">
+      <circle cx="1.6" cy="1.6" r="1.1" fill="#FFFFFF" opacity=".22"/>
+    </pattern>
+  </defs>
+
+  <!-- ===== Aurora (izquierda) ===== -->
+  <g transform="translate(2,76)">
+    <rect x="0" y="0" width="150" height="210" rx="14" fill="url(#auroraBg)"/>
+    <circle cx="24" cy="32" r="50" fill="url(#orb)" opacity=".85"/>
+    <circle cx="134" cy="184" r="42" fill="url(#orb)" opacity=".55"/>
+    <rect x="0.5" y="0.5" width="149" height="209" rx="14" fill="none" stroke="#FFFFFF" stroke-opacity=".14"/>
+    <rect x="26" y="44" width="98" height="122" rx="11" fill="#FFFFFF" opacity=".96"/>
+    <circle cx="75" cy="68" r="9" fill="#0B6EFF" opacity=".9"/>
+    <rect x="45" y="85" width="60" height="6" rx="3" fill="#0B1120" opacity=".78"/>
+    <rect x="40" y="101" width="70" height="13" rx="5" fill="#EEF2FA"/>
+    <rect x="40" y="120" width="70" height="13" rx="5" fill="#EEF2FA"/>
+    <rect x="40" y="142" width="70" height="14" rx="6" fill="url(#btn)"/>
+  </g>
+
+  <!-- ===== Reflector (derecha) ===== -->
+  <g transform="translate(318,76)">
+    <rect x="0" y="0" width="150" height="210" rx="14" fill="url(#shotBg)"/>
+    <circle cx="128" cy="38" r="48" fill="url(#orb)" opacity=".5"/>
+    <rect x="0.5" y="0.5" width="149" height="209" rx="14" fill="none" stroke="#FFFFFF" stroke-opacity=".16"/>
+    <rect x="26" y="46" width="98" height="118" rx="12" fill="#FFFFFF" opacity=".13"/>
+    <rect x="26.5" y="46.5" width="97" height="117" rx="12" fill="none" stroke="#FFFFFF" stroke-opacity=".32"/>
+    <circle cx="75" cy="69" r="9" fill="#8FBBFF" opacity=".95"/>
+    <rect x="45" y="86" width="60" height="6" rx="3" fill="#FFFFFF" opacity=".85"/>
+    <rect x="40" y="102" width="70" height="13" rx="5" fill="#FFFFFF" opacity=".2"/>
+    <rect x="40" y="121" width="70" height="13" rx="5" fill="#FFFFFF" opacity=".2"/>
+    <rect x="40" y="143" width="70" height="14" rx="6" fill="url(#btn)"/>
+  </g>
+
+  <!-- ===== Dividido (centro, al frente) ===== -->
+  <g transform="translate(140,32)">
+    <rect x="0" y="0" width="190" height="242" rx="15" fill="#EEF2FA"/>
+    <path d="M0 15 A15 15 0 0 1 15 0 L91 0 L91 242 L15 242 A15 15 0 0 1 0 227 Z" fill="url(#panelBg)"/>
+    <path d="M0 15 A15 15 0 0 1 15 0 L91 0 L91 242 L15 242 A15 15 0 0 1 0 227 Z" fill="url(#dots)"/>
+    <circle cx="84" cy="228" r="40" fill="url(#orb)" opacity=".5"/>
+    <rect x="16" y="20" width="30" height="8" rx="4" fill="#FFFFFF" opacity=".92"/>
+    <rect x="16" y="113" width="58" height="9" rx="4" fill="#FFFFFF" opacity=".95"/>
+    <rect x="16" y="128" width="42" height="7" rx="3" fill="#FFFFFF" opacity=".55"/>
+    <rect x="16" y="218" width="36" height="5" rx="2" fill="#FFFFFF" opacity=".38"/>
+    <rect x="111" y="88" width="62" height="6" rx="3" fill="#0B1120" opacity=".5"/>
+    <rect x="111" y="100" width="62" height="15" rx="6" fill="#FFFFFF"/>
+    <rect x="111" y="123" width="62" height="6" rx="3" fill="#0B1120" opacity=".5"/>
+    <rect x="111" y="135" width="62" height="15" rx="6" fill="#FFFFFF"/>
+    <rect x="111" y="160" width="62" height="16" rx="7" fill="url(#btn)"/>
+    <rect x="0.5" y="0.5" width="189" height="241" rx="15" fill="none" stroke="#0B1120" stroke-opacity=".1"/>
+  </g>
+
+  <!-- ===== etiquetas ===== -->
+  <g font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#9DC0FF">
+    <text x="77" y="304" text-anchor="middle">Aurora</text>
+    <text x="235" y="304" text-anchor="middle" fill="#FFFFFF">Dividido</text>
+    <text x="393" y="304" text-anchor="middle">Reflector</text>
+  </g>
+</svg>

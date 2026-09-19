@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.c.login.theme</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='companies_setting_container']" position="after">
+                <block title="Pantalla de acceso" name="login_theme_block">
+
+                    <field name="login_theme_id" invisible="1"/>
+
+                    <setting string="Aplicar un tema al acceso"
+                             help="Cambia la pantalla de inicio de sesión por un diseño propio. Mientras esté desactivado se usa la pantalla original de Odoo.">
+                        <field name="login_theme_enabled"/>
+                    </setting>
+
+                    <setting string="Diseño" invisible="not login_theme_enabled">
+                        <field name="login_theme_layout" widget="radio" options="{'horizontal': True}"/>
+                        <div class="text-muted small mt-1">
+                            Aurora: tarjeta centrada sobre un fondo con luces en movimiento.
+                            Dividido: panel de marca a la izquierda y formulario a la derecha.
+                            Reflector: imagen a pantalla completa con tarjeta de vidrio esmerilado.
+                        </div>
+                    </setting>
+
+                    <setting string="Estilo del formulario" invisible="not login_theme_enabled">
+                        <field name="login_theme_card_mode" widget="radio" options="{'horizontal': True}"/>
+                    </setting>
+
+                    <setting string="Colores" invisible="not login_theme_enabled">
+                        <div class="row g-2 mt-1">
+                            <div class="col-auto">
+                                <label for="login_theme_primary_color" class="d-block small text-muted mb-1"/>
+                                <field name="login_theme_primary_color" widget="color"/>
+                            </div>
+                            <div class="col-auto">
+                                <label for="login_theme_bg_start" class="d-block small text-muted mb-1"/>
+                                <field name="login_theme_bg_start" widget="color"/>
+                            </div>
+                            <div class="col-auto">
+                                <label for="login_theme_bg_end" class="d-block small text-muted mb-1"/>
+                                <field name="login_theme_bg_end" widget="color"/>
+                            </div>
+                            <div class="col-auto">
+                                <label for="login_theme_radius" class="d-block small text-muted mb-1"/>
+                                <field name="login_theme_radius" class="oe_inline" style="width: 4rem;"/>
+                            </div>
+                        </div>
+                    </setting>
+
+                    <setting string="Usar un logo propio" invisible="not login_theme_enabled"
+                             help="Si no subes uno, se usa el logo de la compañía.">
+                        <field name="login_theme_use_own_logo"/>
+                        <div class="mt-2" invisible="not login_theme_use_own_logo">
+                            <field name="login_theme_logo" widget="image" class="oe_avatar"
+                                   options="{'size': [0, 90]}"/>
+                        </div>
+                        <div class="mt-2">
+                            <label for="login_theme_logo_height" class="small text-muted me-2"/>
+                            <field name="login_theme_logo_height" class="oe_inline" style="width: 4rem;"/>
+                        </div>
+                    </setting>
+
+                    <setting string="Textos" invisible="not login_theme_enabled">
+                        <div class="mt-1">
+                            <label for="login_theme_headline" class="d-block small text-muted mb-1"/>
+                            <field name="login_theme_headline" placeholder="Bienvenido" class="w-100 mb-2"/>
+                            <label for="login_theme_tagline" class="d-block small text-muted mb-1"/>
+                            <field name="login_theme_tagline" placeholder="Inicia sesión para continuar" class="w-100 mb-2"/>
+                            <label for="login_theme_footer_note" class="d-block small text-muted mb-1"/>
+                            <field name="login_theme_footer_note" placeholder="Opcional" class="w-100"/>
+                        </div>
+                    </setting>
+
+                    <setting string="Imagen de fondo" invisible="not login_theme_enabled"
+                             help="Recomendada para los diseños Dividido y Reflector. Usa una imagen horizontal de al menos 1920 px de ancho.">
+                        <field name="login_theme_background_image" widget="image" class="oe_avatar"
+                               options="{'size': [0, 110]}"/>
+                        <div class="mt-2">
+                            <label for="login_theme_overlay" class="small text-muted me-2"/>
+                            <field name="login_theme_overlay" class="oe_inline" style="width: 4rem;"/>
+                            <span class="text-muted small ms-1">%</span>
+                        </div>
+                    </setting>
+
+                    <setting string="Enlaces visibles" invisible="not login_theme_enabled">
+                        <div class="mt-1">
+                            <div><field name="login_theme_show_reset_password"/><span class="ms-1">Contraseña olvidada</span></div>
+                            <div><field name="login_theme_show_signup"/><span class="ms-1">Crear cuenta</span></div>
+                            <div><field name="login_theme_show_db_selector"/><span class="ms-1">Selector de base de datos</span></div>
+                            <div><field name="login_theme_show_db_manager"/><span class="ms-1">Gestor de bases de datos</span></div>
+                        </div>
+                    </setting>
+
+                    <setting string="Vista previa" class="col-12" invisible="not login_theme_enabled">
+                        <widget name="login_theme_preview"/>
+                    </setting>
+
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

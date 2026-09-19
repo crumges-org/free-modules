@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="login_theme_default" model="c.login.theme">
+        <field name="name">Tema de acceso</field>
+    </record>
+</odoo>

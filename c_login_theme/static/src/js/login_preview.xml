@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="c_login_theme.LoginThemePreview">
+        <div class="c_login_preview_widget mt-2">
+            <div class="btn-group btn-group-sm mb-2" role="group">
+                <button t-foreach="Object.entries(devices)" t-as="entry" t-key="entry[0]"
+                        type="button"
+                        class="btn"
+                        t-att-class="state.device === entry[0] ? 'btn-primary' : 'btn-secondary'"
+                        t-on-click="() => this.setDevice(entry[0])">
+                    <i class="fa me-1" t-att-class="entry[1].icon"/>
+                    <t t-esc="entry[1].label"/>
+                </button>
+            </div>
+            <div class="c_login_preview_box" t-ref="frame" t-att-style="boxStyle">
+                <iframe class="c_login_preview_frame"
+                        title="Vista previa de la pantalla de acceso"
+                        t-att-src="state.url"
+                        t-att-style="frameStyle"/>
+            </div>
+            <div class="text-muted small mt-2">
+                El logo y la imagen de fondo aparecen en la vista previa una vez que guardas.
+            </div>
+        </div>
+    </t>
+
+</templates>
