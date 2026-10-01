@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <!-- Wrap the node rather than rewriting its `t-if`.
+
+         `position="attributes"` on `t-if` *replaces* the attribute, which threw
+         away core's own guard: on Odoo 18 that is
+         `propertiesListGroup_index === _groupedPropertiesList.length - 1 and
+         state.showAddButton`, on 19 the same without `state.showAddButton`. The
+         visible symptom is an extra Add-Property block on a record with two or
+         more property groups - a real bug on both versions, not just here.
+
+         `position="replace"` with `$0` re-emits the original node untouched
+         inside our own `t-if`, so core's condition keeps working and we do not
+         have to restate a private expression that differs between versions. -->
+    <t t-name="odooapp_access_management.PropertiesAddButton"
+       t-inherit="web.PropertiesField" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('o_field_property_add')]" position="replace">
+            <t t-if="!aamHideAdd">$0</t>
+        </xpath>
+    </t>
+
+</templates>

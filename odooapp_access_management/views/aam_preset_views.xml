@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================== -->
+    <!-- Preset Library                                                      -->
+    <!-- ================================================================== -->
+
+    <record id="view_aam_preset_kanban" model="ir.ui.view">
+        <field name="name">aam.preset.kanban</field>
+        <field name="model">aam.preset</field>
+        <field name="arch" type="xml">
+            <!-- Grouping comes from the action context, not from
+                 `default_group_by`: with the attribute here the kanban put the
+                 Category facet straight back after you removed it, so the
+                 library could not be flattened at all. -->
+            <kanban create="false" delete="false" class="o_aam_preset_kanban">
+                <field name="is_available"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-start">
+                            <field name="name" class="fw-bold fs-6"/>
+                            <span t-if="!record.is_available.raw_value"
+                                  class="badge text-bg-light ms-auto"
+                                  title="An app this preset needs is not installed">
+                                Unavailable
+                            </span>
+                        </div>
+                        <field name="description" class="text-muted small mt-1"/>
+                        <footer class="pt-2 align-items-center">
+                            <span class="text-muted small">
+                                <i class="fa fa-shield me-1" title="Restrictions"/>
+                                <field name="restriction_label"/>
+                            </span>
+                            <span class="text-muted small ms-3">
+                                <field name="apps"/>
+                            </span>
+                            <button name="action_use" type="object"
+                                    class="btn btn-sm btn-primary ms-auto"
+                                    invisible="not is_available">
+                                Use this preset
+                            </button>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_aam_preset_list" model="ir.ui.view">
+        <field name="name">aam.preset.list</field>
+        <field name="model">aam.preset</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false">
+                <field name="name"/>
+                <field name="category"/>
+                <field name="apps"/>
+                <field name="restriction_count"/>
+                <field name="model_names" optional="hide"/>
+                <field name="is_available" widget="boolean_toggle" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aam_preset_form" model="ir.ui.view">
+        <field name="name">aam.preset.form</field>
+        <field name="model">aam.preset</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <header>
+                    <button name="action_use" type="object" string="Use this preset"
+                            class="btn-primary" invisible="not is_available"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category"/>
+                            <field name="apps"/>
+                            <field name="restriction_count"/>
+                        </group>
+                        <group>
+                            <field name="is_available"/>
+                            <field name="availability_note"/>
+                            <field name="model_names"/>
+                        </group>
+                    </group>
+                    <group string="What it does">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aam_preset_search" model="ir.ui.view">
+        <field name="name">aam.preset.search</field>
+        <field name="model">aam.preset</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- `model_names` is in here on purpose: the question people
+                     actually arrive with is "how do I lock down sale.order?",
+                     not "which preset was it called?". -->
+                <field name="name"/>
+                <field name="description"/>
+                <field name="model_names" string="Model"/>
+                <field name="apps"/>
+                <filter name="available" string="Available Here"
+                        domain="[('is_available', '=', True)]"/>
+                <filter name="unavailable" string="Needs Another App"
+                        domain="[('is_available', '=', False)]"/>
+                <separator/>
+                <filter name="cross_app" string="Cross-App"
+                        domain="[('category', '=', 'general')]"/>
+                <group name="group_by">
+                    <filter name="group_category" string="Category"
+                            context="{'group_by': 'category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_aam_preset_library" model="ir.actions.act_window">
+        <field name="name">Preset Library</field>
+        <field name="res_model">aam.preset</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_available': 1, 'search_default_group_category': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No presets in the library</p>
+            <p>Presets ship with the module. If this list is empty, update the
+               module to rebuild the catalogue.</p>
+        </field>
+    </record>
+
+    <!-- ================================================================== -->
+    <!-- Apply wizard                                                        -->
+    <!-- ================================================================== -->
+
+    <record id="view_aam_preset_wizard_form" model="ir.ui.view">
+        <field name="name">aam.preset.wizard.form</field>
+        <field name="model">aam.preset.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-info" role="status">
+                    Each preset becomes a profile with its rules already written.
+                    Nothing is assigned to anyone until you say so, and you can edit
+                    everything afterwards.
+                </div>
+                <group>
+                    <!-- Only presets this database can actually honour: an
+                         unavailable one would create a profile whose rules were
+                         all skipped, which looks like the module doing nothing. -->
+                    <field name="preset_ids" widget="many2many_tags"
+                           options="{'no_create': True}"
+                           domain="[('is_available', '=', True)]"/>
+                    <field name="profile_prefix" placeholder="e.g. Warehouse B"/>
+                </group>
+                <field name="coverage" nolabel="1" readonly="1"/>
+                <group string="Assign To (optional)">
+                    <field name="group_ids" widget="many2many_tags"/>
+                    <field name="user_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object" string="Create Profiles"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aam_preset_wizard" model="ir.actions.act_window">
+        <field name="name">Load Presets</field>
+        <field name="res_model">aam.preset.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_aam_preset_library" name="Preset Library" parent="menu_aam_config"
+              action="action_aam_preset_library" sequence="4"/>
+
+    <menuitem id="menu_aam_preset" name="Load Presets" parent="menu_aam_config"
+              action="action_aam_preset_wizard" sequence="5"/>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <!-- The "Custom Filter..." entry is built by the client, so it has no view
+         arch to strip on the server (features F3, H11). -->
+    <t t-name="odooapp_access_management.SearchBarMenuRestrictions"
+       t-inherit="web.SearchBarMenu" t-inherit-mode="extension">
+        <!-- contains(), not hasclass(): this DropdownItem's class is an OWL
+             expression (class="'o_menu_item o_add_custom_filter'"), so the
+             attribute value carries its own quotes and hasclass() never matches. -->
+        <xpath expr="//DropdownItem[contains(@class, 'o_add_custom_filter')]" position="attributes">
+            <attribute name="t-if">!aamHideCustomFilter</attribute>
+        </xpath>
+    </t>
+
+    <!-- Feature F5: Odoo 18 puts a delete (trash) icon on every favourite
+         (search_bar_menu.xml:182), which deletes it after a confirmation.
+         FavoriteItem is t-call'ed from inside web.SearchBarMenu, so the getter
+         resolves on that component. Wrapped with `$0` so the icon's own
+         attributes survive whatever core changes next. -->
+    <t t-name="odooapp_access_management.FavoriteDeleteRestriction"
+       t-inherit="web.SearchBarMenu.FavoriteItem" t-inherit-mode="extension">
+        <xpath expr="//i[hasclass('fa-trash-o')]" position="replace">
+            <t t-if="!aamHideDeleteFilter">$0</t>
+        </xpath>
+    </t>
+
+</templates>

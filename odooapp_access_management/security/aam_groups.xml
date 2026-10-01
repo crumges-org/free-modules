@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- v18 has no res.groups.privilege (that model arrives in 19). What renders
+         as a labelled section on the user form here is the group's
+         ir.module.category, so we declare one of our own.
+
+         Our own rather than reusing base.module_category_administration, because
+         res.groups carries `unique (category_id, name)` (res_users.py:199) and
+         "Administrator" is a name other modules will legitimately want in that
+         category. -->
+    <record id="module_category_access_management" model="ir.module.category">
+        <field name="name">Access Management</field>
+        <field name="description">Who may read and configure access rules.</field>
+        <field name="parent_id" ref="base.module_category_administration"/>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="group_aam_user" model="res.groups">
+        <field name="name">Viewer</field>
+        <field name="category_id" ref="module_category_access_management"/>
+        <field name="comment">Can read access rules and profiles, but not change them.</field>
+    </record>
+
+    <record id="group_aam_manager" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="module_category_access_management"/>
+        <field name="comment">Can create and edit access rules, profiles and settings.</field>
+        <field name="implied_ids" eval="[Command.link(ref('group_aam_user'))]"/>
+    </record>
+
+    <!-- Settings administrators manage access by default; without this the
+         module installs with nobody able to configure it. -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[Command.link(ref('group_aam_manager'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,267 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* nexa_portal_customer_statement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-21 00:00+0000\n"
+"PO-Revision-Date: 2025-01-21 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: nexa_portal_customer_statement
+#: model:ir.model.fields,field_description:nexa_portal_customer_statement.field_res_partner__customer_statement_count
+msgid "Customer Statement Count"
+msgstr "Müşteri Ekstresi Sayısı"
+
+#. module: nexa_portal_customer_statement
+#: model:ir.actions.report,name:nexa_portal_customer_statement.action_customer_statement_pdf
+#: model:ir.ui.menu,name:nexa_portal_customer_statement.menu_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.portal_my_home_customer_statement
+msgid "Customer Statement"
+msgstr "Müşteri Ekstresi"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.portal_my_home_customer_statement
+msgid "View your account statement"
+msgstr "Hesap ekstrenizi görüntüleyin"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Initial Balance"
+msgstr "Açılış Bakiyesi"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "January"
+msgstr "Ocak"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "February"
+msgstr "Şubat"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "March"
+msgstr "Mart"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "April"
+msgstr "Nisan"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "May"
+msgstr "Mayıs"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "June"
+msgstr "Haziran"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "July"
+msgstr "Temmuz"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "August"
+msgstr "Ağustos"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "September"
+msgstr "Eylül"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "October"
+msgstr "Ekim"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "November"
+msgstr "Kasım"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "December"
+msgstr "Aralık"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q1 (Jan - Mar)"
+msgstr "Ç1 (Oca - Mar)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q2 (Apr - Jun)"
+msgstr "Ç2 (Nis - Haz)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q3 (Jul - Sep)"
+msgstr "Ç3 (Tem - Eyl)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q4 (Oct - Dec)"
+msgstr "Ç4 (Eki - Ara)"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Period"
+msgstr "Dönem"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Month"
+msgstr "Ay"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Quarter"
+msgstr "Çeyrek"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Year"
+msgstr "Yıl"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Custom Dates"
+msgstr "Özel Tarihler"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Apply Custom Dates"
+msgstr "Özel Tarihleri Uygula"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "PDF"
+msgstr "PDF"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Reference"
+msgstr "Referans"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Journal"
+msgstr "Yevmiye"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Account"
+msgstr "Hesap"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Invoice Date"
+msgstr "Fatura Tarihi"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Due Date"
+msgstr "Vade Tarihi"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Matching"
+msgstr "Eşleştirme"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Debit"
+msgstr "Borç"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Credit"
+msgstr "Alacak"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Amount Currency"
+msgstr "Döviz Tutarı"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Balance"
+msgstr "Bakiye"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "No transactions found for the selected period."
+msgstr "Seçilen dönem için işlem bulunamadı."
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Total"
+msgstr "Toplam"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Customer"
+msgstr "Müşteri"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Statement Date:"
+msgstr "Ekstre Tarihi:"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Period:"
+msgstr "Dönem:"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "This statement was generated on"
+msgstr "Bu ekstre şu tarihte oluşturuldu:"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Please contact us if you have any questions regarding this statement."
+msgstr "Bu ekstre ile ilgili sorularınız için lütfen bizimle iletişime geçin."

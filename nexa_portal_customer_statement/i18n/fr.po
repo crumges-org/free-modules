@@ -1,0 +1,267 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* nexa_portal_customer_statement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-21 00:00+0000\n"
+"PO-Revision-Date: 2025-01-21 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: nexa_portal_customer_statement
+#: model:ir.model.fields,field_description:nexa_portal_customer_statement.field_res_partner__customer_statement_count
+msgid "Customer Statement Count"
+msgstr "Nombre de relevés client"
+
+#. module: nexa_portal_customer_statement
+#: model:ir.actions.report,name:nexa_portal_customer_statement.action_customer_statement_pdf
+#: model:ir.ui.menu,name:nexa_portal_customer_statement.menu_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.portal_my_home_customer_statement
+msgid "Customer Statement"
+msgstr "Relevé de compte client"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.portal_my_home_customer_statement
+msgid "View your account statement"
+msgstr "Consulter votre relevé de compte"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Initial Balance"
+msgstr "Solde initial"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "January"
+msgstr "Janvier"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "February"
+msgstr "Février"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "March"
+msgstr "Mars"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "April"
+msgstr "Avril"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "May"
+msgstr "Mai"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "June"
+msgstr "Juin"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "July"
+msgstr "Juillet"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "August"
+msgstr "Août"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "September"
+msgstr "Septembre"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "October"
+msgstr "Octobre"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "November"
+msgstr "Novembre"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "December"
+msgstr "Décembre"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q1 (Jan - Mar)"
+msgstr "T1 (Jan - Mar)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q2 (Apr - Jun)"
+msgstr "T2 (Avr - Jun)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q3 (Jul - Sep)"
+msgstr "T3 (Jul - Sep)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q4 (Oct - Dec)"
+msgstr "T4 (Oct - Déc)"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Period"
+msgstr "Période"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Month"
+msgstr "Mois"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Quarter"
+msgstr "Trimestre"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Year"
+msgstr "Année"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Custom Dates"
+msgstr "Dates personnalisées"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Apply Custom Dates"
+msgstr "Appliquer les dates personnalisées"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "PDF"
+msgstr "PDF"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Reference"
+msgstr "Référence"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Journal"
+msgstr "Journal"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Account"
+msgstr "Compte"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Invoice Date"
+msgstr "Date de facturation"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Due Date"
+msgstr "Date d'échéance"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Matching"
+msgstr "Lettrage"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Debit"
+msgstr "Débit"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Credit"
+msgstr "Crédit"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Amount Currency"
+msgstr "Montant en devise"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Balance"
+msgstr "Solde"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "No transactions found for the selected period."
+msgstr "Aucune transaction trouvée pour la période sélectionnée."
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Total"
+msgstr "Total"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Customer"
+msgstr "Client"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Statement Date:"
+msgstr "Date du relevé :"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Period:"
+msgstr "Période :"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "This statement was generated on"
+msgstr "Ce relevé a été généré le"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Please contact us if you have any questions regarding this statement."
+msgstr "Veuillez nous contacter si vous avez des questions concernant ce relevé."

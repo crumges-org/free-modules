@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aam_rules_export_form" model="ir.ui.view">
+        <field name="name">aam.rules.export.form</field>
+        <field name="model">aam.rules.export</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-info" role="status">
+                    Rules are exported by external ID and technical name - never by
+                    database id - so the file survives a migration to another database
+                    or another Odoo version.
+                </div>
+                <group>
+                    <field name="rule_ids" widget="many2many_tags"
+                           placeholder="Leave empty to export everything"/>
+                    <field name="profile_ids" widget="many2many_tags"
+                           placeholder="Leave empty to export everything"/>
+                    <field name="include_inactive"/>
+                </group>
+                <group invisible="not data">
+                    <field name="filename" invisible="1"/>
+                    <field name="data" filename="filename" readonly="1"
+                           string="Download"/>
+                </group>
+                <footer>
+                    <button name="action_export" type="object" string="Export"
+                            class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aam_rules_import_form" model="ir.ui.view">
+        <field name="name">aam.rules.import.form</field>
+        <field name="model">aam.rules.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-info" role="status" invisible="state == 'done'">
+                    Run a dry run first. It resolves every reference in the file and
+                    tells you exactly what is missing, without writing anything.
+                </div>
+                <group invisible="state == 'done'">
+                    <field name="filename" invisible="1"/>
+                    <field name="data" filename="filename" string="JSON File"/>
+                    <field name="mode" widget="radio"/>
+                    <field name="on_conflict" invisible="mode != 'apply'"/>
+                </group>
+                <field name="state" invisible="1"/>
+                <field name="problem_count" invisible="1"/>
+                <field name="imported_count" invisible="1"/>
+                <field name="report" nolabel="1" readonly="1" invisible="state != 'done'"/>
+                <footer>
+                    <button name="action_run" type="object" string="Run"
+                            class="btn-primary" invisible="state == 'done'"/>
+                    <button name="action_run" type="object" string="Run Again"
+                            class="btn-secondary" invisible="state != 'done'"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aam_rules_export" model="ir.actions.act_window">
+        <field name="name">Export Rules</field>
+        <field name="res_model">aam.rules.export</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_aam_rules_import" model="ir.actions.act_window">
+        <field name="name">Import Rules</field>
+        <field name="res_model">aam.rules.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'dialog_size': 'large'}</field>
+    </record>
+
+    <menuitem id="menu_aam_export" name="Export Rules" parent="menu_aam_config"
+              action="action_aam_rules_export" sequence="80"/>
+    <menuitem id="menu_aam_import" name="Import Rules" parent="menu_aam_config"
+              action="action_aam_rules_import" sequence="90"/>
+
+</odoo>

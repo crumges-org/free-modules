@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aam_rule_list" model="ir.ui.view">
+        <field name="name">aam.rule.list</field>
+        <field name="model">aam.rule</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'draft'" decoration-danger="state == 'expired'"
+                  decoration-info="enforcement == 'ui_only'">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="target_type"/>
+                <field name="profile_id" optional="show"/>
+                <field name="user_ids" widget="many2many_tags" optional="show"/>
+                <field name="group_ids" widget="many2many_tags" optional="hide"/>
+                <field name="company_ids" widget="many2many_tags" optional="hide"
+                       groups="base.group_multi_company"/>
+                <field name="enforcement" optional="show"/>
+                <field name="priority" optional="hide"/>
+                <field name="date_to" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'draft'"
+                       decoration-danger="state == 'expired'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aam_rule_form" model="ir.ui.view">
+        <field name="name">aam.rule.form</field>
+        <field name="model">aam.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="oe_highlight" invisible="active"/>
+                    <button name="action_deactivate" type="object" string="Deactivate"
+                            invisible="not active"/>
+                    <!-- Refuses rules the guided wizard cannot represent, rather
+                         than loading them and flattening what it cannot show. -->
+                    <button name="action_edit_in_wizard" type="object"
+                            string="Edit in Wizard"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Expired" bg_color="text-bg-danger"
+                            invisible="state != 'expired'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Warehouse staff: no pricing"/></h1>
+                    </div>
+
+                    <group>
+                        <group string="Applies To">
+                            <field name="target_type" widget="radio"/>
+                            <field name="profile_id"
+                                   invisible="target_type != 'profile'"
+                                   required="target_type == 'profile'"/>
+                            <field name="user_ids" widget="many2many_tags"
+                                   invisible="target_type != 'user'"
+                                   required="target_type == 'user'"/>
+                            <field name="group_ids" widget="many2many_tags"
+                                   invisible="target_type != 'group'"
+                                   required="target_type == 'group'"/>
+                            <!-- Read-only on Odoo 18: the distinction it offers does
+                                 not exist in this version's data. Shown rather than
+                                 hidden so an administrator importing a rule from
+                                 Odoo 19 can see why it has no effect. -->
+                            <field name="include_implied_groups" readonly="1"
+                                   invisible="target_type != 'group'"/>
+                            <field name="company_ids" widget="many2many_tags"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Behaviour">
+                            <field name="enforcement" widget="radio"/>
+                            <field name="priority"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Validity">
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="auto_revoke" invisible="not date_to"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Menus" name="menus">
+                            <field name="menu_line_ids">
+                                <list editable="bottom">
+                                    <field name="menu_id"/>
+                                    <field name="include_children"/>
+                                    <field name="active" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Models" name="models">
+                            <field name="model_line_ids">
+                                <list editable="bottom">
+                                    <field name="model_id"/>
+                                    <field name="model_name" column_invisible="1"/>
+                                    <field name="readonly_model"/>
+                                    <field name="no_create"/>
+                                    <field name="no_write"/>
+                                    <field name="no_unlink"/>
+                                    <field name="no_read" optional="hide"/>
+                                    <field name="hide_export" optional="show"/>
+                                    <field name="hide_import" optional="hide"/>
+                                    <field name="hide_duplicate" optional="hide"/>
+                                    <field name="hide_archive" optional="hide"/>
+                                    <field name="hide_print" optional="hide"/>
+                                    <field name="hide_spreadsheet" optional="hide"/>
+                                    <field name="hide_action_button" optional="hide"/>
+                                    <field name="hide_edit_button" optional="hide"/>
+                                    <field name="domain" optional="show"
+                                           widget="domain" options="{'model': 'model_name'}"/>
+                                    <field name="active" column_invisible="1"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group string="Model">
+                                            <field name="model_id"/>
+                                            <field name="model_name" invisible="1"/>
+                                            <field name="readonly_model"/>
+                                        </group>
+                                        <group string="Operations">
+                                            <field name="no_create"/>
+                                            <field name="no_read"/>
+                                            <field name="no_write"/>
+                                            <field name="no_unlink"/>
+                                        </group>
+                                    </group>
+                                    <group string="Toolbar and Buttons">
+                                        <group>
+                                            <field name="hide_archive"/>
+                                            <field name="hide_duplicate"/>
+                                            <field name="hide_export"/>
+                                            <field name="hide_import"/>
+                                        </group>
+                                        <group>
+                                            <field name="hide_spreadsheet"/>
+                                            <field name="hide_print"/>
+                                            <field name="hide_action_button"/>
+                                            <field name="hide_edit_button"/>
+                                        </group>
+                                    </group>
+                                    <group string="Hidden Views, Reports and Actions">
+                                        <field name="hide_view_ids" widget="many2many_tags"/>
+                                        <field name="hide_view_modes"
+                                               placeholder="e.g. kanban,pivot"/>
+                                        <field name="hide_report_ids" widget="many2many_tags"/>
+                                        <field name="hide_action_ids" widget="many2many_tags"/>
+                                        <field name="hide_server_action_ids"
+                                               widget="many2many_tags"/>
+                                    </group>
+                                    <group string="Record-Level Restriction">
+                                        <field name="domain" widget="domain"
+                                               options="{'model': 'model_name'}"/>
+                                        <label for="domain_on_read" string="Apply To"/>
+                                        <div>
+                                            <field name="domain_on_read" class="oe_inline"/>
+                                            <label for="domain_on_read" string="Read"
+                                                   class="me-3"/>
+                                            <field name="domain_on_write" class="oe_inline"/>
+                                            <label for="domain_on_write" string="Edit"
+                                                   class="me-3"/>
+                                            <field name="domain_on_unlink" class="oe_inline"/>
+                                            <label for="domain_on_unlink" string="Delete"
+                                                   class="me-3"/>
+                                            <field name="domain_on_create" class="oe_inline"/>
+                                            <label for="domain_on_create" string="Create"/>
+                                        </div>
+                                        <field name="soft_restrict"/>
+                                        <field name="related_field_id"/>
+                                        <field name="hierarchy_field_id"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Fields" name="fields">
+                            <field name="field_line_ids">
+                                <list editable="bottom">
+                                    <field name="model_id"/>
+                                    <field name="model_name" column_invisible="1"/>
+                                    <field name="field_id"/>
+                                    <field name="field_ttype" column_invisible="1"/>
+                                    <field name="invisible"/>
+                                    <field name="view_mode" optional="show"/>
+                                    <field name="readonly"/>
+                                    <field name="required"/>
+                                    <field name="mask_type"/>
+                                    <field name="mask_keep" optional="show"
+                                           invisible="mask_type in ['none', 'full', 'email', 'custom']"/>
+                                    <field name="no_open" optional="show"/>
+                                    <field name="no_create" optional="hide"/>
+                                    <field name="no_quick_create" optional="hide"/>
+                                    <field name="no_create_edit" optional="hide"/>
+                                    <field name="no_export" optional="hide"/>
+                                    <field name="condition" optional="show"
+                                           placeholder="e.g. state != 'draft'"/>
+                                    <field name="active" column_invisible="1"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group string="Field">
+                                            <field name="model_id"/>
+                                            <field name="model_name" invisible="1"/>
+                                            <field name="field_id"/>
+                                            <field name="field_ttype"/>
+                                        </group>
+                                        <group string="Access">
+                                            <field name="invisible"/>
+                                            <field name="view_mode"/>
+                                            <field name="readonly"/>
+                                            <field name="required"/>
+                                            <field name="no_export"/>
+                                        </group>
+                                    </group>
+                                    <group string="Relational Options"
+                                           invisible="field_ttype not in ['many2one', 'many2many', 'one2many']">
+                                        <group>
+                                            <field name="no_open"/>
+                                            <field name="no_create"/>
+                                        </group>
+                                        <group>
+                                            <field name="no_quick_create"/>
+                                            <field name="no_create_edit"/>
+                                        </group>
+                                        <field name="field_domain" colspan="2"
+                                               placeholder="e.g. [('country_id.code', '=', 'IN')]"/>
+                                    </group>
+                                    <group string="Condition">
+                                        <field name="condition" nolabel="1"
+                                               placeholder="e.g. state != 'draft' - leave empty to always apply"/>
+                                    </group>
+                                    <group string="Masking">
+                                        <field name="mask_type"/>
+                                        <field name="mask_char"
+                                               invisible="mask_type in ['none', 'custom']"/>
+                                        <field name="mask_keep"
+                                               invisible="mask_type in ['none', 'full', 'email', 'custom']"/>
+                                        <field name="mask_pattern"
+                                               invisible="mask_type != 'custom'"
+                                               required="mask_type == 'custom'"
+                                               placeholder="e.g. [redacted]"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Buttons &amp; Tabs" name="buttons">
+                            <field name="button_line_ids">
+                                <list editable="bottom">
+                                    <field name="model_id"/>
+                                    <field name="model_name" column_invisible="1"/>
+                                    <field name="element_type"/>
+                                    <field name="element_name"/>
+                                    <field name="element_label" optional="show"/>
+                                    <field name="view_mode"/>
+                                    <field name="condition" optional="show"/>
+                                    <field name="active" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Search Panel" name="search">
+                            <field name="search_line_ids">
+                                <list editable="bottom">
+                                    <field name="model_id"/>
+                                    <field name="model_name" column_invisible="1"/>
+                                    <field name="filter_names"/>
+                                    <field name="groupby_names"/>
+                                    <field name="hide_all_filters"/>
+                                    <field name="hide_all_groupby"/>
+                                    <field name="hide_custom_filter" optional="show"/>
+                                    <field name="hide_custom_groupby" optional="show"/>
+                                    <field name="hide_delete_filter" optional="hide"/>
+                                    <field name="hide_favourite" optional="hide"/>
+                                    <field name="hide_search_panel" optional="show"/>
+                                    <field name="active" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Chatter" name="chatter">
+                            <field name="chatter_line_ids">
+                                <list editable="bottom">
+                                    <field name="model_id"/>
+                                    <field name="model_name" column_invisible="1"/>
+                                    <field name="hide_chatter"/>
+                                    <field name="hide_send_message"/>
+                                    <field name="hide_log_note"/>
+                                    <field name="hide_activity"/>
+                                    <field name="hide_followers"/>
+                                    <field name="hide_attachments"/>
+                                    <field name="active" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Everywhere" name="globals">
+                            <div class="alert alert-info" role="status">
+                                These switches apply across the whole database for the targeted
+                                users, not to one model.
+                            </div>
+                            <group>
+                                <group string="Account">
+                                    <field name="readonly_user"/>
+                                    <field name="disable_developer_mode"/>
+                                    <field name="disable_login"/>
+                                    <field name="restrict_rpc"/>
+                                    <field name="restrict_module_manage"/>
+                                </group>
+                                <group string="Actions">
+                                    <field name="hide_import"/>
+                                    <field name="hide_export"/>
+                                    <field name="hide_spreadsheet"/>
+                                    <field name="hide_print"/>
+                                    <field name="hide_action_button"/>
+                                    <field name="hide_add_property"/>
+                                </group>
+                                <group string="Chatter">
+                                    <field name="hide_chatter"/>
+                                    <field name="hide_send_message"/>
+                                    <field name="hide_log_note"/>
+                                    <field name="hide_activity"/>
+                                    <field name="hide_followers"/>
+                                    <field name="hide_attachments"/>
+                                </group>
+                                <group string="Search">
+                                    <field name="hide_filter"/>
+                                    <field name="hide_group_by"/>
+                                    <field name="hide_custom_filter"/>
+                                    <field name="hide_custom_group_by"/>
+                                    <field name="hide_delete_filter"/>
+                                    <field name="hide_search_panel"/>
+                                    <field name="hide_favourite"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Time Windows" name="time_windows">
+                            <div class="alert alert-info" role="status">
+                                With no windows the rule is always active. With windows it applies
+                                only inside them, in the timezone you pick - so "no access outside
+                                office hours" means the office's hours, not UTC.
+                            </div>
+                            <field name="time_window_ids">
+                                <list editable="bottom">
+                                    <field name="day_of_week"/>
+                                    <field name="hour_from" widget="float_time"/>
+                                    <field name="hour_to" widget="float_time"/>
+                                    <field name="tz"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Why this rule exists, who asked for it."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aam_rule_search" model="ir.ui.view">
+        <field name="name">aam.rule.search</field>
+        <field name="model">aam.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_ids"/>
+                <field name="group_ids"/>
+                <field name="profile_id"/>
+                <filter name="active" string="Active" domain="[('state', '=', 'active')]"/>
+                <filter name="draft" string="Inactive" domain="[('state', '=', 'draft')]"/>
+                <filter name="expired" string="Expired" domain="[('state', '=', 'expired')]"/>
+                <separator/>
+                <filter name="by_user" string="User Rules" domain="[('target_type', '=', 'user')]"/>
+                <filter name="by_group" string="Group Rules" domain="[('target_type', '=', 'group')]"/>
+                <filter name="time_based" string="Time-Based"
+                        domain="[('time_window_ids', '!=', False)]"/>
+                <filter name="ui_only" string="UI-Only"
+                        domain="[('enforcement', '=', 'ui_only')]"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_target" string="Applies To"
+                            context="{'group_by': 'target_type'}"/>
+                    <filter name="group_profile" string="Profile"
+                            context="{'group_by': 'profile_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_aam_rule" model="ir.actions.act_window">
+        <field name="name">Access Rules</field>
+        <field name="res_model">aam.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first access rule</p>
+            <p>
+                A rule says who it applies to and what they may not do. Start narrow -
+                one group, one model - and widen once you have seen the effect.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_aam_rule" name="Access Rules" parent="menu_aam_config"
+              action="action_aam_rule" sequence="20"/>
+
+</odoo>

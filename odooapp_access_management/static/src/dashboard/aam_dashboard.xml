@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="odooapp_access_management.Dashboard">
+        <div class="o_aam_dashboard" t-att-class="props.className">
+
+            <div class="o_aam_statusbar">
+                <span class="o_aam_logo" aria-hidden="true"><i class="fa fa-shield"/></span>
+                <h1>Access Management</h1>
+                <span class="o_aam_meta" t-esc="state.data?.company"/>
+                <span class="o_aam_spacer"/>
+                <span t-if="state.data and score" class="o_aam_score"
+                      t-att-class="'o_aam_sev_' + score.band"
+                      t-att-title="score.label">
+                    <svg viewBox="0 0 60 60" aria-hidden="true">
+                        <circle class="o_aam_score_track" cx="30" cy="30" r="26"/>
+                        <circle class="o_aam_score_arc" cx="30" cy="30" r="26"
+                                t-att-stroke-dasharray="score.dash + ' 163.36'"/>
+                    </svg>
+                    <span class="o_aam_score_num" t-esc="score.value"/>
+                </span>
+                <span t-if="state.data" class="o_aam_verdict"
+                      t-att-class="{ o_aam_verdict_bad: verdict.bad }">
+                    <strong t-esc="verdict.text"/>
+                </span>
+                <button class="btn btn-sm btn-light" t-on-click="() => this.load()">
+                    <i class="fa fa-refresh me-1"/>Refresh
+                </button>
+                <button class="btn btn-sm btn-light" t-on-click="openAccessMap">
+                    <i class="fa fa-sitemap me-1"/>Access Map
+                </button>
+                <button class="btn btn-sm btn-primary" t-on-click="() => this.openRules()">
+                    All rules
+                </button>
+            </div>
+
+            <div t-if="state.loading" class="o_aam_empty">
+                <i class="fa fa-circle-o-notch fa-spin"/>
+                <span>Loading…</span>
+            </div>
+
+            <div t-elif="state.error" class="alert alert-danger" role="alert">
+                <t t-esc="state.error"/>
+            </div>
+
+            <t t-else="">
+                <!-- The KPI strip. Each tile's gradient is its identity and never
+                     moves; the border and figure only take a status colour when
+                     the number actually means trouble. -->
+                <div class="o_aam_counts">
+                    <button t-foreach="state.data.tiles" t-as="tile" t-key="tile.key"
+                            class="o_aam_count"
+                            t-att-class="'o_aam_sev_' + tileMeta(tile).severity"
+                            t-on-click="() => this.openRules(tile.key)">
+                        <span class="o_aam_count_icon"
+                              t-att-class="'o_aam_bg_' + tileMeta(tile).accent">
+                            <i class="fa" t-att-class="tileMeta(tile).icon"/>
+                        </span>
+                        <span class="o_aam_count_body">
+                            <span class="o_aam_count_value" t-esc="tile.value"/>
+                            <span class="o_aam_count_label" t-esc="tile.label"/>
+                            <span class="o_aam_count_sub" t-esc="tileMeta(tile).caption"/>
+                        </span>
+                    </button>
+                </div>
+
+                <div class="o_aam_matrix_wrap">
+                    <div class="o_aam_matrix_head">
+                        <h2><i class="fa fa-th"/>Restriction map</h2>
+                        <span class="o_aam_hint">
+                            Every model your rules touch, by what they restrict.
+                        </span>
+                        <span class="o_aam_legend">
+                            <span>fewer</span>
+                            <i class="o_aam_l1"/><i class="o_aam_l2"/>
+                            <i class="o_aam_l3"/><i class="o_aam_l4"/><i class="o_aam_l5"/>
+                            <span>more</span>
+                        </span>
+                    </div>
+
+                    <div t-if="!state.heatmap.rows.length" class="o_aam_empty">
+                        <i class="fa fa-th"/>
+                        <span>
+                            No model is restricted yet. Load a preset or create a rule to see
+                            its shape here.
+                        </span>
+                    </div>
+
+                    <div t-else="" class="o_aam_matrix_scroll">
+                        <table class="o_aam_matrix">
+                            <thead>
+                                <tr>
+                                    <th class="o_aam_rowhead">Model</th>
+                                    <th t-foreach="state.heatmap.columns" t-as="col"
+                                        t-key="col.key"
+                                        t-att-class="'o_aam_g_' + columnGroup(col.key)"
+                                        t-esc="col.label"/>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="state.heatmap.rows" t-as="row" t-key="row.model">
+                                    <td class="o_aam_rowhead">
+                                        <a href="#" class="o_aam_mono"
+                                           t-on-click.prevent="() => this.openModelRules(row.model)"
+                                           t-esc="row.model"/>
+                                    </td>
+                                    <td t-foreach="state.heatmap.columns" t-as="col" t-key="col.key"
+                                        class="o_aam_cell"
+                                        t-att-class="'o_aam_l' + level(row.cells[col.key])"
+                                        t-att-title="col.label + ': ' + row.cells[col.key]"
+                                        t-esc="row.cells[col.key]"/>
+                                    <td class="o_aam_total" t-esc="row.total"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Supporting evidence, deliberately below the hero: the
+                     shape of the rule base, not the shape of the restrictions. -->
+                <div class="o_aam_charts">
+                    <AamChart kind="'donut'"
+                              points="state.data.by_target"
+                              title="'Who the rules target'"
+                              icon="'fa-pie-chart'"
+                              hint="'Every active rule, by how it reaches a user.'"
+                              unit="'Rules'"
+                              height="180"
+                              accent="1"
+                              emptyText="'No active rule is attached to anyone yet.'"/>
+                    <AamChart kind="'bars'"
+                              points="state.data.by_family"
+                              title="'What they restrict'"
+                              icon="'fa-bar-chart'"
+                              hint="'Restriction lines by kind.'"
+                              unit="'Lines'"
+                              height="180"
+                              accent="2"
+                              emptyText="'No restriction lines yet.'"/>
+                    <AamChart kind="'trend'"
+                              points="trendPoints"
+                              title="'Rules created'"
+                              icon="'fa-area-chart'"
+                              hint="'Last six months.'"
+                              unit="'Rules'"
+                              height="180"
+                              accent="3"
+                              emptyText="'No rules created in the last six months.'"/>
+                </div>
+
+                <div class="o_aam_columns">
+                    <div class="o_aam_panel">
+                        <h2><i class="fa fa-heartbeat"/>What needs attention</h2>
+                        <div t-foreach="state.data.insights.notes" t-as="note" t-key="note_index"
+                             class="o_aam_signal" t-att-class="'o_aam_' + note.level">
+                            <span class="o_aam_dot"/>
+                            <span t-esc="note.text"/>
+                        </div>
+                        <ul class="o_aam_facts">
+                            <li>
+                                <span>Administrators protected</span>
+                                <b t-esc="state.data.insights.admin_protected ? 'Yes' : 'No'"/>
+                            </li>
+                            <li>
+                                <span>Companies with rules</span>
+                                <b>
+                                    <t t-esc="state.data.insights.companies_covered"/>
+                                    /
+                                    <t t-esc="state.data.insights.companies_total"/>
+                                </b>
+                            </li>
+                            <li>
+                                <span>Models covered</span>
+                                <b t-esc="state.data.insights.models_covered"/>
+                            </li>
+                            <li>
+                                <span>Users affected</span>
+                                <b t-esc="state.data.insights.users_affected"/>
+                            </li>
+                            <li>
+                                <span>Rules that only hide in the UI</span>
+                                <b t-esc="state.data.insights.ui_only_rules"/>
+                            </li>
+                        </ul>
+
+                        <!-- Who carries the most rules. The bar is a share of the
+                             busiest user, so the column reads as a ranking without
+                             anyone having to compare two numbers. -->
+                        <t t-if="state.data.top_users.length">
+                            <h2 class="mt-3">
+                                <i class="fa fa-user-circle"/>Most affected users
+                                <span class="o_aam_chip" t-esc="state.data.top_users.length"/>
+                            </h2>
+                            <div class="o_aam_scroll">
+                                <div class="o_aam_listrow" t-foreach="state.data.top_users"
+                                     t-as="u" t-key="u.id">
+                                    <span class="o_aam_rank" t-esc="u_index + 1"/>
+                                    <span class="o_aam_avatar"
+                                          t-attf-style="--h:{{ avatarHue(u.id) }}"
+                                          t-esc="initials(u.name)"/>
+                                    <span class="o_aam_listrow_main">
+                                        <span class="o_aam_listrow_name" t-esc="u.name"/>
+                                        <span class="o_aam_bar">
+                                            <span t-attf-style="width:{{ userBarPct(u) }}%"/>
+                                        </span>
+                                    </span>
+                                    <span class="o_aam_listrow_end">
+                                        <span class="o_aam_count_pill">
+                                            <i class="fa fa-shield"/><t t-esc="u.value"/>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <div class="o_aam_panel">
+                        <h2>
+                            <i class="fa fa-history"/>Recent activity
+                            <span t-if="state.data.recent_activity.length" class="o_aam_chip"
+                                  t-esc="state.data.recent_activity.length"/>
+                        </h2>
+                        <div t-if="!state.data.recent_activity.length" class="o_aam_empty">
+                            <i class="fa fa-history"/>
+                            <span>
+                                Nothing logged yet. Turn on denial logging in Settings while you
+                                tune rules.
+                            </span>
+                        </div>
+                        <div t-else="" class="o_aam_scroll">
+                            <div class="o_aam_listrow" t-foreach="state.data.recent_activity"
+                                 t-as="log" t-key="log.id">
+                                <span class="o_aam_listrow_icon"
+                                      t-att-class="'o_aam_bg_' + eventMeta(log).accent">
+                                    <i class="fa" t-att-class="eventMeta(log).icon"/>
+                                </span>
+                                <span class="o_aam_listrow_main">
+                                    <span class="o_aam_listrow_name" t-esc="log.event"/>
+                                    <span class="o_aam_listrow_sub">
+                                        <t t-esc="log.user"/>
+                                        <t t-if="log.model">
+                                            <span class="o_aam_mono" t-esc="log.model"/>
+                                        </t>
+                                    </span>
+                                </span>
+                                <span class="o_aam_listrow_end">
+                                    <span class="o_aam_when" t-esc="log.when"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="o_aam_panel_foot">
+                            <button class="btn btn-sm btn-link" t-on-click="openAuditLog">
+                                Open the audit log
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

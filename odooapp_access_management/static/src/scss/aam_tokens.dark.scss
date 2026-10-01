@@ -1,0 +1,96 @@
+/* Advance Access Management - dark mode.
+ *
+ * Odoo 19 does not toggle a class for dark mode. It serves a *different
+ * compiled stylesheet*: `web/views/webclient_templates.xml` branches on the
+ * `color_scheme` cookie and calls `web.assets_web_dark`, which includes
+ * `web.assets_web` and then appends the files modules contribute to it.
+ *
+ * So this file needs no dark-mode ancestor selector: it only ever compiles into
+ * the dark bundle, where it lands after `aam_tokens.scss` at the same
+ * specificity and wins on source order. No `!important`, no selector padding.
+ *
+ * Custom properties only. Structural rules must never live here, or the two
+ * screens would need a dark counterpart each and we are back to the
+ * duplication this refactor removed.
+ *
+ * Surfaces line up with Odoo 19's own dark chrome ($o-gray-100 #1B1D26 webclient
+ * background, $o-gray-200 #262A36 view background) so the screens sit inside the
+ * UI rather than fighting it.
+ */
+
+.o_aam_dashboard,
+.o_aam_map {
+    --aam-ground:        #1B1D26;
+    --aam-surface:       #262A36;
+    --aam-surface-alt:   #2E3341;
+
+    --aam-ink:           #E4E4E4;
+    --aam-ink-2:         #B1B3BC;
+    --aam-ink-mute:      #9BA1B0;
+    --aam-ink-faint:     #7E8392;
+    --aam-ink-decor:     #4A4F5F;
+    --aam-ink-invert:    #1B1D26;
+
+    /* The hairlines invert from a dark alpha to a light one, which keeps them
+       hairlines instead of the hard grey a solid colour gives here. */
+    --aam-line:          rgba(255, 255, 255, .10);
+    --aam-line-soft:     rgba(255, 255, 255, .06);
+    --aam-line-strong:   rgba(255, 255, 255, .20);
+
+    /* A shadow tinted with ink reads as nothing on a dark ground, so these go
+       to near-black and deepen. */
+    --aam-shadow-1:  0 1px 2px rgba(0, 0, 0, .40), 0 1px 3px rgba(0, 0, 0, .30);
+    --aam-shadow-2:  0 8px 24px rgba(0, 0, 0, .55);
+    --aam-shadow-icon: 0 4px 10px rgba(0, 0, 0, .45);
+    --aam-shadow-focus: 0 0 0 3px rgba(99, 102, 241, .40);
+
+    --aam-brand:      #6366F1;
+    --aam-brand-dark: #4F46E5;
+    --aam-brand-text: #A5B4FC;
+    --aam-brand-tint: rgba(99, 102, 241, .20);
+
+    /* The gradients keep their hues - they are saturated fills carrying a white
+       glyph, so they hold up on either ground - but the two palest ones are
+       stepped down: #FFA94D and #ADB5BD against #262A36 glare. */
+    --aam-grad-orange: linear-gradient(135deg, #F59F4C, #E8620A);
+    --aam-grad-grey:   linear-gradient(135deg, #8B939C, #6B7280);
+
+    --aam-cat-1:  #6366F1;
+    --aam-cat-2:  #0891B2;
+    --aam-cat-3:  #E54690;
+
+    /* The status tints become alphas of their own hue: a fixed pale tint like
+       #ECFDF3 is a light rectangle on a dark card. */
+    --aam-ok-dot:     #059669;  --aam-ok-text:   #75E0A7;
+    --aam-ok-bg:      rgba(5, 150, 105, .16);
+    --aam-ok-line:    rgba(5, 150, 105, .40);
+
+    --aam-warn-dot:   #F79009;  --aam-warn-text: #FEC84B;
+    --aam-warn-bg:    rgba(247, 144, 9, .16);
+    --aam-warn-line:  rgba(247, 144, 9, .40);
+
+    --aam-bad-dot:    #EF4444;  --aam-bad-text:  #FDA29B;
+    --aam-bad-bg:     rgba(239, 68, 68, .16);
+    --aam-bad-line:   rgba(239, 68, 68, .40);
+
+    --aam-info-dot:   #0891B2;  --aam-info-text: #67E3F9;
+    --aam-info-bg:    rgba(8, 145, 178, .18);
+    --aam-info-line:  rgba(8, 145, 178, .45);
+
+    --aam-neutral-dot:  #7E8392;
+    --aam-neutral-text: #9BA1B0;
+    --aam-neutral-bg:   rgba(255, 255, 255, .06);
+    --aam-neutral-line: rgba(255, 255, 255, .10);
+
+    /* Ramp runs the other way in dark: more magnitude, more light. The ink
+       flips once, at d3 -> d4, crossing the same contrast dead zone.
+       d5 is NOT --aam-cat-1's dark step: a categorical dot only needs 3:1
+       against the surface, while a ramp fill has to carry text. #6366F1 gives
+       4.47:1 with white and ~3.8:1 with near-black - it fails both. */
+    --aam-d0: #262A36;  --aam-d0-ink: #6B707F;
+    --aam-d1: #333A5C;  --aam-d1-ink: #E4E4E4;
+    --aam-d2: #414770;  --aam-d2-ink: #E4E4E4;
+    --aam-d3: #4F568D;  --aam-d3-ink: #E4E4E4;
+    --aam-d4: #7882E5;  --aam-d4-ink: #1B1D26;
+    --aam-d5: #A5B4FC;  --aam-d5-ink: #1B1D26;
+}

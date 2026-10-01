@@ -1,0 +1,643 @@
+/* Access Management dashboard.
+ *
+ * Visual reference: the `open_whatsapp_call` dashboard. Its anatomy is what
+ * this file follows - flat slate ground, 16px cards on a two-layer shadow, a
+ * gradient icon square beside every figure, 12px uppercase card titles with a
+ * leading icon and a count chip, a 3px hover lift, and lists that scroll
+ * inside their own card rather than stretching it.
+ *
+ * Design note that survives the restyle: the hero is the restriction matrix,
+ * not the KPI strip. The native artifact of access control is a grid of
+ * who-can-do-what, and for administrators and auditors the *shape* of
+ * restrictions across models is the headline.
+ *
+ * Where the colour is, and where it deliberately is not:
+ *   - Tiles, list rows and chart cards carry gradient icons. That colour is
+ *     IDENTITY - it tells you which tile you are looking at, and never changes
+ *     with the number inside it.
+ *   - Matrix cells stay on ONE sequential hue. A heatmap encodes magnitude; a
+ *     multi-hue ramp would destroy the comparison the matrix exists to support.
+ *   - The column *headers* are colour-grouped instead, which turns seventeen
+ *     columns into four ideas: what a rule blocks, what it stops leaving the
+ *     system, what it hides in the UI, and which records it applies to.
+ *   - Status colour (green/amber/red) is reserved and always paired with a
+ *     word, so nothing on this page is legible only in colour.
+ *
+ * Tokens and mixins live in ../scss/aam_tokens.scss. Dark mode is a separate
+ * compiled bundle in Odoo 19, so there is no dark block in this file.
+ */
+
+/* The action container makes every client action a clipped column flex box
+   (`html .o_web_client .o_action_manager > .o_action`, specificity 0,3,1), so
+   the root's own `overflow: auto` never won and everything below the fold was
+   simply cut off. This screen is a document, not a viewport-locked view. */
+html .o_web_client .o_action_manager > .o_action.o_aam_dashboard {
+    display: block;
+    overflow: auto;
+}
+
+.o_aam_dashboard {
+    @include aam-page-ground;
+    color: var(--aam-ink);
+    height: 100%;
+    padding: 20px var(--aam-gutter) 32px;
+
+    // Technical identifiers are code, so they are set as code. This is
+    // information, not decoration: it tells you at a glance that `sale.order`
+    // is a thing you type, not a label someone wrote.
+    .o_aam_mono {
+        font-family: var(--aam-font-mono);
+        font-size: var(--aam-fs-base);
+        letter-spacing: -0.01em;
+    }
+
+    /* -- header ---------------------------------------------------------
+     * No longer a full-bleed bar with a hairline under it. On a slate ground
+     * the cards provide the structure, and a second horizontal rule just
+     * competed with them.
+     */
+    .o_aam_statusbar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+
+        h1 {
+            font-size: var(--aam-fs-h1);
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: var(--aam-track-tight);
+        }
+        .o_aam_meta {
+            color: var(--aam-ink-mute);
+            font-size: var(--aam-fs-base);
+        }
+        .o_aam_spacer { flex: 1 1 auto; }
+
+        .btn { border-radius: var(--aam-radius-sm); }
+
+        // Brand-filled now that the page has a brand. The old near-black
+        // button was right when the only colour on screen belonged to the
+        // data; against eight gradient tiles it read as unfinished.
+        .btn-primary {
+            background: var(--aam-btn-bg);
+            border-color: var(--aam-btn-bg);
+            color: var(--aam-btn-ink);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, .28);
+            transition: background var(--aam-ease), transform var(--aam-ease);
+            &:hover, &:focus {
+                background: var(--aam-btn-bg-hover);
+                border-color: var(--aam-btn-bg-hover);
+                color: var(--aam-btn-ink);
+                transform: translateY(-1px);
+            }
+        }
+    }
+
+    // The signature mark. One 40px gradient square with the module's own glyph,
+    // which is what the reference uses to stop its header being a bare string.
+    .o_aam_logo {
+        --aam-accent-grad: var(--aam-grad-brand);
+        @include aam-icon-tile(40px, 11px, 18px);
+        box-shadow: 0 4px 12px rgba(79, 70, 229, .35);
+    }
+
+    /* -- health score ring ---------------------------------------------- */
+    .o_aam_score {
+        position: relative;
+        width: 2.75rem;
+        height: 2.75rem;
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        circle { fill: none; stroke-width: 5; }
+        .o_aam_score_track { stroke: var(--aam-line-strong); }
+        .o_aam_score_arc {
+            stroke: var(--aam-ok-dot);
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.4s ease;
+        }
+        .o_aam_score_num {
+            position: absolute;
+            font-size: var(--aam-fs-sm);
+            font-weight: 700;
+            @include aam-figures;
+        }
+        &.o_aam_sev_warn .o_aam_score_arc { stroke: var(--aam-warn-dot); }
+        &.o_aam_sev_bad  .o_aam_score_arc { stroke: var(--aam-bad-dot); }
+    }
+
+    .o_aam_verdict {
+        font-size: var(--aam-fs-md);
+        strong { font-weight: 600; }
+        &.o_aam_verdict_bad { color: var(--aam-bad-text); }
+    }
+
+    /* -- KPI strip -------------------------------------------------------
+     * Ten tiles, so the grid steps 2 -> 5: both divide ten exactly. The
+     * reference's comment is worth keeping - a column count that leaves one
+     * lonely card on the last row undoes the whole grid.
+     */
+    .o_aam_counts {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--aam-gap-tile);
+        margin-bottom: 20px;
+
+        @media (min-width: 992px) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    }
+
+    .o_aam_count {
+        @include aam-card;
+        @include aam-lift;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: var(--aam-pad-card);
+        text-align: left;
+        color: inherit;
+        cursor: pointer;
+
+        &:focus-visible { @include aam-focus-ring; }
+
+        .o_aam_count_icon {
+            @include aam-icon-tile;
+            > i { line-height: 1; }
+        }
+
+        // min-width:0 is what lets the label ellipsis instead of forcing the
+        // tile wider than its grid track.
+        .o_aam_count_body { min-width: 0; }
+
+        .o_aam_count_value {
+            display: block;
+            font-size: var(--aam-fs-num);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: var(--aam-track-tight);
+            white-space: nowrap;
+            @include aam-figures;
+        }
+
+        .o_aam_count_label {
+            display: block;
+            font-size: var(--aam-fs-sm);
+            color: var(--aam-ink-mute);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .o_aam_count_sub {
+            display: block;
+            font-size: var(--aam-fs-micro);
+            color: var(--aam-ink-faint);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        // Severity is a *state*, separate from the tile's identity gradient:
+        // it tints the border and the figure, exactly as the reference does for
+        // its connection KPI. A tile only shouts when its number means trouble.
+        &.o_aam_sev_bad {
+            border-color: var(--aam-bad-line);
+            .o_aam_count_value { color: var(--aam-bad-text); }
+            .o_aam_count_label { color: var(--aam-bad-text); font-weight: 600; }
+        }
+        &.o_aam_sev_warn {
+            border-color: var(--aam-warn-line);
+            .o_aam_count_value { color: var(--aam-warn-text); }
+            .o_aam_count_label { color: var(--aam-warn-text); font-weight: 600; }
+        }
+        // A zero is not trouble. Without this every clean database opened with
+        // two red tiles reading 0.
+        &.o_aam_sev_quiet {
+            border-color: var(--aam-line);
+            .o_aam_count_value { color: var(--aam-ink); }
+            .o_aam_count_label { color: var(--aam-ink-mute); font-weight: 400; }
+        }
+    }
+
+    /* -- accent gradients ------------------------------------------------
+     * Identity, not magnitude. Applied to the icon square only, never to the
+     * card: ten gradient-washed cards would read as an alarm, not a summary.
+     */
+    .o_aam_bg_brand  { --aam-accent-grad: var(--aam-grad-brand); }
+    .o_aam_bg_blue   { --aam-accent-grad: var(--aam-grad-blue); }
+    .o_aam_bg_cyan   { --aam-accent-grad: var(--aam-grad-cyan); }
+    .o_aam_bg_teal   { --aam-accent-grad: var(--aam-grad-teal); }
+    .o_aam_bg_purple { --aam-accent-grad: var(--aam-grad-purple); }
+    .o_aam_bg_orange { --aam-accent-grad: var(--aam-grad-orange); }
+    .o_aam_bg_red    { --aam-accent-grad: var(--aam-grad-red); }
+    .o_aam_bg_grey   { --aam-accent-grad: var(--aam-grad-grey); }
+
+    /* -- the matrix (hero) --------------------------------------------- */
+    .o_aam_matrix_wrap {
+        @include aam-card;
+        padding: var(--aam-pad-card);
+        margin-bottom: var(--aam-gap-card);
+    }
+
+    .o_aam_matrix_head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+
+        h2 {
+            @include aam-card-title;
+            margin: 0;
+        }
+        .o_aam_hint {
+            font-size: var(--aam-fs-sm);
+            color: var(--aam-ink-faint);
+        }
+    }
+
+    .o_aam_legend {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        margin-left: auto;
+        font-size: var(--aam-fs-micro);
+        color: var(--aam-ink-faint);
+
+        i {
+            width: 1.25rem;
+            height: 0.75rem;
+            display: inline-block;
+            border-radius: var(--aam-radius-2xs);
+        }
+    }
+
+    .o_aam_matrix_scroll { overflow-x: auto; margin-top: 12px; }
+
+    table.o_aam_matrix {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 2px;
+
+        th {
+            font-size: var(--aam-fs-micro);
+            font-weight: 600;
+            color: var(--aam-ink-mute);
+            text-transform: uppercase;
+            letter-spacing: var(--aam-track-micro);
+            padding: 0.375rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        // Column families. The cells are one hue by design, so the grouping
+        // colour lives up here, on a 2px underline.
+        th.o_aam_g_crud,
+        th.o_aam_g_flow,
+        th.o_aam_g_ui,
+        th.o_aam_g_records { border-bottom: 2px solid var(--aam-line); }
+
+        th.o_aam_g_crud    { color: var(--aam-cat-1); border-bottom-color: var(--aam-cat-1); }
+        th.o_aam_g_flow    { color: var(--aam-cat-2); border-bottom-color: var(--aam-cat-2); }
+        th.o_aam_g_ui      { color: var(--aam-cat-3); border-bottom-color: var(--aam-cat-3); }
+        th.o_aam_g_records { color: var(--aam-warn-text); border-bottom-color: var(--aam-warn-dot); }
+
+        th.o_aam_rowhead {
+            text-align: left;
+            position: sticky;
+            left: 0;
+            background: var(--aam-surface);
+            z-index: 1;
+        }
+        td.o_aam_rowhead {
+            position: sticky;
+            left: 0;
+            background: var(--aam-surface);
+            z-index: 1;
+            padding-right: 0.75rem;
+            white-space: nowrap;
+        }
+        td.o_aam_cell {
+            width: 2.25rem;
+            height: 1.75rem;
+            text-align: center;
+            font-size: var(--aam-fs-sm);
+            border-radius: var(--aam-radius-xs);
+            cursor: default;
+            @include aam-figures;
+        }
+        td.o_aam_total {
+            font-weight: 700;
+            padding-left: 0.75rem;
+            border-left: 1px solid var(--aam-line);
+            @include aam-figures;
+        }
+    }
+
+    /* Density bands. Declared outside the table so the legend swatches share
+       exactly the same values - a legend that drifts from its chart is worse
+       than no legend.
+
+       Each step carries its own ink token, which is what lets these six rules
+       be written once and still be correct in dark mode: the ramp runs light to
+       dark on white and dark to light on a dark surface, so the text has to
+       flip somewhere, and that somewhere is a property of the step. */
+    @each $band in (0, 1, 2, 3, 4, 5) {
+        .o_aam_l#{$band} {
+            background: var(--aam-d#{$band});
+            color: var(--aam-d#{$band}-ink);
+        }
+    }
+    // An inset ring rather than a border, so a zero cell keeps exactly the same
+    // box as its neighbours whatever `box-sizing` is in play.
+    .o_aam_l0 { box-shadow: inset 0 0 0 1px var(--aam-line); }
+
+    .o_aam_empty {
+        @include aam-empty-state(180px);
+    }
+
+    /* -- chart band ------------------------------------------------------ */
+    .o_aam_charts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--aam-gap-card);
+        margin-bottom: var(--aam-gap-card);
+
+        @media (max-width: 1100px) { grid-template-columns: 1fr; }
+    }
+
+    .o_aam_chart_card {
+        @include aam-card;
+        margin: 0;
+        padding: var(--aam-pad-card);
+
+        .o_aam_chart_head {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 12px;
+        }
+        .o_aam_chart_title {
+            @include aam-card-title;
+            margin: 0;
+        }
+        .o_aam_chart_hint {
+            font-size: var(--aam-fs-micro);
+            color: var(--aam-ink-faint);
+            padding-left: 21px;   // clears the title's 13px icon + 8px gap
+        }
+
+        // Each card's icon takes its own accent, so the three read as three
+        // things rather than one long band.
+        &.o_aam_cat1 .o_aam_chart_title > i { color: var(--aam-cat-1); }
+        &.o_aam_cat2 .o_aam_chart_title > i { color: var(--aam-cat-2); }
+        &.o_aam_cat3 .o_aam_chart_title > i { color: var(--aam-cat-3); }
+
+        .o_aam_chart_canvas { position: relative; }
+        .o_aam_chart_empty { @include aam-empty-state(200px); }
+    }
+
+    .o_aam_chart_legend {
+        list-style: none;
+        margin: 12px 0 0;
+        padding: 0;
+        font-size: var(--aam-fs-base);
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.1875rem 0;
+
+            .o_aam_swatch {
+                width: 0.625rem;
+                height: 0.625rem;
+                border-radius: 3px;
+                flex: 0 0 auto;
+                background: var(--aam-neutral-dot);
+            }
+            .o_aam_chart_key {
+                color: var(--aam-ink-2);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            b { margin-left: auto; @include aam-figures; }
+            .o_aam_chart_pct {
+                color: var(--aam-ink-faint);
+                font-size: var(--aam-fs-micro);
+                min-width: 2.5rem;
+                text-align: right;
+                @include aam-figures;
+            }
+
+            &.o_aam_cat1 .o_aam_swatch { background: var(--aam-cat-1); }
+            &.o_aam_cat2 .o_aam_swatch { background: var(--aam-cat-2); }
+            &.o_aam_cat3 .o_aam_swatch { background: var(--aam-cat-3); }
+        }
+    }
+
+    // Visible only when Chart.js could not load; otherwise `visually-hidden`
+    // keeps it for assistive tech.
+    .o_aam_chart_table {
+        width: 100%;
+        font-size: var(--aam-fs-base);
+        caption { caption-side: top; text-align: left; color: var(--aam-ink-mute); }
+        th, td { padding: 0.25rem 0; text-align: left; font-weight: 400; }
+        td { text-align: right; @include aam-figures; }
+    }
+
+    /* -- lower panels --------------------------------------------------- */
+    .o_aam_columns {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--aam-gap-card);
+    }
+
+    .o_aam_panel {
+        @include aam-card;
+        padding: var(--aam-pad-card);
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+
+        h2 {
+            @include aam-card-title;
+        }
+        .o_aam_chip { @include aam-count-chip; }
+    }
+
+    .o_aam_signal {
+        display: flex;
+        gap: 0.625rem;
+        padding: 0.5rem 0;
+        border-top: 1px solid var(--aam-line-soft);
+        font-size: var(--aam-fs-md);
+
+        &:first-of-type { border-top: 0; }
+        .o_aam_dot {
+            flex: 0 0 auto;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            margin-top: 0.4rem;
+            background: var(--aam-neutral-dot);
+        }
+        &.o_aam_danger {
+            color: var(--aam-bad-text);
+            .o_aam_dot { background: var(--aam-bad-dot); }
+        }
+        &.o_aam_warning .o_aam_dot { background: var(--aam-warn-dot); }
+        &.o_aam_success .o_aam_dot { background: var(--aam-ok-dot); }
+        // `info` notes had no rule at all and fell back to the ramp's mid step.
+        &.o_aam_info    .o_aam_dot { background: var(--aam-info-dot); }
+    }
+
+    .o_aam_facts {
+        list-style: none;
+        margin: 12px 0 0;
+        padding: 12px 0 0;
+        border-top: 1px solid var(--aam-line);
+        font-size: var(--aam-fs-base);
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.25rem 0;
+            color: var(--aam-ink-mute);
+            b { color: var(--aam-ink); font-weight: 700; @include aam-figures; }
+        }
+    }
+
+    /* -- list rows -------------------------------------------------------
+     * The reference's richest idea: an icon that says what kind of thing this
+     * is, a name, a quiet subline, and the metadata pushed to the right edge.
+     * Used by Recent activity; Top users adds a rank and a volume bar.
+     */
+    .o_aam_scroll { @include aam-scroll-body(300px); }
+
+    .o_aam_listrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 8px;
+        border-radius: var(--aam-radius);
+
+        & + .o_aam_listrow { border-top: 1px solid var(--aam-line-soft); }
+
+        .o_aam_listrow_icon { @include aam-icon-tile(36px, 11px, 14px); }
+
+        .o_aam_listrow_main { min-width: 0; flex: 1 1 auto; }
+        .o_aam_listrow_name {
+            display: block;
+            font-weight: 600;
+            font-size: var(--aam-fs-base);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .o_aam_listrow_sub {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: var(--aam-fs-micro);
+            color: var(--aam-ink-mute);
+            margin-top: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .o_aam_listrow_end {
+            margin-left: auto;
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 3px;
+        }
+        .o_aam_when {
+            font-size: var(--aam-fs-micro);
+            color: var(--aam-ink-faint);
+            white-space: nowrap;
+            @include aam-figures;
+        }
+    }
+
+    // Top users: rank, initial avatar, share bar, count pill.
+    .o_aam_rank {
+        width: 18px;
+        flex: 0 0 auto;
+        text-align: center;
+        font-size: var(--aam-fs-sm);
+        font-weight: 700;
+        color: var(--aam-ink-faint);
+        @include aam-figures;
+    }
+
+    // The hue comes from the user id, so the same person keeps the same colour
+    // between reloads. Saturation and lightness are fixed, which keeps every
+    // avatar at the same contrast against white text however the hue lands.
+    .o_aam_avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--aam-fs-sm);
+        font-weight: 700;
+        color: #FFFFFF;
+        background: hsl(var(--h, 245), 58%, 48%);
+        box-shadow: var(--aam-shadow-icon);
+    }
+
+    .o_aam_bar {
+        // `display: block` is load-bearing: this is a <span>, and an inline box
+        // ignores height, so the bar rendered as nothing at all.
+        display: block;
+        height: 5px;
+        border-radius: var(--aam-radius-pill);
+        margin-top: 6px;
+        background: var(--aam-neutral-bg);
+        overflow: hidden;
+
+        > span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            min-width: 4px;
+            background: linear-gradient(90deg, var(--aam-brand), var(--aam-brand-dark));
+        }
+    }
+
+    .o_aam_count_pill {
+        font-size: var(--aam-fs-sm);
+        font-weight: 700;
+        color: var(--aam-brand-text);
+        background: var(--aam-brand-tint);
+        border-radius: var(--aam-radius-pill);
+        padding: 3px 10px;
+        white-space: nowrap;
+        @include aam-figures;
+
+        i { opacity: 0.7; margin-right: 4px; font-size: var(--aam-fs-nano); }
+    }
+
+    .o_aam_panel_foot {
+        margin-top: auto;
+        padding-top: 10px;
+        .btn-link { padding: 0; font-size: var(--aam-fs-base); color: var(--aam-brand-text); }
+    }
+
+    @media (max-width: 900px) {
+        .o_aam_columns { grid-template-columns: 1fr; }
+    }
+}

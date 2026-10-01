@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="odooapp_access_management.AccessMap">
+        <div class="o_aam_map" t-att-class="props.className">
+            <div class="o_aam_map_body">
+
+            <aside class="o_aam_map_side">
+                <div class="o_aam_map_sidehead">
+                    <h2><i class="fa fa-users"/>Groups</h2>
+                    <input type="search" class="form-control form-control-sm"
+                           placeholder="Filter groups"
+                           t-model="state.groupFilter"
+                           aria-label="Filter groups"/>
+                </div>
+                <ul class="o_aam_grouplist">
+                    <li t-foreach="visibleGroups" t-as="group" t-key="group.id">
+                        <button t-on-click="() => this.select(group.id)"
+                                t-att-class="{ o_aam_selected: state.selectedId === group.id }">
+                            <span class="o_aam_gcount" t-esc="group.members"/>
+                            <span class="o_aam_gname" t-esc="group.name"/>
+                            <span class="o_aam_garea" t-esc="group.area"/>
+                        </button>
+                    </li>
+                </ul>
+            </aside>
+
+            <main class="o_aam_map_main">
+                <div t-if="state.loading" class="text-muted">Loading…</div>
+
+                <t t-elif="state.detail">
+                    <div class="o_aam_map_head">
+                        <h1 t-esc="state.detail.group.name"/>
+                        <span class="text-muted" t-esc="state.detail.group.area"/>
+                        <span class="o_aam_spacer"/>
+                        <div class="btn-group btn-group-sm" role="group"
+                             aria-label="Scope">
+                            <button class="btn"
+                                    t-att-class="state.scope === 'relevant' ? 'btn-primary' : 'btn-outline-secondary'"
+                                    t-on-click="() => this.setScope('relevant')">
+                                This group
+                            </button>
+                            <button class="btn"
+                                    t-att-class="state.scope === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
+                                    t-on-click="() => this.setScope('all')">
+                                Including implied
+                            </button>
+                        </div>
+                        <button class="btn btn-sm btn-outline-secondary"
+                                t-on-click="explain">Explain a user</button>
+                        <button class="btn btn-sm btn-outline-secondary"
+                                t-on-click="exportExcel">Export to Excel</button>
+                    </div>
+
+                    <section class="o_aam_section">
+                        <h2>
+                            <i class="fa fa-user"/>Members
+                            <span class="text-muted" t-esc="'(' + state.detail.user_count + ')'"/>
+                        </h2>
+                        <div t-if="!state.detail.users.length" class="text-muted">
+                            Nobody is in this group.
+                        </div>
+                        <div t-else="" class="o_aam_users">
+                            <span t-foreach="state.detail.users" t-as="u" t-key="u.id"
+                                  class="o_aam_userchip">
+                                <t t-esc="u.name"/><small t-esc="u.login"/>
+                            </span>
+                        </div>
+                    </section>
+
+                    <section class="o_aam_section">
+                        <h2><i class="fa fa-check-square-o"/>What this group can do</h2>
+                        <input type="search" class="form-control form-control-sm mb-3"
+                               placeholder="Search models by name or technical id"
+                               t-model="state.modelFilter"
+                               aria-label="Search models"/>
+                        <div t-if="!visibleModels.length" class="text-muted">
+                            No model access rows for this group.
+                        </div>
+                        <table t-else="" class="o_aam_acl">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Technical</th>
+                                    <th class="o_aam_c">Status</th>
+                                    <th class="o_aam_c">Create</th>
+                                    <th class="o_aam_c">Read</th>
+                                    <th class="o_aam_c">Edit</th>
+                                    <th class="o_aam_c">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="visibleModels" t-as="row" t-key="row.model">
+                                    <td t-esc="row.name"/>
+                                    <td class="o_aam_mono" t-esc="row.model"/>
+                                    <td class="o_aam_c">
+                                        <span class="o_aam_badge"
+                                              t-att-class="'o_aam_s_' + row.status"
+                                              t-esc="statusLabel(row.status)"/>
+                                    </td>
+                                    <td class="o_aam_c"
+                                        t-att-class="row.create ? 'o_aam_yes' : 'o_aam_no'"
+                                        t-esc="row.create ? '✓' : '✗'"/>
+                                    <td class="o_aam_c"
+                                        t-att-class="row.read ? 'o_aam_yes' : 'o_aam_no'"
+                                        t-esc="row.read ? '✓' : '✗'"/>
+                                    <td class="o_aam_c"
+                                        t-att-class="row.write ? 'o_aam_yes' : 'o_aam_no'"
+                                        t-esc="row.write ? '✓' : '✗'"/>
+                                    <td class="o_aam_c"
+                                        t-att-class="row.unlink ? 'o_aam_yes' : 'o_aam_no'"
+                                        t-esc="row.unlink ? '✓' : '✗'"/>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <section class="o_aam_section" t-if="state.detail.cannot.length">
+                        <h2><i class="fa fa-minus-circle"/>What this group cannot do</h2>
+                        <ul class="o_aam_cannot">
+                            <li t-foreach="state.detail.cannot" t-as="item" t-key="item_index">
+                                <b t-esc="item.text"/>
+                                <span class="text-muted" t-esc="'(' + item.count + ')'"/>:
+                                <span class="o_aam_mono" t-esc="item.models.join(', ')"/>
+                                <span t-if="item.count > item.models.length" class="text-muted">
+                                    and more
+                                </span>
+                            </li>
+                        </ul>
+                        <p class="text-muted mb-0" style="font-size: 0.8125rem;">
+                            Read from the live access rights, so it never goes stale.
+                        </p>
+                    </section>
+                </t>
+
+                <div t-else="" class="text-muted">Select a group to see its access.</div>
+            </main>
+            </div>
+        </div>
+    </t>
+
+</templates>

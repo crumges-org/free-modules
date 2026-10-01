@@ -1,0 +1,267 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* nexa_portal_customer_statement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-21 00:00+0000\n"
+"PO-Revision-Date: 2025-01-21 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: nexa_portal_customer_statement
+#: model:ir.model.fields,field_description:nexa_portal_customer_statement.field_res_partner__customer_statement_count
+msgid "Customer Statement Count"
+msgstr "عدد كشوف حساب العميل"
+
+#. module: nexa_portal_customer_statement
+#: model:ir.actions.report,name:nexa_portal_customer_statement.action_customer_statement_pdf
+#: model:ir.ui.menu,name:nexa_portal_customer_statement.menu_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.portal_my_home_customer_statement
+msgid "Customer Statement"
+msgstr "كشف حساب العميل"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.portal_my_home_customer_statement
+msgid "View your account statement"
+msgstr "عرض كشف حسابك"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Initial Balance"
+msgstr "الرصيد الافتتاحي"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "January"
+msgstr "يناير"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "February"
+msgstr "فبراير"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "March"
+msgstr "مارس"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "April"
+msgstr "أبريل"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "May"
+msgstr "مايو"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "June"
+msgstr "يونيو"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "July"
+msgstr "يوليو"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "August"
+msgstr "أغسطس"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "September"
+msgstr "سبتمبر"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "October"
+msgstr "أكتوبر"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "November"
+msgstr "نوفمبر"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "December"
+msgstr "ديسمبر"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q1 (Jan - Mar)"
+msgstr "الربع الأول (يناير - مارس)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q2 (Apr - Jun)"
+msgstr "الربع الثاني (أبريل - يونيو)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q3 (Jul - Sep)"
+msgstr "الربع الثالث (يوليو - سبتمبر)"
+
+#. module: nexa_portal_customer_statement
+#: code:addons/nexa_portal_customer_statement/controllers/portal_customer_statement.py:0
+#, python-format
+msgid "Q4 (Oct - Dec)"
+msgstr "الربع الرابع (أكتوبر - ديسمبر)"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Period"
+msgstr "الفترة"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Month"
+msgstr "الشهر"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Quarter"
+msgstr "الربع"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Year"
+msgstr "السنة"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Custom Dates"
+msgstr "تواريخ مخصصة"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Apply Custom Dates"
+msgstr "تطبيق التواريخ المخصصة"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "PDF"
+msgstr "PDF"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Journal"
+msgstr "اليومية"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Account"
+msgstr "الحساب"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Invoice Date"
+msgstr "تاريخ الفاتورة"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Due Date"
+msgstr "تاريخ الاستحقاق"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Matching"
+msgstr "المطابقة"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Debit"
+msgstr "مدين"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Credit"
+msgstr "دائن"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "Amount Currency"
+msgstr "مبلغ العملة"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Balance"
+msgstr "الرصيد"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+msgid "No transactions found for the selected period."
+msgstr "لم يتم العثور على معاملات للفترة المحددة."
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_page
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Total"
+msgstr "الإجمالي"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Customer"
+msgstr "العميل"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Statement Date:"
+msgstr "تاريخ الكشف:"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Period:"
+msgstr "الفترة:"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "This statement was generated on"
+msgstr "تم إنشاء هذا الكشف في"
+
+#. module: nexa_portal_customer_statement
+#: model_terms:ir.ui.view,arch_db:nexa_portal_customer_statement.customer_statement_pdf_report
+msgid "Please contact us if you have any questions regarding this statement."
+msgstr "يرجى الاتصال بنا إذا كان لديك أي استفسارات بخصوص هذا الكشف."

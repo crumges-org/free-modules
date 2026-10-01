@@ -1,0 +1,253 @@
+/* Access Map. Same product, same visual language as the dashboard - and now
+ * literally the same tokens, from ../scss/aam_tokens.scss, rather than a
+ * second copy of them that quietly drifts.
+ *
+ * Follows the `open_whatsapp_call` anatomy the dashboard adopted: flat slate
+ * ground, 16px cards on a two-layer shadow, 12px uppercase section titles with
+ * a leading icon.
+ *
+ * The matrix here is boolean (granted or not) rather than a density, so it uses
+ * marks and status pills instead of the ink ramp.
+ */
+
+.o_aam_map {
+    height: 100%;
+    background: var(--aam-ground);
+    color: var(--aam-ink);
+    overflow: hidden;
+
+    /* The flex row lives on an inner element on purpose. Odoo puts .o_action on
+       a client action's root with its own flex-direction, and winning that with
+       specificity is a fight that breaks on the next release. */
+    .o_aam_map_body {
+        display: flex;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .o_aam_mono {
+        font-family: var(--aam-font-mono);
+        font-size: var(--aam-fs-base);
+        letter-spacing: -0.01em;
+    }
+
+    /* -- group list ----------------------------------------------------- */
+    .o_aam_map_side {
+        flex: 0 0 19rem;
+        border-right: 1px solid var(--aam-line);
+        background: var(--aam-surface);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .o_aam_map_sidehead {
+        padding: 1rem;
+        border-bottom: 1px solid var(--aam-line);
+
+        h2 {
+            @include aam-card-title;
+            margin-bottom: 10px;
+        }
+        input {
+            border-radius: var(--aam-radius-sm);
+            border-color: var(--aam-line-strong);
+            &:focus { border-color: var(--aam-brand); @include aam-focus-ring; }
+        }
+    }
+
+    .o_aam_grouplist {
+        @include aam-scroll-body(100%);
+        margin: 0;
+        padding: 6px;
+        list-style: none;
+
+        li button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: 0;
+            background: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--aam-radius);
+            color: inherit;
+            cursor: pointer;
+            transition: background var(--aam-ease);
+
+            &:hover { background: var(--aam-surface-alt); }
+            &:focus-visible { @include aam-focus-ring; }
+
+            &.o_aam_selected {
+                background: var(--aam-brand-tint);
+                .o_aam_gname { color: var(--aam-brand-text); }
+            }
+
+            .o_aam_gname { font-weight: 600; display: block; font-size: var(--aam-fs-base); }
+            .o_aam_garea {
+                font-size: var(--aam-fs-micro);
+                color: var(--aam-ink-mute);
+            }
+            .o_aam_gcount {
+                float: right;
+                font-size: var(--aam-fs-micro);
+                font-weight: 700;
+                color: var(--aam-ink-mute);
+                background: var(--aam-neutral-bg);
+                border-radius: var(--aam-radius-pill);
+                padding: 0 0.5rem;
+                @include aam-figures;
+            }
+        }
+    }
+
+    /* -- detail pane ---------------------------------------------------- */
+    .o_aam_map_main {
+        @include aam-page-ground;
+        flex: 1 1 auto;
+        overflow-y: auto;
+        padding: 20px var(--aam-gutter) 32px;
+    }
+
+    .o_aam_map_head {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        flex-wrap: wrap;
+        margin-bottom: var(--aam-gap-card);
+
+        h1 {
+            font-size: var(--aam-fs-h1);
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: var(--aam-track-tight);
+        }
+        .o_aam_spacer { flex: 1 1 auto; }
+
+        .btn { border-radius: var(--aam-radius-sm); }
+        .btn-group .btn { border-radius: 0; }
+        .btn-group .btn:first-child {
+            border-top-left-radius: var(--aam-radius-sm);
+            border-bottom-left-radius: var(--aam-radius-sm);
+        }
+        .btn-group .btn:last-child {
+            border-top-right-radius: var(--aam-radius-sm);
+            border-bottom-right-radius: var(--aam-radius-sm);
+        }
+
+        // Scoped to this screen so Odoo's global .btn-primary is untouched.
+        .btn-primary {
+            background: var(--aam-btn-bg);
+            border-color: var(--aam-btn-bg);
+            color: var(--aam-btn-ink);
+            &:hover, &:focus {
+                background: var(--aam-btn-bg-hover);
+                border-color: var(--aam-btn-bg-hover);
+                color: var(--aam-btn-ink);
+            }
+        }
+    }
+
+    .o_aam_section {
+        @include aam-card;
+        padding: var(--aam-pad-card);
+        margin-bottom: var(--aam-gap-card);
+
+        h2 { @include aam-card-title; }
+    }
+
+    .o_aam_users { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+
+    .o_aam_userchip {
+        background: var(--aam-neutral-bg);
+        border: 1px solid var(--aam-neutral-line);
+        border-radius: var(--aam-radius-pill);
+        padding: 0.1875rem 0.6875rem;
+        font-size: var(--aam-fs-base);
+
+        small { color: var(--aam-ink-mute); margin-left: 0.25rem; }
+    }
+
+    /* -- the ACL table --------------------------------------------------- */
+    table.o_aam_acl {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: var(--aam-fs-base);
+
+        th {
+            text-align: left;
+            font-size: var(--aam-fs-micro);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: var(--aam-track-micro);
+            color: var(--aam-ink-mute);
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--aam-line);
+            background: var(--aam-surface);
+        }
+        th.o_aam_c, td.o_aam_c { text-align: center; width: 5rem; }
+        td {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--aam-line-soft);
+            color: var(--aam-ink-2);
+        }
+        tr:last-child td { border-bottom: 0; }
+        tbody tr { transition: background 0.1s ease; }
+        tbody tr:hover td { background: var(--aam-surface-alt); }
+
+        .o_aam_yes { color: var(--aam-ok-text); font-weight: 700; }
+        // No `opacity` here. Fading an already-marginal orange landed the
+        // effective contrast near 2.3:1; a denial is meant to be readable, just
+        // not shouty, so it takes the neutral ink instead.
+        .o_aam_no  { color: var(--aam-neutral-text); }
+    }
+
+    /* -- status pills ----------------------------------------------------
+     * Tinted fill, its own border colour and a dot - deliberately NOT
+     * `border: 1px solid currentColor`, which is what forced the label and the
+     * border to share one colour and made "Partial" unreadable.
+     */
+    .o_aam_badge {
+        @include aam-pill;
+
+        &.o_aam_s_full {
+            background: var(--aam-ok-bg);
+            border-color: var(--aam-ok-line);
+            color: var(--aam-ok-text);
+            &::before { background: var(--aam-ok-dot); }
+        }
+        &.o_aam_s_partial {
+            background: var(--aam-warn-bg);
+            border-color: var(--aam-warn-line);
+            color: var(--aam-warn-text);
+            &::before { background: var(--aam-warn-dot); }
+        }
+        &.o_aam_s_readonly {
+            background: var(--aam-info-bg);
+            border-color: var(--aam-info-line);
+            color: var(--aam-info-text);
+            &::before { background: var(--aam-info-dot); }
+        }
+        &.o_aam_s_none {
+            background: var(--aam-bad-bg);
+            border-color: var(--aam-bad-line);
+            color: var(--aam-bad-text);
+            &::before { background: var(--aam-bad-dot); }
+        }
+    }
+
+    .o_aam_cannot li {
+        margin-bottom: 0.5rem;
+        font-size: var(--aam-fs-md);
+        color: var(--aam-ink-2);
+    }
+
+    @media (max-width: 900px) {
+        .o_aam_map_body { flex-direction: column; }
+        .o_aam_map_side {
+            flex: 0 0 auto;
+            max-height: 40vh;
+            border-right: 0;
+            border-bottom: 1px solid var(--aam-line);
+        }
+    }
+}

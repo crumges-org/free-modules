@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="cron_aam_revoke_expired" model="ir.cron">
+        <field name="name">Access Management: revoke expired rules</field>
+        <field name="model_id" ref="model_aam_rule"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_revoke_expired()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_aam_password_expiry" model="ir.cron">
+        <field name="name">Access Management: password expiry reminders</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_password_expiry_reminder()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

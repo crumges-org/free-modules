@@ -1,0 +1,6 @@
+dev/*.log
+dev/.data/
+*.pyc
+__pycache__/
+.idea/
+.vscode/

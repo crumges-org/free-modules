@@ -1,0 +1,366 @@
+/* Advance Access Management - design tokens and shared mixins.
+ *
+ * Visual reference: the `open_whatsapp_call` dashboard
+ * (addons/open_whatsapp_call/static/src/dashboard/owc_dashboard.scss). What we
+ * take from it is the *anatomy*, not the palette:
+ *
+ *   - a flat slate page ground, not a texture;
+ *   - generously rounded 16px cards on a hairline border and a two-layer
+ *     shadow, which is what makes them read as objects rather than boxes;
+ *   - a gradient icon square beside every figure, so each tile has an identity
+ *     you recognise before you read it;
+ *   - 12px uppercase card titles with a leading icon and an optional count chip;
+ *   - a decisive 3px hover lift.
+ *
+ * What we deliberately do NOT take is WhatsApp green as the brand. In this
+ * module green already means *granted* - it is the ACL table's yes-mark and the
+ * "Full access" pill - so painting the chrome green would spend the one colour
+ * that carries meaning. The brand gradient is indigo instead, and green stays
+ * reserved for status.
+ *
+ * Scoped to the two client-action roots, never `:root`: these must not leak
+ * into the rest of the Odoo backend.
+ *
+ * Dark mode lives in `aam_tokens.dark.scss`. It is a *separate compiled bundle*
+ * in Odoo 19 (`web.assets_web_dark`, chosen server-side from the `color_scheme`
+ * cookie), not a class on the body - there is no `.o_dark_mode` and no
+ * `data-bs-theme` in v19. Anything written against those selectors is dead code,
+ * which is why the reference's own two dark blocks never fire.
+ *
+ * NOTE: Odoo compiles with libsass, so no `@use`, no `@forward`, no `sass:math`.
+ * It also concatenates every SCSS file in a bundle into ONE document, so the
+ * mixins below must be loaded before their callers - which is why the manifest
+ * lists this file explicitly ahead of the wildcard.
+ */
+
+.o_aam_dashboard,
+.o_aam_map {
+
+    /* -- surfaces ------------------------------------------------------ */
+    --aam-ground:        #F1F5F9;
+    --aam-surface:       #FFFFFF;
+    --aam-surface-alt:   #F8FAFC;
+
+    /* -- ink ----------------------------------------------------------- */
+    --aam-ink:           #0F172A;
+    --aam-ink-2:         #334155;
+    --aam-ink-mute:      #64748B;
+    --aam-ink-faint:     #94A3B8;
+    --aam-ink-decor:     #CBD5E1;   /* non-text only: empty-state glyphs */
+    --aam-ink-invert:    #FFFFFF;
+
+    /* -- hairlines ------------------------------------------------------
+     * The card border is an alpha, not a solid: over the slate ground it
+     * reads as a hairline, over white it stays visible, and it needs no dark
+     * counterpart beyond flipping the base colour.
+     */
+    --aam-line:          rgba(15, 23, 42, .08);
+    --aam-line-soft:     rgba(15, 23, 42, .05);
+    --aam-line-strong:   rgba(15, 23, 42, .16);
+
+    /* -- radius ---------------------------------------------------------
+     * Bigger than before across the board. The 16px card is the single most
+     * recognisable thing about the reference design.
+     */
+    --aam-radius-2xs:    2px;
+    --aam-radius-xs:     4px;
+    --aam-radius-sm:     8px;
+    --aam-radius:       12px;
+    --aam-radius-card:  16px;
+    --aam-radius-icon:  13px;
+    --aam-radius-pill: 999px;
+
+    /* -- elevation ------------------------------------------------------
+     * Two layers: a 1px contact shadow to seat the card, and a wider soft one
+     * for depth. The hover shadow is deliberately much larger - the lift is
+     * meant to be felt, not guessed at.
+     */
+    --aam-shadow-1:  0 1px 2px rgba(15, 23, 42, .04), 0 1px 3px rgba(15, 23, 42, .06);
+    --aam-shadow-2:  0 8px 24px rgba(15, 23, 42, .12);
+    --aam-shadow-icon: 0 4px 10px rgba(15, 23, 42, .12);
+    --aam-shadow-focus: 0 0 0 3px rgba(79, 70, 229, .28);
+
+    /* -- spacing ------------------------------------------------------- */
+    --aam-gutter:        24px;
+    --aam-gap-tile:      14px;
+    --aam-gap-card:      16px;
+    --aam-pad-card:      18px;
+
+    /* -- type ---------------------------------------------------------- */
+    /* No --aam-font-sans on purpose: inherit Odoo's stack, which splices in
+       `Odoo Unicode Support Noto` for CJK and Arabic fallback. This module
+       ships ar and zh_CN, so hand-rolling a stack would break them. */
+    --aam-font-mono:  ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
+                      "Liberation Mono", "Courier New", monospace;
+    --aam-fs-nano:    0.625rem;     /* 10px */
+    --aam-fs-micro:   0.6875rem;    /* 11px */
+    --aam-fs-sm:      0.75rem;      /* 12px */
+    --aam-fs-base:    0.8125rem;    /* 13px */
+    --aam-fs-md:      0.875rem;     /* 14px */
+    --aam-fs-h1:      1.25rem;      /* 20px */
+    --aam-fs-num:     1.5rem;       /* 24px */
+    --aam-track-tight:  -0.02em;
+    --aam-track-micro:   0.05em;
+
+    /* -- motion -------------------------------------------------------- */
+    --aam-ease:   0.14s ease;
+    --aam-lift:  -3px;
+
+    /* -- brand ----------------------------------------------------------
+     * Indigo, not the reference's WhatsApp green - see the file header.
+     */
+    --aam-brand:      #4F46E5;
+    --aam-brand-dark: #3730A3;
+    --aam-brand-text: #4338CA;
+    --aam-brand-tint: rgba(79, 70, 229, .12);
+
+    /* -- primary action -------------------------------------------------
+     * Brand-filled now that the page has a brand. The old near-black button
+     * was right when the only colour on screen belonged to the data; against
+     * eight gradient tiles it just looked unfinished.
+     */
+    --aam-btn-bg:        var(--aam-brand);
+    --aam-btn-bg-hover:  var(--aam-brand-dark);
+    --aam-btn-ink:       #FFFFFF;
+
+    /* -- accent gradients -----------------------------------------------
+     * The reference's seven `.o-bg-*` classes. Every one is a 135deg two-stop
+     * ramp from a light step to its darker sibling, which is what gives the
+     * icon squares their depth. They are IDENTITY, never magnitude: each tile
+     * keeps its gradient regardless of the number in it.
+     */
+    --aam-grad-brand:  linear-gradient(135deg, #6366F1, #4338CA);
+    --aam-grad-blue:   linear-gradient(135deg, #4DABF7, #1C7ED6);
+    --aam-grad-cyan:   linear-gradient(135deg, #22D3EE, #0891B2);
+    --aam-grad-teal:   linear-gradient(135deg, #38D9A9, #0CA678);
+    --aam-grad-purple: linear-gradient(135deg, #B197FC, #7048E8);
+    --aam-grad-orange: linear-gradient(135deg, #FFA94D, #F76707);
+    --aam-grad-red:    linear-gradient(135deg, #FF6B6B, #F03E3E);
+    --aam-grad-grey:   linear-gradient(135deg, #ADB5BD, #868E96);
+
+    /* -- categorical: identity only. Never for magnitude. -------------- */
+    --aam-cat-1:  #4F46E5;
+    --aam-cat-2:  #0891B2;
+    --aam-cat-3:  #E54690;
+
+    /* -- status: reserved. Always a dot AND a word, never colour alone.
+     *
+     * Four tokens each, because the saturated hue is not readable as text on
+     * its own tint - #D97706 on #FFFAEB is 3.05:1, which is the one part of
+     * the reference design not to copy. The dot carries the hue (>=3:1 against
+     * the surface); the label uses the darker -text step (>=4.5:1 on the tint).
+     */
+    --aam-ok-dot:     #027A48;  --aam-ok-text:   #027A48;
+    --aam-ok-bg:      #ECFDF3;  --aam-ok-line:   #ABEFC6;
+
+    --aam-warn-dot:   #D97706;  --aam-warn-text: #B54708;
+    --aam-warn-bg:    #FFFAEB;  --aam-warn-line: #FEDF89;
+
+    --aam-bad-dot:    #D92D20;  --aam-bad-text:  #B42318;
+    --aam-bad-bg:     #FEF3F2;  --aam-bad-line:  #FECDCA;
+
+    --aam-info-dot:   #0891B2;  --aam-info-text: #0E7490;
+    --aam-info-bg:    #ECFEFF;  --aam-info-line: #A5F0FC;
+
+    --aam-neutral-dot:  #94A3B8;
+    --aam-neutral-text: #64748B;
+    --aam-neutral-bg:   #F1F5F9;
+    --aam-neutral-line: rgba(15, 23, 42, .08);
+
+    /* -- sequential ramp: magnitude only, ONE hue.
+     *
+     * Every step is a pure white-mix of --aam-cat-1, so it is provably a single
+     * hue - a heatmap encodes magnitude, and a multi-hue ramp destroys the
+     * comparability that makes the matrix readable. The gradients above are for
+     * identity; this ramp is the only place colour means "how much".
+     *
+     * There is a dead zone around L* 49-57 where neither white nor near-black
+     * reaches 4.5:1, so the ramp steps across it between d3 and d4. Each step
+     * carries its own ink token, which is what lets `.o_aam_lN` be written once
+     * and still be correct in dark mode.
+     */
+    --aam-d0: #FFFFFF;  --aam-d0-ink: var(--aam-ink-faint);
+    --aam-d1: #E5E3FB;  --aam-d1-ink: #111827;
+    --aam-d2: #C1BEF6;  --aam-d2-ink: #111827;
+    --aam-d3: #9590EF;  --aam-d3-ink: #111827;
+    --aam-d4: #6962E9;  --aam-d4-ink: #FFFFFF;
+    --aam-d5: #4F46E5;  --aam-d5-ink: #FFFFFF;
+
+    /* -- aliases kept so older rules keep resolving -------------------- */
+    --aam-ink-soft: var(--aam-ink-mute);
+    --aam-paper:    var(--aam-ground);
+    --aam-panel:    var(--aam-surface);
+    --aam-rule:     var(--aam-line);
+    --aam-alert:    var(--aam-bad-text);
+    --aam-alert-bg: var(--aam-bad-bg);
+    --aam-yes:      var(--aam-ok-text);
+    --aam-no:       var(--aam-neutral-text);
+    --aam-accent:   var(--aam-brand);
+}
+
+/* ====================================================================== */
+/* Shared mixins                                                          */
+/* ====================================================================== */
+
+/* The page ground: flat slate, no texture. The dotted grid this replaced came
+   from a different reference; against 16px cards with real shadows it fought
+   the elevation instead of supporting it. */
+@mixin aam-page-ground {
+    background-color: var(--aam-ground);
+}
+
+/* The card. Radius and shadow are the whole design here - get these two wrong
+   and nothing else rescues it. */
+@mixin aam-card {
+    background: var(--aam-surface);
+    border: 1px solid var(--aam-line);
+    border-radius: var(--aam-radius-card);
+    box-shadow: var(--aam-shadow-1);
+}
+
+/* Hover lift. Interactive cards only - a static panel that lifts reads as
+   broken. 3px and a wide shadow, because a 1px nudge is not felt. */
+@mixin aam-lift {
+    transition: transform var(--aam-ease), box-shadow var(--aam-ease),
+                border-color var(--aam-ease);
+    &:hover {
+        transform: translateY(var(--aam-lift));
+        box-shadow: var(--aam-shadow-2);
+        border-color: rgba(79, 70, 229, .35);
+    }
+}
+
+/* The gradient icon square that sits beside every figure. Defaults to the
+   46px/13px of the reference's KPI; list rows pass a smaller size.
+ *
+ * The fill comes through `--aam-accent-grad` rather than a `background`
+ * declaration on the accent class, and that is deliberate. The accent classes
+ * sit on the same element as this mixin's own rule, so a plain
+ * `.o_aam_bg_brand { background: ... }` at (0,2,0) loses to
+ * `.o_aam_dashboard .o_aam_count .o_aam_count_icon` at (0,3,0) and every icon
+ * comes out grey. Custom properties are resolved per element, so the accent
+ * always wins wherever it is set. */
+@mixin aam-icon-tile($size: 46px, $radius: var(--aam-radius-icon), $font: 19px) {
+    width: $size;
+    height: $size;
+    border-radius: $radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: $font;
+    flex: 0 0 auto;
+    background: var(--aam-accent-grad, var(--aam-grad-grey));
+    box-shadow: var(--aam-shadow-icon);
+}
+
+/* 12px uppercase card title with positive tracking and a leading icon. Half of
+   what makes this look considered rather than default. */
+@mixin aam-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--aam-fs-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--aam-track-micro);
+    color: var(--aam-ink-mute);
+    margin: 0 0 14px;
+
+    > i { color: var(--aam-brand); font-size: var(--aam-fs-base); }
+}
+
+/* The count chip that rides at the right edge of a card title. */
+@mixin aam-count-chip {
+    margin-left: auto;
+    background: var(--aam-brand-tint);
+    color: var(--aam-brand-text);
+    font-weight: 700;
+    font-size: var(--aam-fs-micro);
+    line-height: 1.6;
+    padding: 0 8px;
+    border-radius: var(--aam-radius-pill);
+    letter-spacing: 0;
+}
+
+/* The 6px severity dot that carries colour on signals. */
+@mixin aam-dot($size: 6px) {
+    content: "";
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    background: var(--aam-neutral-dot);
+    flex: 0 0 auto;
+}
+
+/* Status pill: tinted fill, matching border, coloured dot, and always a word.
+   Deliberately NOT `border: 1px solid currentColor` - tying the border to the
+   label colour is what forced an unreadable label in the reference design. */
+@mixin aam-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px 2px 7px;
+    border-radius: var(--aam-radius-pill);
+    font-size: var(--aam-fs-micro);
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+    background: var(--aam-neutral-bg);
+    border: 1px solid var(--aam-neutral-line);
+    color: var(--aam-neutral-text);
+
+    &::before { @include aam-dot; }
+}
+
+/* The centred empty state: a big, faded glyph over one line of explanation.
+   Every panel that can be empty uses this, so an empty screen still looks
+   designed. */
+@mixin aam-empty-state($min: 264px) {
+    min-height: $min;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    color: var(--aam-ink-mute);
+    font-size: var(--aam-fs-base);
+
+    > i, .o_aam_empty_icon {
+        font-size: 40px;
+        color: var(--aam-ink-decor);
+    }
+}
+
+@mixin aam-focus-ring {
+    outline: none;
+    box-shadow: var(--aam-shadow-focus);
+}
+
+/* An internally-scrolling list body with a brand-tinted thin scrollbar, so a
+   long list never stretches its card. */
+@mixin aam-scroll-body($max: 340px) {
+    flex: 1 1 auto;
+    max-height: $max;
+    overflow-y: auto;
+    margin: 0 -6px;
+    padding: 0 6px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(79, 70, 229, .45) transparent;
+
+    &::-webkit-scrollbar { width: 8px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(79, 70, 229, .35);
+        border-radius: 8px;
+    }
+    &::-webkit-scrollbar-thumb:hover { background: rgba(79, 70, 229, .60); }
+}
+
+/* Numbers that line up in a column. `font-variant-numeric` is the standard
+   spelling of tnum/lnum and composes with inherited features instead of
+   clobbering them. */
+@mixin aam-figures {
+    font-variant-numeric: tabular-nums lining-nums;
+}

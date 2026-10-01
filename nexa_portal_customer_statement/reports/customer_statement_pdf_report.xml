@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_customer_statement" model="report.paperformat">
+        <field name="name">Customer Statement</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="dpi">96</field>
+    </record>
+
+    <!-- PDF Report Action -->
+    <record id="action_customer_statement_pdf" model="ir.actions.report">
+        <field name="name">Customer Statement</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">nexa_portal_customer_statement.customer_statement_pdf_report</field>
+        <field name="report_file">nexa_portal_customer_statement.customer_statement_pdf_report</field>
+        <field name="print_report_name">'Customer_Statement_%s' % (object.name)</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="nexa_portal_customer_statement.paperformat_customer_statement"/>
+    </record>
+
+    <!-- PDF Report Template -->
+    <template id="customer_statement_pdf_report">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 11px;">
+                    <!-- Header with Logo and Company Info -->
+                    <table style="width: 100%; margin-bottom: 20px;">
+                        <tr>
+                            <td style="width: 50%; vertical-align: top;">
+                                <t t-if="company and company.logo">
+                                    <img t-att-src="image_data_uri(company.logo)" style="max-height: 50px; max-width: 150px; margin-bottom: 10px;"/>
+                                </t>
+                                <h2 style="color: #875A7B; margin: 0 0 5px 0; font-size: 20px;">Customer Statement</h2>
+                                <p style="margin: 0; color: #666; font-size: 11px;">
+                                    Period: <strong t-esc="filter_display"/>
+                                </p>
+                            </td>
+                            <td style="width: 50%; vertical-align: top; text-align: right;">
+                                <t t-if="company">
+                                    <p style="margin: 0 0 3px 0; font-weight: bold; font-size: 12px;"><t t-esc="company.name"/></p>
+                                    <p style="margin: 0; font-size: 10px; color: #666; line-height: 1.4;">
+                                        <t t-if="company.street"><t t-esc="company.street"/><br/></t>
+                                        <t t-if="company.city"><t t-esc="company.city"/></t>
+                                        <t t-if="company.state_id">, <t t-esc="company.state_id.name"/></t>
+                                        <t t-if="company.zip"> <t t-esc="company.zip"/></t>
+                                        <t t-if="company.country_id"><br/><t t-esc="company.country_id.name"/></t>
+                                        <t t-if="company.phone"><br/>Tel: <t t-esc="company.phone"/></t>
+                                    </p>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Partner and Statement Info -->
+                    <table style="width: 100%; margin-bottom: 15px; border: 1px solid #ddd;">
+                        <tr>
+                            <td style="width: 50%; padding: 10px; vertical-align: top; border-right: 1px solid #ddd;">
+                                <p style="margin: 0 0 3px 0; font-weight: bold; color: #875A7B; font-size: 10px; text-transform: uppercase;">Customer</p>
+                                <p style="margin: 0; font-size: 11px; line-height: 1.4;">
+                                    <strong t-esc="partner.name"/><br/>
+                                    <t t-if="partner.street"><t t-esc="partner.street"/><br/></t>
+                                    <t t-if="partner.street2"><t t-esc="partner.street2"/><br/></t>
+                                    <t t-if="partner.city"><t t-esc="partner.city"/></t>
+                                    <t t-if="partner.state_id">, <t t-esc="partner.state_id.name"/></t>
+                                    <t t-if="partner.zip"> <t t-esc="partner.zip"/></t>
+                                    <t t-if="partner.country_id"><br/><t t-esc="partner.country_id.name"/></t>
+                                </p>
+                            </td>
+                            <td style="width: 50%; padding: 10px; vertical-align: top; text-align: right;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="text-align: right; padding: 2px 0;">
+                                            <span style="color: #666; font-size: 10px;">Statement Date:</span>
+                                        </td>
+                                        <td style="text-align: right; padding: 2px 0; font-weight: bold;">
+                                            <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right; padding: 2px 0;">
+                                            <span style="color: #666; font-size: 10px;">Period:</span>
+                                        </td>
+                                        <td style="text-align: right; padding: 2px 0; font-weight: bold;">
+                                            <t t-esc="filter_display"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Statement Table -->
+                    <table style="width: 100%; border-collapse: collapse; font-size: 9px;">
+                        <thead>
+                            <tr style="background: #875A7B; color: white;">
+                                <th style="padding: 6px 4px; text-align: left; border: 1px solid #875A7B;">Reference</th>
+                                <th style="padding: 6px 4px; text-align: center; border: 1px solid #875A7B; width: 40px;">Journal</th>
+                                <th style="padding: 6px 4px; text-align: center; border: 1px solid #875A7B; width: 45px;">Account</th>
+                                <th style="padding: 6px 4px; text-align: center; border: 1px solid #875A7B; width: 60px;">Invoice Date</th>
+                                <th style="padding: 6px 4px; text-align: center; border: 1px solid #875A7B; width: 60px;">Due Date</th>
+                                <th style="padding: 6px 4px; text-align: center; border: 1px solid #875A7B; width: 45px;">Matching</th>
+                                <th style="padding: 6px 4px; text-align: right; border: 1px solid #875A7B; width: 70px;">Debit</th>
+                                <th style="padding: 6px 4px; text-align: right; border: 1px solid #875A7B; width: 70px;">Credit</th>
+                                <th style="padding: 6px 4px; text-align: right; border: 1px solid #875A7B; width: 75px;">Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="statement_lines" t-as="line">
+                                <tr t-att-style="'background: #f0f0f0; font-weight: bold;' if line.get('is_initial_balance') else ('background: #fff;' if line_index % 2 == 0 else 'background: #fafafa;')">
+                                    <td style="padding: 5px 4px; border: 1px solid #ddd;">
+                                        <t t-if="line.get('is_initial_balance')">
+                                            <em><t t-esc="line.get('name', '')"/></em>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="line.get('name', line.get('move_name', ''))"/>
+                                        </t>
+                                    </td>
+                                    <td style="padding: 5px 4px; text-align: center; border: 1px solid #ddd;">
+                                        <t t-esc="line.get('journal_code', '')"/>
+                                    </td>
+                                    <td style="padding: 5px 4px; text-align: center; border: 1px solid #ddd;">
+                                        <t t-esc="line.get('account_code', '')"/>
+                                    </td>
+                                    <td style="padding: 5px 4px; text-align: center; border: 1px solid #ddd;">
+                                        <t t-esc="line.get('invoice_date', '')"/>
+                                    </td>
+                                    <td style="padding: 5px 4px; text-align: center; border: 1px solid #ddd;">
+                                        <t t-esc="line.get('due_date', '')"/>
+                                    </td>
+                                    <td style="padding: 5px 4px; text-align: center; border: 1px solid #ddd;">
+                                        <t t-esc="line.get('matching_number', '')"/>
+                                    </td>
+                                    <td style="padding: 5px 4px; text-align: right; border: 1px solid #ddd;">
+                                        <t t-if="line.get('debit', 0) != 0">
+                                            <span t-esc="line.get('debit', 0)" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                        </t>
+                                    </td>
+                                    <td style="padding: 5px 4px; text-align: right; border: 1px solid #ddd;">
+                                        <t t-if="line.get('credit', 0) != 0">
+                                            <span t-esc="line.get('credit', 0)" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                        </t>
+                                    </td>
+                                    <td t-att-style="'padding: 5px 4px; text-align: right; border: 1px solid #ddd; font-weight: bold;' + (' color: #dc3545;' if line.get('balance', 0) &lt; 0 else '')">
+                                        <span t-esc="line.get('balance', 0)" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: #875A7B; color: white; font-weight: bold;">
+                                <td colspan="6" style="padding: 6px 4px; text-align: right; border: 1px solid #875A7B;">Total</td>
+                                <td style="padding: 6px 4px; text-align: right; border: 1px solid #875A7B;">
+                                    <span t-esc="total_debit" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                </td>
+                                <td style="padding: 6px 4px; text-align: right; border: 1px solid #875A7B;">
+                                    <span t-esc="total_credit" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                </td>
+                                <td style="padding: 6px 4px; text-align: right; border: 1px solid #875A7B;">
+                                    <span t-esc="total_balance" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <!-- Footer Note -->
+                    <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 9px; color: #888;">
+                        <p style="margin: 0;">
+                            This statement was generated on <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y at %H:%M')"/>.
+                            Please contact us if you have any questions regarding this statement.
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

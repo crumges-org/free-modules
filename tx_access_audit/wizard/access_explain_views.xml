@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tx_access_explain_form" model="ir.ui.view">
+        <field name="name">tx.access.explain.form</field>
+        <field name="model">tx.access.explain</field>
+        <field name="arch" type="xml">
+            <form string="Explain Access">
+                <group>
+                    <group>
+                        <field name="user_id" options="{'no_create': True}"/>
+                        <field name="model_id" options="{'no_create': True}"/>
+                        <field name="operation" widget="radio"
+                               options="{'horizontal': true}"/>
+                    </group>
+                    <group>
+                        <field name="allowed" readonly="1"/>
+                        <field name="records_reachable" readonly="1"
+                               invisible="not allowed"/>
+                        <field name="records_total" readonly="1"
+                               invisible="not allowed"/>
+                    </group>
+                </group>
+                <group string="Answer" invisible="not answer">
+                    <field name="answer" nolabel="1" widget="text" readonly="1"/>
+                </group>
+                <notebook invisible="not answer">
+                    <page string="Where the rights come from" name="groups">
+                        <group>
+                            <field name="direct_group_ids" widget="many2many_tags"
+                                   readonly="1"/>
+                            <field name="inherited_group_ids"
+                                   widget="many2many_tags" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Access Lines" name="acls">
+                        <field name="access_line_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="group_id"/>
+                                <field name="perm_read"/>
+                                <field name="perm_write"/>
+                                <field name="perm_create"/>
+                                <field name="perm_unlink"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Record Rules" name="rules">
+                        <field name="rule_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="groups" widget="many2many_tags"/>
+                                <field name="domain_force"/>
+                            </list>
+                        </field>
+                        <div class="text-muted">
+                            A rule with no group is a restriction everyone
+                            obeys. Rules attached to groups are permissions and
+                            are combined with OR, so holding one more group can
+                            widen what a user sees rather than narrow it.
+                        </div>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="action_explain" type="object" string="Refresh"
+                            class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tx_access_explain" model="ir.actions.act_window">
+        <field name="name">Explain Access</field>
+        <field name="res_model">tx.access.explain</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tx_access_finding_tree" model="ir.ui.view">
+        <field name="name">tx.access.finding.tree</field>
+        <field name="model">tx.access.finding</field>
+        <field name="arch" type="xml">
+            <list string="Access Findings" create="false"
+                  decoration-danger="severity == 'high'"
+                  decoration-warning="severity == 'medium'">
+                <field name="severity"/>
+                <field name="title"/>
+                <field name="model_name"/>
+                <field name="kind" optional="hide"/>
+                <field name="scanned_on" optional="hide"/>
+                <!-- The button below is hidden when there is no source record.
+                     Odoo 16 rewrites that condition into attrs, which requires
+                     the field to exist in the view, so it is listed here. -->
+                <field name="res_id" optional="hide"/>
+                <button name="action_open_source" type="object" icon="fa-external-link"
+                        title="Open the rule or access line behind this"
+                        invisible="not res_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tx_access_finding_form" model="ir.ui.view">
+        <field name="name">tx.access.finding.form</field>
+        <field name="model">tx.access.finding</field>
+        <field name="arch" type="xml">
+            <form string="Access Finding" create="false" edit="false">
+                <header>
+                    <button name="action_open_source" type="object"
+                            string="Open Source Record" class="oe_highlight"
+                            invisible="not res_id"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="title" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="severity"/>
+                            <field name="model_name"/>
+                        </group>
+                        <group>
+                            <field name="kind"/>
+                            <field name="scanned_on"/>
+                            <field name="res_model" invisible="1"/>
+                            <field name="res_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="What this means">
+                        <field name="detail" nolabel="1" widget="text"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tx_access_finding_search" model="ir.ui.view">
+        <field name="name">tx.access.finding.search</field>
+        <field name="model">tx.access.finding</field>
+        <field name="arch" type="xml">
+            <search string="Access Findings">
+                <field name="title"/>
+                <field name="model_name"/>
+                <filter name="filter_high" string="High"
+                        domain="[('severity', '=', 'high')]"/>
+                <filter name="filter_medium" string="Medium"
+                        domain="[('severity', '=', 'medium')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_severity" string="Severity"
+                            context="{'group_by': 'severity'}"/>
+                    <filter name="group_kind" string="Check"
+                            context="{'group_by': 'kind'}"/>
+                    <filter name="group_model" string="Odoo Model"
+                            context="{'group_by': 'model_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_tx_access_finding" model="ir.actions.act_window">
+        <field name="name">Access Findings</field>
+        <field name="res_model">tx.access.finding</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_severity': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing scanned yet</p>
+            <p>Run <b>Scan Access Rights</b>. Every finding is a fact read from
+               this database's own access lines and record rules, with a link
+               to the record that produced it.</p>
+        </field>
+    </record>
+
+    <record id="action_tx_access_scan" model="ir.actions.server">
+        <field name="name">Scan Access Rights</field>
+        <field name="model_id" ref="model_tx_access_finding"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_scan()</field>
+    </record>
+
+</odoo>

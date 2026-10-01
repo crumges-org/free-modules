@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aam_explain_form" model="ir.ui.view">
+        <field name="name">aam.explain.form</field>
+        <field name="model">aam.explain</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-info" role="status">
+                    Pick a user and a model to see every restriction that applies -
+                    and, for each one, which rule caused it. Native access rights and
+                    record rules are listed too, so you can tell at a glance whether
+                    a problem comes from this module or from Odoo itself.
+                </div>
+                <group>
+                    <group>
+                        <field name="user_id" options="{'no_create': True}"/>
+                        <field name="model_id" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"
+                               options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <field name="summary" nolabel="1" readonly="1"/>
+                <field name="is_protected" invisible="1"/>
+                <field name="line_ids" nolabel="1" readonly="1">
+                    <list create="false" delete="false" limit="200"
+                          decoration-info="source == 'aam'"
+                          decoration-muted="source in ['acl', 'record_rule']">
+                        <!-- Only the short columns get a fixed width. Sizing
+                             the wide ones too left nothing for "Why This User",
+                             which is the answer people came for. -->
+                        <field name="source" width="100"/>
+                        <field name="category" width="95"/>
+                        <field name="target" width="165"/>
+                        <field name="effect"/>
+                        <!-- The rules involved are named once in the summary
+                             above, so this repeats on every row; available from
+                             the optional-column picker when you want it. -->
+                        <field name="rule_id" optional="hide"/>
+                        <!-- Populated for the API, but shown once per rule in the
+                             summary above rather than repeated on every row. -->
+                        <field name="reason" string="Why This User" optional="hide"/>
+                        <button name="action_open_rule" type="object" icon="fa-external-link"
+                                title="Open the rule" invisible="not rule_id"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_explain" type="object" string="Explain"
+                            class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aam_explain" model="ir.actions.act_window">
+        <field name="name">Access Explainer</field>
+        <field name="res_model">aam.explain</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'dialog_size': 'extra-large'}</field>
+    </record>
+
+    <menuitem id="menu_aam_explain" name="Access Explainer" parent="menu_aam_reporting"
+              action="action_aam_explain" sequence="5"/>
+
+</odoo>

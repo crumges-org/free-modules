@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      The guided setup dialog.
+
+      Four steps, driven by `state` the same way the import wizard drives its two
+      phases: every block carries `invisible="state != '...'"`, and Next/Back write
+      the field and re-render the dialog. No JavaScript - a stepper component would
+      be a lot of code to own for four screens.
+
+      `statusbar` is the progress indicator. It is read-only here: you move with the
+      buttons, so that Next can validate before it lets you past.
+    -->
+    <record id="view_aam_rule_wizard_form" model="ir.ui.view">
+        <field name="name">aam.rule.wizard.form</field>
+        <field name="model">aam.rule.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" readonly="1"
+                           statusbar_visible="who,what,restrict,review"/>
+                </header>
+
+                <field name="rule_id" invisible="1"/>
+                <field name="hits_protected" invisible="1"/>
+
+                <!-- ===================== 1. Who ===================== -->
+                <div invisible="state != 'who'">
+                    <div class="alert alert-info" role="status">
+                        Choose who this restriction is for. Administrators are always
+                        protected, so a rule can never lock everyone out.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="target_type" widget="radio"/>
+                            <field name="user_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   invisible="target_type != 'user'"
+                                   required="target_type == 'user'"/>
+                            <field name="group_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   invisible="target_type != 'group'"
+                                   required="target_type == 'group'"/>
+                        </group>
+                        <group>
+                            <field name="preset_id" options="{'no_create': True}"
+                                   invisible="rule_id"/>
+                        </group>
+                    </group>
+                    <field name="audience" nolabel="1" readonly="1"/>
+                </div>
+
+                <!-- ===================== 2. What ==================== -->
+                <div invisible="state != 'what'">
+                    <div class="alert alert-info" role="status">
+                        Pick what the restriction covers. Models are what the next
+                        step acts on; menus are hidden outright. Either is enough on
+                        its own.
+                    </div>
+                    <group>
+                        <field name="model_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                        <field name="menu_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </group>
+                </div>
+
+                <!-- =================== 3. Restrict ================== -->
+                <div invisible="state != 'restrict'">
+                    <div class="alert alert-info" role="status">
+                        These choices apply to every model you picked. Anything you
+                        need to vary per model is a quick edit on the rule
+                        afterwards.
+                    </div>
+
+                    <group string="What they can do">
+                        <field name="access_level" widget="radio"/>
+                        <group invisible="access_level != 'custom'">
+                            <field name="no_create"/>
+                            <field name="no_read"/>
+                            <field name="no_write"/>
+                            <field name="no_unlink"/>
+                        </group>
+                    </group>
+
+                    <group string="Also hide" col="4">
+                        <field name="hide_export"/>
+                        <field name="hide_import"/>
+                        <field name="hide_print"/>
+                        <field name="hide_duplicate"/>
+                        <field name="hide_archive"/>
+                        <field name="hide_spreadsheet"/>
+                        <field name="hide_action_button"/>
+                        <field name="hide_edit_button"/>
+                    </group>
+
+                    <group string="Which records">
+                        <field name="record_scope" widget="radio"/>
+                        <field name="domain" invisible="record_scope != 'custom'"
+                               required="record_scope == 'custom'"
+                               placeholder="[('user_id', '=', user.id)]"/>
+                        <group invisible="record_scope == 'all'" col="4">
+                            <field name="domain_on_read"/>
+                            <field name="domain_on_write"/>
+                            <field name="domain_on_unlink"/>
+                            <field name="domain_on_create"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Fields" name="fields">
+                            <field name="field_line_ids">
+                                <list editable="bottom">
+                                    <field name="model_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="field_id"
+                                           domain="[('model_id', '=', model_id)]"
+                                           options="{'no_create': True}"/>
+                                    <field name="field_ttype" column_invisible="1"/>
+                                    <field name="treatment"/>
+                                    <field name="mask_type"
+                                           invisible="treatment != 'mask'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Chatter" name="chatter">
+                            <group col="4">
+                                <field name="hide_chatter"/>
+                                <field name="hide_send_message"/>
+                                <field name="hide_log_note"/>
+                                <field name="hide_activity"/>
+                                <field name="hide_followers"/>
+                                <field name="hide_attachments"/>
+                            </group>
+                        </page>
+                        <page string="Search Panel" name="search">
+                            <group col="4">
+                                <field name="hide_all_filters"/>
+                                <field name="hide_all_groupby"/>
+                                <field name="hide_custom_filter"/>
+                                <field name="hide_custom_groupby"/>
+                                <field name="hide_delete_filter"/>
+                                <field name="hide_favourite"/>
+                                <field name="hide_search_panel"/>
+                            </group>
+                        </page>
+                        <page string="Buttons &amp; Tabs" name="buttons">
+                            <field name="button_line_ids">
+                                <list editable="bottom">
+                                    <field name="model_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="element_type"/>
+                                    <field name="element_name"/>
+                                    <field name="view_mode"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Everywhere" name="everywhere">
+                            <div class="alert alert-warning" role="status">
+                                These apply to the whole database for the selected
+                                people, not just the models above.
+                            </div>
+                            <group>
+                                <field name="readonly_user"/>
+                                <field name="disable_login"/>
+                                <field name="disable_developer_mode"/>
+                                <field name="restrict_rpc"/>
+                                <field name="restrict_module_manage"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </div>
+
+                <!-- ==================== 4. Review =================== -->
+                <div invisible="state != 'review'">
+                    <field name="summary" nolabel="1" readonly="1"/>
+                    <group>
+                        <group>
+                            <field name="rule_name"
+                                   placeholder="e.g. Sales team - no deleting"/>
+                            <field name="enforcement" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="save_as_profile" invisible="rule_id"/>
+                            <field name="profile_name"
+                                   invisible="not save_as_profile"
+                                   required="save_as_profile"/>
+                        </group>
+                    </group>
+                </div>
+
+                <footer>
+                    <button name="action_back" type="object" string="Back"
+                            class="btn-secondary" invisible="state == 'who'"/>
+                    <button name="action_next" type="object" string="Next"
+                            class="btn-primary" invisible="state == 'review'"/>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary" invisible="state != 'review'"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_aam_rule_wizard" model="ir.actions.act_window">
+        <field name="name">New Restriction</field>
+        <field name="res_model">aam.rule.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'dialog_size': 'large'}</field>
+    </record>
+
+    <!-- First entry under Configuration: this is where someone new should start,
+         above the preset library. -->
+    <menuitem id="menu_aam_rule_wizard" name="New Restriction"
+              parent="menu_aam_config" action="action_aam_rule_wizard"
+              sequence="1"/>
+
+</odoo>

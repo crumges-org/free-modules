@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Portal Home Entry -->
+    <template id="portal_my_home_customer_statement" name="Customer Statement" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[contains(@class,'o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon">/nexa_portal_customer_statement/static/src/img/statement_icon.svg</t>
+                <t t-set="title">Customer Statement</t>
+                <t t-set="text">View your account statement</t>
+                <t t-set="url">/my/customer_statement</t>
+                <t t-set="placeholder_count">customer_statement_count</t>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Customer Statement Page -->
+    <template id="customer_statement_page" name="Customer Statement Page">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="False"/>
+
+            <div class="o_portal_customer_statement">
+                <!-- Header Section -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                    <div>
+                        <h3 class="mb-1">
+                            <i class="fa fa-file-text-o me-2 text-primary"/>
+                            Customer Statement
+                        </h3>
+                        <p class="text-muted mb-0">
+                            <t t-esc="partner.name"/>
+                        </p>
+                    </div>
+                    <div class="text-muted">
+                        <span class="badge bg-primary fs-6" t-esc="filter_display"/>
+                    </div>
+                </div>
+
+                <!-- Filter Section - Similar to Backend Partner Ledger -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body py-3">
+                        <form action="/my/customer_statement" method="get" id="statement_filter_form">
+                            <div class="row g-3 align-items-end">
+                                <!-- Filter Type Dropdown -->
+                                <div class="col-auto">
+                                    <label class="form-label small text-muted mb-1">Period</label>
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center" 
+                                                type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-calendar me-2"/>
+                                            <span t-esc="filter_display"/>
+                                        </button>
+                                        <ul class="dropdown-menu shadow" aria-labelledby="filterDropdown" style="min-width: 320px;">
+                                            <!-- Month Filter - Clickable Row -->
+                                            <li class="dropdown-item-row px-3 py-2" data-filter="month" style="cursor: pointer;">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <span class="fw-medium">
+                                                        <i t-att-class="'fa fa-check text-primary me-2' if filter_type == 'month' else 'me-4'"/>
+                                                        Month
+                                                    </span>
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="button" class="btn btn-sm btn-link p-0 me-2 nav-btn nav-month" data-direction="prev">
+                                                            <i class="fa fa-chevron-left"/>
+                                                        </button>
+                                                        <span class="month-display text-muted" style="min-width: 110px; text-align: center;">
+                                                            <t t-esc="month_names.get(month, '')"/> <t t-esc="year"/>
+                                                        </span>
+                                                        <button type="button" class="btn btn-sm btn-link p-0 ms-2 nav-btn nav-month" data-direction="next">
+                                                            <i class="fa fa-chevron-right"/>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li><hr class="dropdown-divider my-1"/></li>
+                                            <!-- Quarter Filter - Clickable Row -->
+                                            <li class="dropdown-item-row px-3 py-2" data-filter="quarter" style="cursor: pointer;">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <span class="fw-medium">
+                                                        <i t-att-class="'fa fa-check text-primary me-2' if filter_type == 'quarter' else 'me-4'"/>
+                                                        Quarter
+                                                    </span>
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="button" class="btn btn-sm btn-link p-0 me-2 nav-btn nav-quarter" data-direction="prev">
+                                                            <i class="fa fa-chevron-left"/>
+                                                        </button>
+                                                        <span class="quarter-display text-muted" style="min-width: 110px; text-align: center;">
+                                                            <t t-esc="quarter_names.get(quarter, '')"/>
+                                                        </span>
+                                                        <button type="button" class="btn btn-sm btn-link p-0 ms-2 nav-btn nav-quarter" data-direction="next">
+                                                            <i class="fa fa-chevron-right"/>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li><hr class="dropdown-divider my-1"/></li>
+                                            <!-- Year Filter - Clickable Row -->
+                                            <li class="dropdown-item-row px-3 py-2" data-filter="year" style="cursor: pointer;">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <span class="fw-medium">
+                                                        <i t-att-class="'fa fa-check text-primary me-2' if filter_type == 'year' else 'me-4'"/>
+                                                        Year
+                                                    </span>
+                                                    <div class="d-flex align-items-center">
+                                                        <button type="button" class="btn btn-sm btn-link p-0 me-2 nav-btn nav-year" data-direction="prev">
+                                                            <i class="fa fa-chevron-left"/>
+                                                        </button>
+                                                        <span class="year-display text-muted" style="min-width: 110px; text-align: center;">
+                                                            <t t-esc="year"/>
+                                                        </span>
+                                                        <button type="button" class="btn btn-sm btn-link p-0 ms-2 nav-btn nav-year" data-direction="next">
+                                                            <i class="fa fa-chevron-right"/>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li><hr class="dropdown-divider my-1"/></li>
+                                            <!-- Custom Dates -->
+                                            <li class="px-3 py-2">
+                                                <span class="fw-medium d-block mb-2">Custom Dates</span>
+                                                <div class="row g-2">
+                                                    <div class="col-6">
+                                                        <input type="date" class="form-control form-control-sm" 
+                                                               id="custom_date_from" name="date_from"
+                                                               t-att-value="date_from.strftime('%Y-%m-%d') if date_from else ''"/>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input type="date" class="form-control form-control-sm" 
+                                                               id="custom_date_to" name="date_to"
+                                                               t-att-value="date_to.strftime('%Y-%m-%d') if date_to else ''"/>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary btn-sm w-100 mt-2" 
+                                                        onclick="document.getElementById('filter_type_input').value='custom';">
+                                                    Apply Custom Dates
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden inputs for form submission -->
+                                <input type="hidden" name="filter_type" id="filter_type_input" t-att-value="filter_type"/>
+                                <input type="hidden" name="year" id="year_input" t-att-value="year"/>
+                                <input type="hidden" name="month" id="month_input" t-att-value="month"/>
+                                <input type="hidden" name="quarter" id="quarter_input" t-att-value="quarter"/>
+
+                                <!-- Spacer -->
+                                <div class="col"/>
+
+                                <!-- PDF Export Button -->
+                                <div class="col-auto">
+                                    <a t-attf-href="/my/customer_statement/pdf?filter_type={{filter_type}}&amp;year={{year}}&amp;month={{month}}&amp;quarter={{quarter}}&amp;date_from={{date_from.strftime('%Y-%m-%d') if date_from else ''}}&amp;date_to={{date_to.strftime('%Y-%m-%d') if date_to else ''}}" 
+                                       class="btn btn-outline-primary">
+                                        <i class="fa fa-file-pdf-o me-1"/> PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Statement Table -->
+                <div class="card shadow-sm">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 o_portal_statement_table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-start" style="min-width: 200px;">Reference</th>
+                                    <th class="text-center" style="width: 80px;">Journal</th>
+                                    <th class="text-center" style="width: 80px;">Account</th>
+                                    <th class="text-center" style="width: 110px;">Invoice Date</th>
+                                    <th class="text-center" style="width: 110px;">Due Date</th>
+                                    <th class="text-center" style="width: 90px;">Matching</th>
+                                    <th class="text-end" style="width: 120px;">Debit</th>
+                                    <th class="text-end" style="width: 120px;">Credit</th>
+                                    <th class="text-end" style="width: 140px;">Amount Currency</th>
+                                    <th class="text-end" style="width: 130px;">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="statement_lines">
+                                    <t t-foreach="statement_lines" t-as="line">
+                                        <tr t-att-class="'table-secondary fw-bold' if line.get('is_initial_balance') else ''">
+                                            <!-- Reference/Name -->
+                                            <td class="text-start">
+                                                <t t-if="line.get('is_initial_balance')">
+                                                    <span class="text-muted fst-italic">
+                                                        <t t-esc="line.get('name', '')"/>
+                                                    </span>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-esc="line.get('name', line.get('move_name', ''))"/>
+                                                </t>
+                                            </td>
+                                            <!-- Journal -->
+                                            <td class="text-center text-muted">
+                                                <t t-esc="line.get('journal_code', '')"/>
+                                            </td>
+                                            <!-- Account -->
+                                            <td class="text-center text-muted">
+                                                <t t-esc="line.get('account_code', '')"/>
+                                            </td>
+                                            <!-- Invoice Date -->
+                                            <td class="text-center">
+                                                <t t-esc="line.get('invoice_date', '')"/>
+                                            </td>
+                                            <!-- Due Date -->
+                                            <td class="text-center">
+                                                <span t-att-class="'text-danger' if line.get('is_overdue') else ''">
+                                                    <t t-esc="line.get('due_date', '')"/>
+                                                </span>
+                                            </td>
+                                            <!-- Matching Number -->
+                                            <td class="text-center text-muted">
+                                                <t t-esc="line.get('matching_number', '')"/>
+                                            </td>
+                                            <!-- Debit -->
+                                            <td class="text-end">
+                                                <t t-if="line.get('debit', 0) != 0">
+                                                    <span t-esc="line.get('debit', 0)" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                                </t>
+                                            </td>
+                                            <!-- Credit -->
+                                            <td class="text-end">
+                                                <t t-if="line.get('credit', 0) != 0">
+                                                    <span t-esc="line.get('credit', 0)" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                                </t>
+                                            </td>
+                                            <!-- Amount Currency -->
+                                            <td class="text-end text-muted">
+                                                <t t-if="line.get('amount_currency', 0) != 0 and line.get('currency_symbol') and line.get('currency_id') != currency.id">
+                                                    <t t-if="line.get('currency_position') == 'before'">
+                                                        <t t-esc="line.get('currency_symbol')"/>
+                                                        <t t-esc="'{:,.2f}'.format(line.get('amount_currency', 0))"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-esc="'{:,.2f}'.format(line.get('amount_currency', 0))"/>
+                                                        <t t-esc="line.get('currency_symbol')"/>
+                                                    </t>
+                                                </t>
+                                            </td>
+                                            <!-- Balance -->
+                                            <td class="text-end fw-semibold">
+                                                <span t-att-class="'text-danger' if line.get('balance', 0) &lt; 0 else ''"
+                                                      t-esc="line.get('balance', 0)" 
+                                                      t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td colspan="10" class="text-center text-muted py-5">
+                                            <i class="fa fa-inbox fa-3x mb-3 d-block"/>
+                                            <p class="mb-0">No transactions found for the selected period.</p>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot class="table-light">
+                                <tr class="fw-bold">
+                                    <td colspan="6" class="text-end">Total</td>
+                                    <td class="text-end">
+                                        <span t-esc="total_debit" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-esc="total_credit" t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                    </td>
+                                    <td/>
+                                    <td class="text-end">
+                                        <span t-esc="total_balance" 
+                                              t-options="{'widget': 'monetary', 'display_currency': currency}"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JavaScript for Filter Navigation -->
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function() {
+                    var form = document.getElementById('statement_filter_form');
+                    var filterTypeInput = document.getElementById('filter_type_input');
+                    var yearInput = document.getElementById('year_input');
+                    var monthInput = document.getElementById('month_input');
+                    var quarterInput = document.getElementById('quarter_input');
+
+                    // Clickable filter rows (Month, Quarter, Year)
+                    document.querySelectorAll('.dropdown-item-row').forEach(function(row) {
+                        row.addEventListener('click', function(e) {
+                            // Don't trigger if clicking on navigation buttons
+                            if (e.target.closest('.nav-btn')) return;
+                            
+                            filterTypeInput.value = this.dataset.filter;
+                            form.submit();
+                        });
+                        
+                        // Add hover effect
+                        row.addEventListener('mouseenter', function() {
+                            this.style.backgroundColor = '#f8f9fa';
+                        });
+                        row.addEventListener('mouseleave', function() {
+                            this.style.backgroundColor = '';
+                        });
+                    });
+
+                    // Year navigation arrows
+                    document.querySelectorAll('.nav-year').forEach(function(btn) {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var currentYear = parseInt(yearInput.value);
+                            var newYear = this.dataset.direction === 'prev' ? currentYear - 1 : currentYear + 1;
+                            yearInput.value = newYear;
+                            filterTypeInput.value = 'year';
+                            form.submit();
+                        });
+                    });
+
+                    // Month navigation arrows
+                    document.querySelectorAll('.nav-month').forEach(function(btn) {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var currentMonth = parseInt(monthInput.value);
+                            var currentYear = parseInt(yearInput.value);
+                            
+                            if (this.dataset.direction === 'prev') {
+                                if (currentMonth === 1) {
+                                    monthInput.value = 12;
+                                    yearInput.value = currentYear - 1;
+                                } else {
+                                    monthInput.value = currentMonth - 1;
+                                }
+                            } else {
+                                if (currentMonth === 12) {
+                                    monthInput.value = 1;
+                                    yearInput.value = currentYear + 1;
+                                } else {
+                                    monthInput.value = currentMonth + 1;
+                                }
+                            }
+                            filterTypeInput.value = 'month';
+                            form.submit();
+                        });
+                    });
+
+                    // Quarter navigation arrows
+                    document.querySelectorAll('.nav-quarter').forEach(function(btn) {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            var currentQuarter = parseInt(quarterInput.value);
+                            var currentYear = parseInt(yearInput.value);
+                            
+                            if (this.dataset.direction === 'prev') {
+                                if (currentQuarter === 1) {
+                                    quarterInput.value = 4;
+                                    yearInput.value = currentYear - 1;
+                                } else {
+                                    quarterInput.value = currentQuarter - 1;
+                                }
+                            } else {
+                                if (currentQuarter === 4) {
+                                    quarterInput.value = 1;
+                                    yearInput.value = currentYear + 1;
+                                } else {
+                                    quarterInput.value = currentQuarter + 1;
+                                }
+                            }
+                            filterTypeInput.value = 'quarter';
+                            form.submit();
+                        });
+                    });
+                });
+            </script>
+
+            <!-- Print Styles -->
+            <style type="text/css">
+                @media print {
+                    .o_portal_navbar, .o_portal_my_home_header, .breadcrumb, 
+                    .card-body form, .btn-group, .btn-outline-primary,
+                    nav, footer, .dropdown { display: none !important; }
+                    .card { border: none !important; box-shadow: none !important; }
+                    .table { font-size: 10pt; }
+                    .o_portal_customer_statement { padding: 0 !important; }
+                }
+                
+                .o_portal_statement_table th {
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    color: #495057;
+                    border-bottom: 2px solid #dee2e6;
+                }
+                
+                .o_portal_statement_table td {
+                    vertical-align: middle;
+                    padding: 0.75rem 0.5rem;
+                }
+                
+                .o_portal_statement_table tbody tr:hover {
+                    background-color: rgba(0, 123, 255, 0.05);
+                }
+            </style>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aam_config_settings" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.aam</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='user_default_rights']" position="after">
+                <block title="Access Management" name="aam_settings"
+                       groups="odooapp_access_management.group_aam_manager">
+                    <setting id="aam_enabled_setting" string="Enable Access Management"
+                             help="Master switch. Turning this off makes every access rule inert without uninstalling the module or losing configuration.">
+                        <field name="aam_enabled"/>
+                    </setting>
+                    <setting id="aam_admin_setting" string="Allow Restricting Administrators"
+                             help="By default Settings administrators are never restricted, so a bad rule cannot lock you out.">
+                        <field name="aam_allow_restrict_admin"/>
+                        <div class="text-warning mt-2" invisible="not aam_allow_restrict_admin">
+                            <i class="fa fa-warning me-1"/>
+                            Administrator protection is off. If you lock every administrator
+                            out, recovery needs an odoo-bin shell session.
+                        </div>
+                    </setting>
+                    <setting id="aam_logging_setting" string="Logging">
+                        <field name="aam_log_activity"/>
+                        <div class="text-muted">Record logins and logouts.</div>
+                        <field name="aam_log_denials" class="mt-2"/>
+                        <div class="text-muted">
+                            Record blocked actions. Useful while tuning; leave off in production.
+                        </div>
+                        <div class="mt-2">
+                            <label for="aam_log_retention_days" class="me-2"/>
+                            <field name="aam_log_retention_days" class="oe_inline"/>
+                        </div>
+                    </setting>
+                    <setting id="aam_user_defaults_setting" string="New User Defaults">
+                        <field name="aam_default_new_user_portal"/>
+                        <div class="mt-2">
+                            <label for="aam_password_expiry_days" class="me-2"/>
+                            <field name="aam_password_expiry_days" class="oe_inline"/>
+                            <span class="text-muted ms-1">days (0 disables)</span>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

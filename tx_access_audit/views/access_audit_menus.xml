@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_tx_access_audit_root" name="Access Audit"
+              web_icon="tx_access_audit,static/description/icon.png"
+              sequence="98" groups="base.group_system"/>
+
+    <menuitem id="menu_tx_access_explain" name="Explain Access"
+              parent="menu_tx_access_audit_root"
+              action="action_tx_access_explain" sequence="10"/>
+
+    <menuitem id="menu_tx_access_finding" name="Findings"
+              parent="menu_tx_access_audit_root"
+              action="action_tx_access_finding" sequence="20"/>
+
+    <menuitem id="menu_tx_access_scan" name="Scan Access Rights"
+              parent="menu_tx_access_audit_root"
+              action="action_tx_access_scan" sequence="30"/>
+
+</odoo>

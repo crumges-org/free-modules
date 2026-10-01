@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <!-- Extend rather than replace: the chatter template changes between
+         releases, and a full override would silently drop new features. -->
+    <t t-name="odooapp_access_management.ChatterRestrictions"
+       t-inherit="mail.Chatter" t-inherit-mode="extension">
+
+        <xpath expr="//button[hasclass('o-mail-Chatter-sendMessage')]" position="attributes">
+            <attribute name="t-if">!aamFlags.sendMessage</attribute>
+        </xpath>
+
+        <xpath expr="//button[hasclass('o-mail-Chatter-logNote')]" position="attributes">
+            <attribute name="t-if">!aamFlags.logNote</attribute>
+        </xpath>
+
+        <xpath expr="//button[hasclass('o-mail-Chatter-activity')]" position="attributes">
+            <attribute name="t-if">props.has_activities and !aamFlags.activity</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('o-mail-Followers')]" position="attributes">
+            <attribute name="t-if">!aamFlags.followers</attribute>
+        </xpath>
+
+    </t>
+
+</templates>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tx_access_finding_admin,tx.access.finding.admin,model_tx_access_finding,base.group_system,1,1,1,1
+access_tx_access_explain_admin,tx.access.explain.admin,model_tx_access_explain,base.group_system,1,1,1,1

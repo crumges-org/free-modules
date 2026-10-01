@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_aam_profile_list" model="ir.ui.view">
+        <field name="name">aam.profile.list</field>
+        <field name="model">aam.profile</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="not active">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="user_ids" widget="many2many_tags" optional="show"/>
+                <field name="group_ids" widget="many2many_tags" optional="show"/>
+                <field name="user_count" string="Users Reached"/>
+                <field name="rule_count" string="Rules"/>
+                <field name="date_end" optional="hide"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aam_profile_kanban" model="ir.ui.view">
+        <field name="name">aam.profile.kanban</field>
+        <field name="model">aam.profile</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="color">
+                <!-- Declared because the template reads them through `record.x`
+                     in a t-if; fields only used inside <field/> are picked up
+                     automatically, these are not. -->
+                <field name="color"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-center">
+                            <field name="name" class="fw-bold fs-5"/>
+                            <span t-if="!record.active.raw_value"
+                                  class="badge text-bg-warning ms-auto">Blocked</span>
+                        </div>
+                        <field name="description" class="text-muted"/>
+                        <footer class="pt-2">
+                            <span class="me-3">
+                                <i class="fa fa-users me-1" title="Users reached"/>
+                                <field name="user_count"/>
+                            </span>
+                            <span>
+                                <i class="fa fa-shield me-1" title="Rules"/>
+                                <field name="rule_count"/>
+                            </span>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_aam_profile_form" model="ir.ui.view">
+        <field name="name">aam.profile.form</field>
+        <field name="model">aam.profile</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_block" type="object" string="Block"
+                            invisible="not active"
+                            help="Lift every rule in this profile without deleting anything."/>
+                    <button name="action_unblock" type="object" string="Unblock"
+                            class="oe_highlight" invisible="active"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Blocked" bg_color="text-bg-warning"
+                            invisible="active"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_rules" type="object" class="oe_stat_button"
+                                icon="fa-shield">
+                            <field name="rule_count" widget="statinfo" string="Rules"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-users" disabled="1">
+                            <field name="user_count" widget="statinfo" string="Users"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Read-only Auditor"/></h1>
+                    </div>
+                    <group>
+                        <group string="Assigned To">
+                            <field name="user_ids" widget="many2many_tags"/>
+                            <field name="group_ids" widget="many2many_tags"/>
+                            <field name="company_ids" widget="many2many_tags"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Validity">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="active" invisible="1"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"
+                               placeholder="What this profile is for, so the next administrator knows."/>
+                    </group>
+                    <notebook>
+                        <page string="Rules" name="rules">
+                            <field name="rule_ids"
+                                   context="{'default_target_type': 'profile'}">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="enforcement"/>
+                                    <field name="priority"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'active'"
+                                           decoration-warning="state == 'draft'"
+                                           decoration-danger="state == 'expired'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Blocking a profile archives it, so without a "Blocked" filter there is
+         no way back to it from the list. -->
+    <record id="view_aam_profile_search" model="ir.ui.view">
+        <field name="name">aam.profile.search</field>
+        <field name="model">aam.profile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="user_ids"/>
+                <field name="group_ids"/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+                <filter name="blocked" string="Blocked" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter name="expiring" string="Expires"
+                        domain="[('date_end', '!=', False)]"/>
+                <filter name="assigned" string="Assigned"
+                        domain="['|', ('user_ids', '!=', False), ('group_ids', '!=', False)]"/>
+                <!-- In a search view the RNG forbids @string on <group>;
+                     the "Group By" heading is drawn by the search menu. -->
+                <group name="group_by">
+                    <filter name="group_company" string="Company"
+                            context="{'group_by': 'company_ids'}"
+                            groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_aam_profile" model="ir.actions.act_window">
+        <field name="name">Access Profiles</field>
+        <field name="res_model">aam.profile</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first access profile</p>
+            <p>
+                A profile is a reusable bundle of rules you assign to people. Build it
+                once for "Warehouse Operator", then attach the group - rather than
+                repeating the same restrictions per person.
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_aam_profile" name="Access Profiles" parent="menu_aam_config"
+              action="action_aam_profile" sequence="10"/>
+
+</odoo>

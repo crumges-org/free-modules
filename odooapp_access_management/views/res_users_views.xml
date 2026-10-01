@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_users_form_aam" model="ir.ui.view">
+        <field name="name">res.users.form.aam</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_aam_impersonate" type="object"
+                            string="Sign in as this user" class="btn-secondary"
+                            groups="odooapp_access_management.group_aam_manager"
+                            invisible="not active or share or id == uid"
+                            confirm="You are about to use this account as if it were your own. This is recorded in the audit log. Continue?"/>
+                    <button name="action_aam_force_logout" type="object"
+                            string="Force Logout" class="btn-secondary"
+                            groups="odooapp_access_management.group_aam_manager"
+                            invisible="not id"
+                            confirm="This signs the user out of every device immediately. Continue?"/>
+                </header>
+            </xpath>
+            <xpath expr="//page[@name='access_rights']" position="after">
+                <page string="Access Management" name="aam"
+                      groups="odooapp_access_management.group_aam_user">
+                    <group>
+                        <group string="Password">
+                            <field name="aam_password_write_date" readonly="1"/>
+                            <field name="aam_password_expiry_date" readonly="1"/>
+                            <field name="aam_password_expired" readonly="1"
+                                   invisible="not aam_password_expired"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Use the Access Explainer under Access Management &gt; Reporting to
+                        see every restriction that applies to this user, and which rule
+                        caused each one.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

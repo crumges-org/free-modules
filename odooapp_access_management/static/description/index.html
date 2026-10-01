@@ -1,0 +1,457 @@
+<!--
+  Odoo Apps Store listing for Access Management (Advance Access Management).
+
+  Styles are inline on purpose: this fragment is rendered inside odoo.com's own
+  page, where a <style> block is not reliably preserved and any class name of
+  ours could collide with theirs. That rules out hover states, media queries and
+  pseudo-elements, so the layout leans on flex-wrap to stay responsive and every
+  accent is a real element.
+
+  Palette matches the module itself (static/src/scss/aam_tokens.scss).
+-->
+<section style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#111827;line-height:1.6;max-width:1140px;margin:0 auto;padding:0 16px;">
+
+  <!-- ============================ Banner ============================
+       1774x887 (2:1), the ratio the store's own listings use. The alt text
+       carries the claims in words, because everything in the image is pixels:
+       it is what a screen reader gets, and what is indexed. -->
+  <img src="banner.png"
+       alt="Odoo Access Management - Advance Access Management for user access rights and role based access control. Restrict menus, models, fields, records, buttons, search and chatter per user, group or profile. 31 ready-made access control presets for Sales, CRM, Inventory, Manufacturing, Accounting and HR. User access rights enforced server-side across the web UI, XML-RPC and import/export."
+       style="width:100%;border:1px solid #E5E7EB;border-radius:16px;display:block;margin:24px 0 28px;"/>
+
+  <!-- ============================ Hero ============================
+       Deliberately quieter than it was. The banner above now carries the
+       headline at full size, so a second 44px title directly under it read as
+       a mistake; this keeps the <h1> the page needs in text and steps it down
+       to 30px. Ground is flat #F1F5F9 to match the module's own screens - the
+       dotted grid it used to have is no longer anywhere in the product. -->
+  <div style="background:#F1F5F9;border:1px solid rgba(15,23,42,.08);border-radius:16px;padding:32px 40px;margin:0 0 32px;text-align:center;">
+    <div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#4F46E5;font-weight:700;margin-bottom:12px;">
+      Odoo 18 &middot; Community &amp; Enterprise
+    </div>
+    <h1 style="font-size:30px;line-height:1.15;margin:0 0 14px;font-weight:700;letter-spacing:-.02em;color:#111827;">
+      Odoo Access Management
+    </h1>
+    <p style="font-size:18px;color:#374151;margin:0 auto 24px;max-width:760px;">
+      Advance Access Management gives you complete user access rights and role
+      based access control in one app. Restrict menus, models, fields, records,
+      buttons, search and chatter per user, group or profile. Every access
+      restriction is applied on the server, so it also applies to the API.
+    </p>
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;">
+      <span style="display:inline-block;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:500;">Guided 4-step setup</span>
+      <span style="display:inline-block;background:#ECFDF3;border:1px solid #ABEFC6;color:#027A48;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:500;">31 ready-made presets</span>
+      <span style="display:inline-block;background:#EEF2FF;border:1px solid #C7D2FE;color:#3730A3;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:500;">Server-side enforcement</span>
+      <span style="display:inline-block;background:#ECFEFF;border:1px solid #A5F0FC;color:#0E7490;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:500;">Rule explainer</span>
+      <span style="display:inline-block;background:#FFFAEB;border:1px solid #FEDF89;color:#B54708;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:500;">JSON import / export</span>
+      <span style="display:inline-block;background:#F2F4F7;border:1px solid #E5E7EB;color:#374151;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:500;">6 languages</span>
+    </div>
+  </div>
+
+  <!-- ======================= The three claims ======================= -->
+  <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:36px;">
+
+    <div style="flex:1 1 300px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;border-top:3px solid #4F46E5;padding:22px 24px;">
+      <h3 style="font-size:17px;margin:0 0 10px;font-weight:600;color:#111827;">Access rights enforced on the server</h3>
+      <p style="margin:0;color:#374151;font-size:15px;">
+        Field and record restrictions are applied in
+        <code style="background:#F2F4F7;padding:1px 5px;border-radius:4px;font-size:13px;">read</code>,
+        <code style="background:#F2F4F7;padding:1px 5px;border-radius:4px;font-size:13px;">fields_get</code>
+        and the ORM access layer, not only in the view. XML-RPC and
+        <code style="background:#F2F4F7;padding:1px 5px;border-radius:4px;font-size:13px;">web_read</code>
+        return the same restricted data as the browser.
+      </p>
+    </div>
+
+    <div style="flex:1 1 300px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;border-top:3px solid #0891B2;padding:22px 24px;">
+      <h3 style="font-size:17px;margin:0 0 10px;font-weight:600;color:#111827;">Every access restriction is explained</h3>
+      <p style="margin:0;color:#374151;font-size:15px;">
+        Pick a user and a model. The Access Explainer lists each effect, the rule
+        that caused it, and how that rule reached the user (profile, group or
+        direct). Odoo's own access rights and record rules are included in the
+        same report.
+      </p>
+    </div>
+
+    <div style="flex:1 1 300px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;border-top:3px solid #E54690;padding:22px 24px;">
+      <h3 style="font-size:17px;margin:0 0 10px;font-weight:600;color:#111827;">Access rules portable between databases</h3>
+      <p style="margin:0;color:#374151;font-size:15px;">
+        Rules export to JSON using external IDs and technical names, not database
+        ids. Import runs a dry run that lists any reference missing from the
+        target database before writing anything.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================ Screens ============================ -->
+  <figure style="margin:0 0 28px;">
+    <img src="screenshots/01_dashboard.png" alt="Odoo Access Management dashboard showing active access rules, restricted models and user access rights coverage"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      The dashboard. The restriction map shows every model your rules touch and
+      what they restrict, across 17 restriction types grouped into four colours:
+      CRUD, data export, UI, and record filters.
+    </figcaption>
+  </figure>
+
+  <figure style="margin:0 0 28px;">
+    <img src="screenshots/09_charts.png" alt="Access rights dashboard charts: restriction types, most restricted models and access rule activity over time"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      Charts show how rules reach users, which kinds of restriction they use, and
+      how many were created each month. The panels below list configuration
+      problems and recent access events.
+    </figcaption>
+  </figure>
+
+  <!-- ========================= Guided setup ========================= -->
+  <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:28px 32px;margin-bottom:28px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+      <span style="display:inline-block;width:4px;height:18px;background:#4F46E5;border-radius:2px;"></span>
+      <h2 style="font-size:24px;margin:0;font-weight:700;letter-spacing:-.02em;">Guided access management setup in four steps</h2>
+    </div>
+    <p style="color:#374151;margin:0 0 22px;font-size:16px;max-width:820px;">
+      Configuration &gt; New Restriction walks you through it: pick the users or
+      groups, pick the models and menus, choose what they can do, then read a
+      plain-language summary of exactly what will be created before anything is
+      written. No knowledge of the underlying rule structure is needed.
+    </p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:20px;">
+      <div style="flex:1 1 220px;background:#FAFAFA;border:1px solid #E5E7EB;border-radius:8px;padding:16px 18px;">
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#4F46E5;font-weight:700;margin-bottom:6px;">Step 1 &middot; Who</div>
+        <p style="margin:0;color:#374151;font-size:14px;">Users or groups. The count of people affected updates as you choose, and administrators are flagged before you go further.</p>
+      </div>
+      <div style="flex:1 1 220px;background:#FAFAFA;border:1px solid #E5E7EB;border-radius:8px;padding:16px 18px;">
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#0891B2;font-weight:700;margin-bottom:6px;">Step 2 &middot; What</div>
+        <p style="margin:0;color:#374151;font-size:14px;">The models it covers and the menus to hide. Either on its own is enough.</p>
+      </div>
+      <div style="flex:1 1 220px;background:#FAFAFA;border:1px solid #E5E7EB;border-radius:8px;padding:16px 18px;">
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#E54690;font-weight:700;margin-bottom:6px;">Step 3 &middot; Restrict</div>
+        <p style="margin:0;color:#374151;font-size:14px;">View only, cannot delete, cannot create or delete, or your own combination. Then fields, records, chatter, search, buttons and account-wide switches.</p>
+      </div>
+      <div style="flex:1 1 220px;background:#FAFAFA;border:1px solid #E5E7EB;border-radius:8px;padding:16px 18px;">
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#027A48;font-weight:700;margin-bottom:6px;">Step 4 &middot; Review</div>
+        <p style="margin:0;color:#374151;font-size:14px;">A written summary of what will be created, then apply. Optionally save it as a reusable profile at the same time.</p>
+      </div>
+    </div>
+
+    <p style="color:#374151;margin:0 0 10px;font-size:15px;max-width:820px;">
+      &ldquo;Only their own records&rdquo; is resolved per model rather than assumed:
+      the wizard looks for the model's own salesperson or responsible-user field and
+      writes the matching domain. A model with no link to a user gets no domain
+      instead of a broken one.
+    </p>
+    <p style="color:#374151;margin:0;font-size:15px;max-width:820px;">
+      What comes out is an ordinary Access Rule, editable in full afterwards. The
+      wizard can also load an existing rule back in &mdash; and when a rule has grown
+      past what the four steps can show, it says so and sends you to the rule form
+      rather than silently dropping the difference.
+    </p>
+  </div>
+
+  <!-- ============================ Presets ============================ -->
+  <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:28px 32px;margin-bottom:28px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+      <span style="display:inline-block;width:4px;height:18px;background:#4F46E5;border-radius:2px;"></span>
+      <h2 style="font-size:24px;margin:0;font-weight:700;letter-spacing:-.02em;">31 ready-made access control presets</h2>
+    </div>
+    <p style="color:#374151;margin:0 0 22px;font-size:16px;max-width:820px;">
+      Most setups need no custom rules. Open the Preset Library, search by name or
+      by the model you want to restrict, select one or more presets and apply.
+      Each becomes a profile with its rules already configured, editable like any
+      other profile.
+    </p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;">
+      <span style="background:#F2F4F7;border:1px solid #E5E7EB;border-radius:6px;padding:6px 12px;font-size:13px;color:#374151;"><strong style="color:#111827;">Cross-app</strong> &middot; Read-only Auditor, External Contractor, Contact Data Privacy</span>
+      <span style="background:#F2F4F7;border:1px solid #E5E7EB;border-radius:6px;padding:6px 12px;font-size:13px;color:#374151;"><strong style="color:#111827;">Sales &amp; CRM</strong> &middot; Own Records, Fixed Pricing, No Lead Export</span>
+      <span style="background:#F2F4F7;border:1px solid #E5E7EB;border-radius:6px;padding:6px 12px;font-size:13px;color:#374151;"><strong style="color:#111827;">Inventory &amp; Manufacturing</strong> &middot; Warehouse Operator, Read-only BoM</span>
+      <span style="background:#F2F4F7;border:1px solid #E5E7EB;border-radius:6px;padding:6px 12px;font-size:13px;color:#374151;"><strong style="color:#111827;">Accounting</strong> &middot; No Delete, Viewer, No Bank Details</span>
+      <span style="background:#F2F4F7;border:1px solid #E5E7EB;border-radius:6px;padding:6px 12px;font-size:13px;color:#374151;"><strong style="color:#111827;">HR, Project, POS, Helpdesk</strong> &middot; Self-Service, Own Tasks, Own Tickets</span>
+    </div>
+
+    <p style="margin:0;color:#6B7280;font-size:14px;">
+      Presets that need an app you have not installed are marked unavailable. The
+      wizard lists which models it will apply to and which it will skip on your
+      database before you confirm.
+    </p>
+  </div>
+
+  <figure style="margin:0 0 28px;">
+    <img src="screenshots/08_presets.png" alt="Access control preset library with 31 ready-made Odoo access management policies for Sales, CRM, Inventory, Accounting and HR"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      The Preset Library, grouped by app. Searching for a technical model name
+      such as <code style="background:#F2F4F7;padding:1px 5px;border-radius:4px;font-size:12px;">sale.order</code>
+      returns the presets that restrict it.
+    </figcaption>
+  </figure>
+
+  <figure style="margin:0 0 32px;">
+    <img src="screenshots/03_explainer.png" alt="Access Explainer showing why a user cannot see a record, naming the access rule, the Odoo ACL and the record rule responsible"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      The Access Explainer report for one user and one model.
+    </figcaption>
+  </figure>
+
+  <!-- ============================ Safety ============================ -->
+  <div style="background:#ECFDF3;border:1px solid #ABEFC6;border-radius:8px;padding:26px 30px;margin-bottom:32px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#027A48;"></span>
+      <h2 style="font-size:21px;margin:0;font-weight:700;color:#027A48;">Access management that cannot lock you out</h2>
+    </div>
+    <ul style="margin:0;padding-left:20px;color:#374151;font-size:15px;">
+      <li style="margin-bottom:6px;">Administrators are excluded from all rules unless you enable a system parameter.</li>
+      <li style="margin-bottom:6px;">A global kill switch disables every rule at once.</li>
+      <li style="margin:0;">Saving a rule that would lock out its own author is blocked at save time.</li>
+    </ul>
+  </div>
+
+  <!-- ========================= Feature grid ========================= -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+    <span style="display:inline-block;width:4px;height:18px;background:#4F46E5;border-radius:2px;"></span>
+    <h2 style="font-size:24px;margin:0;font-weight:700;letter-spacing:-.02em;">What this Odoo access management app controls</h2>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:32px;">
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">Odoo menu access rights and model access control</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Hide any menu, with or without its sub-menus</li>
+        <li>Block create, read, edit or delete per model</li>
+        <li>Set a model read-only</li>
+        <li>Hide Archive, Duplicate, Export, Import, Print, Insert in Spreadsheet, or the whole Action menu</li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">Odoo field access rights</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Invisible, read-only or required</li>
+        <li>Remove the internal link, quick create and "Create and edit"</li>
+        <li>Exclude a field from exports while keeping it visible</li>
+        <li>Apply any of the above conditionally, based on the record</li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">Record level access rights and domain restrictions</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Any domain, applied per operation</li>
+        <li>Read, write, create and delete configured independently</li>
+        <li>Relational and hierarchy fields supported</li>
+        <li>Soft restrict: filter a model in its own views without emptying it where other records reference it</li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">Sensitive data masking</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Full, partial, email, phone or a custom pattern</li>
+        <li>Applied in <code style="background:#F2F4F7;padding:1px 5px;border-radius:4px;font-size:12px;">read</code>, so exports and API calls return the masked value</li>
+        <li>Example: phone shows the last four digits, email keeps the domain</li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">Button, tab and search access rights</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Hide header buttons, notebook pages and kanban links</li>
+        <li>Hide named filters and group-bys</li>
+        <li>Hide the custom filter, favourites or the whole search panel</li>
+        <li>Global or per model</li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">Chatter access rights</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Six independent switches: whole chatter, Send Message, Log Note, Activities, Followers, Attachments</li>
+        <li>Allows read-only chatter, where history is visible but posting is not</li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">Time based access management and expiring rules</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Rules active only inside a time window, with a timezone</li>
+        <li>Start and end dates per rule</li>
+        <li>Automatic revocation on expiry, with a scheduled cleanup</li>
+      </ul>
+    </div>
+
+    <div style="flex:1 1 320px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:20px 22px;">
+      <h3 style="font-size:16px;margin:0 0 10px;font-weight:600;">User account access control</h3>
+      <ul style="margin:0;padding-left:18px;color:#374151;font-size:14px;">
+        <li>Password expiry with warning emails at 7 days and 1 day</li>
+        <li>Audited login as another user, and force logout</li>
+        <li>Read-only user, developer mode off, module install blocked</li>
+        <li>External API access restricted per user</li>
+      </ul>
+    </div>
+  </div>
+
+  <figure style="margin:0 0 28px;">
+    <img src="screenshots/04_rule_fields.png" alt="Odoo field access rights: hide a field, set it read-only or required, and mask sensitive data per user, group or profile"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      Field rules, including masking options.
+    </figcaption>
+  </figure>
+
+  <figure style="margin:0 0 32px;">
+    <img src="screenshots/07_import_dryrun.png" alt="Access rules import and export with a dry-run diff report before anything is written"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      The import dry run lists unresolved references before any record is written.
+    </figcaption>
+  </figure>
+
+  <!-- ============================ Tooling ============================ -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+    <span style="display:inline-block;width:4px;height:18px;background:#0891B2;border-radius:2px;"></span>
+    <h2 style="font-size:24px;margin:0;font-weight:700;letter-spacing:-.02em;">Access management tools included</h2>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:28px;">
+    <div style="flex:1 1 260px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:18px 20px;">
+      <h3 style="font-size:15px;margin:0 0 6px;font-weight:600;">Access rights dashboard</h3>
+      <p style="margin:0;color:#374151;font-size:14px;">Restriction map, health score, rule counts and charts, with drill-through to the rules behind each figure.</p>
+    </div>
+    <div style="flex:1 1 260px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:18px 20px;">
+      <h3 style="font-size:15px;margin:0 0 6px;font-weight:600;">Access Map - interactive security explorer</h3>
+      <p style="margin:0;color:#374151;font-size:14px;">Per group: members, model-by-model CRUD rights, and a list of what the group cannot do. Exports to Excel.</p>
+    </div>
+    <div style="flex:1 1 260px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:18px 20px;">
+      <h3 style="font-size:15px;margin:0 0 6px;font-weight:600;">Access Explainer - why a user cannot see something</h3>
+      <p style="margin:0;color:#374151;font-size:14px;">Per user and model: every effect, the rule responsible, and the path from rule to user.</p>
+    </div>
+    <div style="flex:1 1 260px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:18px 20px;">
+      <h3 style="font-size:15px;margin:0 0 6px;font-weight:600;">Guided access rights setup</h3>
+      <p style="margin:0;color:#374151;font-size:14px;">A four-step wizard from who to applied, with a written review before anything is created. Can reopen an existing rule.</p>
+    </div>
+    <div style="flex:1 1 260px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:18px 20px;">
+      <h3 style="font-size:15px;margin:0 0 6px;font-weight:600;">Access control preset library</h3>
+      <p style="margin:0;color:#374151;font-size:14px;">31 profiles across 11 app families, searchable by model name, applied one or several at a time.</p>
+    </div>
+    <div style="flex:1 1 260px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:18px 20px;">
+      <h3 style="font-size:15px;margin:0 0 6px;font-weight:600;">Access rules import and export</h3>
+      <p style="margin:0;color:#374151;font-size:14px;">JSON export and import with a dry-run report, for moving rules between databases.</p>
+    </div>
+    <div style="flex:1 1 260px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:18px 20px;">
+      <h3 style="font-size:15px;margin:0 0 6px;font-weight:600;">Access audit log</h3>
+      <p style="margin:0;color:#374151;font-size:14px;">Rule changes, login and logout activity, and denied access attempts, with scheduled pruning.</p>
+    </div>
+  </div>
+
+  <figure style="margin:0 0 28px;">
+    <img src="screenshots/02_access_map.png" alt="Access Map, an interactive Odoo security explorer for groups, users, models and CRUD access rights"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      The Access Map. Rights are read live, so the view reflects the current
+      configuration.
+    </figcaption>
+  </figure>
+
+  <figure style="margin:0 0 32px;">
+    <img src="screenshots/06_profiles.png" alt="Access profiles: reusable role based access control policies assigned to Odoo users and groups"
+         style="width:100%;border:1px solid #E5E7EB;border-radius:8px;display:block;"/>
+    <figcaption style="font-size:14px;color:#6B7280;margin-top:10px;">
+      Profiles group rules for a role. Assign to users or groups, and block a
+      profile to suspend its rules without deleting them.
+    </figcaption>
+  </figure>
+
+  <!-- ========================== Precedence ========================== -->
+  <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+
+    <div style="flex:1 1 380px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:24px 26px;">
+      <h2 style="font-size:19px;margin:0 0 12px;font-weight:700;">How conflicting access rules resolve</h2>
+      <p style="margin:0 0 10px;color:#374151;font-size:15px;">
+        <strong style="color:#111827;">Deny wins.</strong> Booleans are combined
+        with OR, hidden sets with union, domains with AND.
+      </p>
+      <p style="margin:0;color:#374151;font-size:15px;">
+        Priority breaks ties between restrictions of the same kind. It cannot turn
+        a denial into a permission. The Explainer lists every rule that
+        contributed to a result.
+      </p>
+    </div>
+
+    <div style="flex:1 1 380px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:8px;padding:24px 26px;">
+      <h2 style="font-size:19px;margin:0 0 12px;font-weight:700;">Performance</h2>
+      <p style="margin:0 0 10px;color:#374151;font-size:15px;">
+        All rules that apply to a user are compiled once into a single policy,
+        cached per user, company, language and debug mode. Each enforcement point
+        is then a dictionary lookup.
+      </p>
+      <p style="margin:0;color:#374151;font-size:15px;">
+        Time-based rules are evaluated separately so they do not invalidate the
+        cache. The cache is cleared when a rule, profile or assignment changes.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================ Footer ============================ -->
+  <div style="border-top:1px solid #E5E7EB;padding:28px 0 32px;">
+    <div style="display:flex;flex-wrap:wrap;gap:28px;color:#6B7280;font-size:14px;">
+      <div style="flex:1 1 240px;">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#111827;margin-bottom:6px;">Requirements</div>
+        Odoo 18 Community or Enterprise. No Enterprise-only dependency.
+      </div>
+      <div style="flex:1 1 240px;">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#111827;margin-bottom:6px;">Languages</div>
+        English, German, French, Spanish, Simplified Chinese, Arabic.
+      </div>
+      <div style="flex:1 1 240px;">
+        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#111827;margin-bottom:6px;">Testing</div>
+        102 automated tests, including browser tours and a check that restrictions
+        hold over XML-RPC.
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================== Support &amp; customization ====================== -->
+  <div style="background:#F8FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:44px 40px;margin:0 0 40px;text-align:center;">
+
+    <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#0F766E;font-weight:700;margin-bottom:10px;">
+      Support &amp; Customization
+    </div>
+
+    <h2 style="font-size:30px;line-height:1.25;margin:0 0 16px;font-weight:700;letter-spacing:-.02em;color:#111827;">
+      Need help with Odoo access management, or a feature that isn&rsquo;t here?
+    </h2>
+
+    <p style="font-size:17px;color:#6B7280;margin:0 auto 26px;max-width:640px;">
+      Installation support, custom access rights features and Odoo development,
+      straight from the developer who wrote the module. You are emailing a person,
+      not a ticket queue.
+    </p>
+
+    <a href="mailto:roshankumar402@gmail.com"
+       style="display:inline-block;background:#0F766E;color:#FFFFFF;font-size:17px;font-weight:700;text-decoration:none;padding:16px 32px;border-radius:6px;">
+      roshankumar402@gmail.com
+    </a>
+
+    <p style="font-size:15px;color:#9CA3AF;margin:22px auto 0;max-width:620px;">
+      Please get in touch before leaving a rating. If something is broken I want to
+      fix it, and customization requests are welcome.
+    </p>
+
+    <div style="border-top:1px solid #E5E7EB;margin:32px auto 0;padding-top:20px;max-width:900px;">
+      <div style="font-size:15px;color:#6B7280;margin-bottom:4px;">
+        Developed by <strong style="color:#111827;">Roshan Kumar</strong>
+      </div>
+      <div style="font-size:15px;">
+        <a href="mailto:roshankumar402@gmail.com" style="color:#0F766E;">roshankumar402@gmail.com</a>
+        <span style="color:#9CA3AF;">&nbsp;&middot;&nbsp;</span>
+        <a href="https://github.com/roshank8s" style="color:#0F766E;">github.com/roshank8s</a>
+      </div>
+    </div>
+  </div>
+
+</section>

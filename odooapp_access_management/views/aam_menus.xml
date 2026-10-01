@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Parent menus only. Each leaf menuitem lives beside the action it opens,
+         so adding a screen means touching one file rather than two. -->
+
+    <menuitem id="menu_aam_root" name="Access Management" sequence="80"
+              web_icon="odooapp_access_management,static/description/icon.png"
+              groups="odooapp_access_management.group_aam_user"/>
+
+    <menuitem id="menu_aam_config" name="Configuration" parent="menu_aam_root"
+              sequence="20"/>
+
+    <menuitem id="menu_aam_reporting" name="Reporting" parent="menu_aam_root"
+              sequence="30"/>
+
+</odoo>

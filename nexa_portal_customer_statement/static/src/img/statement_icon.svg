@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45" width="64" height="64">
+  <defs>
+    <linearGradient id="paperGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#714B67;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B5A7B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main document shape -->
+  <path d="M9 4 L30 4 L36 10 L36 41 L9 41 Z" fill="url(#paperGradient)" stroke="#dee2e6" stroke-width="0.8"/>
+  
+  <!-- Folded corner -->
+  <path d="M30 4 L30 10 L36 10 Z" fill="#dee2e6"/>
+  <path d="M30 4 L30 10 L36 10" fill="none" stroke="#ced4da" stroke-width="0.6"/>
+  
+  <!-- Header bar -->
+  <rect x="11" y="13" width="23" height="4" rx="1" fill="url(#accentGradient)"/>
+  
+  <!-- Table lines -->
+  <line x1="11" y1="20" x2="34" y2="20" stroke="#adb5bd" stroke-width="0.6"/>
+  <line x1="11" y1="25" x2="34" y2="25" stroke="#dee2e6" stroke-width="0.4"/>
+  <line x1="11" y1="30" x2="34" y2="30" stroke="#dee2e6" stroke-width="0.4"/>
+  <line x1="11" y1="35" x2="34" y2="35" stroke="#dee2e6" stroke-width="0.4"/>
+  
+  <!-- Column separators -->
+  <line x1="20" y1="19" x2="20" y2="36" stroke="#e9ecef" stroke-width="0.3"/>
+  <line x1="27" y1="19" x2="27" y2="36" stroke="#e9ecef" stroke-width="0.3"/>
+  
+  <!-- Dollar sign accent -->
+  <circle cx="34" cy="9" r="5" fill="url(#accentGradient)" opacity="0.15"/>
+  <text x="34" y="11" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="#714B67" text-anchor="middle">$</text>
+  
+  <!-- Small data dots -->
+  <circle cx="15" cy="22.5" r="0.8" fill="#6c757d"/>
+  <circle cx="23" cy="22.5" r="0.8" fill="#6c757d"/>
+  <circle cx="30" cy="22.5" r="0.8" fill="#714B67"/>
+  
+  <circle cx="15" cy="27.5" r="0.8" fill="#6c757d"/>
+  <circle cx="23" cy="27.5" r="0.8" fill="#6c757d"/>
+  <circle cx="30" cy="27.5" r="0.8" fill="#714B67"/>
+  
+  <circle cx="15" cy="32.5" r="0.8" fill="#6c757d"/>
+  <circle cx="23" cy="32.5" r="0.8" fill="#6c757d"/>
+  <circle cx="30" cy="32.5" r="0.8" fill="#714B67"/>
+</svg>

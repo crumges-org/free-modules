@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <!-- `data-chart` is what tours and stylesheets select on. Deliberately not
+         the title: this module ships five translations, and a text selector
+         would break the day the suite runs in another language. -->
+    <t t-name="odooapp_access_management.AamChart">
+        <figure class="o_aam_chart_card" t-att-data-chart="props.kind"
+                t-att-class="'o_aam_cat' + props.accent">
+
+            <figcaption class="o_aam_chart_head">
+                <span class="o_aam_chart_title">
+                    <i class="fa" t-att-class="props.icon"/>
+                    <t t-esc="props.title"/>
+                </span>
+                <span t-if="props.hint" class="o_aam_chart_hint" t-esc="props.hint"/>
+            </figcaption>
+
+            <div t-if="!hasData" class="o_aam_empty o_aam_chart_empty">
+                <i class="fa" t-att-class="props.icon"/>
+                <span t-esc="props.emptyText"/>
+            </div>
+
+            <t t-else="">
+                <div class="o_aam_chart_canvas"
+                     t-att-style="'height:' + props.height + 'px'">
+                    <canvas t-ref="canvas" role="img" t-att-aria-label="ariaLabel"/>
+                </div>
+
+                <!-- The doughnut's direct labelling. Value and share are here in
+                     text, so the slices never have to be told apart by hue. -->
+                <ul t-if="props.kind === 'donut'" class="o_aam_chart_legend">
+                    <li t-foreach="legend" t-as="row" t-key="row.label"
+                        t-att-class="'o_aam_cat' + row.slot">
+                        <span class="o_aam_swatch"/>
+                        <span class="o_aam_chart_key" t-esc="row.label"/>
+                        <b t-esc="row.value"/>
+                        <span class="o_aam_chart_pct" t-esc="row.pct + '%'"/>
+                    </li>
+                </ul>
+
+                <!-- Always present. Hidden when the canvas drew, visible when
+                     Chart.js could not load: one class binding, two behaviours. -->
+                <table class="o_aam_chart_table"
+                       t-att-class="{ 'visually-hidden': !state.failed }">
+                    <caption t-esc="props.title"/>
+                    <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col" t-esc="props.unit or 'Value'"/>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="props.points" t-as="point" t-key="point.label">
+                            <th scope="row" t-esc="point.label"/>
+                            <td t-esc="point.value"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </t>
+        </figure>
+    </t>
+
+</templates>
